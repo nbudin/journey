@@ -1,0 +1,29 @@
+login:
+  id: 1
+  controller: user
+  action: login
+
+logout:
+  id: 2
+  controller: user
+  action: logout
+
+home:
+  id: 3
+  controller: user
+  action: home
+
+edit:
+  id: 4
+  controller: user
+  action: edit
+
+edit_user:
+  id: 5
+  controller: user
+  action: edit_user
+  
+stupid_permission:
+  id: 6
+  controller: fake
+  action: fake

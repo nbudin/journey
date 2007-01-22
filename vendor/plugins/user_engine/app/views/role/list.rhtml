@@ -1,0 +1,34 @@
+<h1>Listing Roles</h1>
+
+<table id="role_list" class="object_list">
+  <tr>
+<% for column in @content_columns %>
+    <th><%= column.human_name %></th>
+<% end %>
+    <th>Actions</th>
+  </tr>
+  
+<% for role in @roles %>
+  <tr>
+  <% for column in @content_columns %>
+    <td><%=h role.send(column.name) %></td>
+  <% end %>
+    <td>
+      <ul class="actions">
+        <%= link_if_authorized 'Show', {:action => 'show', :id => role}, :wrap_in => "li" %>
+        <%= link_if_authorized 'Edit', {:action => 'edit', :id => role}, :wrap_in => "li" %>
+        <% if authorized?(:action => 'destroy') && (not UserEngine.config([:guest_role_name, :user_role_name, :admin_role_name]).include?(role.name)) %>
+        <%= button_to 'Destroy', :action => 'destroy', :id => role  %><% end %>
+      </ul>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<div class="pagination_links">
+  <%= pagination_links @role_pages %>
+</div>
+
+<div id="role_actions" class="actions">
+  <%= link_if_authorized 'New Role', :action => 'new' %>
+</div>

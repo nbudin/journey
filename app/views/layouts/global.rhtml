@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+  <title>Journey</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <%= engine_stylesheet 'login' %>
+	<%= engine_stylesheet 'user' %>
+	<%= engine_javascript 'user' %>
+	<%= stylesheet_link_tag 'journey.css' %>
+	<%= stylesheet_link_tag 'questionnaire' %>
+  <%= javascript_include_tag :defaults %>
+  <% if @rss_url %>
+    <link rel="alternate" title="RSS Feed" href="<%=@rss_url%>" type="application/rss+xml"/>
+  <% end %>
+  
+  <script type="text/javascript">
+    // cmxform stuff from aLISTapart for Mozilla
+    
+    if (document.addEventListener)
+      document.addEventListener('DOMContentLoaded', cmxform, false);
+    
+    function cmxform() {
+      // Hide forms
+      $$('form.cmxform').each(function (el) {el.hide();});
+      
+      // Processing
+      $$('form.cmxform li label').each(function(label) {
+        if (label.classNames() != 'nocmx') {
+          var labelContent = label.innerHTML;
+          var labelWidth = document.defaultView.getComputedStyle(label, '').getPropertyValue('width');
+          var labelSpan = document.createElement('span');
+          labelSpan.style.display = 'block';
+          labelSpan.style.width = labelWidth;
+          labelSpan.innerHTML = labelContent;
+          label.style.display = '-moz-inline-box';
+          label.innerHTML = null;
+          label.appendChild(labelSpan);
+        }
+      });
+      
+      // Show forms
+      $$('form.cmxform').each(function (el) {el.show();});
+    }
+  </script>
+</head>
+<body id="body">
+
+<% for name in [:notice, :warning, :message] %>
+	<% if flash[name] %>
+		<%= "<div id=\"#{name}\">#{flash[name]}</div>" %>
+	<% end %>
+<% end %>
+
+<% if flash[:errors] -%>
+	<div style="color: red; font-size: 125%;">There were errors processing your request:</div>
+	<ul>
+		<% flash[:errors].each do |error| -%>
+			<li style="color: red"><%= error %></li>
+		<% end -%>
+	</ul>
+<% end %>
+
+<div class="topbar">
+    <table width="100%">
+        <tr>
+            <td>
+            	<%= image_tag "journey-button" %>
+            </td>
+            <td align="right" valign="bottom">
+            	<ul class="makeMenu">
+            		<li>Login
+            		  <ul>
+            		<% if current_user -%>
+            			<li>Logged in as <%=current_user.login%>.</li>
+            			<li><hr/></li>
+            			<li><%= link_to "Edit user profile", :controller => 'user', :action => 'edit' %></li>
+            			<li><%= link_to "Change password", :controller => 'user', :action => 'change_password' %></li>
+            			<li><%= link_to "Log out", :controller => 'user', :action => 'logout' %></li>
+            		<% else -%>
+            		
+            			<li>You are not logged in.</li>
+            			<li><%= link_to "Log in", :controller => 'user', :action => 'login' %></li>
+            			<li><%= link_to "Sign up", :controller => 'user', :action => 'signup' %></li>
+            		<% end -%>
+            		  </ul>
+            		</li>
+            		<li>Navigation
+            		  <ul>
+                		<li><%= link_to "Questionnaires", :controller => 'questionnaire' %></li>
+                		<li><%= link_to "Writing", :controller => 'writing' %></li>
+                	  </ul>
+            	    </li>
+            	    <% if current_user and current_user.admin? -%>
+           			<li>Administration
+           			  <ul>
+           			      <li><%= link_to "Users", :controller => 'user', :action => 'list' %></li>
+           			      <li><%= link_to "Roles", :controller => 'role', :action => 'list' %></li>
+           			      <li><%= link_to "Permissions", :controller => 'permission', :action => 'list' %></li>
+           			  </ul>
+           			</li>
+            	   <% end -%>
+            	</ul>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<%= @content_for_layout %>
+
+</body>
+</html>

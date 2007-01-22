@@ -1,0 +1,14 @@
+<div id="role_editor" class="object_editor">
+  <h1>Editing role '<%= @role.name %>'</h1>
+
+  <%= start_form_tag :action => 'edit', :id => @role %>
+    <%= render_partial "form" %>
+
+    <ul class='actions'>
+      <li><%= submit_tag 'Save' %></li>
+      <%= link_if_authorized 'Show', {:action => 'show', :id => @role}, {:wrap_in => 'li'} %>
+      <%= link_if_authorized 'List', {:action => 'list'}, {:wrap_in => 'li'} %>
+    </ul>
+
+  <%= end_form_tag %>
+</div>

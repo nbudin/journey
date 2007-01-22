@@ -1,0 +1,12 @@
+<div id="permission_details" class="object_details">
+  <% for column in @content_columns %>
+  <p>
+    <b><%= column.human_name %>:</b> <%=h @permission.send(column.name) %>
+  </p>
+  <% end %>
+</div>
+
+<ul class="actions">
+  <%= link_if_authorized 'Edit', {:action => 'edit', :id => @permission}, {:wrap_in => 'li'} %>
+  <%= link_if_authorized 'List', {:action => 'list'}, {:wrap_in => 'li'} %>
+</ul>

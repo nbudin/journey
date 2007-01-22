@@ -1,0 +1,51 @@
+<%= render :partial => 'analyze_toolbar' %>
+
+<script type="text/javascript">
+function sizeResponseViewer() {
+    width = ($('responsetable').offsetWidth - $('responsefromheader').offsetWidth - 10);
+    height = ($('responsetable').offsetHeight);
+    if ($('response') != null) {
+        $('response').style.height = (height - $('responseheader').offsetHeight - 5) + "px";
+    }
+    $('responseviewer').style.width = width + "px";
+    $('responseviewer').style.height = height + "px";
+}
+
+showingResponseId = null;
+function showResponse(id) {
+    if (showingResponseId == null) {
+        document.getElementsByClassName('minimizable').each(function(element) {
+            element.hide();
+        });
+        $('responseviewer').show();
+    }
+    $('responseviewer').update('<div class="responsecontainer" style="text-align: center; height: '+$('responsetable').offsetHeight+'px;"><%=image_tag "throbber.gif", :alt => "Loading..." %></div>');
+    sizeResponseViewer();
+    new Ajax.Updater(
+        'responseviewer',
+        '<%= url_for :action => 'view_response' %>',
+        {
+            parameters: 'id='+id,
+            onComplete: sizeResponseViewer
+        });
+    showingResponseId = id;
+}
+
+function hideResponse() {
+    if (showingResponseId != null) {
+        document.getElementsByClassName('minimizable').each(function(element) {
+            element.show();
+        });
+        $('responseviewer').hide();
+    }
+    showingResponseId = null;
+}
+</script>
+
+<div id="responseviewer" style="display: none; float: right;"></div>
+
+<%= render :partial => 'response_table' %>
+
+<% if @responses.length == 0 -%>
+	<p><i>No responses found.</i><p>
+<% end -%>

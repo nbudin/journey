@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Test::Unit::TestResult</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+Having text right here isn't valid, since it needs to be encapsulated by a block-level element.
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Test::Unit::TestResult</td>
+
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/test/unit/testresult_rb.html">
+                test/unit/testresult.rb
+                </a>
+        <br />
+            </td>
+
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+
+Collects <a href="Failure.html">Test::Unit::Failure</a> and <a
+href="Error.html">Test::Unit::Error</a> so that they can be displayed to
+the user. To this end, observers can be added to it, allowing the dynamic
+updating of, say, a <a href="UI.html">UI</a>.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M004586">add_assertion</a>&nbsp;&nbsp;
+      <a href="#M004585">add_error</a>&nbsp;&nbsp;
+      <a href="#M004584">add_failure</a>&nbsp;&nbsp;
+
+      <a href="#M004583">add_run</a>&nbsp;&nbsp;
+      <a href="#M004590">error_count</a>&nbsp;&nbsp;
+      <a href="#M004589">failure_count</a>&nbsp;&nbsp;
+      <a href="#M004582">new</a>&nbsp;&nbsp;
+      <a href="#M004588">passed?</a>&nbsp;&nbsp;
+      <a href="#M004587">to_s</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Util/Observable.html">Util::Observable</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CHANGED</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;CHANGED&quot;</td>
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">FAULT</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;FAULT&quot;</td>
+        </tr>
+        </table>
+      </div>
+
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+
+          <td class="context-item-name">assertion_count</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">run_count</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M004582" class="method-detail">
+        <a name="M004582"></a>
+
+        <div class="method-heading">
+          <a href="#M004582" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+
+      
+        <div class="method-description">
+          <p>
+Constructs a new, empty <a href="TestResult.html">TestResult</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M004582-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M004582-source">
+<pre>
+<span class="ruby-comment cmt"># File test/unit/testresult.rb, line 23</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+
+        <span class="ruby-ivar">@run_count</span>, <span class="ruby-ivar">@assertion_count</span> = <span class="ruby-value">0</span>, <span class="ruby-value">0</span>
+        <span class="ruby-ivar">@failures</span>, <span class="ruby-ivar">@errors</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>, <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>
+
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M004586" class="method-detail">
+
+        <a name="M004586"></a>
+
+        <div class="method-heading">
+          <a href="#M004586" class="method-signature">
+          <span class="method-name">add_assertion</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+
+          <p>
+Records an individual assertion.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M004586-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M004586-source">
+<pre>
+<span class="ruby-comment cmt"># File test/unit/testresult.rb, line 49</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_assertion</span>
+
+        <span class="ruby-ivar">@assertion_count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+        <span class="ruby-identifier">notify_listeners</span>(<span class="ruby-constant">CHANGED</span>, <span class="ruby-keyword kw">self</span>)
+      <span class="ruby-keyword kw">end</span>
+</pre>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M004585" class="method-detail">
+        <a name="M004585"></a>
+
+        <div class="method-heading">
+          <a href="#M004585" class="method-signature">
+          <span class="method-name">add_error</span><span class="method-args">(error)</span>
+
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Records a <a href="Error.html">Test::Unit::Error</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M004585-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M004585-source">
+
+<pre>
+<span class="ruby-comment cmt"># File test/unit/testresult.rb, line 42</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_error</span>(<span class="ruby-identifier">error</span>)
+        <span class="ruby-ivar">@errors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">error</span>
+        <span class="ruby-identifier">notify_listeners</span>(<span class="ruby-constant">FAULT</span>, <span class="ruby-identifier">error</span>)
+        <span class="ruby-identifier">notify_listeners</span>(<span class="ruby-constant">CHANGED</span>, <span class="ruby-keyword kw">self</span>)
+      <span class="ruby-keyword kw">end</span>
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M004584" class="method-detail">
+        <a name="M004584"></a>
+
+        <div class="method-heading">
+          <a href="#M004584" class="method-signature">
+
+          <span class="method-name">add_failure</span><span class="method-args">(failure)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Records a <a href="Failure.html">Test::Unit::Failure</a>.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M004584-source');return false;">[Source]</a></p>
+
+          <div class="method-source-code" id="M004584-source">
+<pre>
+<span class="ruby-comment cmt"># File test/unit/testresult.rb, line 35</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_failure</span>(<span class="ruby-identifier">failure</span>)
+        <span class="ruby-ivar">@failures</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">failure</span>
+
+        <span class="ruby-identifier">notify_listeners</span>(<span class="ruby-constant">FAULT</span>, <span class="ruby-identifier">failure</span>)
+        <span class="ruby-identifier">notify_listeners</span>(<span class="ruby-constant">CHANGED</span>, <span class="ruby-keyword kw">self</span>)
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="method-M004583" class="method-detail">
+        <a name="M004583"></a>
+
+        <div class="method-heading">
+          <a href="#M004583" class="method-signature">
+          <span class="method-name">add_run</span><span class="method-args">()</span>
+
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Records a test run.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M004583-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M004583-source">
+<pre>
+<span class="ruby-comment cmt"># File test/unit/testresult.rb, line 29</span>
+
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_run</span>
+        <span class="ruby-ivar">@run_count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+        <span class="ruby-identifier">notify_listeners</span>(<span class="ruby-constant">CHANGED</span>, <span class="ruby-keyword kw">self</span>)
+      <span class="ruby-keyword kw">end</span>
+
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M004590" class="method-detail">
+        <a name="M004590"></a>
+
+        <div class="method-heading">
+          <a href="#M004590" class="method-signature">
+
+          <span class="method-name">error_count</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the number of errors this <a href="TestResult.html">TestResult</a>
+has recorded.
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M004590-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M004590-source">
+<pre>
+<span class="ruby-comment cmt"># File test/unit/testresult.rb, line 74</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">error_count</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@errors</span>.<span class="ruby-identifier">size</span>
+
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M004589" class="method-detail">
+        <a name="M004589"></a>
+
+        <div class="method-heading">
+
+          <a href="#M004589" class="method-signature">
+          <span class="method-name">failure_count</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the number of failures this <a
+href="TestResult.html">TestResult</a> has recorded.
+
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M004589-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M004589-source">
+<pre>
+<span class="ruby-comment cmt"># File test/unit/testresult.rb, line 68</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">failure_count</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@failures</span>.<span class="ruby-identifier">size</span>
+
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M004588" class="method-detail">
+        <a name="M004588"></a>
+
+        <div class="method-heading">
+
+          <a href="#M004588" class="method-signature">
+          <span class="method-name">passed?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns whether or not this <a href="TestResult.html">TestResult</a>
+
+represents successful completion.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M004588-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M004588-source">
+<pre>
+<span class="ruby-comment cmt"># File test/unit/testresult.rb, line 62</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">passed?</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@failures</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@errors</span>.<span class="ruby-identifier">empty?</span>
+
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M004587" class="method-detail">
+        <a name="M004587"></a>
+
+        <div class="method-heading">
+
+          <a href="#M004587" class="method-signature">
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns a string contain the recorded runs, assertions, failures and errors
+in this <a href="TestResult.html">TestResult</a>.
+
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M004587-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M004587-source">
+<pre>
+<span class="ruby-comment cmt"># File test/unit/testresult.rb, line 56</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+        <span class="ruby-node">&quot;#{run_count} tests, #{assertion_count} assertions, #{failure_count} failures, #{error_count} errors&quot;</span>
+
+      <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

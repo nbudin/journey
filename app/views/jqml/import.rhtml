@@ -1,0 +1,18 @@
+<h1>Import a saved questionnaire</h1>
+
+<p>Use this form to import a questionnaire you have saved in JQML format.  When your
+	questionnaire has finished importing, you will be taken to the editing page for your
+	new questionnaire immediately.</p>
+
+<% form_tag({:action => 'import'}, :multipart => true, :class => 'cmxform') do %>
+  <fieldset>
+    <legend>Import questionnaire</legend>
+    <ol>
+      <li>
+	      <label for="file">JQML file to import</label>
+	      <input type="file" name="file" />
+	    </li>
+	  </ol>
+		<%= submit_tag "Import" %>
+	</fieldset>
+<% end %>

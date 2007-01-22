@@ -1,0 +1,113 @@
+= responsible_markup plugin for Rails
+<i>Because you shouldn't ship unless it's valid.</i>
+
+A plugin which provides tests for
+* (X)HTML markup validity...
+* Unobtrusive Javascript...
+* Backwards-compatible XHTML...
+* ...and other hallmarks of responsible web development
+
+Why? Because I'm lazy. Unless there's someone around to call me on it, I'll
+write markup which works, but which doesn't follow best practices. After all,
+it's easier to stuff a bunch of display data into a style attribute than it is
+to refactor my CSS classes.
+
+This is a set of assertions to use in unit tests and functional tests to keep
+us (read: me) honest. We (read: I) owe it to ourselves, our clients, our
+employers, and the world in general, to produce the highest quality code we can.
+
+<i>Do it for the children.</i>
+
+Remember to check your CSS[http://jigsaw.w3.org/css-validator/],
+{RSS/Atom}[http://feedvalidator.org/], and
+XML[http://www.stg.brown.edu/service/xmlvalid/] output as well.
+
+== Installation
+
+If your project is source-controlled by Subversion (which it should be, really),
+the easiest way to install this is via Rails' plugin script:
+
+  ./script/plugin install -x http://svn.codahale.com/responsible_markup/trunk
+
+If you're not using Subversion, or if you don't want it adding
+<tt>svn:externals</tt> in your project, remove the <tt>-x</tt> switch:
+
+  ./script/plugin install http://svn.codahale.com/responsible_markup/trunk
+  
+Alternatively, you can just check the trunk out from the repository, if you're
+super-DIY.
+
+  cd path_to_rails_app
+  cd vendor/plugins
+  svn co http://svn.codahale.com/responsible_markup/trunk responsible_markup
+
+Or you can go to the website and download various release archives:
+http://plugins.codahale.com/responsible_markup
+
+== Usage
+
+=== Overview
+
+1. Install the plugin. (See previous section)
+2. Write unit tests, incorporating the various assertions provided.
+3. Develop application, secure in the knowledge that ResponsibleMarkup will call
+   you on your laziness.
+
+=== Specifics
+
+See the documentation for ResponsibleMarkup for a full list of assertions and
+their usage.
+
+== Using Your Own Validator
+
+If you're using this often (as you should be), you should go ahead and install
+a local copy of the W3C Validator. Doing this will speed up your tests
+as well as reduce the load on the public W3C Validator.
+<tt>assert_valid_html</tt> caches the results in the temp directory, but any
+large set of tests will generate upwards of a hundred requests. It makes sense
+to have the time per request as low as possible.
+
+To install the W3C Validator on a local server, follow these instructions:
+http://validator.w3.org/docs/install.html
+
+To use a local validator, follow this example:
+  require 'test/unit'
+  
+  class ValidityTest < Test::Unit::TestCase
+    ResponsibleMarkup::validator_uri = 'http://127.0.0.1/validator/check'
+   
+    def setup
+      html_content = generated_by_magic_process(:go_go_xhtml)
+    end
+  
+    def test_validity
+      assert_valid_html(html_content, "http://foo/bar/squee isn't valid XHTML")
+    end
+  end
+
+== Resources
+
+=== Subversion
+
+* http://svn.codahale.com/responsible_markup
+
+=== Blog
+
+* http://blog.codahale.com
+
+== Credits
+
+Written by Coda Hale <coda.hale@gmail.com>.
+
+Released under the MIT license (see MIT-LICENSE).
+
+W3C results downloading & caching code lifted from Scott Raymond's
+{assert_valid_markup plugin}[http://redgreenblu.com/svn/projects/assert_valid_markup/].
+Excerpting and backtrace-cleaning code lifted from the Rails source. The
+structure of the Rake file and a few other layout conventions were lifted from
+Geoffrey Grosenbach's {ar_fixtures}[http://nubyonrails.com/articles/2005/12/27/dump-or-slurp-yaml-reference-data]
+plugin.
+
+Finally, thanks to my employer, both for paying me to work with Ruby and Rails
+on a daily basis, and also for allowing me to release code which I developed for
+them.

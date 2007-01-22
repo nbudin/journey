@@ -1,0 +1,27 @@
+guest_role:
+  id: 1
+  name: <%= UserEngine.config :guest_role_name %>
+  description: The role for non-logged-in people
+  omnipotent: false
+  system_role: true
+
+admin_role:
+  id: 2
+  name: <%= UserEngine.config :admin_role_name %>
+  description: The role for administrators
+  omnipotent: true
+  system_role: true
+
+user_role:
+  id: 3
+  name: <%= UserEngine.config :user_role_name %>
+  description: The role for regular users
+  omnipotent: false
+  system_role: true
+  
+custom_role:
+  id: 4
+  name: Custom Role
+  description: a non-system role
+  omnipotent: false
+  system_role: false

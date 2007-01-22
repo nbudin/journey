@@ -1,0 +1,7 @@
+<%= start_question @question %>
+<% if @editing -%>
+	<%= select_tag "question[#{@question.id}][default_answer][]", options_for_select(@question.options_for_select), :multiple => true %>
+<% else -%>
+	<%= select_tag "question[#{@question.id}][value][]", options_for_select(@question.options_for_select), :multiple => true %>
+<% end -%>
+<%= end_question @question %>

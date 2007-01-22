@@ -1,0 +1,22 @@
+<% n = ((@question.max - @question.min + @question.step) / @question.step)
+odd = n % 2 == 1
+if odd
+	median = ((n/2) * @question.step) + @question.min
+end -%>
+<%= start_question @question %>
+<%= @question.min %>
+<% @question.min.step(@question.max, @question.step) do |i| -%>
+	<% if odd and i == median -%>
+		[
+	<% end -%>
+	<% if @editing -%>
+		<%= radio_button "question[]", "default_answer", i %>
+	<% else -%>
+		<%= radio_button_tag "question[#{@question.id}]", i, value == i.to_s %>
+	<% end -%>
+	<% if odd and i == median -%>
+	 	] 
+	<% end -%>
+<% end -%>
+<%= @question.max %>
+<%= end_question @question %>

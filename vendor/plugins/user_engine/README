@@ -1,0 +1,215 @@
+= UserEngine: Login + Roles
+
+The UserEngine extends the LoginEngine with a very, *very* simple implementation of RBAC - role based access control. As well as the 'User' object, the UserEngine provides Permission objects, and Role objects. Each User can have many Roles, and each Role is associated with many Permissions. A Permission is simple a controller/action pair. A Role which is associated with some permission has access to that specific controller/action, i.e. any Role associated with the Permission object "user/home" will be allowed to call that action. 
+
+
+=== Not the One True RBAC system
+
+I'll make this point at the beginning, so there can be no doubt - this is *not* a full permission system. The UserEngine only controls which users have the right to hit which controller/action pairs. It will not control access to data at all, so for instance you cannot use it to give users the ability to edit only a subset of your data object (unless that subset is controlled via different controller actions).
+
+
+
+= Installing
+
+1. Create your Rails application, set up your databases, grab the Engines plugin and the LoginEngine, and install them.
+
+2. Install the UserEngine into your vendor/plugins directory
+
+3. Modify your Engines.start call in config/environment.rb - if you have specifically specified which Engines to start, ensure that you add :user (or :user_engine). The important point here is to note that the UserEngine must be started *after* the LoginEngine, since it will override a small amount of the behaviour in the latter. The end of your environment.rb file should look something like this:
+
+    Engines.start :login, :user
+
+  or
+
+    Engines.start :login
+    Engines.start :user
+
+  or simply:
+
+    Engines.start # note that this use assumes that you haven't renamed the user_engine
+                  # to anything which would come before 'login_engine' alphabetically
+
+
+4. Edit your application.rb file so it looks something like the following (note the new <tt>include UserEngine</tt> and the changed +before_filter+):
+
+    class ApplicationController < ActionController::Base
+      include LoginEngine
+      include UserEngine
+
+      helper :user
+      model :user
+
+      before_filter :authorize_action
+    end
+
+5. Edit your application_helper.rb file:
+
+    module ApplicationHelper
+      include LoginEngine
+      include UserEngine
+    end
+
+6. Perform any configuration you might need. You'll probably want to set these values in environment.rb (before the call to Engines.start):
+
+    module UserEngine
+      config :admin_login, "the login name for your administrator user"
+      config :admin_email, "an email address for your administrator"
+      config :admin_password, "your initial admin password"
+    end
+
+7. Initialize the database tables. You must ensure that the tables for the LoginEngine are present since this engine builds on top of them. You will probably get a warning if this is your first installation of the User Engine, indicating that you don't have an Admin role - that's fine, we'll be creating it later. You can either use the engine migrations by calling:
+
+    rake engine_migrate
+
+  to move all engines to their latest versions, or
+
+    rake engine_migrate ENGINE=user
+
+  to migrate only this engine. Alternatively, if you just want to load the full schema information for the User and LoginEngines, run
+
+    rake import_user_engine_schema
+
+8. Run the rake task to install the default Roles and administrator user. This will also create a new user with the Admin role - the default login (if you didn't set it in step 6) is 'admin' and the password is 'testing'. Make sure you change it!:
+
+    rake bootstrap
+
+9. The UserEngine includes a method to check whether or not the system roles created above are still intact. You should typically call this each time the server starts, by placing the following call at the bottom of your environment.rb:
+
+    UserEngine.check_system_roles
+
+10. The UserEngine provides a default stylesheet and a small javascript helper file (used in the Role#edit action), so you'll probably want to include the former and almost certainly the latter in your application's layout. Add the following lines:
+
+      <%= engine_stylesheet "user_engine" %>
+      <%= engine_javascript "user_engine" %>
+
+11. Remove any existing sessions (since they might interfere with the login process), and start the server and log using your administrator login and password (if you didn't set one explicitly in your configuration, the defaults are 'admin'/'testing' - make sure you change them!) and go to http://localhost:3000/user/list to see a list of all the users. From there you can create new users, view roles & permissions, and play around...
+
+12. Since the UserEngine overrides some of the default behaviour in the LoginEngine, if you have made your own modifications within your app directory, you'll probably want to examine these changes to make sure that your own customisations will still operate as expected. You'll need to look at the following:
+
+* The UserEngine's models/user.rb model will override the default given in LoginEngine. If you have your own app/models/user.rb file, you'll need to include UserEngine::AuthorizedUser in your file.
+* The UserController#edit action has been overriden to know about Roles. See user_engine/app/user_controller.rb for details.
+* Many new methods for administrating users, roles and permissions have been provided - again, see user_engine/app/user_controller.rb.
+* If you have overridden any User views, look at the corresponding views in the UserEngine to see if there are any changes you wish to include in your own versions.
+
+
+
+
+
+
+= Configuration
+
+A number of configuration parameters are available to allow to you control
+how the data is stored, should you be unhappy with the defaults. These are
+outlined below. You should almost certainly customize the <tt>:admin_email</tt>
+value in your environment.rb file, i.e.:
+
+  module LoginEngine
+    config :salt, 'your salt value'
+  end
+  module UserEngine
+    config :admin_email, 'admin@megacorp.com'
+  end
+  Engines.start :login, :user
+
+
+=== Configuration Options
+
++role_table+:: the name of the table to store Role objects in. Defaults to 
+               "roles" (or "role" if you have disabled pluralization.)
++permission_table+:: the name of the table to store Permission objects
+                     in. Defaults to "permissions" (or "permission" if
+                     you have disabled pluralization.)
++user_role_table+:: the join table for users and roles. Defaults to 
+                    <user_table>_<role_table>. (User table is specified in
+                    the LoginEngine configuration).
++permission_role_table+:: the join table for roles and permissions. Defaults
+                          to <permission_table>_<role_table>.
++guest_role_name+:: the name for the Guest Role. Defaults to "Guest".
++user_role_name+:: the name for the User Role. Defaults to "User".
++admin_role_name+:: the name for the Admin Role. Defaults to "Admin".
++admin_login+:: the login ID for the initial Admin user. Defaults to "admin".
++admin_email+:: the email address of the site administrator. Defaults to
+                "admin@your.company".
++login_page+:: a Hash describing where the login page. Defaults to
+               {:controller => 'user', :action => 'login'}
++steath+:: a boolean flag to indicate whether or not the system should
+           display helpful messages about authorized roles when they are
+           denied access to an action, or if it should simply deny the
+           user access without revealing which roles can access that action.
+           Defaults to false (i.e. DO show helpful messages).               
+               
+               
+= Usage
+
+=== Users
+Once you have logged in as an administrator, you can go to /user/list to get a list of all users. Here you can also create new users (/user/new) and edit the details of the users in your system.
+
+If you edit a user (/user/edit_user/+id+), you can now not only change user details and passwords, but also specify which roles the user has.
+
+=== Roles
+
+Three distinct Role objects are initially created when you bootstrap the UserEngine
+
+* Guest, with permissions to login, signup and retrieve forgotten passwords
+* User, with permissions to logout, to to /user/home, change passwords and edit their own information
+* Admin, with permissions to edit all users, list users, edit all roles, edit permissions, and so on.
+
+New roles can easily be created at /role/new, where you can select exactly which permissions this role should have. A similar interface is presented in /role/edit/+id+. For instance, if you have a ReportController with the actions +view+ and +edit+, you might create two new Roles - 'ReportViewer' and ReportEditor'. The only permissions the ReportViewer has will be report/view, and the only permission assigned to ReportEditor is similarly report/edit. You can now assign the ReportViewer role to as many users as will need to be able to view reports, but only give the ReportEditor to users who should also be able to edit reports.
+
+It's worth noting that this point that if a user has the ability to edit other users (/user/edit_user), they will be able to assign Roles (including the Admin role) to anyone they please. Similarly, users who can edit roles (/role/edit) can add any permissions at all to any Role within the system. Therefore you (as the system administrator) must be *very* careful about allowing these permissions on any role other than Admin.
+
+In general, you should not give normal users *any* permissions other than the default ones, and permissions to any controllers specific to *your* application.
+
+=== Permissions
+
+While you can create permissions using the regular scaffold-style interface, it is better to avoid manually creating them if possible. Instead, a method is provided for automatically scanning your controllers and ensuring that there exists a Permission object for each controller-action pair. This method is <tt>Permission.sychronize_controllers</tt> (or just <tt>Permission.sync</tt> as a shorthand), and can be called either from the console, or as a rake task:
+
+  rake sync_permissions
+  
+It may be worth noting that currently this method will deliberately *never* delete any permission objects from your system, even if the method is no longer present.
+
+== Helper methods
+
+The UserEngine provides several helpers which understand permissions and roles, to be used in your views. The two most important are outlined below.
+
+=== link_if_authorized(controller, action)
+
+<tt>link_if_authorized</tt> will produce a link to an action *only* if the currently logged-in user has permission to perform the given action. It can be passed options to show the text (without a link) if the user is not authorized, or to wrap the text in another HTML element (i.e an li element) if a link is to be produced.
+
+=== authorized?(controller, action)
+
+<tt>authorized?</tt> will simply return true or false to reflect the current user's authorization for the given action. This method can also take a block, which will only be performed if the user is authorized for the given action. In this manner you can control the display chunks of HTML or certain processing based on the permissions of the current user.
+
+
+= Notes
+
+=== Database Schemas & Testing
+
+Currently, since not all databases appear to support structure cloning, the tests will load the entire schema into your test database, potentially blowing away any other test structures you might have. If this presents an issue for your application, comment out the line in test/test_helper.rb
+
+
+= LICENSE
+
+Copyright (c) 2005 James Adam
+
+This is the MIT license, the license Ruby on Rails itself is licensed 
+under.
+
+Permission is hereby granted, free of charge, to any person obtaining 
+a copy of this software and associated documentation files (the 
+"Software"), to deal in the Software without restriction, including 
+without limitation the rights to use, copy, modify, merge, publish, 
+distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the 
+following conditions:
+
+The above copyright notice and this permission notice shall be included 
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY 
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 

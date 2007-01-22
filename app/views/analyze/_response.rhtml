@@ -1,0 +1,34 @@
+<% counter = 0 -%>
+<div id="responsecontainer<%=resp.id%>" class="responsecontainer">
+    <div class="responseheader" id="responseheader">
+    	<table width="100%">
+    		<tr>
+    			<td align="left">
+    				<%=resp.title%>
+    			</td>
+    			<td align="right">
+    				<%= button_to_function "Close", 'hideResponse();' %>
+    			</td>
+    		</tr>
+    	</table>
+    </div>
+    <div class="response" id="response">
+    	<% resp.answers.each do |answer| -%>
+    	    <% question = answer.question %>
+    		<% counter += 1 -%>
+    		<table class="question" id="question<%=resp.id%>_<%=question.id%>">
+    			<script type="text/javascript">
+    				questions_of_type['<%=question.type%>'].push($('question<%=resp.id%>_<%=question.id%>'));
+    			</script>
+    			<tr<% if counter % 2 == 1 %> class="odd"<%end%>>
+    				<td class="caption">
+    					<%= question.caption %>
+    				</td>
+    				<td class="questionbody">
+    					<%=h answer.value %>
+    				</td>
+    			</tr>
+    		</table>
+    	<% end -%>
+    </div>
+</div>

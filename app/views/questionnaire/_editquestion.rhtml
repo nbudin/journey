@@ -1,0 +1,32 @@
+<% @editing = true -%>
+<fieldset class="editingbox">
+	<legend>
+		Question #<%=@page.questions.index(question) + 1 -
+			((params[:action] == 'delete_question' and question.position > Question.find(params[:id]).position) ? 1 : 0) %>:
+		<%= link_to_remote "Delete", :update => ("page#{@page.id}"),
+			:url => { :action => "delete_question", :id => question.id } %>
+	</legend>
+	<div class="editingbuttons">
+		<%= form_remote_tag :update => ("question#{question.id}"),
+				:html => { :id => "form_change_question_type_#{question.id}", :class => "typeselector" },
+				:loading => "Form.disable('form_change_question_type_#{question.id}');",
+				:url => { :action => "change_question_type", :id => question.id } %>
+			<%= select_tag :type, options_for_select(question_types,
+				question.type.to_s), :html => { :class => "typeselector" } %>
+			<%= submit_tag "Change question type" %>
+		<%= end_form_tag %>
+		<% if question.is_a? Field %>
+    		<%= form_remote_tag :update => "question#{question.id}",
+    		         :html => { :id => "form_set_purpose_#{question.id}", :class => "purposeselector" },
+    		         :loading => "Form.disable('form_set_purpose_#{question.id}');",
+    		         :url => { :action => "change_field_purpose", :id => question.id } %>
+   		      <%= select_tag :purpose, options_for_select([''] + Questionnaire.special_field_purposes,
+   		          question.purpose.nil? ? '' : question.purpose), :html => { :class => "purposeselector" } %>
+   		      <%= submit_tag "Set special purpose" %>
+    		<%= end_form_tag %>
+        <% end %>
+	</div>
+	<%= render_question question %>
+</fieldset>
+<%= link_to_remote "Insert question", :update => ("page#{@page.id}"),
+	:url => { :action => "add_question_to_page", :id => @page.id, :position => question.position + 1 } %>

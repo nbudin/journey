@@ -1,0 +1,23 @@
+require 'rubygems'
+require 'rake'
+require 'rake/testtask'
+require 'test/unit'
+
+require 'fileutils'
+
+desc "Default Task"
+task :default => [ :test ]
+
+# The following task causes Bus Errors on my machine for some reasion:
+# /usr/local/lib/ruby/site_ruby/1.8/powerpc-darwin8.0.0/svn/ext/core.bundle: [BUG] Bus Error
+# ruby 1.8.2 (2004-12-25) [powerpc-darwin8.0.0]
+# Haven't figured out why yet, so run test/run_tests.rb for now
+
+# Run the unit tests
+Rake::TestTask.new { |t|
+  t.libs << "test"
+  t.pattern = 'test/*_test.rb'
+  t.verbose = true
+#  t.warning  = true
+}
+

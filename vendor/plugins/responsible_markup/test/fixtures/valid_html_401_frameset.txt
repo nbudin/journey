@@ -1,0 +1,11 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>SOOOOOOOOOOOOOO BBBBBBBOOOOOOOOOOOOOORRRRRRRRRREEEEEEEEEEEDDDDDDDD!</title>
+</head>
+<frameset rows="*,40">
+	<frame scrolling="auto" frameborder="0" noresize src="http://yay.for.happy.monkey.things.com">
+	<frame scrolling="no" frameborder="0" noresize src="yeeeaaaaaarrrrrgh.html">
+</frameset>
+</html>

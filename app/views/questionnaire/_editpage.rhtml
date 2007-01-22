@@ -1,0 +1,36 @@
+<% @editing = true
+fadein_id = (params[:action] == 'add_question_to_page' ? @question.id : -1)
+fadeout_id = (params[:action] == 'delete_question' ? params[:id].to_i : -1) -%>
+
+<fieldset class="page">
+	<a name="page<%= @page.id %>"></a>
+	<legend>
+		Page #<%=@questionnaire.pages.index(@page) + 1 -
+			((params[:action] == 'delete_page' and @page.position > Page.find(params[:id]).position) ? 1 : 0) %>:
+		<%= link_to_remote "Delete", :update => "wholepage",
+			:url => {:action => "delete_page", :id => @page.id} %>
+	</legend>
+	<%= form_tag :action => "change_page_title", :id => @page.id %>
+		<label for="page_<%= @page.id %>_title">Title</label>
+		<%= text_field "page[]", "title" %><br/>
+		<div class="submit"><%= submit_tag "Change page title" %></div>
+	<%= end_form_tag %>
+
+	<%= link_to_remote "Insert question", :update => ("page#{@page.id}"),
+			:url => { :action => "add_question_to_page", :id => @page.id, :position => 1 } %>
+
+	<% @page.questions.each do |question| -%>
+		<div id="question<%=question.id%>" <% if fadein_id == question.id %>style="display: none"<% end %>>
+			<%= render :partial => 'editquestion', :locals => { :question => question } %>
+		</div>
+	<% end -%>
+</fieldset>
+<%= link_to_remote "Insert page", :update => "wholepage",
+	:url => {:action => 'add_page_to_questionnaire', :id => @questionnaire.id, 
+		:position => @page.position + 1} %>
+
+<% if fadeout_id != -1 -%>
+	<script type="text/javascript">new Effect.BlindUp("question<%=fadeout_id%>", { duration: 0.25 });</script>
+<% elsif fadein_id != -1 -%>
+	<script type="text/javascript">new Effect.BlindDown("question<%=fadein_id%>", { duration: 0.25 });</script>
+<% end -%>

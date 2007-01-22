@@ -1,0 +1,18 @@
+<ul>
+<% @all_roles.each do |role| %>
+  <li>
+    <input type="checkbox" id="user_roles_<%= role.id %>" name="user[roles][]" value="<%= role.id %>" 
+      <% if @user.roles.include?(role) %>
+        checked="checked"
+      <% end %>
+    />
+    <%= link_if_authorized(role.name, {:controller => "role", :action => "show", :id => role}, {:show_text => true}) %>
+    &raquo; 
+    <%= role.description %>
+  </li>
+<% end %>
+</ul>
+
+<% if submit %>
+  <%= form_input :submit_button, 'Save Roles', :class => 'two_columns' %>
+<% end %>

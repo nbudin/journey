@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>I'm A Little Teapot</title>
+</head>
+<body onload="do_a_bunch_of_javascript(3 > 1);">
+
+	<a href="#" onclick="I'm totally broken by > turning off Javascript">Moo!</a>
+	
+	<a href="javascript:I, too, am broken by turning Javascript off.">Moojax!</a>
+
+	<div id="content" onclick="magic_javascriptjax_2_0_beta();">
+		Content is placed here by magic Javascriptjax 2.0 (beta).
+	</div>
+	<script>Do something here</script>
+
+</body>
+</html>

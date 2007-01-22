@@ -1,0 +1,15 @@
+<div id="permission_editor" class="object_editor">
+  <h1>Editing permission '<%= @permission.path %>'</h1>
+
+  <%= start_form_tag :action => 'edit', :id => @permission %>
+    <%= render_partial "form" %>
+
+    <ul class='actions'>
+      <li><%= submit_tag 'Save' %></li>
+      <%= link_if_authorized 'Show', {:action => 'show', :id => @permission}, {:wrap_in => 'li'} %>
+      <%= link_if_authorized 'List', {:action => 'list'}, {:wrap_in => 'li'} %>
+    </ul>
+
+  <%= end_form_tag %>
+</div>
+

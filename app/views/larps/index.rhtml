@@ -1,0 +1,9 @@
+<h1>Listing larps</h1>
+
+<%= render :partial => @larps %>
+
+<br />
+
+<div id="<%=create_form_dom_id(Larp)%>">
+  <%= link_to_remote 'New larp', :update => create_form_dom_id(Larp), :url => new_larp_path %>
+</div>

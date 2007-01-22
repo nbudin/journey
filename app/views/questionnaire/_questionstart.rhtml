@@ -1,0 +1,29 @@
+<table class="question">
+	<tr>
+		<td class="caption<% if @question.required %> required<% end %>">
+			<% if @editing -%>
+				<%= form_remote_tag :update => ("question#{@question.id}"),
+					:html => { :id => "form_change_question_attrs_#{@question.id}" },
+					:loading => "Form.disable('form_change_question_attrs_#{@question.id}');",
+					:url => { :action => "change_question_attrs", :id => @question.id } %>
+					<%= text_field "question[]", "caption" %>
+					Required? <%= check_box "question[]", "required" %>
+					<%= submit_tag "Save changes" %>
+				<%= end_form_tag %>
+			<% else -%>
+				<%= @question.caption %>
+			<% end -%>
+		</td>
+		<td class="questionbody">
+			<% if @editing -%>
+				<% if @question.kind_of? SelectorField -%>
+					<%= render :partial => "selector_field_edit" %>
+				<% end -%>
+				<% if @question.kind_of? RangeField -%>
+					<%= render :partial => "range_field_edit" %>
+				<% end -%>
+				<%= form_remote_tag :update => ("question#{@question.id}"),
+					:html => { :id => "form_change_default_answer_#{@question.id}" },
+					:loading => "Form.disable('form_change_default_answer_#{@question.id}');",
+					:url => { :action => "change_default_answer", :id => @question.id } %>
+			<% end %>

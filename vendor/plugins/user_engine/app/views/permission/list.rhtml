@@ -1,0 +1,35 @@
+<h1>Listing Permissions</h1>
+
+<table id="permission_list" class="object_list">
+  <tr>
+<% for column in @content_columns %>
+    <th><%= column.human_name %></th>
+<% end %>
+    <th>Actions</th>
+  </tr>
+  
+<% for permission in @permissions %>
+  <tr>
+  <% for column in @content_columns %>
+    <td><%=h permission.send(column.name) %></td>
+  <% end %>
+    <td>
+      <ul class="actions">
+        <%= link_if_authorized 'Show', {:action => 'show', :id => permission}, :wrap_in => "li" %>
+        <%= link_if_authorized 'Edit', {:action => 'edit', :id => permission}, :wrap_in => "li" %>
+        <% if authorized?(:action => 'destroy') %><%= button_to 'Destroy', {:action => 'destroy', :id => permission} %><% end %>
+      </ul>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<div class="pagination_links">
+  <%= pagination_links @permission_pages %>
+</div>
+
+<div id="permission_actions" class="actions">
+  <%= # This might be useful for Administrators, although it shouldnt really be
+      # used.
+      link_if_authorized 'New permission', :action => 'new' %>
+</div>

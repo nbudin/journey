@@ -1,0 +1,12 @@
+== Feb 23-28 2006
+
+* Made the damn thing on a cough-syrup-fueled whim.
+
+== March 7 2006
+
+* Fixed "totally not working" problem by putting the initialization code back
+  into responsible_markup.rb instead of init.rb.
+
+== May 25 2006
+
+* Added assert_well_formed_xml and streamlined a few internals.

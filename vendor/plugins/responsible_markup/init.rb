@@ -1,0 +1,1 @@
+require 'responsible_markup'

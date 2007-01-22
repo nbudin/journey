@@ -1,0 +1,33 @@
+<h1>Listing Users</h1>
+
+<table id="user_list" class="object_list">
+  <tr>
+<% for column in @content_columns %>
+    <th><%= column.human_name %></th>
+<% end %>
+    <th>Actions</th>
+  </tr>
+
+<% for user in @all_users %>
+  <tr>
+  <% for column in @content_columns %>
+    <td><%=h user.send(column.name) %></td>
+  <% end %>
+    <td>
+      <ul class="actions">
+        <%= link_if_authorized 'Show', {:action => 'show', :id => user}, :wrap_in => "li" %>
+        <%= link_if_authorized 'Edit', {:action => 'edit_user', :id => user}, :wrap_in => "li" %>
+        <% if authorized?(:action => 'delete_user') && (user.login != UserEngine.config(:admin_login)) %><%= button_to 'Destroy', :action => 'delete_user', :id => user %><% end %>
+      </ul>
+    </td>  
+  </tr>
+<% end %>
+</table>
+
+<div class="pagination_links">
+  <%= pagination_links @user_pages %>
+</div>
+
+<div id="user_actions" class="actions">
+  <%= link_if_authorized 'New User', :controller => "user", :action => 'new' %>
+</div>

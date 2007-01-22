@@ -1,0 +1,20 @@
+<h1>Listing projects</h1>
+
+<table>
+	<% @projects.each do |project| -%>
+		<tr>
+			<td><%=project.name%></td>
+			<td><%= link_to "Edit", :controller => 'checkout', :project => project.id%></td>
+			<td><a href="<%=project.repo_url%>">Visit repository</a></td>
+			<td><%= link_to "Delete", :action => 'delete_project', :id => project.id %></td>
+		</tr>
+	<% end -%>
+</table>
+
+<%= error_messages_for("project") %>
+
+<fieldset>
+	<legend>New project</legend>
+	<%= form("project", :action => "create_project", :input_block =>
+	 		Proc.new { |record, column| "<label for=\"project_#{column.name}\">#{column.human_name}</label>#{input(record, column.name)}<br/>" }) %>
+</fieldset>

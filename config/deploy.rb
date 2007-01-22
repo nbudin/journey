@@ -13,7 +13,7 @@ require 'mongrel_cluster/recipes'
 # form the root of the application path.
 
 set :application, "journey"
-set :repository, "http://svn.natbudin.com/svn/journey"
+set :repository, "http://svn.natbudin.com/svn/journey/trunk"
 
 # =============================================================================
 # ROLES
@@ -31,7 +31,7 @@ role :db,  "journey.aegames.org", :primary => true
 # =============================================================================
 # OPTIONAL VARIABLES
 # =============================================================================
-set :deploy_to, "/var/www/journey" # defaults to "/u/apps/#{application}"
+set :deploy_to, "/var/www/journey-test" # defaults to "/u/apps/#{application}"
 set :use_sudo, true
 set :checkout, "export"
 set :user, "www-data"            # defaults to the currently logged in user

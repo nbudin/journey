@@ -13,7 +13,7 @@ require 'mongrel_cluster/recipes'
 # form the root of the application path.
 
 set :application, "journey"
-set :repository, "http://svn.natbudin.com/svn/journey"
+set :repository, "http://svn.natbudin.com/svn/journey/branches/stable"
 
 # =============================================================================
 # ROLES

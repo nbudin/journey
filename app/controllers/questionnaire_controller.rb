@@ -322,4 +322,9 @@ class QuestionnaireController < ApplicationController
     @page = @question.page
     render :partial => "editquestion", :locals => { :question => @question }
   end
+  
+  def delete_response
+    Response.delete(@params[:id])
+    render :nothing => true
+  end
 end

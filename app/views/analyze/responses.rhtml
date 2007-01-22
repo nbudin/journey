@@ -12,7 +12,7 @@ function sizeResponseViewer() {
 }
 
 showingResponseId = null;
-function showResponse(id) {
+function showResponse(id) {  
     if (showingResponseId == null) {
         document.getElementsByClassName('minimizable').each(function(element) {
             element.hide();
@@ -39,6 +39,33 @@ function hideResponse() {
         $('responseviewer').hide();
     }
     showingResponseId = null;
+}
+
+function deleteResponse() {
+  $('response_wait_toolbar').hide();
+  $('response_toolbar').hide();
+  $('response_delete_toolbar').show();
+}
+
+function cancelDelete() {
+  $('response_wait_toolbar').hide();
+  $('response_delete_toolbar').hide();
+  $('response_toolbar').show();
+}
+
+function confirmDelete() {
+  $('response_delete_toolbar').hide();
+  $('response_wait_toolbar').show();
+  new Ajax.Request(
+      '<%= url_for :action => 'delete_response', :controller => 'questionnaire' %>',
+      {
+          parameters: 'id='+showingResponseId,
+          onSuccess: function (req, header) { window.location.reload(); },
+          onFailure: function (req, header) { 
+            alert(resp.responseText);
+            cancelDelete();
+          }
+      });
 }
 </script>
 

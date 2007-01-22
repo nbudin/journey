@@ -1,0 +1,31 @@
+.larp {
+	border: 1px black solid;
+	background-color: #ddd;
+	padding: 2px;
+	margin: 2px;
+}
+
+.show {
+	font-weight: bold;
+}
+
+img.icon {
+	vertical-align: middle;
+}
+
+.new {
+	border: 1px black solid;
+	background-color: #ffc;
+	padding: 2px;
+}
+
+table.itemheader {
+	width: 100%;
+	font-weight: bold;
+	border: none;
+	text-align: right;
+}
+
+table.itemheader tr > td:first-child {
+	text-align: left;
+}

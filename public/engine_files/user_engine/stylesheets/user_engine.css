@@ -1,0 +1,86 @@
+/*
+  This is just an example stylesheet to show how you can apply some standard 
+  styling to the elements within the authentication system.
+*/
+
+/* Tables of data */
+.object_list td,
+.object_list th,
+.object_list ul {
+  text-align: left;
+  vertical-align: top;
+
+}
+
+.object_details h2 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+/* Lists of action links */
+ul.actions {
+  list-style-type: none;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+ul.actions li {
+  display: inline;
+}
+
+/* Buttons used to perform POST actions */
+.button-to, .button-to div {
+	display: inline;
+}
+
+
+
+/* All editors have this class */
+.object_editor {}
+
+
+/*  Roles 
+    ===== */
+
+#role_permission_table td {
+  text-align: left;
+  vertical-align: top;
+}
+
+#role_permission_table ul { 
+  padding-left: 5px;
+  list-style-type: none; 
+}
+#role_permission_table thead ul li { 
+  display: inline; 
+}
+
+#role_user_list ul li {
+  display: inline;
+}
+
+#role_permission_table td,
+#role_permission_table th {
+  text-align: left;
+  vertical-align: top;
+}
+
+#role_editor {}
+#role_details {}
+#role_permissions {}
+
+
+/*  User Editor
+    =========== */
+    
+#user_editor {}
+#user_details_editor {}
+#user_password_editor {}
+#user_role_editor {}
+#user_role_list {}
+#user_delete {}
+
+/*  Permission Editor
+    ================= */
+    
+#permission_editor {}

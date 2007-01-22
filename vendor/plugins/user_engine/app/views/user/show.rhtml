@@ -1,0 +1,20 @@
+<div id="user_details" class="object_details">
+  <h2>User: <%= @user.login %></h2>
+  <% for column in @content_columns %>
+  <p>
+    <b><%= column.human_name %>:</b> <%=h @user.send(column.name) %>
+  </p>
+  <% end %>
+  
+  <h2>Roles</h2>
+  <ul id="user_role_list">
+    <% @user.roles.each do |role| %>
+    <%= link_if_authorized role.name, {:controller => 'role', :action => 'show', :id => role}, {:wrap_in => 'li', :title => role.description, :show_text => true} %>
+    <% end %>
+  </ul>
+</div>
+
+<ul class="actions">
+  <%= link_if_authorized 'Edit', {:action => 'edit_user', :id => @user}, {:wrap_in => 'li'} %>
+  <%= link_if_authorized 'List', {:action => 'list'}, {:wrap_in => 'li'} %>
+</ul>

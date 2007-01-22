@@ -1,0 +1,7 @@
+<%= start_question @question %>
+<% if @editing -%>
+	<%= check_box "question[]", "default_answer" %>
+<% else -%>
+	<%= check_box "answer[]", "value" %>
+<% end -%>
+<%= end_question @question %>

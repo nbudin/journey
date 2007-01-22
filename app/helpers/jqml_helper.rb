@@ -1,0 +1,2 @@
+module JQMLHelper
+end

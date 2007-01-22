@@ -1,0 +1,11 @@
+<h1>Resume a saved questionnaire session</h1>
+
+<p>To resume a saved questionnaire session, or to amend a submitted questionnaire response,
+	please enter your session code below and press "Go".</p>
+	
+<p><b>Note: if you are amending a submitted response, this will "unsubmit" your response.  You will
+	need to press the "Finish" button at the end of the questionnaire again to resubmit.</b></p>
+
+<%= form_tag %>
+	Session code: <%= text_field_tag "session_code" %> <%= submit_tag "Go" %>
+<%= end_form_tag %>

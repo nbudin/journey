@@ -1,0 +1,52 @@
+<div id="user_editor" class="object_editor">
+  <h1>Editing user '<%= @user.login %>'</h1>
+
+  <%= error_messages_for 'user' %>
+
+  <% if authorized?(:action => "edit_user") %>
+  <div id="user_details_editor">
+    <%= start_form_tag :action => 'edit_user', :id => @user %>
+      <%= render_partial 'edit', :user => @user, :submit => true %>
+    <%= end_form_tag %>
+  </div>
+  <% end %>
+
+  <h2>Password</h2>
+  <% if authorized?(:action => "change_password_for_user") %>
+  <div id="user_password_editor">
+    <%= start_form_tag :action => 'change_password_for_user', :id => @user %>
+      <%= hidden_field_tag "back_to", "edit" %>
+      <%= render_partial 'password', :submit => true %>
+    <%= end_form_tag %>
+  </div>
+  <% end %>
+
+  <h2>Roles</h2>
+  <% if authorized?(:action => "edit_roles") %>
+  <div id="user_role_editor">
+    <%= start_form_tag :action => 'edit_roles', :id => @user %>
+      <%= render_partial 'roles', :submit => true, :user => @user %>
+    <%= end_form_tag %>
+  </div>
+  <% else %>
+  <ul id="user_role_list">
+    <% @user.roles.each do |role| %>
+    <li><%= role.name %> - <%= role.description %></li><% end %>
+  </ul>
+  <% end %>
+
+  <% if authorized?(:action => "delete_user") %>
+  <%= start_form_tag :action => 'delete_user', :id => @user %>
+    <div id="user_delete">
+      <%= hidden_field 'user', 'form', :value => 'delete' %>
+
+      <%= form_input :submit_button, 'Delete Account' %>
+    </div>
+  <%= end_form_tag %>
+  <% end %>
+</div>
+
+<ul class="actions">
+  <%= link_if_authorized 'Show', {:action => 'show', :id => @user}, {:wrap_in => 'li'} %>
+  <%= link_if_authorized 'List', {:action => 'list'}, {:wrap_in => 'li'} %>  
+</ul>

@@ -1,0 +1,19 @@
+task :default => [:test, :docs]
+
+PKG_NAME = "responsible_markup"
+PKG_VERSION = "0.2"
+
+desc "Build the documentation for ResponsibleMarkup."
+task :docs do
+  sh "rdoc README CHANGELOG MIT-LICENSE lib -m README -S -N"
+end
+
+desc "Package ResponsibleMarkup for distribution."
+task :package => :docs do
+  sh "tar czf #{PKG_NAME}-#{PKG_VERSION}.tar.gz *"
+end
+
+desc "Run the ResponsibleMarkup unit tests."
+task :test do
+  sh "ruby #{File.join('test','responsible_markup_test.rb')}"
+end

@@ -1,0 +1,7 @@
+<%= start_question @question %>
+<% if @editing -%>
+	<%= select "question[]", "default_answer", @question.options_for_select %>
+<% else -%>
+	<%= select "answer[]", "value", @question.options_for_select %>
+<% end -%>
+<%= end_question @question %>

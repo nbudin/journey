@@ -1,0 +1,27 @@
+xml.questionnaire(:title => @questionnaire.title) do
+  if @questionnaire.custom_html
+    xml.custom_html(@questionnaire.custom_html)
+  end
+  if @questionnaire.custom_css
+    xml.custom_css(@questionnaire.custom_css)
+  end
+  @questionnaire.pages.each do |page|
+    xml.page(:title => page.title) do
+      page.questions.each do |question|
+        xml.question(:type => question.type, :required => question.required) do
+          xml.caption(question.caption)
+          xml.default_answer(question.default_answer)
+          if question.kind_of? RangeField
+            xml.range(:min => question.min, :max => question.max, :step => question.step)
+          end
+          if question.kind_of? SelectorField
+            question.question_options.each do |option|
+              xml.option(option.option)
+            end
+          end
+        end
+      end
+    end
+  end
+end
+          

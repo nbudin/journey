@@ -1,0 +1,49 @@
+<h1>Listing questionnaires</h1>
+
+<table>
+  
+<% for questionnaire in Questionnaire.find(:all) %>
+  <tr>
+    <td><%=h questionnaire.title %></td>
+    <td>
+		<% if questionnaire.is_open -%>
+			<%= link_to 'Answer', :action => 'answer', :id => questionnaire %>
+		<% end -%>
+	</td>
+    <td>
+		<% if not questionnaire.is_open -%>
+			<%= link_to 'Open', :action => 'set_open', :id => questionnaire, :status => 'open' %>
+		<% else -%>
+			<%= link_to 'Close', :action => 'set_open', :id => questionnaire, :status => 'closed' %>
+		<% end -%>
+	</td>
+	<td>
+		<%= link_to 'Edit', :action => 'edit', :id => questionnaire %>
+	</td>
+	<td>
+		<%= link_to 'Answers', :controller => 'analyze', :action => 'responses', :id => questionnaire %>
+	</td>
+	<td>
+		<%= link_to 'Export', :controller => 'jqml', :action => 'export', :id => questionnaire %>
+	</td>
+	<td>
+		<%= link_to 'Delete', :action => 'delete', :id => questionnaire %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+
+<%= form_tag :action => 'create_questionnaire' %>
+	<fieldset>
+		<legend>New questionnaire</legend>
+		<label for="questionnaire_title">Title</label>
+		<%= text_field :questionnaire, :title %>
+		<div class="submit">
+			<%= submit_tag 'New questionnaire' %>
+		</div>
+	</fieldset>
+<%= end_form_tag %>
+<%= link_to "Import questionnaire", :controller => 'jqml', :action => 'import' %>

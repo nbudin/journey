@@ -1,0 +1,23 @@
+admin_user:
+  id: 1
+  login: admin
+  salted_password: b1de1d1d2aec05df2be6f02995537c1783f08490 # atest
+  salt: bf3c47e71c0bfeb6288c9b6b5e24e15256a0e407
+  email: admin@company.com
+  verified: 1
+  
+normal_user:
+  id: 2
+  login: normal_user
+  salted_password: b1de1d1d2aec05df2be6f02995537c1783f08490 # atest
+  salt: bf3c47e71c0bfeb6288c9b6b5e24e15256a0e407
+  email: normal_user@company.com
+  verified: 1  
+
+another_user:
+  id: 3
+  login: another_user
+  salted_password: b1de1d1d2aec05df2be6f02995537c1783f08490 # atest
+  salt: bf3c47e71c0bfeb6288c9b6b5e24e15256a0e407
+  email: another_user@company.com
+  verified: 1

@@ -1,0 +1,16 @@
+<h1>New role</h1>
+
+<%= start_form_tag :action => 'new' %>
+<%= error_messages_for 'role' %>
+
+<!--[form:role]-->
+<p><label for="role_name">Name</label><br/>
+<%= text_field 'role', 'name'  %></p>
+
+<p><label for="role_description">Description</label><br/>
+<%= text_area 'role', 'description', {:rows => 5}  %></p>
+
+  <%= submit_tag "Create" %>
+<%= end_form_tag %>
+
+<%= link_to 'Back', :action => 'list' %>

@@ -1,0 +1,51 @@
+<% if @count == 0 %>
+<p>No responses found.</p>
+<% else %>
+    <% header_fields = @questionnaire.special_field_associations.select { |sfa| sfa.purpose != 'name' }%>
+    <table id="responsetable" style="width: 100%;">
+        <tr>
+            <th style="width: 20em" id="responsefromheader">Response from</th>
+            <th class="minimizable">Submit Date</th>
+            <% header_fields.each do |header| %>
+                <th class="minimizable"><%= header.question.caption %></th>
+            <% end %>
+            <th class="minimizable">ID</th>
+            <th></th>
+        </tr>
+        <% @responses.each do |response| %>
+            <tr class="<%=cycle "even", "odd" %>" style="height: 0">
+                <td><%=link_to_function ellipsize(response.title,35), "showResponse(#{response.id})"%></td>
+                <td class="minimizable"><%=response.submitted_at%></td>
+                <% header_fields.each do |header| %>
+                    <td class="minimizable"><%= response.special_answer(header.purpose).value %></td>
+                <% end %>
+                <td class="minimizable"><%= response.id %></td>
+            </tr>
+        <% end %>
+        <% (@items_per_page - @responses.length).times do %>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        <% end%>
+    </table>
+    <table id="response_navigator" style="width: 100%;">
+        <tr>
+            <td style="text-align: left; width: 25%">
+                <% if @responses_pages.current.previous%>
+                    <%= link_to "<< Previous Page", :page => @responses_pages.current.previous %>
+                <% end%>
+            </td>
+            <td style="text-align: center; width: 25%">
+                Showing <%= @responses.length %> of <%= @count %> responses.
+            </td>
+            <td style="text-align: center; width: 25%">
+                Jump to page <%= pagination_links_remote @responses_pages %>
+            </td>
+            <td style="text-align: right; width: 25%">
+                <% if @responses_pages.current.next%>
+                    <%= link_to "Next Page >>", :page => @responses_pages.current.next %>
+                <% end%>
+            </td>
+        </tr>
+    </table>
+<% end %>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>I'm A Little Teapot</title>
+  <script type="text/javascript">
+  // <![CDATA[
+
+		//holy crap I'm totally loading all my javascript here!
+		
+		
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+	<div id="content">
+		Content is placed here by magic Javascriptjax 2.0 (beta).
+	</div>
+
+</body>
+</html>

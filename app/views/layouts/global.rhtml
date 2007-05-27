@@ -5,9 +5,6 @@
 <head>
   <title>Journey</title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <%= engine_stylesheet 'login' %>
-	<%= engine_stylesheet 'user' %>
-	<%= engine_javascript 'user' %>
 	<%= stylesheet_link_tag 'journey.css' %>
 	<%= stylesheet_link_tag 'questionnaire' %>
   <%= javascript_include_tag :defaults %>
@@ -72,8 +69,8 @@
             	<ul class="makeMenu">
             		<li>Login
             		  <ul>
-            		<% if @session[:account] -%>
-            			<li>Logged in as <%=@session[:account].id%>.</li>
+            		<% if session[:account] -%>
+            			<li>Logged in as <%=session[:account].id%>.</li>
             			<li><hr/></li>
             			<li><%= link_to "Edit user profile", :controller => 'user', :action => 'edit' %></li>
             			<li><%= link_to "Change password", :controller => 'user', :action => 'change_password' %></li>
@@ -91,7 +88,7 @@
                 		<li><%= link_to "Writing", :controller => 'writing' %></li>
                 	  </ul>
             	    </li>
-            	    <% if @session[:account] #and current_user.admin? -%>
+            	    <% if session[:account] #and current_user.admin? -%>
            			<li>Administration
            			  <ul>
            			      <li><%= link_to "Users", :controller => 'user', :action => 'list' %></li>

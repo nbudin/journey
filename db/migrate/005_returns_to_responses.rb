@@ -1,27 +1,19 @@
-class Return < ActiveRecord::Base
-  belongs_to :questionnaire
-end
-
 class ReturnsToResponses < ActiveRecord::Migration
   def self.up
+    create_table "answers", :force => true do |t|
+      t.column "response_id", :integer
+      t.column "question_id", :integer, :default => 0, :null => false
+      t.column "value", :text
+      t.column "created_at", :datetime
+      t.column "updated_at", :datetime
+    end
     create_table "responses" do |t|
       t.column "questionnaire_id", :integer, :default => 0, :null => false
     end
-    Return.find(:all).each do |r|
-      Response.create :id => r.id, :questionnaire_id => r.questionnaire_id
-    end
-    rename_column "answers", "return_id", "response_id"
-    drop_table "returns"
   end
 
   def self.down
-    create_table "returns" do |t|
-      t.column "questionnaire_id", :integer, :default => 0, :null => false
-    end
-    Response.find(:all).each do |r|
-      Return.create :id => r.id, :questionnaire_id => r.questionnaire_id
-    end
-    rename_column "answers", "response_id", "return_id"
     drop_table "responses"
+    drop_table "answers"
   end
 end

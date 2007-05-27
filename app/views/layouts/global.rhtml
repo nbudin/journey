@@ -72,8 +72,8 @@
             	<ul class="makeMenu">
             		<li>Login
             		  <ul>
-            		<% if current_user -%>
-            			<li>Logged in as <%=current_user.login%>.</li>
+            		<% if @session[:account] -%>
+            			<li>Logged in as <%=@session[:account].id%>.</li>
             			<li><hr/></li>
             			<li><%= link_to "Edit user profile", :controller => 'user', :action => 'edit' %></li>
             			<li><%= link_to "Change password", :controller => 'user', :action => 'change_password' %></li>
@@ -81,8 +81,7 @@
             		<% else -%>
             		
             			<li>You are not logged in.</li>
-            			<li><%= link_to "Log in", :controller => 'user', :action => 'login' %></li>
-            			<li><%= link_to "Sign up", :controller => 'user', :action => 'signup' %></li>
+            			<li><%= link_to "Log in", :controller => 'auth', :action => 'login' %></li>
             		<% end -%>
             		  </ul>
             		</li>
@@ -92,7 +91,7 @@
                 		<li><%= link_to "Writing", :controller => 'writing' %></li>
                 	  </ul>
             	    </li>
-            	    <% if current_user and current_user.admin? -%>
+            	    <% if @session[:account] #and current_user.admin? -%>
            			<li>Administration
            			  <ul>
            			      <li><%= link_to "Users", :controller => 'user', :action => 'list' %></li>

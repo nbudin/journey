@@ -50,25 +50,6 @@ end
 #   inflect.uncountable %w( fish sheep )
 # end
 
-# Include your application configuration below
-module LoginEngine
-  config :salt, "JourneyLikesSalt"
-  config :app_name, 'Journey'
-  config :app_url, 'http://journey.aegames.org'
-  if ENV['RAILS_ENV'] != 'production'
-    config :use_email_notification, false
-  end
-end
-
-module UserEngine
-  config :admin_login, "admin"
-  config :admin_email, "journey@aegames.org"
-  config :admin_password, "dontstopbelievin"
-end
-
-Engines.start :login, :user
-UserEngine.check_system_roles
-
 # Set up the workdir, make sure it exists
 JOURNEY_WORKDIR = File.join(File.expand_path(RAILS_ROOT), "working_copies")
 FileUtils.mkdir_p JOURNEY_WORKDIR

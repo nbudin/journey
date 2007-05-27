@@ -6,27 +6,27 @@ ActiveRecord::Schema.define(:version => 21) do
 
   create_table "answers", :force => true do |t|
     t.column "response_id", :integer
-    t.column "question_id", :integer, :default => 0, :null => false
-    t.column "value", :text
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
+    t.column "question_id", :integer,  :default => 0, :null => false
+    t.column "value",       :text
+    t.column "created_at",  :datetime
+    t.column "updated_at",  :datetime
   end
 
   create_table "characters", :force => true do |t|
-    t.column "name", :string
+    t.column "name",    :string
     t.column "larp_id", :integer
   end
 
   create_table "checkouts", :force => true do |t|
     t.column "project_id", :integer
-    t.column "user_id", :integer
-    t.column "path", :string
+    t.column "user_id",    :integer
+    t.column "path",       :string
   end
 
   create_table "larp_runs", :force => true do |t|
     t.column "larp_id", :integer
-    t.column "venue", :string
-    t.column "when", :datetime
+    t.column "venue",   :string
+    t.column "when",    :datetime
   end
 
   create_table "larps", :force => true do |t|
@@ -34,111 +34,64 @@ ActiveRecord::Schema.define(:version => 21) do
   end
 
   create_table "larps_questionnaires", :id => false, :force => true do |t|
-    t.column "larp_id", :integer
+    t.column "larp_id",          :integer
     t.column "questionnaire_id", :integer
   end
 
   create_table "pages", :force => true do |t|
-    t.column "questionnaire_id", :integer, :default => 0, :null => false
-    t.column "position", :integer
-    t.column "title", :string
-  end
-
-  create_table "permissions", :force => true do |t|
-    t.column "controller", :string, :default => "", :null => false
-    t.column "action", :string, :default => "", :null => false
-    t.column "description", :string
-  end
-
-  create_table "permissions_roles", :id => false, :force => true do |t|
-    t.column "permission_id", :integer, :default => 0, :null => false
-    t.column "role_id", :integer, :default => 0, :null => false
+    t.column "questionnaire_id", :integer, :null => false
+    t.column "position",         :integer
+    t.column "title",            :string
   end
 
   create_table "players", :id => false, :force => true do |t|
     t.column "larp_run_id", :integer
-    t.column "user_id", :integer
+    t.column "user_id",     :integer
   end
 
-  add_index "players", ["larp_run_id", "user_id"], :name => "players_larp_run_id_index", :unique => true
+  add_index "players", ["larp_run_id", "user_id"], :name => "index_players_on_larp_run_id_and_user_id", :unique => true
 
   create_table "projects", :force => true do |t|
-    t.column "name", :string, :default => "", :null => false
+    t.column "name",     :string, :default => "", :null => false
     t.column "repo_url", :string, :default => "", :null => false
     t.column "username", :string
     t.column "password", :string
   end
 
-  create_table "question_options", :force => true do |t|
-    t.column "question_id", :integer, :default => 0, :null => false
-    t.column "option", :text, :default => "", :null => false
-    t.column "position", :integer, :default => 0, :null => false
-  end
-
   create_table "questionnaires", :force => true do |t|
-    t.column "title", :text
-    t.column "is_open", :boolean
-    t.column "custom_html", :string, :default => ""
-    t.column "custom_css", :string, :default => ""
-    t.column "allow_finish_later", :boolean, :default => true, :null => false
+    t.column "title",                :text
+    t.column "is_open",              :boolean
+    t.column "custom_html",          :string,  :default => ""
+    t.column "custom_css",           :string,  :default => ""
+    t.column "allow_finish_later",   :boolean, :default => true, :null => false
     t.column "allow_amend_response", :boolean, :default => true, :null => false
-    t.column "rss_secret", :string
+    t.column "rss_secret",           :string
   end
 
   create_table "questions", :force => true do |t|
-    t.column "type", :string, :limit => 100, :default => "", :null => false
-    t.column "position", :integer, :default => 0, :null => false
-    t.column "caption", :text, :default => "", :null => false
-    t.column "required", :boolean, :default => false, :null => false
-    t.column "min", :integer, :default => 0, :null => false
-    t.column "max", :integer, :default => 0, :null => false
-    t.column "step", :integer, :default => 1, :null => false
-    t.column "page_id", :integer, :default => 0, :null => false
+    t.column "type",           :string,  :limit => 100, :default => "",    :null => false
+    t.column "position",       :integer,                :default => 0,     :null => false
+    t.column "caption",        :text,                   :default => "",    :null => false
+    t.column "required",       :boolean,                :default => false, :null => false
+    t.column "min",            :integer,                :default => 0,     :null => false
+    t.column "max",            :integer,                :default => 0,     :null => false
+    t.column "step",           :integer,                :default => 1,     :null => false
+    t.column "page_id",        :integer,                                   :null => false
     t.column "default_answer", :string
   end
 
   create_table "responses", :force => true do |t|
-    t.column "questionnaire_id", :integer, :default => 0, :null => false
-    t.column "saved_page", :integer
-    t.column "session_code", :string
-    t.column "submitted", :boolean, :default => false, :null => false
-    t.column "user_id", :integer
-  end
-
-  create_table "roles", :force => true do |t|
-    t.column "name", :string, :default => "", :null => false
-    t.column "description", :string
-    t.column "omnipotent", :boolean, :default => false, :null => false
-    t.column "system_role", :boolean, :default => false, :null => false
+    t.column "questionnaire_id", :integer, :default => 0,     :null => false
+    t.column "saved_page",       :integer
+    t.column "session_code",     :string
+    t.column "submitted",        :boolean, :default => false, :null => false
+    t.column "user_id",          :integer
   end
 
   create_table "special_field_associations", :force => true do |t|
     t.column "questionnaire_id", :integer
-    t.column "question_id", :integer
-    t.column "purpose", :string
-  end
-
-  create_table "users", :force => true do |t|
-    t.column "login", :string, :limit => 80, :default => "", :null => false
-    t.column "salted_password", :string, :limit => 40, :default => "", :null => false
-    t.column "email", :string, :limit => 60, :default => "", :null => false
-    t.column "firstname", :string, :limit => 40
-    t.column "lastname", :string, :limit => 40
-    t.column "salt", :string, :limit => 40, :default => "", :null => false
-    t.column "verified", :integer, :default => 0
-    t.column "role", :string, :limit => 40
-    t.column "security_token", :string, :limit => 40
-    t.column "token_expiry", :datetime
-    t.column "created_at", :datetime
-    t.column "updated_at", :datetime
-    t.column "logged_in_at", :datetime
-    t.column "deleted", :integer, :default => 0
-    t.column "delete_after", :datetime
-  end
-
-  create_table "users_roles", :id => false, :force => true do |t|
-    t.column "user_id", :integer, :default => 0, :null => false
-    t.column "role_id", :integer, :default => 0, :null => false
+    t.column "question_id",      :integer
+    t.column "purpose",          :string
   end
 
 end

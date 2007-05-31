@@ -29,3 +29,52 @@ table.itemheader {
 table.itemheader tr > td:first-child {
 	text-align: left;
 }
+
+form.aeform label,input {
+    display: block;
+    width: 150px;
+    float: left;
+    margin-bottom: 10px;
+}
+
+form.aeform input[type=checkbox] {
+    display: inline;
+    width: 10pt;
+    height: 10pt;
+    vertical-align: middle;
+    float: none;
+}
+
+form.aeform input[type=submit],input[type=button] {
+    display: inline;
+    vertical-align: middle;
+    float: none;
+}
+
+form.aeform label {
+    text-align: right;
+    width: 75px;
+    padding-right: 20px;
+}
+
+form.aeform br {
+    clear: left;
+}
+
+form.aeform fieldset {
+	margin-bottom: 10px;
+	border: none;
+	border-top: 1px solid black;
+	background-color: #ddd;
+}
+
+form.aeform textarea {
+    margin-bottom: 10px;
+}
+
+form.aeform legend {
+	padding: 1px;
+	border: 1px solid black;
+	font-weight: bold;
+	background-color: #eee;
+}

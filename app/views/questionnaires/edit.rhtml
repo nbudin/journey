@@ -1,0 +1,43 @@
+<h1>Editing questionnaire</h1>
+
+<%= error_messages_for :questionnaire %>
+
+<script type="text/javascript">
+function toggleQuestionnaireProperties() {
+  <%= update_page do |page|
+    page.toggle :questionnaire_properties
+    page.toggle :show_questionnaire_properties
+  end %>
+}
+</script>
+
+<% ae_form_for(:questionnaire, @questionnaire) do |f| %>
+	<fieldset>
+		<legend>Questionnaire properties</legend>
+		<span id="show_questionnaire_properties">
+		  <%= link_to_function "Edit questionnaire properties", "toggleQuestionnaireProperties();" %>
+	  </span>
+		<span id="questionnaire_properties" style="display: none;">
+	    <%= f.text_field "title" %>
+	    <%= f.text_area "custom_html", :rows => 4 %>
+	    <%= f.text_area "custom_css", :rows => 4 %>
+	    Open for responses? <%= f.check_box "is_open" %>
+	    Allow "Finish Later"? <%= f.check_box "allow_finish_later" %>
+	    Allow "Amend Response"? <%= f.check_box "allow_amend_response" %>
+
+      <p>
+		    <%= submit_tag "Save changes" %>&nbsp;
+		    <%= button_to_function "Cancel editing", "toggleQuestionnaireProperties();" %>
+	    </p>
+		</span>
+	</fieldset>
+<% end %>
+
+<% form_for(:questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
+  <p>
+    <%= submit_tag "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', questionnaire_path(@questionnaire) %> |
+<%= link_to 'Back', questionnaires_path %>

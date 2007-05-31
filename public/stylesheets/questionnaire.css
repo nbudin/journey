@@ -2,7 +2,7 @@ body {
  	font-family: sans-serif;
 	font-size: 14px;
 	height: 100%;
-	margin-top: 70px;
+	margin-top: 85px;
 }
 
 form.cmxform fieldset {
@@ -159,80 +159,8 @@ select {
 	border-bottom: 2px solid black;
 	padding: 2px;
 	width: 100%;
-	height: 60px;
+	height: 75px;
 	z-index: 100;
-}
-
-ul.makeMenu, ul.makeMenu ul {
-	list-style: none;
-	padding-left: 0px;
-	display: block;
-	background-color: #bbbbbb;
-    width: 40em;
-}
-
-ul.makeMenu {
-    border: 1px black solid;
-    width: 40em;
-    position: relative;
-    text-align: left;
-}
-
-ul.makeMenu li {
-    display: inline;
-    cursor: default;
-}
-
-ul.makeMenu > li {
-    font-weight: bold;
-    padding-right: 2em;
-    background-color: #aaaaaa;
-}
-
-ul.makeMenu > li:hover {
-    background-color: #ffffff;
-}
-
-ul.makeMenu li > ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: -1px;
-    border-left: 1px black solid;
-    border-right: 1px black solid;
-    border-bottom: 1px black solid;
-    border-top: 1px black dotted;
-}
-
-ul.makeMenu li > ul li {
-    display: block;
-    font-weight: normal;
-}
-
-ul.makeMenu ul.CSStoShow {
-    display: block;
-}
-
-ul.makeMenu li:hover > ul {
-    display: block;
-}
-
-ul.makeMenu li a {
-    font-weight: bold;
-    color: #000000;
-    width: 100%;
-    display: block;
-}
-
-ul.makeMenu li a:hover {
-    background-color: #ffffff;
-}
-
-ul.analyze_toolbar li {
-	display: inline;
-	margin-right: 1em;
-	padding: 3px;
-	background-color: #cccccc;
 }
 
 .responseheader {

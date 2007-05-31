@@ -1,4 +1,6 @@
 class Questionnaire < ActiveRecord::Base
+  acts_as_permissioned :permission_names => [:edit, :export, :view_answers, :edit_answers]
+  
   has_many :pages, :dependent => :destroy, :order => :position
   has_many :responses, :dependent => :destroy, :order => "id DESC"
   has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id

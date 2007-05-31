@@ -63,41 +63,10 @@
     <table width="100%">
         <tr>
             <td>
-            	<%= image_tag "journey-button" %>
+            	<%= link_to(image_tag("journey-button.png", :border => "0"), :controller => 'questionnaire') %>
             </td>
             <td align="right" valign="bottom">
-            	<ul class="makeMenu">
-            		<li>Login
-            		  <ul>
-            		<% if session[:account] -%>
-            			<li>Logged in as <%=session[:account].id%>.</li>
-            			<li><hr/></li>
-            			<li><%= link_to "Edit user profile", :controller => 'user', :action => 'edit' %></li>
-            			<li><%= link_to "Change password", :controller => 'user', :action => 'change_password' %></li>
-            			<li><%= link_to "Log out", :controller => 'user', :action => 'logout' %></li>
-            		<% else -%>
-            		
-            			<li>You are not logged in.</li>
-            			<li><%= link_to "Log in", :controller => 'auth', :action => 'login' %></li>
-            		<% end -%>
-            		  </ul>
-            		</li>
-            		<li>Navigation
-            		  <ul>
-                		<li><%= link_to "Questionnaires", :controller => 'questionnaire' %></li>
-                		<li><%= link_to "Writing", :controller => 'writing' %></li>
-                	  </ul>
-            	    </li>
-            	    <% if session[:account] #and current_user.admin? -%>
-           			<li>Administration
-           			  <ul>
-           			      <li><%= link_to "Users", :controller => 'user', :action => 'list' %></li>
-           			      <li><%= link_to "Roles", :controller => 'role', :action => 'list' %></li>
-           			      <li><%= link_to "Permissions", :controller => 'permission', :action => 'list' %></li>
-           			  </ul>
-           			</li>
-            	   <% end -%>
-            	</ul>
+  	          <%= render :partial => 'auth/auth_form' %>
             </td>
         </tr>
     </table>

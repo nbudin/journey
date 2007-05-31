@@ -7,7 +7,7 @@
     <td><%=h questionnaire.title %></td>
     <td>
 		<% if questionnaire.is_open -%>
-			<%= link_to 'Answer', :action => 'answer', :id => questionnaire %>
+			<%= link_to 'Answer', :controller => 'answer', :id => questionnaire %>
 		<% end -%>
 	</td>
     <td>

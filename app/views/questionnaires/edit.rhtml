@@ -1,4 +1,4 @@
-<h1>Editing questionnaire</h1>
+<h1>Editing "<%=h @questionnaire.title%>"</h1>
 
 <%= error_messages_for :questionnaire %>
 
@@ -11,6 +11,9 @@ function toggleQuestionnaireProperties() {
 }
 </script>
 
+<div class="vertical-fill">
+
+<div class="vertical-fill-header">
 <% ae_form_for(:questionnaire, @questionnaire) do |f| %>
 	<fieldset>
 		<legend>Questionnaire properties</legend>
@@ -32,12 +35,33 @@ function toggleQuestionnaireProperties() {
 		</span>
 	</fieldset>
 <% end %>
+</div>
 
-<% form_for(:questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
-  <p>
-    <%= submit_tag "Update" %>
-  </p>
-<% end %>
+<table id="questionnaireedit" class="vertical-fill-body">
+  <tr>
+    <th id="pagesheading">Pages</th>
+    <th id="pageheading"></th>
+  </tr>
+  <tr>
+    <td id="pages">
+      <ul>
+        <% @questionnaire.pages.each do |page| -%>
+          <li id="page_<%=page.id%>" class="page">
+            <%=h page.title%>
+            <%=image_tag "delete.png"%>
+            <%=image_tag "edit.png"%>
+          </li>
+        <% end -%>
+      </ul>
+    </td>
+    <td id="editpage">
+    </td>
+  </tr>
+</table>
 
+<div class="vertical-fill-footer">
 <%= link_to 'Show', questionnaire_path(@questionnaire) %> |
 <%= link_to 'Back', questionnaires_path %>
+</div>
+
+</div>

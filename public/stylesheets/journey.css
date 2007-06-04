@@ -78,3 +78,66 @@ form.aeform legend {
 	font-weight: bold;
 	background-color: #eee;
 }
+
+table#questionnaireedit {
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+}
+
+table#questionnaireedit th,td {
+    margin: 0;
+    padding: 0;
+}
+
+table#questionnaireedit td#pages,th#pagesheading {
+    width: 20%;
+    border-right: 1px solid black;
+}
+
+
+table#questionnaireedit th {
+    background-color: #ddd;
+    padding: 2px;
+}
+
+table#questionnaireedit td#pages li.page {
+    border: 0;
+    border-bottom: 1px #666 solid;
+    margin: 0;
+    background-color: #aaa;
+    padding: 2px;
+    height: 16px;
+}
+
+table#questionnaireedit td#pages li.page img {
+    float: right;
+}
+
+table#questionnaireedit td#pages ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+div.vertical-fill {
+    height: auto !important;
+    min-height: 100%;
+    margin: 0 auto;
+    position: relative;
+    height: 100%;
+}
+
+div.vertical-fill-header {
+}
+
+div.vertical-fill-body {
+    padding: 1em 1em 5em;
+}
+
+div.vertical-fill-footer {
+    position: absolute;
+    bottom: 0pt;
+}

@@ -1,0 +1,6 @@
+<h1>Account not activated</h1>
+
+<p>That account hasn't been activated yet.  If you want to try resending the activation email (because you
+  didn't receive it, or accidentally deleted it), click the button below.</p>
+  
+<p><%= button_to "Resend activation email", :action => 'resend_activation', :account => params[:account], :email => params[:email] %></p>

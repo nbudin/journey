@@ -1,0 +1,20 @@
+<h1>I forgot my password...</h1>
+
+<p>No problem.  Just fill out the form below and we'll <b>reset your password to a random one</b>, and send
+  it to you via email.</p>
+  
+<% form_tag ({:action => 'forgot', :controller => 'auth'}, {:class => 'cmxform'}) do |f| %>
+  <fieldset>
+    <legend>Forgot my password</legend>
+    
+    <ol>
+      <li>
+        <label for="email">Email address:</label>
+        <%= text_field_tag "email" %>
+      </li>
+      <li>
+        <%= submit_tag "Email me a new password" %>
+      </li>
+    </ol>
+  </fieldset>
+<% end %>

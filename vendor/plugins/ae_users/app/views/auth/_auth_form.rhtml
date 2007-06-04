@@ -1,0 +1,17 @@
+<% form_tag({:action => 'login', :controller => 'auth'}) do |f| -%>
+    <% if not session[:account] %>
+      <label for="email" class="required">Email address:</label>
+      <%= text_field_tag "email", params[:email] %><br/>
+      <label for="password" class="required">Password:</label>
+      <%= password_field_tag "password" %><br/>
+      <%= link_to "Sign up", :controller => 'account', :action => 'signup' %>
+      <%= link_to "Forgot your password?", :controller => 'auth', :action => 'forgot_form' %>
+      <%= submit_tag "Log in" %>
+    <% else %>
+      <p>You are currently logged in as <%= session[:account].person.name %>.</p>
+      <ul>
+        <li><%= link_to "Edit profile", :controller => 'account', :action => 'edit_profile' %></li>
+        <li><%= link_to "Log out", :controller => :auth, :action => :logout %></li>
+      </ul>
+    <% end %>
+<% end -%>

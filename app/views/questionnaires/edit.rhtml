@@ -47,7 +47,9 @@ function toggleQuestionnaireProperties() {
       <ul>
         <% @questionnaire.pages.each do |page| -%>
           <li id="page_<%=page.id%>" class="page">
-            <%=h page.title%>
+            <div class="caption">
+              <%=h page.title%>
+            </div>
             <%=image_tag "delete.png"%>
             <%=image_tag "edit.png"%>
           </li>

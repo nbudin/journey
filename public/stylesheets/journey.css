@@ -93,7 +93,7 @@ table#questionnaireedit th,td {
 }
 
 table#questionnaireedit td#pages,th#pagesheading {
-    width: 20%;
+    width: 210px;
     border-right: 1px solid black;
 }
 
@@ -109,7 +109,15 @@ table#questionnaireedit td#pages li.page {
     margin: 0;
     background-color: #aaa;
     padding: 2px;
-    height: 16px;
+    min-height: 16px;
+}
+
+table#questionnaireedit td#pages li.page div.caption {
+    float: left;
+    display: inline;
+    width: 175px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 table#questionnaireedit td#pages li.page img {

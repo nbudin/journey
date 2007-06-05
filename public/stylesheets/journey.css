@@ -13,6 +13,10 @@ img.icon {
 	vertical-align: middle;
 }
 
+img {
+    border: 0;
+}
+
 .new {
 	border: 1px black solid;
 	background-color: #ffc;
@@ -30,7 +34,7 @@ table.itemheader tr > td:first-child {
 	text-align: left;
 }
 
-form.aeform label,input {
+form.aeform label, form.aeform input {
     display: block;
     width: 150px;
     float: left;
@@ -45,7 +49,7 @@ form.aeform input[type=checkbox] {
     float: none;
 }
 
-form.aeform input[type=submit],input[type=button] {
+form.aeform input[type=submit], form.aeform input[type=button] {
     display: inline;
     vertical-align: middle;
     float: none;
@@ -87,14 +91,21 @@ table#questionnaireedit {
     margin-bottom: 1em;
 }
 
-table#questionnaireedit th,td {
+table#questionnaireedit th, table#questionnaireedit td {
     margin: 0;
     padding: 0;
 }
 
-table#questionnaireedit td#pages,th#pagesheading {
+table#questionnaireedit th {
+    border-bottom: 1px black solid;
+}
+
+table#questionnaireedit th#pagesheading {
     width: 210px;
-    border-right: 1px solid black;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 
@@ -103,31 +114,42 @@ table#questionnaireedit th {
     padding: 2px;
 }
 
+table#questionnaireedit td#pages {
+    padding-bottom: 0.5em;
+}
+
 table#questionnaireedit td#pages li.page {
     border: 0;
     border-bottom: 1px #666 solid;
+    border-right: 1px #666 solid;
     margin: 0;
     background-color: #aaa;
     padding: 2px;
     min-height: 16px;
+    display: block;
+    cursor: move;
 }
 
 table#questionnaireedit td#pages li.page div.caption {
     float: left;
     display: inline;
-    width: 175px;
+    width: 173px;
     overflow: hidden;
     white-space: nowrap;
+    line-height: 16px;
 }
 
-table#questionnaireedit td#pages li.page img {
+table#questionnaireedit td#pages li.page a {
     float: right;
+    clear: none;
 }
 
 table#questionnaireedit td#pages ul {
-    list-style-type: none;
+    list-style: none;
     margin: 0;
     padding: 0;
+    border: none;
+    margin-bottom: 0.5em;
 }
 
 div.vertical-fill {

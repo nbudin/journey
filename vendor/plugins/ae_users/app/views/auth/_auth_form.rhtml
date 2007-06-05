@@ -1,4 +1,4 @@
-<% form_tag({:action => 'login', :controller => 'auth'}) do |f| -%>
+<% form_tag({:action => 'login', :controller => 'auth'}, {:class => 'authform'}) do |f| -%>
     <% if not session[:account] %>
       <label for="email" class="required">Email address:</label>
       <%= text_field_tag "email", params[:email] %><br/>

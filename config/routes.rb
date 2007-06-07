@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :pages
+
   map.resources :questionnaires
 
   # Add your own custom routes here.

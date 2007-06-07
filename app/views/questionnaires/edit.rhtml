@@ -9,6 +9,15 @@ function toggleQuestionnaireProperties() {
     page.toggle :show_questionnaire_properties
   end %>
 }
+
+function switchPage(id, title) {
+  $('pageview').src = '<%=pages_url + "/" %>' + id + ';edit';
+  document.getElementsByClassName('activepage').each(function (page) {
+    page.removeClassName('activepage');
+  });
+  $('page_'+id).addClassName('activepage');
+  $('pageheading').replace('<div id="pageheading">' + title.escapeHTML() + '</div>');
+}
 </script>
 
 <div class="vertical-fill">
@@ -37,13 +46,11 @@ function toggleQuestionnaireProperties() {
 <% end %>
 </div>
 
-<table id="questionnaireedit" class="vertical-fill-body">
-  <tr>
-    <th id="pagesheading">Pages</th>
-    <th id="pageheading"></th>
-  </tr>
-  <tr>
-    <td id="pages">
+<div id="questionnaireedit" class="vertical-fill-body">
+  <div id="container">
+    <div id="pagesheading">Pages</div>
+    <div id="pageheading">&nbsp;</div>
+    <div id="pages">
       <ul id="pagelist">
         <% @questionnaire.pages.each do |page| -%>
           <li id="page_<%=page.id%>" class="page">
@@ -52,21 +59,18 @@ function toggleQuestionnaireProperties() {
             </div>
             <%=link_to_function(image_tag("delete.png"), 
               "if (confirm('Do you really want to delete the page \"#{page.title}\"?')) { deletePage(#{page.id}); }")%>
-            <%=link_to_function(image_tag("edit.png"), "switchPage(#{page.id})")%>
+            <%=link_to_function(image_tag("edit.png"), "switchPage(#{page.id}, '#{escape_javascript page.title}')")%>
           </li>
         <% end -%>
       </ul>
       <%= sortable_element("pagelist") %>
       <button>Create New Page</button>
-    </td>
-    <td id="editpage">
-    </td>
-  </tr>
-</table>
-
-<div class="vertical-fill-footer">
-<%= link_to 'Show', questionnaire_path(@questionnaire) %> |
-<%= link_to 'Back', questionnaires_path %>
+    </div>
+    <div id="editpage">
+      <iframe id="pageview" name="pageview">
+      </iframe>
+    </div>
+  </div>
 </div>
 
 </div>

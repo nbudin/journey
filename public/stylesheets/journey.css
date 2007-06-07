@@ -83,24 +83,44 @@ form.aeform legend {
 	background-color: #eee;
 }
 
-table#questionnaireedit {
+#questionnaireedit {
     border: 1px solid black;
     width: 100%;
     height: 100%;
-    border-collapse: collapse;
     margin-bottom: 1em;
+    padding: 0;
 }
 
-table#questionnaireedit th, table#questionnaireedit td {
+#questionnaireedit #container {
+    margin-left: 210px;
+}
+
+#questionnaireedit #pagesheading, #questionnaireedit #pages {
+    left: -210px;
+    width: 210px;
+    float: left;
+    position: relative;
+}
+
+#questionnaireedit div {
     margin: 0;
     padding: 0;
 }
 
-table#questionnaireedit th {
+#questionnaireedit #pagesheading, #questionnaireedit #pageheading {
     border-bottom: 1px black solid;
+    background-color: #ddd;
+    padding-top: 1pt;
+    padding-bottom: 1pt;
+    position: relative;
+    top: 0;
+    height: 12pt;
+    font-size: 12pt;
+    font-weight: bold;
+    text-align: center;
 }
 
-table#questionnaireedit th#pagesheading {
+#questionnaireedit #pagesheading {
     width: 210px;
     padding-left: 0;
     padding-right: 0;
@@ -108,17 +128,21 @@ table#questionnaireedit th#pagesheading {
     padding-bottom: 2px;
 }
 
-
-table#questionnaireedit th {
-    background-color: #ddd;
-    padding: 2px;
+#questionnaireedit #pageheading, #questionnaireedit #editpage {
+    width: 100%;
+    vertical-align: top;
 }
 
-table#questionnaireedit td#pages {
+#questionnaireedit #pages {
     padding-bottom: 0.5em;
+    vertical-align: top;
+    clear: left;
 }
 
-table#questionnaireedit td#pages li.page {
+#questionnaireedit #editpage {
+}
+
+#questionnaireedit #pages li.page {
     border: 0;
     border-bottom: 1px #666 solid;
     border-right: 1px #666 solid;
@@ -130,7 +154,12 @@ table#questionnaireedit td#pages li.page {
     cursor: move;
 }
 
-table#questionnaireedit td#pages li.page div.caption {
+#questionnaireedit #pages li.page.activepage {
+    border-right: 0;
+    background-color: #ffa;
+}
+
+#questionnaireedit #pages li.page div.caption {
     float: left;
     display: inline;
     width: 173px;
@@ -139,12 +168,12 @@ table#questionnaireedit td#pages li.page div.caption {
     line-height: 16px;
 }
 
-table#questionnaireedit td#pages li.page a {
+#questionnaireedit #pages li.page a {
     float: right;
     clear: none;
 }
 
-table#questionnaireedit td#pages ul {
+#questionnaireedit #pages ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -152,22 +181,25 @@ table#questionnaireedit td#pages ul {
     margin-bottom: 0.5em;
 }
 
-div.vertical-fill {
-    height: auto !important;
-    min-height: 100%;
-    margin: 0 auto;
-    position: relative;
+#questionnaireedit iframe#pageview {
+    border: 0;
+    width: 100%;
     height: 100%;
 }
 
-div.vertical-fill-header {
+div.vertical-fill {
+    min-height: 100%;
 }
 
-div.vertical-fill-body {
+.vertical-fill-header {
+}
+
+.vertical-fill-body {
     padding: 1em 1em 5em;
+    min-height: 100%;
 }
 
-div.vertical-fill-footer {
+.vertical-fill-footer {
     position: absolute;
     bottom: 0pt;
 }

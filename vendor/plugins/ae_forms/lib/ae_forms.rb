@@ -1,11 +1,82 @@
 # AeForms
 
 module AeForms
+  def ae_form_stylesheet
+    <<-END_SRC
+<style type="text/css">
+form.aeform ul.inline {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+    clear: both;
+}
+
+form.aeform ul.inline li {
+    margin-right: 1em;
+    display: inline;
+    border-left: 1px solid;
+}
+
+form.aeform label, form.aeform input {
+    display: block;
+    width: 70%;
+    float: left;
+    margin-bottom: 10px;
+}
+
+form.aeform input[type=checkbox] {
+    display: inline;
+    width: 10pt;
+    height: 10pt;
+    vertical-align: middle;
+    float: none;
+}
+
+form.aeform input[type=submit], form.aeform input[type=button] {
+    display: inline;
+    vertical-align: middle;
+    float: none;
+    width: auto;
+}
+
+form.aeform label {
+    text-align: right;
+    width: 25%;
+    padding-right: 3%;
+}
+
+form.aeform br {
+    clear: left;
+}
+
+form.aeform fieldset {
+  margin-bottom: 10px;
+  border: none;
+  border-top: 1px solid black;
+  background-color: #ddd;
+}
+
+form.aeform textarea {
+    margin-bottom: 10px;
+}
+
+form.aeform legend {
+  padding: 1px;
+  border: 1px solid black;
+  font-weight: bold;
+  background-color: #eee;
+}
+</style>
+    END_SRC
+  end
+  
   class AeFormBuilder < ActionView::Helpers::FormBuilder
     (field_helpers - %w(check_box radio_button hidden_field)).each do |selector|
       src = <<-END_SRC
         def #{selector}(field, options = {})
-          (@template.content_tag("label", field.to_s.humanize + ":", :for => field) +
+          label = options[:label] || field.to_s.humanize
+          (@template.content_tag("label", label + ":", :for => field) +
             super +
             @template.content_tag("br"))
         end

@@ -15,7 +15,6 @@ form.aeform ul.inline {
 form.aeform ul.inline li {
     margin-right: 1em;
     display: inline;
-    border-left: 1px solid;
 }
 
 form.aeform select, form.aeform label, form.aeform input {

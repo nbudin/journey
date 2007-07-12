@@ -18,11 +18,14 @@ form.aeform ul.inline li {
     border-left: 1px solid;
 }
 
+form.aeform select, form.aeform label, form.aeform input {
+    float: left;
+    margin-bottom: 10px;
+}
+
 form.aeform label, form.aeform input {
     display: block;
     width: 70%;
-    float: left;
-    margin-bottom: 10px;
 }
 
 form.aeform input[type=checkbox] {
@@ -72,7 +75,7 @@ form.aeform legend {
   end
   
   class AeFormBuilder < ActionView::Helpers::FormBuilder
-    (field_helpers - %w(check_box radio_button hidden_field)).each do |selector|
+    (field_helpers - %w(check_box radio_button hidden_field) + %w(date_select)).each do |selector|
       src = <<-END_SRC
         def #{selector}(field, options = {})
           label = options[:label] || field.to_s.humanize
@@ -82,6 +85,13 @@ form.aeform legend {
         end
       END_SRC
       class_eval src, __FILE__, __LINE__
+    end
+    
+    def select(field, choices, options = {})
+      label = options[:label] || field.to_s.humanize
+      (@template.content_tag("label", label + ":", :for => field) +
+        super +
+        @template.content_tag("br"))
     end
   end
   

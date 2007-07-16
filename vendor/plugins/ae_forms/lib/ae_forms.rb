@@ -4,6 +4,10 @@ module AeForms
   def ae_form_stylesheet
     <<-END_SRC
 <style type="text/css">
+form.aeform {
+  font-size: 90%;
+}
+
 form.aeform ul.inline {
     list-style-type: none;
     margin: 0;
@@ -24,7 +28,7 @@ form.aeform select, form.aeform label, form.aeform input {
 
 form.aeform label, form.aeform input {
     display: block;
-    width: 70%;
+    width: 65%;
 }
 
 form.aeform input[type=checkbox] {

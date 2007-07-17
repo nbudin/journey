@@ -8,6 +8,10 @@ form.aeform {
   font-size: 90%;
 }
 
+form.aeform h1, form.aeform h2, form.aeform h3, form.aeform h4, form.aeform h5, form.aeform h6 {
+  clear: both;
+}
+
 form.aeform ul.inline {
     list-style-type: none;
     margin: 0;

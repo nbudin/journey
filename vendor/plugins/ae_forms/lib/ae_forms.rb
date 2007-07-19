@@ -35,6 +35,10 @@ form.aeform label, form.aeform input {
     width: 65%;
 }
 
+form.aeform input[type=hidden] {
+    display: none;
+}
+
 form.aeform input[type=checkbox] {
     display: inline;
     width: 10pt;

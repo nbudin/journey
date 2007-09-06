@@ -20,9 +20,9 @@ function switchPage(id, title) {
 }
 
 function deletePage(id) {
-  new Ajax.Request('<%= pages_url %>/'+id+'?method=delete',
+  new Ajax.Request('<%= pages_url %>/'+id+'?_method=delete',
     {
-      method: 'get',
+      method: 'post',
       onSuccess: function() {
         $('page_'+id).remove();
       },
@@ -33,13 +33,16 @@ function deletePage(id) {
   );
 }
 
-/*function createPage() {
-  new Ajax.Request('<%= pages_url %>?questionnaire_id=<%=@questionnaire.id%>',
+function createPage() {
+  new Ajax.Request('<%= pages_url %>?page[questionnaire_id]=<%=@questionnaire.id%>',
     {
       method: 'post',
       onSuccess: function() {
-        ;
-}*/
+        window.reload();
+      }
+    }
+  );
+}
 </script>
 
 <div class="vertical-fill">
@@ -73,19 +76,7 @@ function deletePage(id) {
     <div id="pagesheading">Pages</div>
     <div id="pageheading">&nbsp;</div>
     <div id="pages">
-      <ul id="pagelist">
-        <% @questionnaire.pages.each do |page| -%>
-          <li id="page_<%=page.id%>" class="page">
-            <div class="caption">
-              <%=h page.title%>
-            </div>
-            <%=link_to_function(image_tag("delete.png"),
-              "if (confirm('Do you really want to delete the page \"#{page.title}\"?')) { deletePage(#{page.id}); }")%>
-            <%=link_to_function(image_tag("edit.png"), "switchPage(#{page.id}, '#{escape_javascript page.title}')")%>
-          </li>
-        <% end -%>
-      </ul>
-      <%= sortable_element("pagelist") %>
+      <%= render :partial => "pagelist", :locals => {:questionnaire => @questionnaire} %>
       <button onClick="createPage();">Create New Page</button>
     </div>
     <div id="editpage">

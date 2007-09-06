@@ -1,6 +1,4 @@
 class AnswerController < ApplicationController
-  layout 'questionnaire'
-  
   def resume
     if params[:session_code]
       session_id = params[:session_code].split('-')[0].to_i
@@ -20,7 +18,7 @@ class AnswerController < ApplicationController
             raise "This questionnaire does not allow you to resume a session."
           end
         end
-        
+
         qid = @resp.questionnaire.id
         @session["response_#{qid}"] = @resp
         redirect_to :action => 'answer', :id => qid, :page => @resp[:saved_page]
@@ -29,7 +27,7 @@ class AnswerController < ApplicationController
   rescue
     @flash[:errors] = [$!.to_s]
   end
-  
+
   def index
     @questionnaire = Questionnaire.find(params[:id])
     if not @questionnaire.is_open
@@ -50,11 +48,11 @@ class AnswerController < ApplicationController
       #@resp.verify_answers_for_page @page
     end
   end
-  
+
   def questionnaire_closed
     @questionnaire = Questionnaire.find(params[:id])
   end
-  
+
   def validate_answers(resp, page)
     errors = []
     page.questions.each do |question|
@@ -66,19 +64,19 @@ class AnswerController < ApplicationController
     end
     return errors
   end
-  
+
   def answer_given(question_id)
     return (params[:question] and params[:question][question_id.to_s] and
       params[:question][question_id.to_s].length > 0)
   end
-  
+
   def save_session
     @resp = @session["response_#{params[:id]}"]
     if not @resp.questionnaire.allow_finish_later and not @resp.submitted
       @flash[:errors] = ["This questionnaire does not allow you to resume answering later."]
       redirect_to :action => "answer", :id => @resp.questionnaire.id, :page => params[:current_page]
     end
-    
+
     if not (@resp.submitted and not @resp.questionnaire.allow_amend_response)
       @page = @resp.questionnaire.pages[params[:current_page].to_i - 1]
       @resp.saved_page = params[:current_page]
@@ -86,14 +84,14 @@ class AnswerController < ApplicationController
       @resp.session_code = "#{@resp.id}-#{@resp.session_code}"
       @resp.save
     end
-    
+
     @session["response_#{params[:id]}"] = nil
   end
-  
+
   def save_answers
     @resp = @session["response_#{params[:id]}"]
     @page = @resp.questionnaire.pages[params[:current_page].to_i - 1]
-    
+
     @page.questions.each do |question|
       if question.kind_of? Field
         ans = Answer.find_answer(@resp, question)
@@ -111,7 +109,7 @@ class AnswerController < ApplicationController
         end
       end
     end
-    
+
     if params[:commit] =~ /later/i
       redirect_to :action => "save_session", :id => @resp.questionnaire.id, :current_page => params[:current_page]
       return

@@ -1,16 +1,16 @@
 .larp {
-	border: 1px black solid;
-	background-color: #ddd;
-	padding: 2px;
-	margin: 2px;
+        border: 1px black solid;
+        background-color: #ddd;
+        padding: 2px;
+        margin: 2px;
 }
 
 .show {
-	font-weight: bold;
+        font-weight: bold;
 }
 
 img.icon {
-	vertical-align: middle;
+        vertical-align: middle;
 }
 
 img {
@@ -18,75 +18,25 @@ img {
 }
 
 .new {
-	border: 1px black solid;
-	background-color: #ffc;
-	padding: 2px;
+        border: 1px black solid;
+        background-color: #ffc;
+        padding: 2px;
 }
 
 table.itemheader {
-	width: 100%;
-	font-weight: bold;
-	border: none;
-	text-align: right;
+        width: 100%;
+        font-weight: bold;
+        border: none;
+        text-align: right;
 }
 
 table.itemheader tr > td:first-child {
-	text-align: left;
-}
-
-form.aeform label, form.aeform input {
-    display: block;
-    width: 150px;
-    float: left;
-    margin-bottom: 10px;
-}
-
-form.aeform input[type=checkbox] {
-    display: inline;
-    width: 10pt;
-    height: 10pt;
-    vertical-align: middle;
-    float: none;
-}
-
-form.aeform input[type=submit], form.aeform input[type=button] {
-    display: inline;
-    vertical-align: middle;
-    float: none;
-}
-
-form.aeform label {
-    text-align: right;
-    width: 75px;
-    padding-right: 20px;
-}
-
-form.aeform br {
-    clear: left;
-}
-
-form.aeform fieldset {
-	margin-bottom: 10px;
-	border: none;
-	border-top: 1px solid black;
-	background-color: #ddd;
-}
-
-form.aeform textarea {
-    margin-bottom: 10px;
-}
-
-form.aeform legend {
-	padding: 1px;
-	border: 1px solid black;
-	font-weight: bold;
-	background-color: #eee;
+        text-align: left;
 }
 
 #questionnaireedit {
     border: 1px solid black;
     width: 100%;
-    height: 100%;
     margin-bottom: 1em;
     padding: 0;
 }
@@ -126,6 +76,7 @@ form.aeform legend {
     padding-right: 0;
     padding-top: 2px;
     padding-bottom: 2px;
+    height: 11pt;
 }
 
 #questionnaireedit #pageheading, #questionnaireedit #editpage {
@@ -140,6 +91,10 @@ form.aeform legend {
 }
 
 #questionnaireedit #editpage {
+    margin-left: -210px;
+    float: left;
+    padding: 0;
+    height: 480px;
 }
 
 #questionnaireedit #pages li.page {

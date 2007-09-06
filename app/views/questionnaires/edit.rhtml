@@ -18,31 +18,53 @@ function switchPage(id, title) {
   $('page_'+id).addClassName('activepage');
   $('pageheading').replace('<div id="pageheading">' + title.escapeHTML() + '</div>');
 }
+
+function deletePage(id) {
+  new Ajax.Request('<%= pages_url %>/'+id+'?method=delete',
+    {
+      method: 'get',
+      onSuccess: function() {
+        $('page_'+id).remove();
+      },
+      onFailure: function(transport) {
+        alert("Error while deleting page: "+transport.responseText);
+      }
+    }
+  );
+}
+
+/*function createPage() {
+  new Ajax.Request('<%= pages_url %>?questionnaire_id=<%=@questionnaire.id%>',
+    {
+      method: 'post',
+      onSuccess: function() {
+        ;
+}*/
 </script>
 
 <div class="vertical-fill">
 
 <div class="vertical-fill-header">
 <% ae_form_for(:questionnaire, @questionnaire) do |f| %>
-	<fieldset>
-		<legend>Questionnaire properties</legend>
-		<span id="show_questionnaire_properties">
-		  <%= link_to_function "Edit questionnaire properties", "toggleQuestionnaireProperties();" %>
-	  </span>
-		<span id="questionnaire_properties" style="display: none;">
-	    <%= f.text_field "title" %>
-	    <%= f.text_area "custom_html", :rows => 4 %>
-	    <%= f.text_area "custom_css", :rows => 4 %>
-	    Open for responses? <%= f.check_box "is_open" %>
-	    Allow "Finish Later"? <%= f.check_box "allow_finish_later" %>
-	    Allow "Amend Response"? <%= f.check_box "allow_amend_response" %>
+        <fieldset>
+                <legend>Questionnaire properties</legend>
+                <span id="show_questionnaire_properties">
+                  <%= link_to_function "Edit questionnaire properties", "toggleQuestionnaireProperties();" %>
+          </span>
+                <span id="questionnaire_properties" style="display: none;">
+            <%= f.text_field "title" %>
+            <%= f.text_area "custom_html", :rows => 4 %>
+            <%= f.text_area "custom_css", :rows => 4 %>
+            Open for responses? <%= f.check_box "is_open" %>
+            Allow "Finish Later"? <%= f.check_box "allow_finish_later" %>
+            Allow "Amend Response"? <%= f.check_box "allow_amend_response" %>
 
       <p>
-		    <%= submit_tag "Save changes" %>&nbsp;
-		    <%= button_to_function "Cancel editing", "toggleQuestionnaireProperties();" %>
-	    </p>
-		</span>
-	</fieldset>
+                    <%= submit_tag "Save changes" %>&nbsp;
+                    <%= button_to_function "Cancel editing", "toggleQuestionnaireProperties();" %>
+            </p>
+                </span>
+        </fieldset>
 <% end %>
 </div>
 
@@ -57,19 +79,20 @@ function switchPage(id, title) {
             <div class="caption">
               <%=h page.title%>
             </div>
-            <%=link_to_function(image_tag("delete.png"), 
+            <%=link_to_function(image_tag("delete.png"),
               "if (confirm('Do you really want to delete the page \"#{page.title}\"?')) { deletePage(#{page.id}); }")%>
             <%=link_to_function(image_tag("edit.png"), "switchPage(#{page.id}, '#{escape_javascript page.title}')")%>
           </li>
         <% end -%>
       </ul>
       <%= sortable_element("pagelist") %>
-      <button>Create New Page</button>
+      <button onClick="createPage();">Create New Page</button>
     </div>
     <div id="editpage">
       <iframe id="pageview" name="pageview">
       </iframe>
     </div>
+    <div style="clear: both;"/>
   </div>
 </div>
 

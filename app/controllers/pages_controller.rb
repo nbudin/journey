@@ -1,4 +1,7 @@
 class PagesController < ApplicationController
+  layout "answer"
+  before_filter :get_questionnaire
+
   # GET /pages
   # GET /pages.xml
   def index
@@ -34,13 +37,15 @@ class PagesController < ApplicationController
   # POST /pages
   # POST /pages.xml
   def create
-    @page = Page.new(params[:page])
+    p = params[:page] || {}
+    p[:questionnaire_id] = @questionnaire.id
+    @page = Page.new(p)
 
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
-        format.html { redirect_to page_url(@page) }
-        format.xml  { head :created, :location => page_url(@page) }
+        format.html { redirect_to page_url(@questionnaire, @page) }
+        format.xml  { head :created, :location => page_url(@questionnaire, @page) }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @page.errors.to_xml }
@@ -56,7 +61,7 @@ class PagesController < ApplicationController
     respond_to do |format|
       if @page.update_attributes(params[:page])
         flash[:notice] = 'Page was successfully updated.'
-        format.html { redirect_to page_url(@page) }
+        format.html { redirect_to page_url(@questionnaire, @page) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -72,8 +77,12 @@ class PagesController < ApplicationController
     @page.destroy
 
     respond_to do |format|
-      format.html { redirect_to pages_url }
+      format.html { redirect_to pages_url(@questionnaire) }
       format.xml  { head :ok }
     end
+  end
+
+  def get_questionnaire
+    @questionnaire = Questionnaire.find(params[:questionnaire_id])
   end
 end

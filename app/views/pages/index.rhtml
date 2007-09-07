@@ -3,16 +3,16 @@
 <table>
   <tr>
   </tr>
-  
+
 <% for page in @pages %>
   <tr>
-    <td><%= link_to 'Show', page_path(page) %></td>
-    <td><%= link_to 'Edit', edit_page_path(page) %></td>
-    <td><%= link_to 'Destroy', page_path(page), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Show', page_path(@questionnaire, page) %></td>
+    <td><%= link_to 'Edit', edit_page_path(@questionnaire, page) %></td>
+    <td><%= link_to 'Destroy', page_path(@questionnaire, page), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New page', new_page_path %>
+<%= link_to 'New page', new_page_path(@questionnaire) %>

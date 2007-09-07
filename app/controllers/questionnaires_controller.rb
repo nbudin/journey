@@ -76,4 +76,9 @@ class QuestionnairesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def pagelist
+    @questionnaire = Questionnaire.find(params[:id])
+    render :partial => 'pagelist', :locals => { :questionnaire => @questionnaire }
+  end
 end

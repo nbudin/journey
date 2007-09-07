@@ -11,7 +11,7 @@ function toggleQuestionnaireProperties() {
 }
 
 function switchPage(id, title) {
-  $('pageview').src = '<%=pages_url + "/" %>' + id + ';edit';
+  $('pageview').src = '<%=pages_url(@questionnaire) + "/" %>' + id + ';edit';
   document.getElementsByClassName('activepage').each(function (page) {
     page.removeClassName('activepage');
   });
@@ -20,7 +20,7 @@ function switchPage(id, title) {
 }
 
 function deletePage(id) {
-  new Ajax.Request('<%= pages_url %>/'+id+'?_method=delete',
+  new Ajax.Request('<%= pages_url(@questionnaire) %>/'+id+'?_method=delete',
     {
       method: 'post',
       onSuccess: function() {
@@ -34,11 +34,11 @@ function deletePage(id) {
 }
 
 function createPage() {
-  new Ajax.Request('<%= pages_url %>?page[questionnaire_id]=<%=@questionnaire.id%>',
+  new Ajax.Request('<%= pages_url(@questionnaire) %>',
     {
       method: 'post',
       onSuccess: function() {
-        window.reload();
+        new Ajax.Updater('pagelist', '<%= questionnaire_url(@questionnaire.id) %>;pagelist', { method: 'get' });
       }
     }
   );

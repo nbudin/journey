@@ -34,7 +34,7 @@
 
 <div class="topbar">
     <div style="float: left;">
-        <%= link_to(image_tag("journey-button.png", :border => "0"), :controller => 'questionnaire') %>
+        <%= link_to(image_tag("journey-button.png", :border => "0"), questionnaires_url) %>
     </div>
     <div style="width: 30%; float: right">
         <%= render :partial => 'auth/auth_form' %>

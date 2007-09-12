@@ -18,7 +18,6 @@ class QuestionnairesController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
 
     respond_to do |format|
-      format.html # show.rhtml
       format.xml  { render :xml => @questionnaire.to_xml }
     end
   end

@@ -4,10 +4,6 @@ module AeForms
   def ae_form_stylesheet
     <<-END_SRC
 <style type="text/css">
-form.aeform {
-  font-size: 90%;
-}
-
 form.aeform h1, form.aeform h2, form.aeform h3, form.aeform h4, form.aeform h5, form.aeform h6 {
   clear: both;
 }
@@ -23,11 +19,17 @@ form.aeform ul.inline {
 form.aeform ul.inline li {
     margin-right: 1em;
     display: inline;
+    font-size: 90%;
+}
+
+form.aeform p {
+    font-size: 90%;
 }
 
 form.aeform select, form.aeform label, form.aeform input {
     float: left;
     margin-bottom: 0.3em;
+    font-size: 90%;
 }
 
 form.aeform label, form.aeform input {
@@ -52,6 +54,8 @@ form.aeform input[type=submit], form.aeform input[type=button] {
     vertical-align: middle;
     float: none;
     width: auto;
+    font-size: 90%;
+    height: 1.5em;
 }
 
 form.aeform label {

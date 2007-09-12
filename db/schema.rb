@@ -58,6 +58,12 @@ ActiveRecord::Schema.define(:version => 21) do
     t.column "password", :string
   end
 
+  create_table "question_options", :force => true do |t|
+    t.column "question_id", :integer,                 :null => false
+    t.column "option",      :text,    :default => "", :null => false
+    t.column "position",    :integer,                 :null => false
+  end
+
   create_table "questionnaires", :force => true do |t|
     t.column "title",                :text
     t.column "is_open",              :boolean

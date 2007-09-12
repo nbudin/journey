@@ -27,7 +27,7 @@ form.aeform ul.inline li {
 
 form.aeform select, form.aeform label, form.aeform input {
     float: left;
-    margin-bottom: 10px;
+    margin-bottom: 0.3em;
 }
 
 form.aeform label, form.aeform input {
@@ -65,14 +65,14 @@ form.aeform br {
 }
 
 form.aeform fieldset {
-  margin-bottom: 10px;
+  margin-bottom: 0.3em;
   border: none;
   border-top: 1px solid black;
   background-color: #ddd;
 }
 
 form.aeform textarea {
-    margin-bottom: 10px;
+    margin-bottom: 0.3em;
 }
 
 form.aeform legend {
@@ -84,7 +84,7 @@ form.aeform legend {
 </style>
     END_SRC
   end
-  
+
   class AeFormBuilder < ActionView::Helpers::FormBuilder
     (field_helpers - %w(check_box radio_button hidden_field) + %w(date_select)).each do |selector|
       src = <<-END_SRC
@@ -97,7 +97,7 @@ form.aeform legend {
       END_SRC
       class_eval src, __FILE__, __LINE__
     end
-    
+
     def select(field, choices, options = {})
       label = options[:label] || field.to_s.humanize
       (@template.content_tag("label", label + ":", :for => field) +
@@ -105,7 +105,7 @@ form.aeform legend {
         @template.content_tag("br"))
     end
   end
-  
+
   def ae_form_for(name, object = nil, options = nil, &proc)
     options = options || {}
     options[:html] = (options[:html] || {}).merge(:class => "aeform")

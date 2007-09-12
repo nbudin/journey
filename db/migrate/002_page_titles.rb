@@ -4,6 +4,6 @@ class PageTitles < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :pages, :title, :string
+    remove_column :pages, :title
   end
 end

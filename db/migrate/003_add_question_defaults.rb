@@ -4,6 +4,6 @@ class AddQuestionDefaults < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :questions, :default_answer, :string
+    remove_column :questions, :default_answer
   end
 end

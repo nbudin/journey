@@ -15,10 +15,16 @@ class Pages < ActiveRecord::Migration
       t.column "step", :integer, :default => 1, :null => false
       t.column "questionnaire_id", :integer, :null => false
     end
-    
+
     create_table :pages, :force => true do |t|
       t.column :questionnaire_id, :integer, :null => false
       t.column :position, :integer
+    end
+
+    create_table :question_options, :force => true do |t|
+      t.column "question_id", :integer, :null => false
+      t.column "option", :text, :null => false
+      t.column "position", :integer, :null => false
     end
 
     add_column :questions, :page_id, :integer, :null => false
@@ -34,5 +40,6 @@ class Pages < ActiveRecord::Migration
     drop_table :pages
     drop_table :questions
     drop_table :questionnaires
+    drop_table :question_options
   end
 end

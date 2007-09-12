@@ -9,6 +9,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html # index.rhtml
+      format.json { render :text => @pages.to_json }
       format.xml  { render :xml => @pages.to_xml }
     end
   end
@@ -20,6 +21,7 @@ class PagesController < ApplicationController
 
     respond_to do |format|
       format.html # show.rhtml
+      format.json { render :text => @page.to_json }
       format.xml  { render :xml => @page.to_xml }
     end
   end
@@ -61,11 +63,13 @@ class PagesController < ApplicationController
     respond_to do |format|
       if @page.update_attributes(params[:page])
         flash[:notice] = 'Page was successfully updated.'
+        format.json { head :ok }
         format.html { redirect_to page_url(@questionnaire, @page) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @page.errors.to_xml }
+        format.json { render :json => @page.errors.to_json }
       end
     end
   end

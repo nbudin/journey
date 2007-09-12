@@ -1,13 +1,15 @@
 <% @editing = true -%>
 
-<h1 id="page_title">Page title: <%= @page.title %></h1>
-<%= image_tag("edit-field.png", { :id => "edit_page_title" }) %>
+<h1>
+  Page title: <span id="page_title"><%= @page.title %></span>
+  <%= image_tag("edit-field.png", { :id => "edit_page_title" }) %>
+</h1>
+
 <script type="text/javascript">
-new Ajax.InPlaceEditor("page_title", '<%= page_url(@questionnaire, @page) %>.xml',
-  { ajaxOptions: { method: 'put' },
-    externalControl: 'edit_page_title',
-    paramName: 'page[title]' }
-  );
+Base.model("Page", {prefix: '<%= questionnaire_url(@questionnaire) %>',
+                    format: 'json'});
+
+new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title');
 </script>
 
 <!--

@@ -1,4 +1,6 @@
 class QuestionnairesController < ApplicationController
+  rest_edit_permissions
+
   # GET /questionnaires
   # GET /questionnaires.xml
   def index

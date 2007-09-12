@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  rest_edit_permissions :class_name => "Questionnaire", :id_param => "questionnaire_id"
+
   layout "answer"
   before_filter :get_questionnaire
 

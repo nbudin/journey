@@ -1,0 +1,15 @@
+<%= form_remote_tag :update => "question#{@question.id}",
+	:html => { :id => "form_change_range_params_#{@question.id}" },
+	:loading => "Form.disable('form_change_range_params_#{@question.id}');",
+ 	:url => { :action => 'change_range_params', :id => @question.id } %>
+	<fieldset>
+		<legend>Range parameters</legend>
+		<label for="question_<%=@question.id%>_min">Min</label>
+		<%= text_field "question[]", "min", :size => 2 %><br/>
+		<label for="question_<%=@question.id%>_max">Max</label>
+		<%= text_field "question[]", "max", :size => 2 %><br/>
+		<label for="question_<%=@question.id%>_step">Step size</label>
+		<%= text_field "question[]", "step", :size => 2 %><br/>
+		<div class="submit"><%= submit_tag "Change parameters" %></div>
+	</fieldset>
+<%= end_form_tag %>

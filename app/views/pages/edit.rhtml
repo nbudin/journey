@@ -1,24 +1,49 @@
-<% @editing = true -%>
+<% @editing = true
+pageindex = @questionnaire.pages.index(@page)
+fieldcount = 0 -%>
 
-<h1>
-  Page title: <span id="page_title"><%= @page.title %></span>
-  <%= image_tag("edit-field.png", { :id => "edit_page_title" }) %>
-</h1>
+<div class="answerpage" id="answerpage">
+        <div class="pagetitle"><span id="page_title"><%= @page.title %></span>
+          <%= image_tag("edit-field.png", { :id => "edit_page_title" }) %>
+        </div>
 
 <script type="text/javascript">
 Base.model("Page", {prefix: '<%= questionnaire_url(@questionnaire) %>',
                     format: 'json'});
+Base.model("Question", {prefix: '<%= page_url(@questionnaire, @page) %>',
+                    format: 'json'});
 
-new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title');
+new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
+   { externalControl: 'edit_page_title' });
 </script>
 
-
-        <%= link_to_remote "Insert question", :update => ("page#{@page.id}"),
-                        :url => { :action => "add_question_to_page", :id => @page.id, :position => 1 } %>
-
-        <% @page.questions.each do |question| -%>
-                <div id="question<%=question.id%>">
-                        <%= render :partial => 'editquestion', :locals => { :question => question } %>
-                </div>
+        <% if @questionnaire.pages.length > 1 -%>
+                <div class="pagecount">Page <%= pageindex + 1 %> of <%= @questionnaire.pages.length %></div>
         <% end -%>
 
+        <% @page.questions.each do |question| -%>
+          <% if question.kind_of? Field; fieldcount += 1; end
+            if question.kind_of? Divider; fieldcount = 0; end -%>
+              <div class="question <%= if question.kind_of? Field
+                 if fieldcount % 2 == 0
+                   "even"
+                 else
+                   "odd"
+                 end
+              end %>" id="question<%=question.id%>">
+                <%= render_question question %>
+              </div>
+          <% end -%>
+          <div class="navbuttons">
+            <% if pageindex > 0 -%>
+              <%= submit_tag "<< Previous page" %>
+            <% end -%>
+            <% if pageindex < @questionnaire.pages.length - 1 -%>
+              <%= submit_tag "Next page >>" %>
+              <% 5.times { %>&nbsp;<% } %>
+              <%= submit_tag "Finish later" %>
+            <% else -%>
+              <%= submit_tag "Finish" %>
+            <% end -%>
+         </div>
+</div>

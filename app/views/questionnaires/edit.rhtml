@@ -45,9 +45,6 @@ function createPage() {
 }
 </script>
 
-<div class="vertical-fill">
-
-<div class="vertical-fill-header">
 <% ae_form_for(:questionnaire, @questionnaire) do |f| %>
         <fieldset>
                 <legend>Questionnaire properties</legend>
@@ -69,9 +66,8 @@ function createPage() {
                 </span>
         </fieldset>
 <% end %>
-</div>
 
-<div id="questionnaireedit" class="vertical-fill-body">
+<div id="questionnaireedit">
   <div id="container">
     <div id="pagesheading">Pages</div>
     <div id="pageheading">&nbsp;</div>
@@ -87,4 +83,3 @@ function createPage() {
   </div>
 </div>
 
-</div>

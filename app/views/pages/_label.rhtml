@@ -1,0 +1,9 @@
+<div class="question">
+        <div class="questionbody">
+          <% if @editing -%>
+            <%= jipe_editor(@question, "caption") %>
+          <% else -%>
+            <%= @question.caption %>
+          <% end -%>
+        </div>
+</div>

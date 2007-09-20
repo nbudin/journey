@@ -73,7 +73,7 @@ end
 #  run "chmod a+x #{current_path}/public/dispatch.fcgi"
 #end
 
-task :after_setup do
-  run "rake bootstrap"
-end
-  
+#task :after_setup do
+#  run "rake bootstrap"
+#end
+

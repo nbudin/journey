@@ -66,7 +66,7 @@ task :after_update_code do
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
   imagesdir = "#{deploy_to}/#{shared_dir}/public/images"
   run "for f in #{imagesdir}/*; do ln -nfs $f #{release_path}/public/images/; done"
-  run "cd #{release_path} ; rake bootstrap RAILS_ENV=production"
+  #run "cd #{release_path} ; rake bootstrap RAILS_ENV=production"
 end
 
 #task :after_symlink, :roles => [:web, :app] do

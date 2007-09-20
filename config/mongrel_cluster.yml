@@ -1,6 +1,6 @@
 --- 
 user: www-data
-cwd: /var/www/journey/current/
+cwd: /var/www/journey-test/current/
 port: "8100"
 environment: production
 group: www-data

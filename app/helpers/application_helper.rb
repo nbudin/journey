@@ -29,7 +29,8 @@ module ApplicationHelper
 
   def jipe_editor_for(record, field, options = {})
     options = { :external_control => true,
-      :class => record.class.to_s, :rows => 1 }.update(options || {})
+      :class => record.class.to_s,
+      :rows => 1}.update(options || {})
     rclass = options[:class]
     outstr = <<-ENDDOC
       <script type="text/javascript">
@@ -45,15 +46,45 @@ module ApplicationHelper
 
   def jipe_editor(record, field, options = {})
     options = { :external_control => true,
-      :class => record.class.to_s, :rows => 1 }.update(options || {})
+      :class => record.class.to_s,
+      :rows => 1,
+      :editing => true }.update(options || {})
     rclass = options[:class]
     outstr = <<-ENDDOC
       <span id="#{rclass.downcase}_#{record.id}_#{field}">
         #{record.send(field)}
       </span>
-      #{ image_tag("edit-field.png",
-        { :id => "edit_#{rclass.downcase}_#{record.id}_#{field}" }) }
-      #{ jipe_editor_for(record, field, options)}
     ENDDOC
+    if options[:editing]
+      outstr += <<-ENDDOC
+        #{ options[:external_control] ? image_tag("edit-field.png",
+          { :id => "edit_#{rclass.downcase}_#{record.id}_#{field}" }) : "" }
+        #{ jipe_editor_for(record, field, options)}
+      ENDDOC
+    end
+    return outstr
+  end
+
+    def render_question(question)
+    @question = question
+    value = ''
+    if params[:action] == 'answer'
+      answer = Answer.find_answer(@resp, question)
+      if answer
+        value = answer.value
+      else
+        value = @question.default_answer
+      end
+    end
+    return render :partial => "questions/" + question.attributes['type'].tableize.singularize,
+                  :locals => { 'value' => value }
+  end
+
+  def start_question(question)
+    return render :partial => 'questions/questionstart', :locals => { :question => question }
+  end
+
+  def end_question(question)
+    return render :partial => 'questions/questionend', :locals => { :question => question }
   end
 end

@@ -1,0 +1,10 @@
+                        <% if @editing -%>
+                                <%= submit_to_remote "clear_default_answer_#{@question.id}", 'Clear default',
+                                        :html => { :id => "clear_default_answer_#{@question.id}" },
+                                        :loading => "$('clear_default_answer_#{@question.id}').disabled = 'true';",
+                                        :update => "question#{@question.id}",
+                                        :url => { :action => 'clear_default_answer', :id => @question.id } %>
+                        <% end -%>
+                </td>
+        </tr>
+</table>

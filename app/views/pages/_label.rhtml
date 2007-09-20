@@ -1,7 +1,7 @@
 <div class="question">
         <div class="questionbody">
           <% if @editing -%>
-            <%= jipe_editor(@question, "caption") %>
+            <%= jipe_editor(@question, "caption", :class => "Question", :rows => 4) %>
           <% else -%>
             <%= @question.caption %>
           <% end -%>

@@ -83,7 +83,6 @@ Jipe.InPlaceEditor.prototype = {
     Element.hide(this.element);
     this.createForm();
     this.element.parentNode.insertBefore(this.form, this.element);
-    //    if (!this.options.loadTextURL) Field.scrollFreeActivate(this.editField);
     // stop the event to avoid a page refresh in Safari
     if (evt) {
       Event.stop(evt);
@@ -129,11 +128,7 @@ Jipe.InPlaceEditor.prototype = {
   },
   createEditField: function() {
     var text;
-    //if(this.options.loadTextURL) {
-      text = this.options.loadingText;
-    //} else {
-    //  text = this.getText();
-    //}
+    text = this.options.loadingText;
 
     var obj = this;
 
@@ -182,7 +177,7 @@ Jipe.InPlaceEditor.prototype = {
     this.record = obj;
     Element.removeClassName(this.form, this.options.loadingClassName);
     this.editField.disabled = false;
-    this.editField.value = obj[this.field].stripTags();
+    this.editField.value = obj[this.field];
     Field.scrollFreeActivate(this.editField);
   },
   onclickCancel: function() {

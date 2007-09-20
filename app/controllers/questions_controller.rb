@@ -1,0 +1,93 @@
+class QuestionsController < ApplicationController
+  rest_edit_permissions :class_name => "Questionnaire", :id_param => "questionnaire_id"
+
+  layout "answer"
+  before_filter :get_questionnaire_and_page
+
+  # GET /questions
+  # GET /questions.xml
+  def index
+    @questions = Question.find(:all)
+
+    respond_to do |format|
+      format.html # index.rhtml
+      format.json { render :text => @questions.to_json }
+      format.xml  { render :xml => @questions.to_xml }
+    end
+  end
+
+  # GET /questions/1
+  # GET /questions/1.xml
+  def show
+    @question = Question.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.rhtml
+      format.json { render :json => @question.to_json }
+      format.xml  { render :xml => @question.to_xml }
+    end
+  end
+
+  # GET /questions/new
+  def new
+    @question = Question.new
+  end
+
+  # GET /questions/1;edit
+  def edit
+    @question = Question.find(params[:id])
+  end
+
+  # POST /questions
+  # POST /questions.xml
+  def create
+    @question = Question.new(params[:question])
+
+    respond_to do |format|
+      if @question.save
+        flash[:notice] = 'Question was successfully created.'
+        format.html { redirect_to question_url(@question) }
+        format.xml  { head :created, :location => question_url(@question) }
+      else
+        format.html { render :action => "new" }
+        format.xml  { render :xml => @question.errors.to_xml }
+      end
+    end
+  end
+
+  # PUT /questions/1
+  # PUT /questions/1.xml
+  def update
+    @question = Question.find(params[:id])
+
+    respond_to do |format|
+      if @question.update_attributes(params[:question])
+        flash[:notice] = 'Question was successfully updated.'
+        format.html { redirect_to question_url(@question) }
+        format.xml  { head :ok }
+        format.json { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @question.errors.to_xml }
+        format.json { render :json => @question.errors.to_json }
+      end
+    end
+  end
+
+  # DELETE /questions/1
+  # DELETE /questions/1.xml
+  def destroy
+    @question = Question.find(params[:id])
+    @question.destroy
+
+    respond_to do |format|
+      format.html { redirect_to questions_url }
+      format.xml  { head :ok }
+    end
+  end
+
+  def get_questionnaire_and_page
+    @questionnaire = Questionnaire.find(params[:questionnaire_id])
+    @page = Page.find(params[:page_id])
+  end
+end

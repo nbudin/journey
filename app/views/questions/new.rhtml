@@ -1,0 +1,11 @@
+<h1>New question</h1>
+
+<%= error_messages_for :question %>
+
+<% form_for(:question, :url => questions_path(@questionnaire, @page)) do |f| %>
+  <p>
+    <%= submit_tag "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', questions_path(@questionnaire, @page) %>

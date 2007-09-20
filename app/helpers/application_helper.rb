@@ -29,31 +29,31 @@ module ApplicationHelper
 
   def jipe_editor_for(record, field, options = {})
     options = { :external_control => true,
-      :class => record.class.to_s }.update(options || {})
+      :class => record.class.to_s, :rows => 1 }.update(options || {})
     rclass = options[:class]
     outstr = <<-ENDDOC
       <script type="text/javascript">
         new Jipe.InPlaceEditor("#{rclass.downcase}_#{record.id}_#{field}",
-          #{rclass}, #{record.id}, #{field.to_json}
+          #{rclass}, #{record.id}, #{field.to_json}, {
     ENDDOC
     if options[:external_control]
-      outstr += ", { externalControl: 'edit_#{rclass.downcase}_#{record.id}_#{field}'}"
+      outstr += "externalControl: 'edit_#{rclass.downcase}_#{record.id}_#{field}', "
     end
-    outstr += ");\n</script>"
+    outstr += "rows: #{options[:rows]}});\n</script>"
     return outstr
   end
 
   def jipe_editor(record, field, options = {})
-    options = { :external_control => true }
-    rclass = record.class.to_s
+    options = { :external_control => true,
+      :class => record.class.to_s, :rows => 1 }.update(options || {})
+    rclass = options[:class]
     outstr = <<-ENDDOC
       <span id="#{rclass.downcase}_#{record.id}_#{field}">
         #{record.send(field)}
       </span>
       #{ image_tag("edit-field.png",
         { :id => "edit_#{rclass.downcase}_#{record.id}_#{field}" }) }
-      #{ jipe_editor_for(record, field,
-          :external_control => options[:external_control])}
+      #{ jipe_editor_for(record, field, options)}
     ENDDOC
   end
 end

@@ -13,76 +13,45 @@ class QuestionsControllerTest < Test::Unit::TestCase
     @response   = ActionController::TestResponse.new
   end
 
-  def test_index
+  def test_should_get_index
     get :index
     assert_response :success
-    assert_template 'list'
+    assert assigns(:questions)
   end
 
-  def test_list
-    get :list
-
-    assert_response :success
-    assert_template 'list'
-
-    assert_not_nil assigns(:questions)
-  end
-
-  def test_show
-    get :show, :id => 1
-
-    assert_response :success
-    assert_template 'show'
-
-    assert_not_nil assigns(:question)
-    assert assigns(:question).valid?
-  end
-
-  def test_new
+  def test_should_get_new
     get :new
-
     assert_response :success
-    assert_template 'new'
-
-    assert_not_nil assigns(:question)
+  end
+  
+  def test_should_create_question
+    old_count = Question.count
+    post :create, :question => { }
+    assert_equal old_count+1, Question.count
+    
+    assert_redirected_to question_path(assigns(:question))
   end
 
-  def test_create
-    num_questions = Question.count
-
-    post :create, :question => {}
-
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-
-    assert_equal num_questions + 1, Question.count
+  def test_should_show_question
+    get :show, :id => 1
+    assert_response :success
   end
 
-  def test_edit
+  def test_should_get_edit
     get :edit, :id => 1
-
     assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:question)
-    assert assigns(:question).valid?
   end
-
-  def test_update
-    post :update, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => 1
+  
+  def test_should_update_question
+    put :update, :id => 1, :question => { }
+    assert_redirected_to question_path(assigns(:question))
   end
-
-  def test_destroy
-    assert_not_nil Question.find(1)
-
-    post :destroy, :id => 1
-    assert_response :redirect
-    assert_redirected_to :action => 'list'
-
-    assert_raise(ActiveRecord::RecordNotFound) {
-      Question.find(1)
-    }
+  
+  def test_should_destroy_question
+    old_count = Question.count
+    delete :destroy, :id => 1
+    assert_equal old_count-1, Question.count
+    
+    assert_redirected_to questions_path
   end
 end

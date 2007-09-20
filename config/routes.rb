@@ -1,7 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
-
   map.resources :questionnaires, :member => { :pagelist => :get } do |questionnaires|
-    questionnaires.resources :pages
+    questionnaires.resources :pages do |pages|
+      pages.resources :questions
+    end
   end
 
   # Add your own custom routes here.

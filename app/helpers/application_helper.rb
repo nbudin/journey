@@ -64,8 +64,28 @@ module ApplicationHelper
     end
     return outstr
   end
+  
+  def jipe_image_toggle(record, field, true_image, false_image, options = {})
+    options = {
+      :class => record.class.to_s,
+    }.update(options || {})
+    rclass = options[:class]
+    value = record.send(field)
+    idprefix = "#{rclass.downcase}_#{record.id}_#{field}"
+    outstr = <<-ENDDOC
+      #{image_tag true_image, :id => "#{idprefix}_true", 
+          :style => (value ? "" : "display: none") }
+      #{image_tag false_image, :id => "#{idprefix}_false", 
+          :style => (value ? "display: none" : "")}
+      <script type="text/javascript">
+        new Jipe.ImageToggle("#{idprefix}_true", "#{idprefix}_false",
+          #{rclass}, #{record.id}, #{field.to_json});
+      </script>
+    ENDDOC
+    return outstr
+  end
 
-    def render_question(question)
+  def render_question(question)
     @question = question
     value = ''
     if params[:action] == 'answer'

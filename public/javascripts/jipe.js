@@ -292,3 +292,73 @@ Jipe.InPlaceEditor.prototype = {
     }
   }
 };
+
+Jipe.ImageToggle = Class.create();
+Jipe.ImageToggle.defaultHighlightColor = "#FFFF99";
+Jipe.ImageToggle.prototype = {
+  initialize: function(trueElement, falseElement, model, recordId, field, options) {
+    this.model = model;
+    this.recordId = recordId;
+    this.field = field;
+    this.trueElement = $(trueElement);
+    this.falseElement = $(falseElement);
+
+    this.options = Object.extend({
+      onComplete: function(transport, element) {
+        new Effect.Highlight(element, {startcolor: this.options.highlightcolor});
+      },
+      onFailure: function(transport) {
+        alert("Error communicating with the server: " + transport.responseText.stripTags());
+      },
+      savingClassName: 'imagetoggle-saving',
+      loadingClassName: 'imagetoggle-loading',
+      highlightcolor: Jipe.ImageToggle.defaultHighlightColor,
+      highlightendcolor: "#FFFFFF",
+      ajaxOptions: {},
+      evalScripts: false
+    }, options || {});
+
+    this.originalBackground = Element.getStyle(this.trueElement, 'background-color');
+    if (!this.originalBackground) {
+      this.originalBackground = "transparent";
+    }
+
+    this.trueClickListener = this.setFalse.bindAsEventListener(this);
+    this.falseClickListener = this.setTrue.bindAsEventListener(this);
+    Event.observe(this.trueElement, 'click', this.trueClickListener);
+    Event.observe(this.falseElement, 'click', this.falseClickListener);
+    
+    this.loadExternalState();
+  },
+  loadExternalState: function() {
+    this.model.find(this.recordId,
+                    this.options.ajaxOptionsOnLoad || this.options.ajaxOptions,
+                    this.onLoadedExternalState.bind(this));
+  },
+  onLoadedExternalState: function(obj) {
+    this.record = obj;
+    this.updateImage(obj[this.field]); 
+  },
+  updateImage: function(state) {
+    if (state == "1" || state == "true") {
+      this.trueElement.show();
+      this.falseElement.hide();    
+    } else {
+      this.falseElement.show();
+      this.trueElement.hide();
+    }
+  },
+  onComplete: function(transport) {
+    this.options.onComplete.bind(this)(transport, this.element);
+  },
+  setFalse: function() {
+    this.updateImage(false);
+    this.record[this.field] = false;
+    this.record.save(this.onComplete.bind(this));
+  },
+  setTrue: function() {
+    this.updateImage(true);
+    this.record[this.field] = true;
+    this.record.save(this.onComplete.bind(this));
+  }
+};

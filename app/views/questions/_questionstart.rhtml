@@ -1,7 +1,9 @@
 <table class="question">
-        <tr>
-                <td class="caption<% if @question.required %> required<% end %>">
-                   <%= jipe_editor(@question, "caption", :class => "Question",
-                                   :editing => @editing ) %>
-                </td>
-                <td class="questionbody">
+<tr>
+<td class="caption<% if @question.required %> required<% end %>">
+  <%= jipe_image_toggle(@question, "required", "required.png", "not-required.png",
+        :class => "Question") %>
+  <%= jipe_editor(@question, "caption", :class => "Question",
+  :editing => @editing ) %>
+</td>
+<td class="questionbody">

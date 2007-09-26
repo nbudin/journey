@@ -328,7 +328,8 @@ Jipe.ImageToggle.prototype = {
     Event.observe(this.trueElement, 'click', this.trueClickListener);
     Event.observe(this.falseElement, 'click', this.falseClickListener);
     
-    this.loadExternalState();
+    //this.loadExternalState();
+    this.controlEnabled = true;
   },
   loadExternalState: function() {
     this.model.find(this.recordId,
@@ -349,16 +350,34 @@ Jipe.ImageToggle.prototype = {
     }
   },
   onComplete: function(transport) {
-    this.options.onComplete.bind(this)(transport, this.element);
+    this.controlEnabled = true;
+    this.options.onComplete.bind(this)();
   },
   setFalse: function() {
-    this.updateImage(false);
-    this.record[this.field] = false;
-    this.record.save(this.onComplete.bind(this));
+    if (this.controlEnabled) {
+      this.setState(false);
+    }
   },
   setTrue: function() {
-    this.updateImage(true);
-    this.record[this.field] = true;
-    this.record.save(this.onComplete.bind(this));
+    if (this.controlEnabled) {
+      this.setState(true);
+    }
+  },
+  setState: function(state) {
+    this.controlEnabled = false;
+    this.desiredState = state;
+    this.updateImage(this.desiredState);
+    this.model.find(this.recordId,
+        this.options.ajaxOptionsOnLoad || this.options.ajaxOptions,
+        this.setStateInner.bind(this));
+  },
+  setStateInner: function(record) {
+    this.record = record;
+    if (this.record[this.field] != this.desiredState) {
+      this.record[this.field] = this.desiredState;
+      this.record.save(this.onComplete.bind(this));
+    } else {
+      this.onComplete();
+    }
   }
 };

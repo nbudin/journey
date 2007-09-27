@@ -162,3 +162,7 @@ div.vertical-fill {
 form.inplaceeditor-form {
     display: inline;
 }
+
+img.image_button {
+    cursor: pointer;
+}

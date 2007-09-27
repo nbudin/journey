@@ -39,8 +39,7 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       if @questionnaire.save
-        flash[:notice] = 'Questionnaire was successfully created.'
-        format.html { redirect_to questionnaire_url(@questionnaire) }
+        format.html { redirect_to questionnaires_url }
         format.xml  { head :created, :location => questionnaire_url(@questionnaire) }
       else
         format.html { render :action => "new" }
@@ -56,8 +55,7 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       if @questionnaire.update_attributes(params[:questionnaire])
-        flash[:notice] = 'Questionnaire was successfully updated.'
-        format.html { redirect_to questionnaire_url(@questionnaire) }
+        format.html { redirect_to edit_questionnaire_url(@questionnaire) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

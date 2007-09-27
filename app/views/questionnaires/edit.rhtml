@@ -45,7 +45,7 @@ function createPage() {
 }
 </script>
 
-<% ae_form_for(:questionnaire, @questionnaire) do |f| %>
+<% ae_form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
         <fieldset>
                 <legend>Questionnaire properties</legend>
                 <span id="show_questionnaire_properties">

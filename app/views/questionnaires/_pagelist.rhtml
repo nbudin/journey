@@ -4,9 +4,9 @@
             <div class="caption">
               <%=h page.title%>
             </div>
-            <%=link_to_function(image_tag("delete.png"),
+            <%=link_to_function(image_tag("delete.png", :class => "image_button"),
               "if (confirm('Do you really want to delete the page \"#{page.title}\"?')) { deletePage(#{page.id}); }")%>
-            <%=link_to_function(image_tag("edit.png"), "switchPage(#{page.id}, '#{escape_javascript page.title}')")%>
+            <%=link_to_function(image_tag("edit.png", :class => "image_button"), "switchPage(#{page.id}, '#{escape_javascript page.title}')")%>
           </li>
   <% end -%>
 </ul>

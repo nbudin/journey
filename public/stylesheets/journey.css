@@ -110,6 +110,7 @@ table.itemheader tr > td:first-child {
     min-height: 16px;
     display: block;
     cursor: pointer;
+    background-image: url(/images/page-tab-gradient.png);
 }
 
 #questionnaireedit #pages div.draghandle {
@@ -127,6 +128,7 @@ table.itemheader tr > td:first-child {
 #questionnaireedit #pages li.page.activepage {
     border-right: 0;
     background-color: #fff;
+    background-image: none;
     
     /* omg this is fugly */
     z-index: 1;

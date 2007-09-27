@@ -59,7 +59,7 @@ table.itemheader tr > td:first-child {
 
 #questionnaireedit #pagesheading, #questionnaireedit #pageheading {
     border-top: 1px black solid;
-    background-color: #ddd;
+    background-color: #aaa;
     padding-top: 1pt;
     padding-bottom: 1pt;
     position: relative;
@@ -105,11 +105,23 @@ table.itemheader tr > td:first-child {
     border-bottom: 1px #666 solid;
     border-left: 1px #666 solid;
     margin: 0;
-    background-color: #aaa;
+    background-color: #ddd;
     padding: 2px;
     min-height: 16px;
     display: block;
-    cursor: move;
+    cursor: pointer;
+}
+
+#questionnaireedit #pages div.draghandle {
+    float: left; 
+    width: 5px; 
+    overflow: hidden; 
+    background-color: #00f; 
+    left: -2px; 
+    top: -2px; 
+    position: relative; 
+    height: 19px; 
+    cursor: move;   
 }
 
 #questionnaireedit #pages li.page.activepage {
@@ -124,7 +136,7 @@ table.itemheader tr > td:first-child {
 #questionnaireedit #pages li.page div.caption {
     float: left;
     display: inline;
-    width: 173px;
+    width: 182px; /* +5px if we get rid of drag handles */
     overflow: hidden;
     white-space: nowrap;
     line-height: 16px;

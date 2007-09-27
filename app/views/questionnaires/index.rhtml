@@ -8,6 +8,7 @@
 <% for questionnaire in @questionnaires %>
   <tr>
     <td><%=h questionnaire.title %></td>
+    <td><%= link_to "Answer", :controller => "answer", :action => "index", :id => questionnaire.id %></td>
     <td><%= link_to 'Edit', edit_questionnaire_path(questionnaire) %></td>
     <td><%= link_to 'Delete', questionnaire_path(questionnaire), :confirm => 'Are you sure?', :method => :delete %></td>
     <td><%= link_to 'Export', questionnaire_path(questionnaire) + ".xml" %></td>

@@ -9,8 +9,8 @@
         <%= stylesheet_link_tag 'questionnaire' %>
   <%= ae_form_stylesheet %>
   <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag 'jester' %>
-  <%= javascript_include_tag 'jipe' %>
+  <%= javascript_include_tag 'jester', :plugin => 'jipe' %>
+  <%= javascript_include_tag 'jipe', :plugin => 'jipe' %>
   <% if @rss_url %>
     <link rel="alternate" title="RSS Feed" href="<%=@rss_url%>" type="application/rss+xml"/>
   <% end %>

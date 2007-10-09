@@ -28,7 +28,7 @@ function Base(name, options) {
   if (options.singular)
     this._singular = options.singular;
   else
-    this._singular = name.toLowerCase();
+    this._singular = name.underscore();
   
   this._plural = this._singular.pluralize(options.plural);
   

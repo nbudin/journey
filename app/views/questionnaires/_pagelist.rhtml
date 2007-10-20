@@ -1,10 +1,10 @@
 <ul id="pagelist">
   <% questionnaire.pages.each do |page| -%>
-          <li id="page_<%=page.id%>" class="page">
+          <li id="page_<%=page.id%>" class="page" onClick="switchPage(<%=page.id%>, '<%=escape_javascript page.title%>');">
             <div class="draghandle">
               <%=image_tag("drag-handle.png")%>
             </div>
-            <div class="caption" onClick="switchPage(<%=page.id%>, '<%=escape_javascript page.title%>');">
+            <div class="caption">
               <%=h page.title%>
             </div>
             <%=link_to_function(image_tag("delete.png", :class => "image_button"),

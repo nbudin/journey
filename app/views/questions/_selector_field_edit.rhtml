@@ -5,7 +5,7 @@
 		:loading => "Form.disable('form_remove_options_from_question_#{@question.id}');",
 	 	:url => { :action => "remove_options_from_question", :id => @question.id } %>
 	
-		<%= select_tag "options[]", options_for_select(@question.options_for_select), :multiple => true %>
+		<%= select_tag "options[]", options_for_select(@question.options_for_select), :multiple => true, :style => "padding-right: 2em;" %>
 	
 		<%= submit_tag "Remove option(s)" %>
 	

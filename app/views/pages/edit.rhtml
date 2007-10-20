@@ -2,17 +2,33 @@
 pageindex = @questionnaire.pages.index(@page)
 fieldcount = 0 -%>
 
+<script type="text/javascript">
+Base.model("Page", {prefix: '<%= questionnaire_url(@questionnaire) %>',
+                    format: 'json'});
+Base.model("Question", {prefix: '<%= page_url(@questionnaire, @page) %>',
+                    format: 'json'});
+                    
+function clearDefault(questionId) {
+  el = $("question_" + questionId + "_default_answer");
+  el.value = "Clearing default...";
+  el.disabled = true;
+  Question.find(questionId, {}, function(q) {
+    q.default_answer = "";
+    q.save(function() {
+      this.value = "";
+      this.disabled = false;
+      new Effect.Highlight(this);
+    }.bind(this));
+  }.bind(el));
+}
+</script>
+
 <div class="answerpage" id="answerpage">
         <div class="pagetitle"><span id="page_title"><%= @page.title %></span>
           <%= image_tag("edit-field.png", { :id => "edit_page_title", :plugin => 'jipe' }) %>
         </div>
 
 <script type="text/javascript">
-Base.model("Page", {prefix: '<%= questionnaire_url(@questionnaire) %>',
-                    format: 'json'});
-Base.model("Question", {prefix: '<%= page_url(@questionnaire, @page) %>',
-                    format: 'json'});
-
 new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
    { externalControl: 'edit_page_title' });
 </script>

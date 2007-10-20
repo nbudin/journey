@@ -1,7 +1,8 @@
 <table class="question">
 <tr>
 <td class="caption<% if @question.required %> required<% end %>" id="question_<%=@question.id%>_header">
-  <%= jipe_image_toggle(@question, "required", "required.png", "not-required.png",
+  <% if @editing -%>
+    <%= jipe_image_toggle(@question, "required", "required.png", "not-required.png",
         :class => "Question", 
         :on_complete => "function () { 
           e = $('question_#{@question.id}_header'); 
@@ -12,6 +13,7 @@
           }
           new Effect.Highlight('question_#{@question.id}_caption');
           } ") %>
+  <% end -%>
           <%= jipe_editor(@question, "caption", :class => "Question",
   :editing => @editing ) %>
 </td>

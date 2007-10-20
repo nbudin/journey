@@ -1,10 +1,8 @@
-                        <% if @editing -%>
-                                <%= submit_to_remote "clear_default_answer_#{@question.id}", 'Clear default',
-                                        :html => { :id => "clear_default_answer_#{@question.id}" },
-                                        :loading => "$('clear_default_answer_#{@question.id}').disabled = 'true';",
-                                        :update => "question#{@question.id}",
-                                        :url => { :action => 'clear_default_answer', :id => @question.id } %>
-                        <% end -%>
                 </td>
+                <% if @editing -%>
+                    <td>
+                        <%= image_tag "clear-field.png", :onClick => "clearDefault(#{@question.id});", :style => "vertical-align: middle;" %>
+                    </td>
+                <% end -%>
         </tr>
 </table>

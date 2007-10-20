@@ -1,13 +1,4 @@
 <div class="heading">
-	<% if @editing -%>
-		<%= form_remote_tag :update => "question#{@question.id}",
-				:html => { :id => "form_change_question_attrs_#{@question.id}" },
-				:loading => "Form.disable('form_change_question_attrs_#{@question.id}');",
-				:url => { :action => "change_question_attrs", :id => @question.id } %>
-			<%= text_field "question[]", "caption" %>
-			<%= submit_tag "Change caption" %>
-		<%= end_form_tag %>
-	<% else -%>
-		<%= @question.caption %>
-	<% end -%>
+  <%= jipe_editor(@question, "caption", :class => "Question",
+                  :editing => @editing) %>
 </div>

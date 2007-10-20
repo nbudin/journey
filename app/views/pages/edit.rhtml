@@ -8,14 +8,15 @@ Base.model("Page", {prefix: '<%= questionnaire_url(@questionnaire) %>',
 Base.model("Question", {prefix: '<%= page_url(@questionnaire, @page) %>',
                     format: 'json'});
                     
-function clearDefault(questionId) {
+function updateDefault(questionId, newDefault) {
   el = $("question_" + questionId + "_default_answer");
-  el.value = "Clearing default...";
+  el.value = "Saving...";
   el.disabled = true;
+  el.newDefault = newDefault;
   Question.find(questionId, {}, function(q) {
-    q.default_answer = "";
+    q.default_answer = el.newDefault;
     q.save(function() {
-      this.value = "";
+      this.value = this.newDefault;
       this.disabled = false;
       new Effect.Highlight(this);
     }.bind(this));

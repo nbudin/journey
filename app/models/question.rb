@@ -71,6 +71,9 @@ class SelectorField < Field
 end
 
 class DropDownField < SelectorField
+  def options_for_select
+    return [['', '']] + super
+  end
 end
 
 class RadioField < SelectorField

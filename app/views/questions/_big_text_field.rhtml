@@ -1,6 +1,7 @@
 <% if @editing -%>
 	<%= start_question @question %>
-	<%= text_area "question[]", "default_answer", :rows => 4 %>
+	<%= text_area "question[]", "default_answer", :rows => 4,
+	    :onChange => "updateDefault(#{@question.id}, this.value);" %>
 	<%= end_question @question %>
 <% else -%>
 	<p<%if @question.required%> class="required"<%end%>><%=@question.caption%></p>

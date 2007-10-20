@@ -1,7 +1,8 @@
 <%= start_question @question %>
 <% if @editing -%>
 	<%= select "question[]", "default_answer", @question.options_for_select,
-	      {:style => "padding-right: 2em;"} %>
+	      {:style => "padding-right: 2em;",
+	        :onChange => "updateDefault(#{@question.id}, this.value);" } %>
 <% else -%>
 	<%= select_tag "question[#{@question.id}]", options_for_select(@question.options_for_select, value) %>
 <% end -%>

@@ -1,6 +1,7 @@
 <%= start_question @question %>
 <% if @editing -%>
-	<%= text_field "question[]", "default_answer" %>
+	<%= text_field "question[]", "default_answer", 
+	    :onChange => "updateDefault(#{@question.id}, this.value);"  %>
 <% else -%>
 	<%= text_field_tag "question[#{@question.id}]", value %>
 <% end -%>

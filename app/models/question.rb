@@ -78,6 +78,3 @@ end
 
 class RadioField < SelectorField
 end
-
-class MultiSelectField < SelectorField
-end

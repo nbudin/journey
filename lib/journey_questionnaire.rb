@@ -5,7 +5,7 @@ module Journey
     end
 
     def self.field_types
-      %w{ TextField BigTextField RangeField CheckBoxField DropDownField RadioField MultiSelectField }
+      %w{ TextField BigTextField RangeField CheckBoxField DropDownField RadioField }
     end
     
     def self.types_for_sql(types)

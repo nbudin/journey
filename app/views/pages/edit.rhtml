@@ -16,7 +16,11 @@ function updateDefault(questionId, newDefault) {
   Question.find(questionId, {}, function(q) {
     q.default_answer = el.newDefault;
     q.save(function() {
-      this.value = this.newDefault;
+      if (this.type == 'checkbox') {
+        this.checked = this.newDefault;
+      } else {
+        this.value = this.newDefault;
+      }
       this.disabled = false;
       new Effect.Highlight(this);
     }.bind(this));

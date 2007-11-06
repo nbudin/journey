@@ -4,7 +4,8 @@ if odd
 	median = ((n/2) * @question.step) + @question.min
 end -%>
 <%= start_question @question %>
-<%= @question.min %>
+<%= jipe_editor(@question, "min", :class => "Question", :editing => @editing,
+								:external_control => false) %>
 <% @question.min.step(@question.max, @question.step) do |i| -%>
 	<% if odd and i == median -%>
 		[
@@ -18,5 +19,6 @@ end -%>
 	 	] 
 	<% end -%>
 <% end -%>
-<%= @question.max %>
+<%= jipe_editor(@question, "max", :class => "Question", :editing => @editing,
+								:external_control => false) %>
 <%= end_question @question %>

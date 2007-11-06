@@ -26,6 +26,16 @@ function updateDefault(questionId, newDefault) {
     }.bind(this));
   }.bind(el));
 }
+
+function reloadQuestion(questionId) {
+  new Ajax.Updater("question"+questionId,
+                   "<%= questions_url(@questionnaire, @page) %>/"+questionId+";edit",
+                   { method: "get" });
+}
+
+function makeReloadFunction(questionId) {
+  return function() {reloadQuestion(questionId)};
+}
 </script>
 
 <div class="answerpage" id="answerpage">

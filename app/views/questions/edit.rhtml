@@ -1,12 +1,2 @@
-<h1>Editing question</h1>
-
-<%= error_messages_for :question %>
-
-<% form_for(:question, :url => question_path(@questionnaire, @page, @question), :html => { :method => :put }) do |f| %>
-  <p>
-    <%= submit_tag "Update" %>
-  </p>
-<% end %>
-
-<%= link_to 'Show', question_path(@questionnaire, @page, @question) %> |
-<%= link_to 'Back', questions_path %>
+<% @editing = true -%>
+<%= render_question @question %>

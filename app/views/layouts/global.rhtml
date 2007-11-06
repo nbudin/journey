@@ -17,12 +17,6 @@
 </head>
 <body id="body">
 
-<% for name in [:notice, :warning, :message] %>
-        <% if flash[name] %>
-                <%= "<div id=\"#{name}\">#{flash[name]}</div>" %>
-        <% end %>
-<% end %>
-
 <% if flash[:errors] -%>
         <div style="color: red; font-size: 125%;">There were errors processing your request:</div>
         <ul>

@@ -4,7 +4,8 @@ module Jipe
   def jipe_editor_for(record, field, options = {})
     options = { :external_control => true,
       :class => record.class.to_s,
-      :rows => 1}.update(options || {})
+      :rows => 1,
+      :on_complete => nil }.update(options || {})
     rclass = options[:class]
     outstr = <<-ENDDOC
       <script type="text/javascript">
@@ -14,6 +15,9 @@ module Jipe
     if options[:external_control]
       outstr += "externalControl: 'edit_#{rclass.downcase}_#{record.id}_#{field}', "
     end
+    if options[:on_complete]
+      outstr += "onComplete: #{options[:on_complete]}, "
+    end
     outstr += "rows: #{options[:rows]}});\n</script>"
     return outstr
   end
@@ -22,7 +26,8 @@ module Jipe
     options = { :external_control => true,
       :class => record.class.to_s,
       :rows => 1,
-      :editing => true }.update(options || {})
+      :editing => true,
+      :on_complete => nil }.update(options || {})
     rclass = options[:class]
     outstr = <<-ENDDOC
       <span id="#{rclass.downcase}_#{record.id}_#{field}">

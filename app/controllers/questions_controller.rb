@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   rest_edit_permissions :class_name => "Questionnaire", :id_param => "questionnaire_id"
 
   layout "answer"
+  layout nil, :only => [:edit]
   before_filter :get_questionnaire_and_page
 
   # GET /questions

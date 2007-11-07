@@ -1,7 +1,9 @@
                 </td>
                 <% if @editing -%>
                     <td>
-                        <%= image_tag "clear-field.png", :onClick => "updateDefault(#{@question.id}, '');", :style => "vertical-align: middle;" %>
+                        <%= image_tag "clear-field.png",
+                                :onClick => "updateDefault#{is_radio_group ? "ForRadioGroup" : ""}(#{@question.id}, '');",
+                                :style => "vertical-align: middle;" %>
                     </td>
                 <% end -%>
         </tr>

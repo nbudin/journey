@@ -12,7 +12,8 @@ end -%>
 		[
 	<% end -%>
 	<% if @editing -%>
-		<%= radio_button "question[]", "default_answer", i %>
+		<%= radio_button "question[]", "default_answer", i,
+			:onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);" %>
 	<% else -%>
 		<%= radio_button_tag "question[#{@question.id}]", i, value == i.to_s %>
 	<% end -%>
@@ -23,4 +24,4 @@ end -%>
 <%= jipe_editor(@question, "max", :class => "Question", :editing => @editing,
 								:external_control => false,
 								:on_complete => "makeReloadFunction(#{@question.id})") %>
-<%= end_question @question %>
+<%= end_question @question, :is_radio_group => true %>

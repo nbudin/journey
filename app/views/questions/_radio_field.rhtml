@@ -1,11 +1,12 @@
 <%= start_question @question %>
 <% if @editing -%>
 	<% @question.question_options.each do |option| -%>
-		<%= option.option %> <%= radio_button "question[]", "default_answer", option.option %>
+		<%= option.option %> <%= radio_button "question[]", "default_answer", option.option,
+			:onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);" %>
 	<% end -%>
 <% else -%>
 	<% @question.question_options.each do |option| -%>
 		<%= option.option %> <%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option %>
 	<% end -%>
 <% end -%>
-<%= end_question @question %>
+<%= end_question(@question, :is_radio_group => true) %>

@@ -212,3 +212,7 @@ form.purposeselector, form.typeselector {
 form.inplaceeditor-form {
   display: inline;
 }
+
+.questionbody input.editor_field {
+    width: auto;
+}

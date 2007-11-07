@@ -2,40 +2,9 @@
 pageindex = @questionnaire.pages.index(@page)
 fieldcount = 0 -%>
 
+<%= javascript_include_tag 'questionnaireedit' %>
 <script type="text/javascript">
-Base.model("Page", {prefix: '<%= questionnaire_url(@questionnaire) %>',
-                    format: 'json'});
-Base.model("Question", {prefix: '<%= page_url(@questionnaire, @page) %>',
-                    format: 'json'});
-                    
-function updateDefault(questionId, newDefault) {
-  el = $("question_" + questionId + "_default_answer");
-  el.value = "Saving...";
-  el.disabled = true;
-  el.newDefault = newDefault;
-  Question.find(questionId, {}, function(q) {
-    q.default_answer = el.newDefault;
-    q.save(function() {
-      if (this.type == 'checkbox') {
-        this.checked = this.newDefault;
-      } else {
-        this.value = this.newDefault;
-      }
-      this.disabled = false;
-      new Effect.Highlight(this);
-    }.bind(this));
-  }.bind(el));
-}
-
-function reloadQuestion(questionId) {
-  new Ajax.Updater("question"+questionId,
-                   "<%= questions_url(@questionnaire, @page) %>/"+questionId+";edit",
-                   { method: "get" });
-}
-
-function makeReloadFunction(questionId) {
-  return function() {reloadQuestion(questionId)};
-}
+  setupQuestionnaireEditing(<%= @questionnaire.id %>, <%= @page.id %>);
 </script>
 
 <div class="answerpage" id="answerpage">

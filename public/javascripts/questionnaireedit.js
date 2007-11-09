@@ -1,8 +1,9 @@
 setupQuestionnaireEditing = function(questionnaireId, pageId) {
   this.questionnaireId = questionnaireId;
   this.pageId = pageId;
-  Base.model("Page", {prefix: '/questionnaires/'+questionnaireId, format: 'json'});
-  Base.model("Question", {prefix: '/questionnaires/'+questionnaireId+'/pages/'+pageId, format: 'json'});
+  Resource.model("Page", {prefix: '/questionnaires/'+questionnaireId, format: 'json'});
+  Resource.model("Question", {prefix: '/questionnaires/'+questionnaireId+'/pages/'+pageId, format: 'json'});
+  Resource.model("QuestionOption", {prefix: '/questionnaires/'+questionnaireId+'/pages/'+pageId+'/questions/:question_id/', format: 'json'});
 }.bind(this);
                     
 function updateDefault(questionId, newDefault) {
@@ -56,4 +57,23 @@ function reloadQuestion(questionId) {
 
 function makeReloadFunction(questionId) {
   return function() {reloadQuestion(questionId)};
+}
+
+function addOption(questionId, newOption) {
+  el = $("question_"+questionId+"_add_option");
+  el.value = "Saving...";
+  el.disabled = true;
+  el.newOption = newOption;
+  el.questionId = questionId;
+  QuestionOption.create({question_id: questionId, 'option': newOption}, function() {
+    el.value = "";
+    el.hide();
+    reloadQuestion(this.questionId);
+  }.bind(el));
+}
+
+function removeOption(questionId, optionId) {
+  QuestionOption.destroy({id: optionId, question_id: questionId}, function() {
+    reloadQuestion(this);
+  }.bind(questionId));
 }

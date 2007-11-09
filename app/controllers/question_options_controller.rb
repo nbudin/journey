@@ -40,6 +40,7 @@ class QuestionOptionsController < ApplicationController
   # POST /question_options.xml
   def create
     @question_option = QuestionOption.new(params[:question_option])
+    @question_option.question = @question
 
     respond_to do |format|
       if @question_option.save

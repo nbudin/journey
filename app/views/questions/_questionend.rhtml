@@ -3,7 +3,8 @@
                     <td>
                         <%= image_tag "clear-field.png",
                                 :onClick => "updateDefault#{is_radio_group ? "ForRadioGroup" : ""}(#{@question.id}, '');",
-                                :style => "vertical-align: middle;" %>
+                                :style => "vertical-align: middle;",
+                                :class => "image_button" %>
                     </td>
                 <% end -%>
         </tr>

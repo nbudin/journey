@@ -158,12 +158,16 @@ select {
         position: fixed;
         left: 0px;
         top: 0px;
-        background-color: #cccccc;
-        border-bottom: 2px solid black;
+        background-image: url('/images/topbar-bg.png');
+        border-bottom: 2px solid #bad032;
         padding: 2px;
         width: 100%;
         height: 75px;
         z-index: 100;
+}
+
+a {
+        color: #3e4704;
 }
 
 .responseheader {

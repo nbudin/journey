@@ -187,4 +187,6 @@ form.inplaceeditor-form {
 
 img.image_button {
     cursor: pointer;
+    vertical-align: middle;
+    border: 0;
 }

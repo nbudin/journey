@@ -7,8 +7,9 @@
             <div class="caption">
               <%=h page.title%>
             </div>
-            <%=link_to_function(image_tag("delete.png", :class => "image_button"),
-              "if (confirm('Do you really want to delete the page \"#{page.title}\"?')) { deletePage(#{page.id}); }")%>
+            <%=link_to_function(image_tag("delete.png", :class => "image_button", :style => "padding: 0; margin: 0;"),
+              "if (confirm('Do you really want to delete the page \"#{page.title}\"?')) { deletePage(#{page.id}); }",
+              :style => "padding: 0; margin: 0;")%>
           </li>
   <% end -%>
 </ul>

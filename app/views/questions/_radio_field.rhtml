@@ -5,7 +5,8 @@
 		<%= image_tag "remove.png", :class => "image_button",
 				:onClick => "removeOption(#{@question.id}, #{option.id});" %>
 		<%= radio_button "question[]", "default_answer", option.option,
-			:onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);" %>
+			:onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);",
+			:style => "vertical-align: middle;" %>
 	<% end -%>
 	<%= image_tag "add.png", :class => "image_button",
 		:onClick => "el = $('question_#{@question.id}_add_option'); el.toggle(); el.focus();" %>

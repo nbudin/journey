@@ -36,7 +36,7 @@ function updateDefaultForRadioGroup(questionId, newDefault) {
       }
     }
   } else {
-    button = $("question_"+questionId+"_default_answer_"+newDefault);
+    button = $("question_"+questionId+"_default_answer_"+newDefault.toLowerCase().gsub(/[^a-z]/, ''));
     button.checked = true;
   }
   button.newDefault = newDefault;
@@ -73,7 +73,9 @@ function addOption(questionId, newOption) {
 }
 
 function removeOption(questionId, optionId) {
-  QuestionOption.destroy({id: optionId, question_id: questionId}, function() {
-    reloadQuestion(this);
-  }.bind(questionId));
+  if (confirm("Do you really want to remove this option?")) {
+    QuestionOption.destroy({id: optionId, question_id: questionId}, function() {
+      reloadQuestion(this);
+    }.bind(questionId));
+  }
 }

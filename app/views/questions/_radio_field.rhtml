@@ -8,12 +8,7 @@
 			:onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);",
 			:style => "vertical-align: middle;" %>
 	<% end -%>
-	<%= image_tag "add.png", :class => "image_button",
-		:onClick => "el = $('question_#{@question.id}_add_option'); el.toggle(); el.focus();" %>
-	<form style="display: inline;" onSubmit="addOption(<%=@question.id%>, $F('question_<%=@question.id%>_add_option'));">
-		<%= text_field_tag "question_#{@question.id}_add_option", "", :style => "display: none; width: auto;",
-				:onSubmit => "addOption(#{@question.id}, this.value);" %>
-	</form>
+	<%= render :partial => 'questions/add_option' %>
 <% else -%>
 	<% @question.question_options.each do |option| -%>
 		<%= option.option %> <%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option %>

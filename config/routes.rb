@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :questionnaires, :member => { :pagelist => :get } do |questionnaires|
-    questionnaires.resources :pages do |pages|
-      pages.resources :questions do |questions|
+    questionnaires.resources :pages, :collection => { :sort => :post } do |pages|
+      pages.resources :questions, :collection => { :sort => :post } do |questions|
         questions.resources :question_options
       end
     end

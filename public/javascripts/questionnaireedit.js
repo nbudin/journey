@@ -79,3 +79,9 @@ function removeOption(questionId, optionId) {
     }.bind(questionId));
   }
 }
+
+function deleteQuestion(questionId) {
+  Question.destroy({id: questionId}, function() {
+    window.location.reload();
+  });
+}

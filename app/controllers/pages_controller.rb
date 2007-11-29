@@ -87,6 +87,15 @@ class PagesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def sort
+    @pages = @questionnaire.pages
+    @pages.each do |page|
+      page.position = params['pagelist'].index(page.id.to_s) + 1
+      page.save
+    end
+    render :nothing => true
+  end
 
   def get_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id])

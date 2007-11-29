@@ -1,4 +1,6 @@
+<%= start_question @question, :is_display => true %>
 <div class="heading">
   <%= jipe_editor(@question, "caption", :class => "Question",
                   :editing => @editing) %>
 </div>
+<%= end_question @question, :is_display => true %>

@@ -13,4 +13,4 @@
           </li>
   <% end -%>
 </ul>
-<%= sortable_element "pagelist", :handle => "draghandle" %>
+<%= sortable_element "pagelist", :handle => "draghandle", :url => pages_path(@questionnaire) + ';sort' %>

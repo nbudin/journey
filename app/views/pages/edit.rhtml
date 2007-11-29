@@ -21,19 +21,24 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
                 <div class="pagecount">Page <%= pageindex + 1 %> of <%= @questionnaire.pages.length %></div>
         <% end -%>
 
+        <ul id="questions">
         <% @page.questions.each do |question| -%>
           <% if question.kind_of? Field; fieldcount += 1; end
             if question.kind_of? Divider; fieldcount = 0; end -%>
-              <div class="question <%= if question.kind_of? Field
+              <li class="question <%= if question.kind_of? Field
                  if fieldcount % 2 == 0
                    "even"
                  else
                    "odd"
                  end
-              end %>" id="question<%=question.id%>">
+              end %>" id="question_<%=question.id%>">
                 <%= render_question question %>
-              </div>
+              </li>
           <% end -%>
+          </ul>
+          <%= sortable_element "questions", :handle => "draghandle",
+              :url => questionnaire_page_questions_path(@questionnaire, @page) + ';sort',
+              :complete => "window.location.reload();" %>
           <div class="navbuttons">
             <% if pageindex > 0 -%>
               <%= submit_tag "<< Previous page" %>

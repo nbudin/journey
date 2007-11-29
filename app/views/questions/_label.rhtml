@@ -1,6 +1,8 @@
+<%= start_question @question, :is_display => true %>
 <div class="question">
         <div class="questionbody">
           <%= jipe_editor(@question, "caption", :class => "Question", :rows => 4,
                           :editing => @editing) %>
         </div>
 </div>
+<%= end_question @question, :is_display => true %>

@@ -46,7 +46,6 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        flash[:notice] = 'Question was successfully created.'
         format.html { redirect_to question_url(@question) }
         format.xml  { head :created, :location => question_url(@question) }
       else
@@ -63,7 +62,6 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
-        flash[:notice] = 'Question was successfully updated.'
         format.html { redirect_to question_url(@question) }
         format.xml  { head :ok }
         format.json { head :ok }
@@ -82,9 +80,19 @@ class QuestionsController < ApplicationController
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to questions_url }
+      format.html { redirect_to questions_url(@questionnaire, @page) }
       format.xml  { head :ok }
+      format.json { head :ok }
     end
+  end
+  
+  def sort
+    @questions = @page.questions
+    @questions.each do |question|
+      question.position = params['questions'].index(question.id.to_s) + 1
+      question.save
+    end
+    render :nothing => true
   end
 
   def get_questionnaire_and_page

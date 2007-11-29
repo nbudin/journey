@@ -1,5 +1,13 @@
 <table class="question">
 <tr>
+<% if @editing -%>
+  <td class="draghandle">
+    <div class="draghandle">
+      <%=image_tag("drag-handle.png")%>
+    </div>
+  </td>
+<% end -%>
+<% if not is_display -%>
 <td class="caption<% if @question.required %> required<% end %>" id="question_<%=@question.id%>_header">
   <% if @editing -%>
     <%= jipe_image_toggle(@question, "required", "required.png", "not-required.png",
@@ -17,4 +25,5 @@
           <%= jipe_editor(@question, "caption", :class => "Question",
   :editing => @editing ) %>
 </td>
-<td class="questionbody">
+<% end -%>
+<td class="questionbody" style="width: 100%;">

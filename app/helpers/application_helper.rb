@@ -42,13 +42,18 @@ module ApplicationHelper
                   :locals => { 'value' => value }
   end
 
-  def start_question(question)
-    return render :partial => 'questions/questionstart', :locals => { :question => question }
+  def start_question(question, options = {})
+    options = {
+      :is_radio_group => false,
+      :is_display => false,
+    }.update(options)
+    return render :partial => 'questions/questionstart', :locals => { :question => question }.update(options)
   end
 
   def end_question(question, options = {})
     options = {
-      :is_radio_group => false
+      :is_radio_group => false,
+      :is_display => false,
     }.update(options)
     return render :partial => 'questions/questionend', :locals => { :question => question }.update(options)
   end

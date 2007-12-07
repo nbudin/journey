@@ -28,6 +28,7 @@ function deletePage(id) {
 }
 
 function createPage() {
+  Sortable.destroy("pagelist");
   new Ajax.Request('<%= pages_url(@questionnaire) %>',
     {
       method: 'post',

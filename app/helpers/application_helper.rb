@@ -38,8 +38,8 @@ module ApplicationHelper
         value = @question.default_answer
       end
     end
-    return render :partial => "questions/" + question.attributes['type'].tableize.singularize,
-                  :locals => { 'value' => value }
+    return render(:partial => "questions/" + question.attributes['type'].tableize.singularize,
+                  :locals => { 'value' => value })
   end
 
   def start_question(question, options = {})
@@ -47,7 +47,7 @@ module ApplicationHelper
       :is_radio_group => false,
       :is_display => false,
     }.update(options)
-    return render :partial => 'questions/questionstart', :locals => { :question => question }.update(options)
+    return render(:partial => 'questions/questionstart', :locals => { :question => question }.update(options))
   end
 
   def end_question(question, options = {})
@@ -55,6 +55,6 @@ module ApplicationHelper
       :is_radio_group => false,
       :is_display => false,
     }.update(options)
-    return render :partial => 'questions/questionend', :locals => { :question => question }.update(options)
+    return render(:partial => 'questions/questionend', :locals => { :question => question }.update(options))
   end
 end

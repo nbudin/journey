@@ -190,3 +190,33 @@ img.image_button {
     vertical-align: middle;
     border: 0;
 }
+
+ul.tabstrip {
+    list-style: none;
+    margin-bottom: 6px;
+    padding-left: 12px;
+}
+
+ul.tabstrip li {
+    display: inline;
+    border: 1px black solid;
+    border-bottom: none;
+    padding: 6px;
+    margin-right: 12px;
+    background-color: #ddd;
+}
+
+ul.tabstrip li a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+}
+
+ul.tabstrip li.selected {
+    background-color: #bad032;
+}
+
+div.tabpage {
+    background-color: #bad032;
+    padding: 6px;
+}

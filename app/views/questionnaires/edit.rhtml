@@ -68,11 +68,12 @@ function selectTab(name) {
                 
             <%= f.text_field "title" %>
             <%= f.text_area "custom_html", :rows => 4 %>
-            <%= f.text_area "custom_css", :rows => 4 %>
-            Open for responses? <%= f.check_box "is_open" %>
-            Allow "Finish Later"? <%= f.check_box "allow_finish_later" %>
-            Allow "Amend Response"? <%= f.check_box "allow_amend_response" %>
-            <p>
+            <%= f.text_area "custom_css", :rows => 4 %><br/>
+            <p style="margin-left: 25%">
+              Open for responses? <%= f.check_box "is_open" %>
+              Allow "Finish Later"? <%= f.check_box "allow_finish_later" %>
+              Allow "Amend Response"? <%= f.check_box "allow_amend_response" %>
+            <br/>
                     <%= submit_tag "Save changes" %>&nbsp;
             </p>
           <% end %>

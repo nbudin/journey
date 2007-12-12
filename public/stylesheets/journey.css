@@ -213,10 +213,10 @@ ul.tabstrip li a {
 }
 
 ul.tabstrip li.selected {
-    background-color: #bad032;
+    background-color: #ccd87f;
 }
 
 div.tabpage {
-    background-color: #bad032;
+    background-color: #ccd87f;
     padding: 6px;
 }

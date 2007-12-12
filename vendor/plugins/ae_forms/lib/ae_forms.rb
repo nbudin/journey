@@ -95,8 +95,7 @@ form.aeform legend {
         def #{selector}(field, options = {})
           label = options[:label] || field.to_s.humanize
           (@template.content_tag("label", label + ":", :for => field) +
-            super +
-            @template.content_tag("br"))
+            super)
         end
       END_SRC
       class_eval src, __FILE__, __LINE__

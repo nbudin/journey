@@ -77,6 +77,7 @@ form.aeform fieldset {
 
 form.aeform textarea {
     margin-bottom: 0.3em;
+    width: 65%;
 }
 
 form.aeform legend {

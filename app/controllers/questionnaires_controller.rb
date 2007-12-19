@@ -34,11 +34,13 @@ class QuestionnairesController < ApplicationController
 
   # POST /questionnaires
   # POST /questionnaires.xml
+  require_login :only => [:create]
   def create
     @questionnaire = Questionnaire.new(params[:questionnaire])
 
     respond_to do |format|
       if @questionnaire.save
+        @questionnaire.grant(logged_in_person)
         format.html { redirect_to questionnaires_url }
         format.xml  { head :created, :location => questionnaire_url(@questionnaire) }
       else

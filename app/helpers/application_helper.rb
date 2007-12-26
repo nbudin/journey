@@ -30,7 +30,7 @@ module ApplicationHelper
   def render_question(question)
     @question = question
     value = ''
-    if params[:action] == 'answer'
+    if params[:controller] == "answer"
       answer = Answer.find_answer(@resp, question)
       if answer
         value = answer.value

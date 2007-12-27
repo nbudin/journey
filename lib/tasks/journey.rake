@@ -58,4 +58,4 @@ task :journey_perms => [:sync_permissions, :create_roles, :create_admin_user] do
   raise "Couldn't save editor role!" if !editor.save
 end
     
-task :bootstrap => [:journey_perms]
+#task :bootstrap => [:journey_perms]

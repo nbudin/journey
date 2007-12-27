@@ -83,7 +83,7 @@ class QuestionnaireController < ApplicationController
       else
         @page = @resp.questionnaire.pages[0]
       end
-      @resp.verify_answers_for_page @page
+      #@resp.verify_answers_for_page @page
     end
   end
   
@@ -95,13 +95,17 @@ class QuestionnaireController < ApplicationController
     errors = []
     page.questions.each do |question|
       if question.kind_of? Field and question.required
-        ans = Answer.find_answer(resp, question)
-        if not (@params[:answer] and @params[:answer][ans.id.to_s] and @params[:answer][ans.id.to_s][:value] and @params[:answer][ans.id.to_s][:value].length > 0)
+        if not answer_given(question.id)
             errors << "You didn't answer the question \"#{question.caption}\", which is required."
         end
       end
     end
     return errors
+  end
+  
+  def answer_given(question_id)
+    return (@params[:question] and @params[:question][question_id.to_s] and
+      @params[:question][question_id.to_s].length > 0)
   end
   
   def save_session
@@ -129,9 +133,17 @@ class QuestionnaireController < ApplicationController
     @page.questions.each do |question|
       if question.kind_of? Field
         ans = Answer.find_answer(@resp, question)
-        if @params[:answer] and @params[:answer][ans.id.to_s]
-          ans.value = @params[:answer][ans.id.to_s][:value]
+        if answer_given(question.id)
+          if ans.nil?
+            ans = Answer.new :question_id => question.id, :response_id => @resp.id
+          end
+          ans.value = @params[:question][question.id.to_s]
           ans.save
+        else
+          # No answer provided
+          if not ans.nil?
+            ans.destroy
+          end
         end
       end
     end

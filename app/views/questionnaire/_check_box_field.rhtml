@@ -2,6 +2,6 @@
 <% if @editing -%>
 	<%= check_box "question[]", "default_answer" %>
 <% else -%>
-	<%= check_box "answer[]", "value" %>
+	<%= check_box_tag "question[#{@question.id}]", :checked => (value == "1") %>
 <% end -%>
 <%= end_question @question %>

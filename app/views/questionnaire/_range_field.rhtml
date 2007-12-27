@@ -12,7 +12,7 @@ end -%>
 	<% if @editing -%>
 		<%= radio_button "question[]", "default_answer", i %>
 	<% else -%>
-		<%= radio_button "answer[]", "value", i %>
+		<%= radio_button_tag "question[#{@question.id}]", i, value == i.to_s %>
 	<% end -%>
 	<% if odd and i == median -%>
 	 	] 

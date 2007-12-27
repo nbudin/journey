@@ -4,5 +4,5 @@
 	<%= end_question @question %>
 <% else -%>
 	<p<%if @question.required%> class="required"<%end%>><%=@question.caption%></p>
-	<%= text_area "answer[]", "value", :rows => 4 %>
+	<%= text_area_tag "question[#{@question.id}]", value, :rows => 4 %>
 <% end -%>

@@ -5,7 +5,7 @@
 	<% end -%>
 <% else -%>
 	<% @question.question_options.each do |option| -%>
-		<%= option.option %> <%= radio_button "answer[]", "value", option.option %>
+		<%= option.option %> <%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option %>
 	<% end -%>
 <% end -%>
 <%= end_question @question %>

@@ -220,3 +220,27 @@ div.tabpage {
     background-color: #ccd87f;
     padding: 6px;
 }
+
+div#toolbox {
+    background-color: #ffc675;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    color: #754500;
+}
+
+div#toolbox ul {
+    padding-left: 0.5em;
+}
+
+div#toolbox ul li {
+    display: inline;
+}
+
+div#toolbox input[type='button'] {
+    border: #754500 1px solid;
+    color: #512f00;
+    background-color: #ffa92e;
+    padding: 3px;
+}

@@ -1,7 +1,7 @@
 class Question < ActiveRecord::Base
   belongs_to :page
   acts_as_list :scope => :page_id
-  has_many :answers
+  has_many :answers, :dependent => :destroy
   
   def questionnaire
     page.questionnaire

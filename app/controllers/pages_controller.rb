@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  rest_edit_permissions :class_name => "Questionnaire", :id_param => "questionnaire_id"
+  perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
+  require_permission "edit", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
 
   layout "answer"
   before_filter :get_questionnaire

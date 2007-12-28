@@ -1,7 +1,7 @@
 class Page < ActiveRecord::Base
   belongs_to :questionnaire
   acts_as_list :scope => :questionnaire_id
-  has_many :questions, :order => :position
+  has_many :questions, :order => :position, :dependent => :destroy
   has_many :fields, :class_name => 'Question', :order => :position,
     :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::field_types)}"
   has_many :decorators, :class_name => 'Question', :order => :position,

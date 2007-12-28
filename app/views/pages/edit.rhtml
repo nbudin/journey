@@ -52,3 +52,51 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
             <% end -%>
          </div>
 </div>
+
+<div id="toolbox">
+  <div id="add_fields_toolbox">
+    <table style="width: 100%;">
+      <tr>
+        <td style="width: 8em;">
+          <b>Add Fields</b><br/>
+          <i>Click any of these buttons to add that type of field to the page.</i>
+        </td>
+        <td>
+          <ul>
+            <% Journey::Questionnaire::decorator_types.each do |t| -%>
+              <%= button_to_function h(t), "addQuestion('#{t}');" %>
+<!--              <li id="add_<%=t%>"><%=h t%></li>
+              <script type="text/javascript">
+                new Draggable('add_<%=t%>', { ghosting: true, revert: true });
+              </script> -->
+            <% end -%>
+          </ul>
+          <ul>
+            <% Journey::Questionnaire::field_types.each do |t| -%>
+              <%= button_to_function h(t), "addQuestion('#{t}');" %>
+            <% end -%>
+          </ul>
+        </td>
+        <td style="text-align: right; vertical-align: top;">
+          <b><%= link_to_function "&darr;",
+            "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle();",
+            :style => "text-decoration: none; color: #754500;" %></b>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="add_fields_toolbox_hidden" style="display: none;">
+    <table style="width: 100%;">
+      <tr>
+        <td>
+          <b>Add Fields</b>
+        </td>
+        <td style="text-align: right;">   
+          <b><%= link_to_function "&uarr;",
+            "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle();",
+            :style => "text-decoration: none; color: #754500;" %></b>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

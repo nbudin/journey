@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
-  rest_edit_permissions :class_name => "Questionnaire", :id_param => "questionnaire_id"
+  perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
+  require_permission "edit", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
 
   layout "answer"
   layout nil, :only => [:edit]
@@ -43,11 +44,14 @@ class QuestionsController < ApplicationController
   # POST /questions.xml
   def create
     @question = Question.new(params[:question])
+    @question.page = @page
 
     respond_to do |format|
-      if @question.save
+      if @question.save and @question.update_attribute(:type, params[:question][:type])
+        @question = Question.find(@question.id)
         format.html { redirect_to question_url(@question) }
-        format.xml  { head :created, :location => question_url(@question) }
+        format.xml  { head :created, :location => questionnaire_page_question_url(@questionnaire, @page, @question) }
+        format.json { head :created, :location => questionnaire_page_question_url(@questionnaire, @page, @question) }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @question.errors.to_xml }

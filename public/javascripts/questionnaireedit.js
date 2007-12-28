@@ -59,6 +59,34 @@ function makeReloadFunction(questionId) {
   return function() {reloadQuestion(questionId)};
 }
 
+function addQuestion(typ) {
+  Question.create({ 'type': typ },
+                  function (q) {
+                    newli = document.createElement('li');
+                    newli.setAttribute('id', 'question_'+q.id);
+                    newli.setAttribute('class', 'question');
+                    newli.setAttribute('position', 'relative');
+                    $('questions').appendChild(newli);
+                    new Ajax.Updater("question_"+q.id,
+                                     "/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+q.id+";edit",
+                                     { method: "get", evalScripts: true, insertion: Insertion.Bottom});
+                    Sortable.create("questions",
+                                    { handle:'draghandle',
+                                      onUpdate:function() {
+                                        new Ajax.Request('/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions;sort",
+                                                         { asynchronous:true,
+                                                            evalScripts:true,
+                                                            onComplete: function(request){
+                                                              window.location.reload();
+                                                            },
+                                                            parameters: Sortable.serialize("questions")
+                                                          }
+                                                        )
+                                        }
+                                    });
+                  });
+}
+
 function addOption(questionId, newOption) {
   el = $("question_"+questionId+"_add_option");
   el.value = "Saving...";

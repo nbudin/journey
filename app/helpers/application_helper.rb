@@ -40,6 +40,8 @@ module ApplicationHelper
     end
     return render(:partial => "questions/" + question.attributes['type'].tableize.singularize,
                   :locals => { 'value' => value })
+  rescue
+    return render :inline => "<%= start_question @question %><b>Unknown question type for question #{question.id}</b><%= end_question @question %>"
   end
 
   def start_question(question, options = {})

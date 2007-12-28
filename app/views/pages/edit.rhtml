@@ -65,10 +65,6 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           <ul>
             <% Journey::Questionnaire::decorator_types.each do |t| -%>
               <%= button_to_function h(t), "addQuestion('#{t}');" %>
-<!--              <li id="add_<%=t%>"><%=h t%></li>
-              <script type="text/javascript">
-                new Draggable('add_<%=t%>', { ghosting: true, revert: true });
-              </script> -->
             <% end -%>
           </ul>
           <ul>

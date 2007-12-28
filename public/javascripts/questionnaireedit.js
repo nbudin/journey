@@ -113,3 +113,22 @@ function deleteQuestion(questionId) {
     window.location.reload();
   });
 }
+
+function duplicateQuestion(questionId, times) {
+  alert('duplicate '+times+' times');
+}
+
+function toggleDropdown(questionId) {
+  dropdownicon = $('dropdown_icon_'+questionId)
+  $$('.selected_dropdown_icon').each(function(ddi) {
+    if (ddi != dropdownicon)
+    ddi.removeClassName('selected_dropdown_icon');
+    });
+  dropdownicon.toggleClassName('selected_dropdown_icon');
+  dropdown = $('question_dropdown_'+questionId);
+  $$('ul.dropdown').each(function(dd) {
+    if (dd != dropdown)
+    dd.hide();
+    });
+  dropdown.toggle();
+}

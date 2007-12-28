@@ -2,6 +2,7 @@ require 'journey_questionnaire'
 
 class AnalyzeController < ApplicationController
   layout "global", :except => "rss"
+  require_permission "view_answers", :class_name => "Questionnaire", :only => [:responses, :response_table, :aggregate]
 
   def responses 
     @items_per_page = params[:items_per_page] || 20

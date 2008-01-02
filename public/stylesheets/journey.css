@@ -77,6 +77,10 @@ table.itemheader tr > td:first-child {
     border-bottom: 1px #666 solid;
 }
 
+#questionnaireedit #pageheading {
+    padding-right: 2px; /* to compensate for the border on editpage */
+}
+
 #questionnaireedit #pageheading, #questionnaireedit #editpage {
     width: 100%;
     vertical-align: top;

@@ -6,6 +6,15 @@ class Question < ActiveRecord::Base
   def questionnaire
     page.questionnaire
   end
+  
+  def deepclone
+    c = self.class.new
+    c.page = self.page
+    c.caption = self.caption
+    c.required = self.required
+    
+    return c
+  end
 end
 
 class Label < Question
@@ -28,6 +37,13 @@ class Field < Question
     else
       special_field_association.purpose
     end
+  end
+  
+  def deepclone
+    c = super
+    c.default_answer = self.default_answer
+    
+    return c
   end
 end
 
@@ -60,6 +76,15 @@ class RangeField < Field
       end
     end
   end
+  
+  def deepclone
+    c = super
+    c.min = self.min
+    c.max = self.max
+    c.step = self.step
+    
+    return c
+  end
 end
 
 class SelectorField < Field
@@ -67,6 +92,15 @@ class SelectorField < Field
   
   def options_for_select
     return question_options.collect { |o| [ o.option, o.option ] }
+  end
+  
+  def deepclone
+    c = super
+    self.question_options.each do |o|
+      c.question_options.push(o.clone)
+    end
+    
+    return c
   end
 end
 

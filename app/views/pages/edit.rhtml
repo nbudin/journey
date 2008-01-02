@@ -53,6 +53,9 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
          </div>
 </div>
 
+<div id="toolboxspacer">
+</div>
+
 <div id="toolbox">
   <div id="add_fields_toolbox">
     <table style="width: 100%;">
@@ -75,7 +78,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
         </td>
         <td style="text-align: right; vertical-align: top;">
           <b><%= link_to_function "&darr;",
-            "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle();",
+            "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle(); sizeToolboxSpacer();",
             :style => "text-decoration: none; color: #754500;" %></b>
         </td>
       </tr>
@@ -89,10 +92,21 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
         </td>
         <td style="text-align: right;">   
           <b><%= link_to_function "&uarr;",
-            "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle();",
+            "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle(); sizeToolboxSpacer();",
             :style => "text-decoration: none; color: #754500;" %></b>
         </td>
       </tr>
     </table>
   </div>
 </div>
+
+<!-- don't let the toolbox cover stuff -->
+<script type="text/javascript">
+function sizeToolboxSpacer() {
+  newHeight = $('toolbox').offsetHeight + 5;
+  $('toolboxspacer').style.height = newHeight + "px";
+}
+
+Event.observe(window, 'load', sizeToolboxSpacer);
+Event.observe(window, 'resize', sizeToolboxSpacer);
+</script>

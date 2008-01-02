@@ -98,6 +98,20 @@ class QuestionsController < ApplicationController
     end
     render :nothing => true
   end
+  
+  def duplicate
+    @question = Question.find(params[:id])
+    @times = params[:times] || 1
+    
+    i = @page.questions.index(@question) + 1
+    @times.to_i.times do
+      c = @question.deepclone
+      @page.questions.insert(i, c)
+      c.save
+    end
+    
+    render :nothing => true
+  end
 
   def get_questionnaire_and_page
     @questionnaire = Questionnaire.find(params[:questionnaire_id])

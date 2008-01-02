@@ -115,7 +115,12 @@ function deleteQuestion(questionId) {
 }
 
 function duplicateQuestion(questionId, times) {
-  alert('duplicate '+times+' times');
+  new Ajax.Request('/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+";duplicate",
+                   { onComplete: function(request) {
+                      window.location.reload();
+                    },
+                    parameters: { 'times': times }
+                   });
 }
 
 function toggleDropdown(questionId) {

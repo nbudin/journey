@@ -1,5 +1,7 @@
 <h1>Editing "<%=h @questionnaire.title%>"</h1>
 
+
+
 <%= error_messages_for :questionnaire %>
 
 <script type="text/javascript">
@@ -101,3 +103,20 @@ function selectTab(name) {
   </div>
 </div>
 
+<!-- don't scroll this page -->
+<style type="text/css">
+body {
+  overflow: hidden;
+}
+</style>
+
+<!-- make questionnaireedit fill remaining vertical space -->
+<script type="text/javascript">
+function sizeQuestionnaireEdit() {
+  newHeight = window.innerHeight - $('editpage').offsetTop - 5;
+  $('editpage').style.height = newHeight + "px";
+}
+
+Event.observe(window, 'load', sizeQuestionnaireEdit);
+Event.observe(window, 'resize', sizeQuestionnaireEdit);
+</script>

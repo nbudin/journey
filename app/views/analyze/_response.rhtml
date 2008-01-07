@@ -23,8 +23,8 @@
     	</table>
     </div>
     <div class="response" id="response">
-    	<% resp.answers.each do |answer| -%>
-    	    <% question = answer.question %>
+    	<% resp.questionnaire.fields.each do |question| -%>
+        <% answer = resp.answer_for_question(question) -%>
     		<% counter += 1 -%>
     		<table class="question" id="question<%=resp.id%>_<%=question.id%>">
     			<script type="text/javascript">
@@ -35,7 +35,11 @@
     					<%= question.caption %>
     				</td>
     				<td class="questionbody">
-    					<%=h answer.value %>
+              <% if answer.nil? -%>
+                &nbsp;
+              <% else -%>
+    					  <%=h answer.value %>
+              <% end -%>
     				</td>
     			</tr>
     		</table>

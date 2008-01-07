@@ -272,3 +272,9 @@ ul.dropdown li a {
 .selected_dropdown_icon {
     background-color: #fff;
 }
+
+div.special_purpose {
+    background-color: #fff;
+    display: inline;
+    border: 1px black solid;
+}

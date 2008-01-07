@@ -15,6 +15,21 @@ class Question < ActiveRecord::Base
     
     return c
   end
+  
+  def xmlcontent(xml)
+    xml.page_id(self.page.id)
+    xml.caption(self.caption)
+    xml.required(self.required)
+  end
+  
+  def to_xml(options = {})
+    options[:indent] ||= 2
+    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml.instruct! unless options[:skip_instruct]
+    xml.question do
+      xmlcontent(xml)
+    end
+  end
 end
 
 class Label < Question
@@ -37,6 +52,45 @@ class Field < Question
     else
       special_field_association.purpose
     end
+  end
+  
+  def purpose=(newpurpose)
+    if not (newpurpose.nil? or newpurpose == '')
+      if special_field_association.nil?
+        logger.debug "Creating new SFA record"
+        sfa = SpecialFieldAssociation.create!(:questionnaire => questionnaire,
+                                              :purpose => newpurpose,
+                                              :question => self)
+        reload
+      else
+        logger.debug "Editing existing SFA record"
+        special_field_association.purpose = newpurpose
+      end
+    else
+      if not special_field_association.nil?
+        logger.debug "Destroying existing SFA record"
+        special_field_association.destroy
+      end
+    end
+  end
+  
+  before_save do |field|
+    if not field.special_field_association.nil?
+      logger.debug "Saving SFA"
+      field.special_field_association.save!
+    end
+  end
+  
+  def to_json
+    #awful hack to get purpose into the attributes list
+    json = super
+    return json.sub(/(attributes: \{)/, "\\1'purpose': #{purpose.to_json}, ")
+  end
+  
+  def xmlcontent(xml)
+    super
+    xml.default_answer(self.default_answer)
+    xml.purpose(self.purpose)
   end
   
   def deepclone
@@ -77,6 +131,13 @@ class RangeField < Field
     end
   end
   
+  def xmlcontent(xml)
+    super
+    xml.min(self.min)
+    xml.max(self.max)
+    xml.step(self.step)
+  end
+  
   def deepclone
     c = super
     c.min = self.min
@@ -92,6 +153,19 @@ class SelectorField < Field
   
   def options_for_select
     return question_options.collect { |o| [ o.option, o.option ] }
+  end
+  
+  def xmlcontent(xml)
+    super
+    xml.question_options do
+      self.question_options.each do |o|
+        xml.question_option do
+          xml.option(o.option)
+        end
+      end
+    end
+    xml.default_answer(self.default_answer)
+    xml.purpose(self.purpose)
   end
   
   def deepclone

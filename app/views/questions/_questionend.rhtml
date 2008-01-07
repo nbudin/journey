@@ -11,6 +11,19 @@
                                             "updateDefault#{is_radio_group ? "ForRadioGroup" : ""}(#{@question.id}, ''); toggleDropdown(#{@question.id});")%>
                             </li>
                           <% end -%>
+                          <% if @question.respond_to? 'purpose' %>
+                                <li>
+                                      <% if @question.purpose.nil? -%>
+                                              <%= link_to_function(image_tag("set-special-purpose.png", :class => "image_button",
+                                                                     :alt => "Set special purpose") + " Set special purpose",
+                                                                   "setSpecialPurpose(#{@question.id}); toggleDropdown(#{@question.id});") %>
+                                      <% else -%>
+                                              <%= link_to_function(image_tag("unset-special-purpose.png", :class => "image_button",
+                                                                     :alt => "Remove special purpose") + " Remove special purpose (#{@question.purpose})",
+                                                                   "setSpecialPurpose(#{@question.id}, ''); toggleDropdown(#{@question.id});") %>
+                                      <% end -%>
+                                </li>
+                          <% end -%>
                           <li>
                                 <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
                                                                :alt => "Duplicate question") + " Duplicate question",

@@ -26,4 +26,12 @@
   :editing => @editing ) %>
 </td>
 <% end -%>
-<td class="questionbody" style="width: 100%;">
+<td class="questionbody" id="questionbody_<%=@question.id%>" style="width: 100%;">
+<% if @editing and @question.respond_to? "purpose" -%>
+  <% if not (@question.purpose.nil? or @question.purpose == "") -%>
+    <div class="special_purpose">
+      <%= image_tag "set-special-purpose.png", :alt => "Special purpose field" %>
+      <%=h @question.purpose %>
+    </div>
+  <% end -%>
+<% end -%>

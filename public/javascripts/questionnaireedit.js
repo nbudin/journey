@@ -123,6 +123,74 @@ function duplicateQuestion(questionId, times) {
                    });
 }
 
+function setSpecialPurpose(questionId, purpose) {
+  if (purpose == null) {
+    new Ajax.Request('/questionnaires/'+questionnaireId+'.xml;available_special_field_purposes',
+                     { 'method': 'get',
+                       'onSuccess': function(transport) {
+                          body = $('questionbody_'+questionId);
+                          
+                          realChildren = [];
+                          for (i=0; i<body.childNodes.length; i++) {
+                            realChildren.push(body.childNodes[i]);
+                          }
+                          for (i=0; i<realChildren.length; i++) {
+                            body.removeChild(realChildren[i]);
+                          }
+                          
+                          iNode = document.createElement('i');
+                          iNode.appendChild(document.createTextNode("Special purpose: "));
+                          body.appendChild(iNode);
+                          
+                          purposeSelector = document.createElement('select');
+                          purposeSelector.setAttribute('style', 'margin-right: 3em;');
+                          purposeSelector.setAttribute('id', 'purpose_selector_'+questionId);
+                          
+                          availablePurposes = Jester.Tree.parseXML(transport.responseText).available_purposes.purpose;
+                          function addPurpose(purpose) {
+                            option = document.createElement('option');
+                            option.setAttribute('value', purpose);
+                            option.appendChild(document.createTextNode(purpose));
+                            purposeSelector.appendChild(option);
+                          }
+                          addPurpose('');
+                          availablePurposes.each(function(p) {addPurpose(p);});
+                          
+                          body.appendChild(purposeSelector);
+                             
+                          setPurpose = document.createElement('button');
+                          setPurpose.appendChild(document.createTextNode("Set"));
+                          setPurpose.observe('click', function() {
+                            setSpecialPurpose(questionId, this.value);
+                          }.bind(purposeSelector));
+                          body.appendChild(setPurpose);
+                          
+                          cancel = document.createElement('button');
+                          cancel.appendChild(document.createTextNode("Cancel"));
+                          cancel.observe('click', function() {
+                            el = $('questionbody_'+questionId);
+                            while (el.childNodes.length > 0) {
+                              el.removeChild(el.firstChild);
+                            }
+                            
+                            this.each(function(child) {
+                              el.appendChild(child);
+                            });
+                          }.bind(realChildren));
+                          body.appendChild(cancel);
+                       }
+                     });
+    
+  } else {
+    Question.find(questionId, function(q) {
+      q.purpose = purpose;
+      q.save(function() {
+        reloadQuestion(questionId);
+      });
+    });
+  }
+}
+
 function toggleDropdown(questionId) {
   dropdownicon = $('dropdown_icon_'+questionId)
   $$('.selected_dropdown_icon').each(function(ddi) {

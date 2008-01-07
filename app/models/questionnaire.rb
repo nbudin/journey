@@ -16,6 +16,15 @@ class Questionnaire < ActiveRecord::Base
   def Questionnaire.special_field_purposes
     %w( name address phone email gender )
   end
+  
+  def used_special_field_purposes
+    special_field_associations.collect { |sfa| sfa.purpose }
+  end
+  
+  def unused_special_field_purposes
+    usfp = used_special_field_purposes
+    Questionnaire.special_field_purposes.select { |p| not usfp.include?(p) }
+  end
 
   def after_create
     page = Page.create :questionnaire_id => id

@@ -77,6 +77,22 @@ class QuestionnairesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def available_special_field_purposes
+    @questionnaire = Questionnaire.find(params[:id])
+    
+    respond_to do |format|
+      format.xml do
+        xml = Builder::XmlMarkup.new(:indent => 2)
+        xml.instruct!
+        render :xml => (xml.available_purposes do
+          @questionnaire.unused_special_field_purposes.each do |p|
+            xml.purpose p
+          end
+        end)
+      end
+    end
+  end
 
   def pagelist
     @questionnaire = Questionnaire.find(params[:id])

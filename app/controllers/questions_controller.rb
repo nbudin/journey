@@ -26,7 +26,7 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       format.html # show.rhtml
       format.json { render :json => @question.to_json }
-      format.xml  { render :xml => @question.to_xml }
+      format.xml  { render :xml => @question.to_xml(:methods => [:purpose]) }
     end
   end
 
@@ -66,6 +66,9 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
+        if params[:question].has_key?(:purpose)
+          @question.purpose = params[:question][:purpose]
+        end
         format.html { redirect_to question_url(@question) }
         format.xml  { head :ok }
         format.json { head :ok }

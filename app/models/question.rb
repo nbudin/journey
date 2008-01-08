@@ -57,18 +57,15 @@ class Field < Question
   def purpose=(newpurpose)
     if not (newpurpose.nil? or newpurpose == '')
       if special_field_association.nil?
-        logger.debug "Creating new SFA record"
         sfa = SpecialFieldAssociation.create!(:questionnaire => questionnaire,
                                               :purpose => newpurpose,
                                               :question => self)
         reload
       else
-        logger.debug "Editing existing SFA record"
         special_field_association.purpose = newpurpose
       end
     else
       if not special_field_association.nil?
-        logger.debug "Destroying existing SFA record"
         special_field_association.destroy
       end
     end
@@ -76,7 +73,6 @@ class Field < Question
   
   before_save do |field|
     if not field.special_field_association.nil?
-      logger.debug "Saving SFA"
       field.special_field_association.save!
     end
   end

@@ -50,7 +50,7 @@ function updateDefaultForRadioGroup(questionId, newDefault) {
 }
 
 function reloadQuestion(questionId) {
-  new Ajax.Updater("question"+questionId,
+  new Ajax.Updater("question_"+questionId,
                    "/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+";edit",
                    { method: "get", evalScripts: true });
 }
@@ -154,7 +154,11 @@ function setSpecialPurpose(questionId, purpose) {
                             purposeSelector.appendChild(option);
                           }
                           addPurpose('');
-                          availablePurposes.each(function(p) {addPurpose(p);});
+                          if (typeof availablePurposes == "string") {
+                            addPurpose(availablePurposes);
+                          } else {
+                            availablePurposes.each(function(p) {addPurpose(p);});
+                          }
                           
                           body.appendChild(purposeSelector);
                              

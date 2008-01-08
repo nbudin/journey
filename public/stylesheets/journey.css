@@ -274,7 +274,14 @@ ul.dropdown li a {
 }
 
 div.special_purpose {
-    background-color: #fff;
-    display: inline;
-    border: 1px black solid;
+    background-color: #abc4d0;
+    border: 1px #329cd0 solid;
+    right: 21px;
+    top: 6px;
+    height: 16px;
+    position: absolute;
+}
+
+div.special_purpose img {
+    vertical-align: top;
 }

@@ -12,7 +12,7 @@ function switchPage(id, title) {
     page.removeClassName('activepage');
   });
   $('page_'+id).addClassName('activepage');
-  $('pageheading').replace('<div id="pageheading">' + title.escapeHTML() + '</div>');
+  $('pagetitle').replace('<span id="pagetitle">' + title.escapeHTML() + '</span>');
 }
 
 function deletePage(id) {
@@ -90,14 +90,16 @@ function selectTab(name) {
 
 <div id="questionnaireedit">
   <div id="container">
-    <div id="pagesheading">Pages</div>
-    <div id="pageheading">&nbsp;</div>
+    <div id="pageheading" style="height: 16px;">
+      <div id="pagesheading" style="top: -3px;">Pages</div>
+      <span id="pagetitle"></span>
+    </div>
     <div id="pages">
       <%= render :partial => "pagelist", :locals => {:questionnaire => @questionnaire} %>
       <button onClick="createPage();">Create New Page</button>
     </div>
     <div id="editpage">
-      <iframe id="pageview" name="pageview">
+      <iframe id="pageview" name="pageview" frameborder="0">
       </iframe>
     </div>
     <div style="clear: both;"/>

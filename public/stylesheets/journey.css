@@ -1,3 +1,7 @@
+body {
+        border: none;
+}
+
 .larp {
         border: 1px black solid;
         background-color: #ddd;
@@ -35,7 +39,6 @@ table.itemheader tr > td:first-child {
 }
 
 #questionnaireedit {
-    /*border: 1px solid black;*/
     width: 100%;
     margin-bottom: 1em;
     padding: 0;
@@ -74,7 +77,6 @@ table.itemheader tr > td:first-child {
 
 #questionnaireedit #pagesheading {
     width: 210px;
-    border-bottom: 1px #666 solid;
 }
 
 #questionnaireedit #pageheading {
@@ -90,6 +92,8 @@ table.itemheader tr > td:first-child {
     padding-bottom: 0.5em;
     vertical-align: top;
     clear: left;
+    top: -3px;
+    border-top: 1px black solid;
 }
 
 #questionnaireedit #editpage {
@@ -98,7 +102,7 @@ table.itemheader tr > td:first-child {
     padding: 0;
     height: 480px;
     position: relative;
-    top: -1px; /* not really sure why I have to do this */    
+    top: -3px; /* not really sure why I have to do this */
 }
 
 #questionnaireedit #pages li.page {

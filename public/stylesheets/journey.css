@@ -200,6 +200,7 @@ ul.tabstrip {
     list-style: none;
     margin-bottom: 6px;
     padding-left: 12px;
+    margin-left: 0;
 }
 
 ul.tabstrip li {

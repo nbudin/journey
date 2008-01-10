@@ -104,11 +104,34 @@ var BrowserDetect = {
 };
 BrowserDetect.init();
 
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
 function displayBrowserWarning(id, browser, versionCallback) {
     el = $(id);
     if (BrowserDetect.browser == browser) {
         if (versionCallback == null || versionCallback()) {
+					if (!readCookie("suppress_browser_warning_"+el.id)) {
+						btn = document.createElement("button");
+						btn.appendChild(document.createTextNode("Ignore this warning"));
+						btn.style.marginBottom = "1em";
+						Event.observe(btn, "click", function() { suppressBrowserWarning(el.id); });
+						el.appendChild(btn);
             el.show();
+					}
         }
     }
+}
+
+function suppressBrowserWarning(id) {
+	document.cookie = "suppress_browser_warning_"+id+"=1; path=/";
+	$(id).hide();
 }

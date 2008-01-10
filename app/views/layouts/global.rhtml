@@ -14,6 +14,7 @@
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'jester', :plugin => 'jipe' %>
   <%= javascript_include_tag 'jipe', :plugin => 'jipe' %>
+  <%= javascript_include_tag 'browserdetect.js' %>
   <% if @rss_url %>
     <link rel="alternate" title="RSS Feed" href="<%=@rss_url%>" type="application/rss+xml"/>
   <% end %>
@@ -37,6 +38,29 @@
         <%= render :partial => 'auth/auth_form' %>
     </div>
 </div>
+
+<div id="ie_warning" style="display: none; padding-left: 1em; padding-right: 1em; border: #f00 1px solid; background-color: #fcc;">
+  <h2>Warning for Internet Explorer users</h2>
+  
+  <p>Journey is known not to work well with Microsoft Internet Explorer.  Answering questionnaires will work
+    fine with any browser, but other functionality, such as editing, importing, exporting, and analyzing
+    questionnaires may fail.</p>
+  
+  <p>Journey is tested and known to work with the following browsers:</p>
+  
+  <ul>
+    <li><a href="http://www.getfirefox.com">Mozilla Firefox 2.0 and up</a></li>
+    <li><a href="http://www.apple.com/safari">Safari 3.0 and up</a></li>
+  </ul>
+  
+  <p>Both of these browsers are available for free, and we recommend their use over Internet Explorer not
+    just for this site, but in general, due to their greater track record for security, stability, and
+    web standards compliance.</p>
+</div>
+
+<script type="text/javascript">
+  displayBrowserWarning('ie_warning', "Explorer");
+</script>
 
 <%= @content_for_layout %>
 

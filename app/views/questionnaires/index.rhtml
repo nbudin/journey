@@ -1,24 +1,75 @@
-<h1>Listing questionnaires</h1>
+<h1>Questionnaires</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-  </tr>
+<%= javascript_include_tag "layout.js" %>
 
-<% for questionnaire in @questionnaires %>
-  <tr>
-    <td><%=h questionnaire.title %></td>
-    <td><%= link_to "Answer", :controller => "answer", :action => "index", :id => questionnaire.id %></td>
-    <td><%= link_to 'Edit', edit_questionnaire_path(questionnaire) %></td>
-    <td>
-		  <%= link_to 'Answers', :controller => 'analyze', :action => 'responses', :id => questionnaire %>
-	  </td>
-    <td><%= link_to 'Export', questionnaire_path(questionnaire) + ".xml" %></td>
-    <td><%= link_to 'Delete', questionnaire_path(questionnaire), :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+<ul class="tabstrip">
+  <li id="create_questionnaire_tab">
+    <%= link_to_function "Create questionnaire", "selectTab('create_questionnaire');"%>
+  </li>
+	<li id="import_questionnaire_tab">
+    <%= link_to_function "Import questionnaire", "selectTab('import_questionnaire');"%>
+  </li>
+</ul>
 
-<br />
+<div id="create_questionnaire" style="display: none;" class="tabpage">
+	<p><b>Create a new questionnaire</b></p>
+	<div style="max-width: 300px;">
+		<% ae_form_for(:questionnaire, @questionnaire, :url => questionnaires_path, :html => {:id => "create_questionnaire"}) do |f| %>
+		  <%= f.text_field "title" %>
+			<%= submit_tag "Create" %>
+		<% end %>
+	</div>
+</div>
 
-<%= link_to 'New questionnaire', new_questionnaire_path %>
+<div id="import_questionnaire" style="display: none;" class="tabpage">
+	<p><b>Import a questionnaire</b></p>
+	<div style="max-width: 300px;">
+	  <% form_tag({:controller => "jqml", :action => 'import'}, :multipart => true) do %>
+		  <label for="file">JQML file to import</label>
+		  <input type="file" name="file" />
+			<%= submit_tag "Import" %>
+		<% end %>
+	</div>
+</div>
+
+<% p = logged_in? ? logged_in_person : nil-%>
+
+<div id="questionnaire_list" style="border-top: 1px black solid;">
+	<table style="width: 100%; border-collapse: collapse;">
+
+	<% for questionnaire in @questionnaires %>
+		<tr class="<%= cycle("odd", "even") %>">
+			<td style="width: 100%; font-weight: bold;"><%=h questionnaire.title %></td>
+			<td>
+				<% if questionnaire.is_open -%>
+					<%= link_to "Answer", :controller => "answer", :action => "index", :id => questionnaire.id %>
+				<% end -%>
+			</td>
+			<td>
+				<% if p and p.permitted?(questionnaire, "edit") -%>
+					<%= link_to 'Edit', edit_questionnaire_path(questionnaire) %>
+				<% end -%>
+			</td>
+			<td>
+				<% if p and p.permitted?(questionnaire, "view_answers") -%>
+					<%= link_to 'Responses', :controller => 'analyze', :action => 'responses', :id => questionnaire %>
+				<% end -%>
+			</td>
+			<td>
+				<% if questionnaire.is_open? or (p and p.permitted?(questionnaire, "edit")) -%>
+					<%= link_to 'Export', questionnaire_path(questionnaire) + ".xml" %>
+				<% end -%>
+			</td>
+			<td>
+				<% if p and p.permitted?(questionnaire, "destroy") -%>
+					<%= link_to 'Delete', questionnaire_path(questionnaire), :confirm => 'Are you sure?', :method => :delete %>
+				<% end-%>
+			</td>
+		</tr>
+	<% end %>
+	</table>
+</div>					
+
+<script type="text/javascript">
+  selectTab('questionnaire_list');
+</script>

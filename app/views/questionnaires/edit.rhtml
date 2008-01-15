@@ -1,29 +1,9 @@
 <h1>Editing "<%=h @questionnaire.title%>"</h1>
 
-
-
 <%= error_messages_for :questionnaire %>
+<%= javascript_include_tag "layout.js" %>
 
 <script type="text/javascript">
-
-function getInnerHeight() {
-  var y;
-  if (window.innerHeight) // all except Explorer
-  {
-    y = window.innerHeight;
-  }
-  else if (document.documentElement && document.documentElement.clientHeight)
-    // Explorer 6 Strict Mode
-  {
-    y = document.documentElement.clientHeight;
-  }
-  else if (document.body) // other Explorers
-  {
-    y = document.body.clientHeight;
-  }
-  
-  return y;
-}
 
 function switchPage(id, title) {
   $('pageview').src = '<%=pages_url(@questionnaire) + "/" %>' + id + ';edit';
@@ -58,21 +38,6 @@ function createPage() {
       }
     }
   );
-}
-
-selectedTabName = "";
-
-function selectTab(name) {
-  $$('div.tabpage').each(function(page) { page.hide(); });
-  $$('ul.tabstrip li').each(function(tab) { tab.removeClassName('selected')});
-  if (selectedTabName != name) {
-    $(name).show();
-    $(name+'_tab').addClassName('selected');
-    selectedTabName = name;
-  } else {
-    selectedTabName = "";
-  }
-  sizeQuestionnaireEdit();
 }
 </script>
 
@@ -141,4 +106,5 @@ function sizeQuestionnaireEdit() {
 
 Event.observe(window, 'load', sizeQuestionnaireEdit);
 Event.observe(window, 'resize', sizeQuestionnaireEdit);
+observeTabSelected(sizeQuestionnaireEdit);
 </script>

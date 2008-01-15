@@ -55,7 +55,7 @@
 					links << link_to('Export', questionnaire_path(questionnaire) + ".xml")
 				end
 		  -%>
-		<% if links.length > 0 -%>
+		<% if links.length > -1 -%>
 			<% authors = questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
 			<div class="questionnairesummary">
 				<h3 style="display: inline; margin-top: 0;"><%=h questionnaire.title %></h3>

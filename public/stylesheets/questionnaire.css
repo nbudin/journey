@@ -236,3 +236,7 @@ li.question div.draghandle {
         padding: 0.5em;
         margin-top: 1em;
 }
+
+.questionnairesummary h3 {
+        margin-top: 0;
+}

@@ -58,18 +58,16 @@
 		<% if links.length > 0 -%>
 			<% authors = questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
 			<div class="questionnairesummary">
-				<p>
-					<h3 style="display: inline;"><%=h questionnaire.title %></h3>
-					<% if authors.length > 0 -%>
-					  <br/>
-			      <i>By <%= questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") %></i>
-					<% end -%>
-			  </p>
+				<h3 style="display: inline; margin-top: 0;"><%=h questionnaire.title %></h3>
+				<% if authors.length > 0 -%>
+				  <br/>
+		      <i>By <%=h authors %></i>
+				<% end -%>
 				<p>
 					<%= pluralize(questionnaire.pages.count, "page") %><br/>
 					<%= pluralize(questionnaire.fields.count, "question") %>
 				</p>
-				<p>
+				<p style="margin-bottom: 0;">
 				  <%= links.join(" ") %>
 				</p>
 			</div>

@@ -36,7 +36,10 @@ class QuestionnairesController < ApplicationController
   # POST /questionnaires.xml
   require_login :only => [:create]
   def create
-    @questionnaire = Questionnaire.new(params[:questionnaire])
+    p = params[:questionnaire] || {}
+    p[:title] ||= "Untitled questionnaire"
+    @questionnaire = Questionnaire.new(p)
+    
 
     respond_to do |format|
       if @questionnaire.save

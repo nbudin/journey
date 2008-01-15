@@ -44,6 +44,7 @@ class PagesController < ApplicationController
   def create
     p = params[:page] || {}
     p[:questionnaire_id] = @questionnaire.id
+    p[:title] ||= "Untitled page"
     @page = Page.new(p)
 
     respond_to do |format|

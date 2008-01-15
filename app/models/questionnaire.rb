@@ -27,7 +27,7 @@ class Questionnaire < ActiveRecord::Base
   end
 
   def after_create
-    page = Page.create :questionnaire_id => id
+    page = Page.create :questionnaire_id => id, :title => "Untitled page"
     page.insert_at(1)
   end
 

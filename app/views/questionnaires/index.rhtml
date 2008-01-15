@@ -35,41 +35,44 @@
 <% p = logged_in? ? logged_in_person : nil-%>
 
 <div id="questionnaire_list" style="border-top: 1px black solid;">
-	<table style="width: 100%; border-collapse: collapse;">
-
 	<% for questionnaire in @questionnaires %>
-		<tr class="<%= cycle("odd", "even") %>">
-			<td style="width: 100%; font-weight: bold;"><%=h questionnaire.title %></td>
-			<td>
-				<% if questionnaire.is_open -%>
-					<%= link_to "Answer", :controller => "answer", :action => "index", :id => questionnaire.id %>
-				<% end -%>
-			</td>
-			<td>
-				<% if p and p.permitted?(questionnaire, "edit") -%>
-					<%= link_to 'Edit', edit_questionnaire_path(questionnaire) %>
-				<% end -%>
-			</td>
-			<td>
-				<% if p and p.permitted?(questionnaire, "view_answers") -%>
-					<%= link_to 'Responses', :controller => 'analyze', :action => 'responses', :id => questionnaire %>
-				<% end -%>
-			</td>
-			<td>
-				<% if questionnaire.is_open? or (p and p.permitted?(questionnaire, "edit")) -%>
-					<%= link_to 'Export', questionnaire_path(questionnaire) + ".xml" %>
-				<% end -%>
-			</td>
-			<td>
-				<% if p and p.permitted?(questionnaire, "destroy") -%>
-					<%= link_to 'Delete', questionnaire_path(questionnaire), :confirm => 'Are you sure?', :method => :delete %>
-				<% end-%>
-			</td>
-		</tr>
+		<%  links = []
+				if questionnaire.is_open
+					links << link_to("Answer", :controller => "answer", :action => "index", :id => questionnaire.id)
+				end
+				if p
+					if p.permitted?(questionnaire, "edit")
+						links << link_to('Edit', edit_questionnaire_path(questionnaire))
+					end
+					if p.permitted?(questionnaire, "view_answers")
+						links << link_to(pluralize(questionnaire.responses.count, "Response"), :controller => 'analyze', :action => 'responses', :id => questionnaire)
+					end
+					if p.permitted?(questionnaire, "destroy")
+						links << link_to('Delete', questionnaire_path(questionnaire), :confirm => 'Are you sure?', :method => :delete)
+					end
+				end
+				if questionnaire.is_open? or (p and p.permitted?(questionnaire, "edit"))
+					links << link_to('Export', questionnaire_path(questionnaire) + ".xml")
+				end
+		  -%>
+		<% if links.length > 0 -%>
+			<% authors = questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
+			<div class="questionnairesummary">
+				<p>
+					<h3 style="display: inline;"><%=h questionnaire.title %></h3>
+					<% if authors.length > 0 -%>
+					  <br/>
+			      <i>By <%= questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") %></i>
+					<% end -%>
+			  </p>
+				<p>
+					<%= pluralize(questionnaire.pages.count, "page") %><br/>
+					<%= pluralize(questionnaire.fields.count, "question") %>
+				</p>
+				<p>
+				  <%= links.join(" ") %>
+				</p>
+			</div>
+		<% end -%>
 	<% end %>
-	</table>
 </div>					
-
-<script type="text/javascript">
-  selectTab('questionnaire_list');
-</script>

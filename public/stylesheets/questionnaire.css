@@ -230,3 +230,9 @@ ul#questions {
 li.question div.draghandle {
     cursor: move;   
 }
+
+.questionnairesummary {
+        background-color: #c1ddff;
+        padding: 0.5em;
+        margin-top: 1em;
+}

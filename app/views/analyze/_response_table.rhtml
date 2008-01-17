@@ -27,6 +27,11 @@
                 <td class="minimizable"><%= response.id %></td>
             </tr>
         <% end %>
+				<% (Response.per_page - @responses.length).times do %>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+        <% end%>
     </table>
     <%= will_paginate @responses %>
 <% end %>

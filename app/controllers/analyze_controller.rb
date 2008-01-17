@@ -13,8 +13,7 @@ class AnalyzeController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
     @rss_url = url_for :action => "rss", :id => @questionnaire.id, :secret => @questionnaire.rss_secret
     
-    @responses = Response.paginate_by_questionnaire_id(@questionnaire.id,
-        :conditions => "id in (select response_id from answers)", :page => params[:page])
+    @responses = @questionnaire.valid_responses.paginate :page => params[:page]
     
     if request.xml_http_request?
       render :partial => 'response_table', :layout => false

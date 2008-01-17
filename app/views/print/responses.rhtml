@@ -1,0 +1,7 @@
+<% @questionnaire.valid_responses.each do |resp| -%>
+  <div class="separate-page">
+    <h1><%=h resp.title %></h1>
+  
+    <%= render :partial => "analyze/response", :locals => {:resp => resp} %>
+  </div>
+<% end -%>

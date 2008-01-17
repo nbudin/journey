@@ -1,11 +1,10 @@
 require 'journey_questionnaire'
 
 class AnalyzeController < ApplicationController
-  layout "global", :except => "rss"
+  layout "global", :except => [:rss, :print]
   require_permission "view_answers", :class_name => "Questionnaire", :only => [:responses, :response_table, :aggregate]
 
   def responses 
-    @items_per_page = params[:items_per_page] || 20
     sort = params[:sort_column] || 'id'
     if params[:reverse] == "true"
       sort = "#{sort} DESC"
@@ -14,12 +13,8 @@ class AnalyzeController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
     @rss_url = url_for :action => "rss", :id => @questionnaire.id, :secret => @questionnaire.rss_secret
     
-    conditions = ["questionnaire_id = ? and id in (select response_id from answers)",
-      @questionnaire.id]
-    
-    @count = Response.count(:conditions => conditions)
-    @responses_pages, @responses = paginate(:responses, :order => sort, :conditions => conditions, 
-      :per_page => @items_per_page)
+    @responses = Response.paginate_by_questionnaire_id(@questionnaire.id,
+        :conditions => "id in (select response_id from answers)", :page => params[:page])
     
     if request.xml_http_request?
       render :partial => 'response_table', :layout => false

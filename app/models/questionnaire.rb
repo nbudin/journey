@@ -5,12 +5,14 @@ class Questionnaire < ActiveRecord::Base
 
   has_many :pages, :dependent => :destroy, :order => :position
   has_many :responses, :dependent => :destroy, :order => "id DESC"
+  has_many :valid_responses, :order => "id DESC", :class_name => "Response",
+    :conditions => "id in (select response_id from answers)"
   has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id
   has_many :special_fields, :through => :special_field_associations, :source => :question
-  has_many :questions, :through => :pages
-  has_many :fields, :through => :pages, :class_name => 'Question', :order => :position,
+  has_many :questions, :through => :pages, :order => "pages.position, questions.position"
+  has_many :fields, :through => :pages, :class_name => 'Question', :order => "pages.position, questions.position",
     :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::field_types)}"
-  has_many :decorators, :through => :pages, :class_name => 'Question', :order => :position,
+  has_many :decorators, :through => :pages, :class_name => 'Question', :order => "pages.position, questions.position",
     :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::decorator_types)}"
 
   def Questionnaire.special_field_purposes

@@ -1,1 +1,25 @@
-<%= render :partial => 'response', :locals => { :resp => @resp } %>
+<div id="responsecontainer<%=@resp.id%>" class="responsecontainer">
+    <div class="responseheader" id="responseheader">
+    	<table width="100%">
+    		<tr>
+    			<td align="left">
+    				<%=@resp.title%>
+    			</td>
+    			<td align="right">
+    			  <span id="response_wait_toolbar" style="display: none;">
+    			    Please wait...
+    			  </span>
+    			  <span id="response_delete_toolbar" style="display: none;">
+    			    Are you sure? <%= button_to_function "Yes", 'confirmDelete();' %>
+    			    <%= button_to_function "No", 'cancelDelete();' %>
+    			  </span>
+    			  <span id="response_toolbar">
+    			    <%= button_to_function "Delete", 'deleteResponse();' %>
+    				  <%= button_to_function "Close", 'hideResponse();' %>
+    				</span>
+    			</td>
+    		</tr>
+    	</table>
+    </div>
+    <%= render :partial => 'response', :locals => { :resp => @resp } %>
+</div>

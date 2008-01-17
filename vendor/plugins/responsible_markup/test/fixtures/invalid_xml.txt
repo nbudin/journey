@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<oh_crap />
-<blee>
- <blah />
- <blarg whee="wonk">
-   It's like... & twa.
- <blarg>
-</blee>

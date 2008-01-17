@@ -1,1 +1,0 @@
-require 'textmate_backtracer'

@@ -290,3 +290,34 @@ div.special_purpose {
 div.special_purpose img {
     vertical-align: top;
 }
+
+  .pagination {
+    padding: 3px;
+    margin: 3px;
+    text-align: center;
+  }
+  .pagination a {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #ccd87f;
+    text-decoration: none;
+    color: #647400;
+  }
+  .pagination a:hover, .pagination a:active {
+    border: 1px solid #ccd87f;
+    color: #000;
+  }
+  .pagination span.current {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #647400;
+    font-weight: bold;
+    background-color: #647400;
+    color: #FFF;
+  }
+  .pagination span.disabled {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #eee;
+    color: #ddd;
+  }

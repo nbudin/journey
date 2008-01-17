@@ -3,6 +3,10 @@ class Response < ActiveRecord::Base
   validates_associated :questionnaire
   has_many :answers, :dependent => :destroy
   
+  def self.per_page
+    20
+  end
+  
   def after_create
 #    self.questionnaire.pages.each do |page|
 #      page.questions.each do |question|

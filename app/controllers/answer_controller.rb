@@ -21,7 +21,7 @@ class AnswerController < ApplicationController
 
         qid = @resp.questionnaire.id
         @session["response_#{qid}"] = @resp
-        redirect_to :action => 'answer', :id => qid, :page => @resp[:saved_page]
+        redirect_to :action => 'index', :id => qid, :page => @resp[:saved_page]
       end
     end
   rescue

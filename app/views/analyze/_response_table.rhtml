@@ -15,7 +15,16 @@
         <% @responses.each do |response| %>
             <tr class="<%=cycle "even", "odd" %>" style="height: 0">
                 <td><%=link_to_function ellipsize(response.title,35), "showResponse(#{response.id})"%></td>
-                <td class="minimizable"><%=response.submitted_at%></td>
+                <td class="minimizable">
+                  <% if response.submitted -%>
+                    <%=response.submitted_at%>
+                  <% else -%>
+                    <b>Partial</b>
+                    <% if @questionnaire.allow_finish_later -%>
+                      (resume code: <i><%=response.session_code %></i>)
+                    <% end -%>
+                  <% end -%>
+                </td>
                 <% header_fields.each do |header| %>
 										<% answer = response.special_answer(header.purpose) -%>
                     <td class="minimizable">

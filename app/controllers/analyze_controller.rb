@@ -1,7 +1,9 @@
 require 'journey_questionnaire'
+require 'fastercsv'
+require 'iconv'
 
 class AnalyzeController < ApplicationController
-  layout "global", :except => [:rss, :print]
+  layout "global", :except => [:rss, :csv]
   require_permission "view_answers", :class_name => "Questionnaire", :only => [:responses, :response_table, :aggregate]
 
   def responses 
@@ -34,7 +36,33 @@ class AnalyzeController < ApplicationController
     if params[:secret] != @questionnaire.rss_secret
       throw "Provided secret does not match questionnaire"
     end
-    @responses = @questionnaire.responses.select { |r| r.answers.count > 0 }
+    @responses = @questionnaire.valid_responses
+  end
+  
+  def csv
+    @questionnaire = Questionnaire.find(params[:id])
+    @responses = @questionnaire.valid_responses
+    @columns = @questionnaire.fields
+    
+    stream_csv(@questionnaire.title + ".csv") do |csv|
+      if params[:rotate]
+        csv << (["id"] + @responses.collect { |r| r.id })
+        @columns.each do |col|
+          csv << ([col.caption] + @responses.collect do |r|
+            ans = r.answer_for_question(col)
+            ans ? ans.value : ""
+          end)
+        end
+      else
+        csv << (["id"] + @columns.collect { |c| c.caption })
+        @responses.each do |resp|
+          csv << ([resp.id] + @columns.collect do |c| 
+            ans = resp.answer_for_question(c)
+            ans ? ans.value : ""
+          end)
+        end
+      end
+    end
   end
   
   def aggregate
@@ -61,6 +89,30 @@ class AnalyzeController < ApplicationController
         end
         @answercounts[qid][val] += 1
       end
+    end
+  end
+  
+  private
+  def stream_csv(filename)
+    if request.env['HTTP_USER_AGENT'] =~ /msie/i
+      headers['Pragma'] = 'public'
+      headers['Content-type'] = 'text/plain'
+      headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
+      headers['Expires'] = "0"
+    else
+      headers['Content-Type'] ||= 'text/csv'
+    end
+    headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
+    
+    output = StringIO.new
+    csv = FasterCSV.new(output, :row_sep => "\r\n")
+    yield csv
+    begin
+      c = Iconv.new('ISO-8859-15', 'UTF-8')
+      render :text => c.iconv(output.string)
+    rescue Iconv::IllegalSequence
+      # this won't work in excel but might work other places
+      render :text => output.string
     end
   end
 end

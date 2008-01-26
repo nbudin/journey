@@ -1,5 +1,9 @@
 <ul class="analyze_toolbar">
 	<li><%= link_to "View Responses", :action => 'responses', :id => @params[:id] %></li>
 	<li><%= link_to "Print Responses", :controller => 'print', :action => 'responses', :id => @params[:id] %></li>
+	<li>Export Responses to Spreadsheet:
+	  <%= link_to "in rows", :action => 'csv', :id => @params[:id] %>
+	  or <%= link_to "in columns", :action => 'csv', :id => @params[:id], :rotate => true %>
+	</li>
 	<li><%= link_to "Aggregate", :action => 'aggregate', :id => @params[:id] %></li>
 </ul>

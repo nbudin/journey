@@ -21,7 +21,12 @@
                   <% else -%>
                     <b>Partial</b>
                     <% if @questionnaire.allow_finish_later -%>
-                      (resume code: <i><%=response.session_code %></i>)
+                      <% if response.session_code -%>
+                        (session code: <%= link_to response.session_code, :controller => "answer", :action => "resume",
+                          :session_code => response.session_code %>)
+                      <% else -%>
+                        (no session code)
+                      <% end -%>
                     <% end -%>
                   <% end -%>
                 </td>

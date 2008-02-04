@@ -37,7 +37,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           <% end -%>
           </ul>
           <%= sortable_element "questions", :handle => "draghandle",
-              :url => questionnaire_page_questions_path(@questionnaire, @page) + ';sort',
+              :url => questionnaire_page_questions_path(@questionnaire, @page) + '/sort',
               :complete => "window.location.reload();" %>
           <div class="navbuttons">
             <% if pageindex > 0 -%>

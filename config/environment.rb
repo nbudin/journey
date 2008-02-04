@@ -1,39 +1,23 @@
 # Be sure to restart your web server when you modify this file.
 
+RAILS_GEM_VERSION = '2.0.2' unless defined? RAILS_GEM_VERSION
+
 # Uncomment below to force Rails into production mode when 
 # you don't control web/app server and can't set it the proper way
 ENV['RAILS_ENV'] ||= 'production'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
+require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
   
-  # Skip frameworks you're not going to use
-  # config.frameworks -= [ :action_web_service, :action_mailer ]
-
-  # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{RAILS_ROOT}/extras )
-
-  # Force all environments to use the same logger level 
-  # (by default production uses :info, the others :debug)
-  # config.log_level = :debug
-
-  # Use the database for sessions instead of the file system
-  # (create the session table with 'rake create_sessions_table')
-  # config.action_controller.session_store = :active_record_store
-
-  # Enable page/fragment caching by setting a file-based store
-  # (remember to create the caching directory and make it readable to the application)
-  # config.action_controller.fragment_cache_store = :file_store, "#{RAILS_ROOT}/cache"
-
-  # Activate observers that should always be running
-  # config.active_record.observers = :cacher, :garbage_collector
-
-  # Make Active Record use UTC-base instead of local time
-  # config.active_record.default_timezone = :utc
-  
+  config.action_controller.session = {
+      :session_key => '_journey_aegames_org-trunk_session',
+      :secret      => 'ca837e0d9bfed2129139ac1712cf768687981f043aca55c15b424d1deee830babca9bf84afea63d9fd18164f9b026b5c5846b3cb1d64d8febeab9618d24a385f'
+    }
+      
   # Use Active Record's schema dumper instead of SQL when creating the test database
   # (enables use of different database adapters for development and test environments)
   config.active_record.schema_format = :ruby

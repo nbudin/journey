@@ -51,7 +51,7 @@ function updateDefaultForRadioGroup(questionId, newDefault) {
 
 function reloadQuestion(questionId) {
   new Ajax.Updater("question_"+questionId,
-                   "/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+";edit",
+                   "/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+"/edit",
                    { method: "get", evalScripts: true });
 }
 
@@ -68,12 +68,12 @@ function addQuestion(typ) {
                     newli.setAttribute('position', 'relative');
                     $('questions').appendChild(newli);
                     new Ajax.Updater("question_"+q.id,
-                                     "/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+q.id+";edit",
+                                     "/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+q.id+"/edit",
                                      { method: "get", evalScripts: true, insertion: Insertion.Bottom});
                     Sortable.create("questions",
                                     { handle:'draghandle',
                                       onUpdate:function() {
-                                        new Ajax.Request('/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions;sort",
+                                        new Ajax.Request('/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions/sort",
                                                          { asynchronous:true,
                                                             evalScripts:true,
                                                             onComplete: function(request){
@@ -115,7 +115,7 @@ function deleteQuestion(questionId) {
 }
 
 function duplicateQuestion(questionId, times) {
-  new Ajax.Request('/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+";duplicate",
+  new Ajax.Request('/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+"/duplicate",
                    { onComplete: function(request) {
                       window.location.reload();
                     },
@@ -125,7 +125,7 @@ function duplicateQuestion(questionId, times) {
 
 function setSpecialPurpose(questionId, purpose) {
   if (purpose == null) {
-    new Ajax.Request('/questionnaires/'+questionnaireId+'.xml;available_special_field_purposes',
+    new Ajax.Request('/questionnaires/'+questionnaireId+'/available_special_field_purposes.xml',
                      { 'method': 'get',
                        'onSuccess': function(transport) {
                           body = $('questionbody_'+questionId);

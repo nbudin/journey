@@ -6,7 +6,7 @@
 <script type="text/javascript">
 
 function switchPage(id, title) {
-  $('pageview').src = '<%=pages_url(@questionnaire) + "/" %>' + id + ';edit';
+  $('pageview').src = '<%= edit_questionnaire_page_url(@questionnaire, 9999) + "/" %>'.replace(/9999/, id+'');
   document.getElementsByClassName('activepage').each(function (page) {
     page.removeClassName('activepage');
   });
@@ -15,7 +15,7 @@ function switchPage(id, title) {
 }
 
 function deletePage(id) {
-  new Ajax.Request('<%= pages_url(@questionnaire) %>/'+id+'?_method=delete',
+  new Ajax.Request('<%= questionnaire_pages_url(@questionnaire) %>/'+id+'?_method=delete',
     {
       method: 'post',
       onSuccess: function() {
@@ -30,7 +30,7 @@ function deletePage(id) {
 
 function createPage() {
   Sortable.destroy("pagelist");
-  new Ajax.Request('<%= pages_url(@questionnaire) %>',
+  new Ajax.Request('<%= questionnaire_pages_url(@questionnaire) %>',
     {
       method: 'post',
       onSuccess: function() {

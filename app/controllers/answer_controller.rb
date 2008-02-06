@@ -20,7 +20,7 @@ class AnswerController < ApplicationController
         end
 
         qid = @resp.questionnaire.id
-        session["response_#{qid}"] = @resp
+        session["response_#{qid}"] = @resp.id
         redirect_to :action => 'index', :id => qid, :page => @resp[:saved_page]
       end
     end
@@ -35,17 +35,16 @@ class AnswerController < ApplicationController
     else
       response_key = "response_#{@questionnaire.id}"
       if session[response_key]
-        @resp = session[response_key]
+        @resp = Response.find(session[response_key])
       else
         @resp = Response.create :questionnaire => @questionnaire
-        session[response_key] = @resp
+        session[response_key] = @resp.id
       end
       if params[:page]
         @page = @resp.questionnaire.pages[params[:page].to_i - 1]
       else
         @page = @resp.questionnaire.pages[0]
       end
-      #@resp.verify_answers_for_page @page
     end
   end
 
@@ -71,7 +70,7 @@ class AnswerController < ApplicationController
   end
 
   def save_session
-    @resp = session["response_#{params[:id]}"]
+    @resp = Response.find(session["response_#{params[:id]}"])
     if not @resp.questionnaire.allow_finish_later and not @resp.submitted
       @flash[:errors] = ["This questionnaire does not allow you to resume answering later."]
       redirect_to :action => "answer", :id => @resp.questionnaire.id, :page => params[:current_page]
@@ -85,11 +84,11 @@ class AnswerController < ApplicationController
       @resp.save
     end
 
-    @session["response_#{params[:id]}"] = nil
+    session["response_#{params[:id]}"] = nil
   end
 
   def save_answers
-    @resp = @session["response_#{params[:id]}"]
+    @resp = Response.find(session["response_#{params[:id]}"])
     @page = @resp.questionnaire.pages[params[:current_page].to_i - 1]
 
     @page.questions.each do |question|
@@ -132,7 +131,10 @@ class AnswerController < ApplicationController
         @resp.save
         redirect_to :action => "save_session", :id => @resp.questionnaire.id, :current_page => 1
       else
-        redirect_to :action => "index", :id => @resp.questionnaire.id, :page => (params[:current_page].to_i + offset)
+        new_page = params[:current_page].to_i + offset
+        @resp.saved_page = new_page
+        @resp.save
+        redirect_to :action => "index", :id => @resp.questionnaire.id, :page => new_page
       end
     end
   end

@@ -1,4 +1,5 @@
 require 'sha1'
+require 'rexml/document'
 
 class Questionnaire < ActiveRecord::Base
   acts_as_permissioned :permission_names => [:edit, :view_answers, :edit_answers, :destroy]
@@ -29,8 +30,10 @@ class Questionnaire < ActiveRecord::Base
   end
 
   def after_create
-    page = Page.create :questionnaire_id => id, :title => "Untitled page"
-    page.insert_at(1)
+    if pages.length == 0
+      page = Page.create :questionnaire_id => id, :title => "Untitled page"
+      page.insert_at(1)
+    end
   end
 
   def rss_secret
@@ -77,5 +80,72 @@ class Questionnaire < ActiveRecord::Base
         end
       end
     end
+  end
+  
+  def Questionnaire.from_xml(xml)
+    root = REXML::Document.new(xml).root
+    q = Questionnaire.new(:title => root.attributes['title'], :custom_html => '',
+      :custom_css => '', :is_open => false)
+    root.each_element do |element|
+      if element.name == 'custom_html'
+        q.custom_html = element.text
+      elsif element.name == 'custom_css'
+        q.custom_css = element.text
+      elsif element.name == 'page'
+        p = q.pages.new :title => element.attributes['title']
+        element.each_element do |question|
+          if question.name != 'question'
+            raise "Found a #{question.name} tag that shouldn't be a direct child of page"
+          end
+          
+          if not Journey::Questionnaire::question_types.include?(question.attributes['type'])
+            raise "#{question.attributes['type']} is not a valid question type"
+          end
+          
+          klass = Journey::Questionnaire::question_class(question.attributes['type'])
+          ques = klass.new(:required => question.attributes['required'], :page => p)
+          
+          question.each_element('caption') do |caption|
+            ques.caption = caption.text
+          end
+          da = nil
+          question.each_element('default_answer') do |default_answer|
+            da = default_answer.text
+            logger.info "Default answer is #{da}"
+          end
+          
+          if ques.kind_of? RangeField
+            question.each_element('range') do |range|
+              ['min', 'max', 'step'].each do |attrib|
+                ques.send "#{attrib}=", range.attributes[attrib]
+              end
+            end
+          end
+          
+          if ques.kind_of? SelectorField
+            optrows = {}
+            question.each_element('option') do |option|
+              o = QuestionOption.new :option => option.text
+              ques.question_options << o
+              optrows[option.text] = o
+              logger.info("Inserted optrows[#{option.text}] with id #{o.id}")
+            end
+            if da and da.length > 0
+              logger.info("Setting default answer for question to #{optrows[da].option}")
+              ques.default_answer = optrows[da].option
+            end
+          end
+          
+          ques.position = p.questions.length + 1
+          p.questions << ques
+        end
+        
+        p.position = q.pages.length + 1
+        q.pages << p
+      else
+        raise "Found a #{element.name} tag that shouldn't be a direct child of questionnaire"
+      end
+    end
+    return q
   end
 end

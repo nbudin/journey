@@ -24,7 +24,7 @@
 <div id="import_questionnaire" style="display: none;" class="tabpage">
 	<p><b>Import a questionnaire</b></p>
 	<div style="max-width: 300px;">
-	  <% form_tag({:controller => "jqml", :action => 'import'}, :multipart => true) do %>
+	  <% form_tag(questionnaires_path, :multipart => true) do %>
 		  <label for="file">JQML file to import</label>
 		  <input type="file" name="file" />
 			<%= submit_tag "Import" %>

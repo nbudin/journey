@@ -15,5 +15,11 @@ module Journey
     def self.question_types
       return decorator_types + field_types
     end
+    
+    def self.question_class(klass)
+      if self.question_types.include?(klass)
+        return eval(klass)
+      end
+    end
   end
 end

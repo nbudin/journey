@@ -1,8 +1,0 @@
-<% if @editing -%>
-	<%= start_question @question %>
-	<%= text_area "question[]", "default_answer", :rows => 4 %>
-	<%= end_question @question %>
-<% else -%>
-	<p<%if @question.required%> class="required"<%end%>><%=@question.caption%></p>
-	<%= text_area_tag "question[#{@question.id}]", value, :rows => 4 %>
-<% end -%>

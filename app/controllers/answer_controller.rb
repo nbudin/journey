@@ -20,7 +20,7 @@ class AnswerController < ApplicationController
         end
 
         qid = @resp.questionnaire.id
-        @session["response_#{qid}"] = @resp
+        session["response_#{qid}"] = @resp
         redirect_to :action => 'index', :id => qid, :page => @resp[:saved_page]
       end
     end
@@ -34,11 +34,11 @@ class AnswerController < ApplicationController
       redirect_to :action => 'questionnaire_closed', :id => params[:id]
     else
       response_key = "response_#{@questionnaire.id}"
-      if @session[response_key]
-        @resp = @session[response_key]
+      if session[response_key]
+        @resp = session[response_key]
       else
         @resp = Response.create :questionnaire => @questionnaire
-        @session[response_key] = @resp
+        session[response_key] = @resp
       end
       if params[:page]
         @page = @resp.questionnaire.pages[params[:page].to_i - 1]
@@ -71,7 +71,7 @@ class AnswerController < ApplicationController
   end
 
   def save_session
-    @resp = @session["response_#{params[:id]}"]
+    @resp = session["response_#{params[:id]}"]
     if not @resp.questionnaire.allow_finish_later and not @resp.submitted
       @flash[:errors] = ["This questionnaire does not allow you to resume answering later."]
       redirect_to :action => "answer", :id => @resp.questionnaire.id, :page => params[:current_page]

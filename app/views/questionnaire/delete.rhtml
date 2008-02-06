@@ -1,7 +1,0 @@
-<h1>Confirm deletion</h1>
-
-<%= form_tag :action => :delete, :confirm => true%>
-	<p>Really delete the questionnaire "<%= @questionnaire.title %>"?
-	If you are sure, press the button below.</p>
-	<p><%= submit_tag "Yes, really!" %></p>
-<%= end_form_tag %>

@@ -78,9 +78,7 @@ class Field < Question
   end
   
   def to_json
-    #awful hack to get purpose into the attributes list
-    json = super
-    return json.sub(/(attributes: \{)/, "\\1'purpose': #{purpose.to_json}, ")
+    super :methods => "purpose"
   end
   
   def xmlcontent(xml)

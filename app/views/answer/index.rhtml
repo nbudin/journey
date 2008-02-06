@@ -8,7 +8,7 @@ fieldcount = 0 -%>
 		<div class="pagecount">Page <%= pageindex + 1 %> of <%= @resp.questionnaire.pages.length %></div>
 	<% end -%>
 
-	<%= form_tag :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => pageindex + 1 %>
+	<% form_tag :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => pageindex + 1 do %>
 		<% @page.questions.each do |question| -%>
 			<% if question.kind_of? Field; fieldcount += 1; end 
 			if question.kind_of? Divider; fieldcount = 0; end -%>
@@ -34,5 +34,5 @@ fieldcount = 0 -%>
 				<%= submit_tag "Finish" %>
 			<% end -%>
 		</div>
-	<%= end_form_tag %>
+	<% end %>
 </div>

@@ -1,7 +1,0 @@
-<%= start_question @question %>
-<% if @editing -%>
-	<%= text_field "question[]", "default_answer" %>
-<% else -%>
-	<%= text_field_tag "question[#{@question.id}]", value %>
-<% end -%>
-<%= end_question @question %>

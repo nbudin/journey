@@ -44,6 +44,7 @@ class QuestionsController < ApplicationController
   # POST /questions.xml
   def create
     @question = Question.new(params[:question])
+    @question.caption ||= ""
     @question.page = @page
 
     respond_to do |format|

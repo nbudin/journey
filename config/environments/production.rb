@@ -19,7 +19,7 @@ config.action_controller.perform_caching             = true
 # config.action_mailer.raise_delivery_errors = false
 
 ActionMailer::Base.delivery_method = :smtp
-ActionMailer::Base.server_settings = {
+ActionMailer::Base.smtp_settings = {
   :address => "mail.aegames.org",
   :port => 587,
   :domain => "aegames.org",

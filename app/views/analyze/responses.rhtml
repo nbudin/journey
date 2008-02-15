@@ -9,6 +9,8 @@ function sizeResponseViewer() {
     }
     $('responseviewer').style.width = width + "px";
     $('responseviewer').style.height = height + "px";
+		$('responseviewer').style.top = ($('responsetable').offsetTop) + 'px';
+		$('responseviewer').style.left = ($('responsefromheader').offsetLeft + 10 + $('responsefromheader').offsetWidth) + 'px';
 }
 
 showingResponseId = null;
@@ -69,7 +71,7 @@ function confirmDelete() {
 }
 </script>
 
-<div id="responseviewer" style="display: none; float: right;"></div>
+<div id="responseviewer" style="display: none; position: absolute;"></div>
 
 <%= render :partial => 'response_table' %>
 

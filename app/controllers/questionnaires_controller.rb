@@ -1,10 +1,22 @@
+require 'paginator'
+
 class QuestionnairesController < ApplicationController
   rest_edit_permissions
 
   # GET /questionnaires
   # GET /questionnaires.xml
   def index
-    @questionnaires = Questionnaire.find(:all)
+    p = logged_in? ? logged_in_person : nil
+    all_questionnaires = Questionnaire.find(:all, :order => 'id DESC')
+    permitted_questionnaires = all_questionnaires.select do |q|
+      q.is_open or (p and Questionnaire.permission_names.any? { |pn| p.permitted?(q, pn) })
+    end
+    pager = ::Paginator.new(permitted_questionnaires.size, 5) do |offset, per_page|
+      permitted_questionnaires[offset, per_page]
+    end
+    @questionnaires = returning WillPaginate::Collection.new(params[:page] || 1, 5, permitted_questionnaires.size) do |p|
+      p.replace pager.page(params[:page]).items
+    end
 
     respond_to do |format|
       format.html # index.rhtml

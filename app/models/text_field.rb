@@ -1,0 +1,2 @@
+class TextField < FreeformField
+end

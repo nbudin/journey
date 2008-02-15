@@ -1,0 +1,2 @@
+class Divider < Question
+end

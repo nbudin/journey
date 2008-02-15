@@ -210,6 +210,10 @@ ul.tabstrip li {
     padding: 6px;
     margin-right: 12px;
     background-color: #ddd;
+    background-image: url(/images/drop-down.png);
+    background-position: 3px;
+    background-repeat: no-repeat;
+    padding-left: 22px;
 }
 
 ul.tabstrip li a {
@@ -220,6 +224,17 @@ ul.tabstrip li a {
 
 ul.tabstrip li.selected {
     background-color: #ccd87f;
+}
+
+ul.tabstrip li.link {
+    background-color: #ffc;
+    background-image: url(/images/link.png);
+}
+
+ul.tabstrip li.selected_link {
+    background-color: #fff;
+    background-image: none;
+    padding-left: 6px;
 }
 
 div.tabpage {

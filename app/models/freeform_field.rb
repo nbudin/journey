@@ -1,0 +1,2 @@
+class FreeformField < Field
+end

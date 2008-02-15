@@ -1,9 +1,27 @@
-<ul class="analyze_toolbar">
-	<li><%= link_to "View Responses", :action => 'responses', :id => params[:id] %></li>
-	<li><%= link_to "Print Responses", :controller => 'print', :action => 'responses', :id => params[:id] %></li>
-	<li>Export Responses to Spreadsheet:
-	  <%= link_to "in rows", :action => 'csv', :id => params[:id] %>
-	  or <%= link_to "in columns", :action => 'csv', :id => params[:id], :rotate => true %>
+<%= javascript_include_tag "layout.js" %>
+
+<h1>Responses for "<%= @questionnaire.title %>"</h1>
+
+<ul class="tabstrip">
+	<li id="view_tab" class="<%= link_tab_class 'responses' %>">
+		<%= link_to "View", :action => 'responses', :id => params[:id] %>
 	</li>
-	<li><%= link_to "Aggregate", :action => 'aggregate', :id => params[:id] %></li>
+	<li id="aggregate_tab" class="<%= link_tab_class 'aggregate' %>">
+		<%= link_to "Aggregate", :action => 'aggregate', :id => params[:id] %>
+	</li>
+	<li id="print_tab" class="link">
+		<%= link_to "Print", :controller => 'print', :action => 'responses', :id => params[:id] %>
+	</li>
+  <li id="export_tab">
+    <%= link_to_function "Export", "selectTab('export');"%>
+  </li>
 </ul>
+
+<div id="export" style="display: none;" class="tabpage">
+	<p><b>Export to a spreadsheet</b></p>
+	<%= link_to "One response per row", :action => 'csv', :id => params[:id] %><br/>
+	<%= link_to "One response per column", :action => 'csv', :id => params[:id], :rotate => true %>
+</div>
+
+<div style="border-top: 1px black solid;">
+</div>

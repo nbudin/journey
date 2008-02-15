@@ -105,8 +105,12 @@ class Questionnaire < ActiveRecord::Base
           klass = Journey::Questionnaire::question_class(question.attributes['type'])
           ques = klass.new(:required => question.attributes['required'], :page => p)
           
+          ques.caption = ""
           question.each_element('caption') do |caption|
             ques.caption = caption.text
+            if ques.caption.nil?
+              ques.caption = ""
+            end
           end
           da = nil
           question.each_element('default_answer') do |default_answer|
@@ -131,8 +135,13 @@ class Questionnaire < ActiveRecord::Base
               logger.info("Inserted optrows[#{option.text}] with id #{o.id}")
             end
             if da and da.length > 0
-              logger.info("Setting default answer for question to #{optrows[da].option}")
-              ques.default_answer = optrows[da].option
+              optrow = optrows[da]
+              if optrow.nil?
+                logger.warn("No optrow called #{da} found!")
+              else
+                logger.info("Setting default answer for question to #{optrows[da].option}")
+                ques.default_answer = optrows[da].option
+              end
             end
           end
           

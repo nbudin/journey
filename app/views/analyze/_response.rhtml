@@ -13,11 +13,15 @@
     					<%= question.caption %>
     				</td>
     				<td class="questionbody">
-              <% if answer.nil? -%>
-                &nbsp;
-              <% else -%>
-    					  <%=h answer.value %>
-              <% end -%>
+                <% if question.kind_of? CheckBoxField -%>
+                    <%= check_box_tag "answer_#{question.id}", 'checked', answer, :disabled => true -%>
+                <% else -%>
+                    <% if answer.nil? -%>
+                        &nbsp;
+                    <% else -%>
+                        <%=h answer.value %>
+                    <% end -%>
+                <% end -%>
     				</td>
     			</tr>
     		</table>

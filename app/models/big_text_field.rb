@@ -1,0 +1,2 @@
+class BigTextField < FreeformField
+end

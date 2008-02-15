@@ -59,4 +59,12 @@ module ApplicationHelper
     }.update(options)
     return render(:partial => 'questions/questionend', :locals => { :question => question }.update(options))
   end
+  
+  def link_tab_class(action)
+    if params[:action] == action
+      'selected_link'
+    else
+      'link'
+    end
+  end
 end

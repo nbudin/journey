@@ -1,0 +1,2 @@
+class RadioField < SelectorField
+end

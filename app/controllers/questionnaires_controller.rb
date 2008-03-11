@@ -30,7 +30,14 @@ class QuestionnairesController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
 
     respond_to do |format|
-      format.xml  { render :xml => @questionnaire.to_xml }
+      format.xml do
+        if logged_in? and logged_in_person.permitted?(@questionnaire, "edit")
+          render :xml => @questionnaire.to_xml
+        else
+          response.headers["Content-type"] = "text/html"
+          access_denied("Sorry, but you are not allowed to edit this questionnaire.")
+        end
+      end
     end
   end
 

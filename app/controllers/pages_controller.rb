@@ -21,6 +21,7 @@ class PagesController < ApplicationController
   # GET /pages/1.xml
   def show
     @page = Page.find(params[:id])
+    check_forged_path
 
     respond_to do |format|
       format.html # show.rhtml
@@ -37,6 +38,7 @@ class PagesController < ApplicationController
   # GET /pages/1;edit
   def edit
     @page = Page.find(params[:id])
+    check_forged_path
   end
 
   # POST /pages
@@ -63,6 +65,7 @@ class PagesController < ApplicationController
   # PUT /pages/1.xml
   def update
     @page = Page.find(params[:id])
+    check_forged_path
 
     respond_to do |format|
       if @page.update_attributes(params[:page])
@@ -82,6 +85,7 @@ class PagesController < ApplicationController
   # DELETE /pages/1.xml
   def destroy
     @page = Page.find(params[:id])
+    check_forged_path
     @page.destroy
 
     respond_to do |format|
@@ -99,7 +103,14 @@ class PagesController < ApplicationController
     render :nothing => true
   end
 
+  private 
   def get_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
+  end
+  
+  def check_forged_path
+    if @page.questionnaire != @questionnaire
+      access_denied "That page ID does not match the questionnaire given."
+    end
   end
 end

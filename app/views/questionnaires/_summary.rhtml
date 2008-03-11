@@ -13,9 +13,9 @@
       if p.permitted?(questionnaire, "destroy")
         links << link_to('Delete', questionnaire_path(questionnaire), :confirm => 'Are you sure?', :method => :delete)
       end
-    end
-    if questionnaire.is_open? or (p and p.permitted?(questionnaire, "edit"))
-      links << link_to('Export', questionnaire_path(questionnaire) + ".xml")
+      if p.permitted?(questionnaire, "edit")
+        links << link_to('Export', questionnaire_path(questionnaire) + ".xml")
+      end
     end
   -%>
 <% authors = questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>

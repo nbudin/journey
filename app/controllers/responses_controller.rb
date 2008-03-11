@@ -7,7 +7,7 @@ class ResponsesController < ApplicationController
   # GET /responses
   # GET /responses.xml
   def index
-    @responses = Response.find(:all)
+    @responses = @questionnaire.responses
 
     respond_to do |format|
       format.html # index.html.erb

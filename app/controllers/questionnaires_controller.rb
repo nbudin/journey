@@ -49,7 +49,13 @@ class QuestionnairesController < ApplicationController
   require_login :only => [:create]
   def create
     if params[:file]
-      @questionnaire = Questionnaire.from_xml(params[:file].read)
+      begin
+        @questionnaire = Questionnaire.from_xml(params[:file].read)
+      rescue Exception => ex
+        flash[:errors] = ["There was an error parsing the JQML file you uploaded.  Please check to make sure it is a valid JQML file."]
+        redirect_to :action => "index"
+        return
+      end
     else
       p = params[:questionnaire] || {}
       p[:title] ||= "Untitled questionnaire"
@@ -62,7 +68,7 @@ class QuestionnairesController < ApplicationController
         format.html { redirect_to questionnaires_url }
         format.xml  { head :created, :location => questionnaire_url(@questionnaire) }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to :action => "index" }
         format.xml  { render :xml => @questionnaire.errors.to_xml }
       end
     end

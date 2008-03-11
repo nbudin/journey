@@ -1,0 +1,11 @@
+<h1>New response</h1>
+
+<%= error_messages_for :response %>
+
+<% form_for(@response) do |f| %>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', responses_path %>

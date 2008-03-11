@@ -1,0 +1,12 @@
+<h1>Editing response</h1>
+
+<%= error_messages_for :response %>
+
+<% form_for(@response) do |f| %>
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', questionnaire_response_path(@questionnaire, @response) %> |
+<%= link_to 'Back', questionnaire_responses_path(@questionnaire) %>

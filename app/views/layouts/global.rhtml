@@ -21,10 +21,18 @@
 </head>
 <body id="body">
 
-<% if flash[:errors] -%>
+<% if flash[:errors] or flash[:error_messages] -%>
+  <% # gaaaaah -%>
+  <% allerrors = [] -%>
+  <% if flash[:errors]
+    allerrors += flash[:errors]
+  end
+  if flash[:error_messages]
+    allerrors += flash[:error_messages]
+  end -%>
         <div style="color: red; font-size: 125%;">There were errors processing your request:</div>
         <ul>
-                <% flash[:errors].each do |error| -%>
+                <% allerrors.each do |error| -%>
                         <li style="color: red"><%= error %></li>
                 <% end -%>
         </ul>

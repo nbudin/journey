@@ -22,6 +22,7 @@ class QuestionsController < ApplicationController
   # GET /questions/1.xml
   def show
     @question = Question.find(params[:id])
+    check_forged_path
 
     respond_to do |format|
       format.html # show.rhtml
@@ -38,6 +39,7 @@ class QuestionsController < ApplicationController
   # GET /questions/1;edit
   def edit
     @question = Question.find(params[:id])
+    check_forged_path
   end
 
   # POST /questions
@@ -64,6 +66,7 @@ class QuestionsController < ApplicationController
   # PUT /questions/1.xml
   def update
     @question = Question.find(params[:id])
+    check_forged_path
 
     respond_to do |format|
       if @question.update_attributes(params[:question])
@@ -85,6 +88,7 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1.xml
   def destroy
     @question = Question.find(params[:id])
+    check_forged_path
     @question.destroy
 
     respond_to do |format|
@@ -106,6 +110,7 @@ class QuestionsController < ApplicationController
   def duplicate
     @question = Question.find(params[:id])
     @times = params[:times] || 1
+    check_forged_path
     
     i = @page.questions.index(@question) + 1
     @times.to_i.times do
@@ -117,8 +122,18 @@ class QuestionsController < ApplicationController
     render :nothing => true
   end
 
+  private
+  def check_forged_path
+    if @question.page != @page
+      access_denied "That question ID does not match the page given."
+    end
+  end
+  
   def get_questionnaire_and_page
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
     @page = Page.find(params[:page_id])
+    if @page.questionnaire != @questionnaire
+      access_denied "That page ID does not match the questionnaire given."
+    end
   end
 end

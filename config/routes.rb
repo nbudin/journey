@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
         questions.resources :question_options
       end
     end
+    questionnaires.resources :responses
   end
 
   # Add your own custom routes here.

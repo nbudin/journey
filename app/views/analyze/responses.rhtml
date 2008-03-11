@@ -59,9 +59,9 @@ function confirmDelete() {
   $('response_delete_toolbar').hide();
   $('response_wait_toolbar').show();
   new Ajax.Request(
-      '<%= url_for :action => 'delete_response', :controller => 'questionnaire' %>',
+      '<%= questionnaire_responses_url @questionnaire %>/'+showingResponseId,
       {
-          parameters: 'id='+showingResponseId,
+          method: 'delete',
           onSuccess: function (req, header) { window.location.reload(); },
           onFailure: function (req, header) { 
             alert(resp.responseText);

@@ -13,7 +13,7 @@ require 'mongrel_cluster/recipes'
 # form the root of the application path.
 
 set :application, "journey"
-set :repository, "http://journey-questionnaires.googlecode.com/svn/branches/2.0"
+set :repository, "http://journey-questionnaires.googlecode.com/svn/branches/2.0.1"
 
 # =============================================================================
 # ROLES

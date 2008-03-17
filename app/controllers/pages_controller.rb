@@ -53,8 +53,8 @@ class PagesController < ApplicationController
       if @page.save
         flash[:notice] = 'Page was successfully created.'
         format.html { redirect_to questionnaire_page_url(@questionnaire, @page) }
-        format.xml  { head :created, :location => questionnaire_page_url(@questionnaire, @page) }
-        format.json { head :created, :location => questionnaire_page_url(@questionnaire, @page) }
+        format.xml  { head :created, :location => formatted_questionnaire_page_url(@questionnaire, @page, 'xml') }
+        format.json { head :created, :location => formatted_questionnaire_page_url(@questionnaire, @page, 'json') }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @page.errors.to_xml }

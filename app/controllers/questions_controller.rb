@@ -53,8 +53,8 @@ class QuestionsController < ApplicationController
       if @question.save and @question.update_attribute(:type, params[:question][:type])
         @question = Question.find(@question.id)
         format.html { redirect_to question_url(@question) }
-        format.xml  { head :created, :location => questionnaire_page_question_url(@questionnaire, @page, @question) }
-        format.json { head :created, :location => questionnaire_page_question_url(@questionnaire, @page, @question) }
+        format.xml  { head :created, :location => formatted_questionnaire_page_question_url(@questionnaire, @page, @question, 'xml') }
+        format.json { head :created, :location => formatted_questionnaire_page_question_url(@questionnaire, @page, @question, 'json') }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @question.errors.to_xml }

@@ -46,8 +46,8 @@ class QuestionOptionsController < ApplicationController
 
     respond_to do |format|
       if @question_option.save
-        format.json { head :created, :location => question_option_url(@questionnaire, @page, @question, @question_option) }
-        format.xml  { head :created, :location => question_option_url(@questionnaire, @page, @question, @question_option) }
+        format.json { head :created, :location => formatted_questionnaire_page_question_option_url(@questionnaire, @page, @question, @question_option, 'json') }
+        format.xml  { head :created, :location => formatted_questionnaire_page_question_option_url(@questionnaire, @page, @question, @question_option, 'xml') }
       else
         format.json { render :json => @question_option.errors.to_json }
         format.xml  { render :xml => @question_option.errors.to_xml }

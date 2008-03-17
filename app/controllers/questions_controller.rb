@@ -102,7 +102,7 @@ class QuestionsController < ApplicationController
     @questions = @page.questions
     @questions.each do |question|
       question.position = params['questions'].index(question.id.to_s) + 1
-      question.save
+      question.save!
     end
     render :nothing => true
   end

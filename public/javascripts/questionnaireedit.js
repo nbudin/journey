@@ -60,7 +60,7 @@ function makeReloadFunction(questionId) {
 }
 
 function addQuestion(typ) {
-  Question.create({ 'type': typ },
+    Question.create({ 'type': typ },
                   function (q) {
                     newli = document.createElement('li');
                     newli.setAttribute('id', 'question_'+q.id);

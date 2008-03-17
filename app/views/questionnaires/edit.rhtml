@@ -5,13 +5,22 @@
 
 <script type="text/javascript">
 
+currentPage = null;
+
 function switchPage(id, title) {
-  $('pageview').src = '<%= edit_questionnaire_page_url(@questionnaire, 9999) + "/" %>'.replace(/9999/, id+'');
+  if (id != null) {
+    $('pageview').src = '<%= edit_questionnaire_page_url(@questionnaire, 9999) + "/" %>'.replace(/9999/, id+'');
+  } else {
+    $('pageview').src = 'about:blank';
+  }
   document.getElementsByClassName('activepage').each(function (page) {
     page.removeClassName('activepage');
   });
-  $('page_'+id).addClassName('activepage');
+  if (id != null) {
+    $('page_'+id).addClassName('activepage');
+  }
   $('pagetitle').replace('<span id="pagetitle">' + title.escapeHTML() + '</span>');
+  currentPage = id;
 }
 
 function deletePage(id) {
@@ -20,6 +29,9 @@ function deletePage(id) {
       method: 'post',
       onSuccess: function() {
         $('page_'+id).remove();
+        if (currentPage == id) {
+          switchPage(null, "");
+        }
       },
       onFailure: function(transport) {
         alert("Error while deleting page: "+transport.responseText);
@@ -28,14 +40,25 @@ function deletePage(id) {
   );
 }
 
+eventsToUnload = [];
+function addEventToUnload(element, event, callback) {
+  eventsToUnload.push({'element': element, 'event': event, 'callback': callback});
+}
+
+function reloadPagelist() {
+  for (i=0; i<eventsToUnload.length; i++) {
+    etu = eventsToUnload[i];
+    Event.stopObserving(etu['element'], etu['event'], etu['callback']);
+  }
+  new Ajax.Updater('pagelist', '<%= questionnaire_url(@questionnaire.id) %>/pagelist', { method: 'get', evalScripts: true });
+}
+
 function createPage() {
   Sortable.destroy("pagelist");
   new Ajax.Request('<%= questionnaire_pages_url(@questionnaire) %>',
     {
       method: 'post',
-      onSuccess: function() {
-        new Ajax.Updater('pagelist', '<%= questionnaire_url(@questionnaire.id) %>;pagelist', { method: 'get' });
-      }
+      onSuccess: reloadPagelist
     }
   );
 }

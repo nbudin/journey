@@ -1,6 +1,6 @@
 <ul id="pagelist">
   <% questionnaire.pages.each do |page| -%>
-          <li id="page_<%=page.id%>" class="page" onClick="switchPage(<%=page.id%>, '<%=escape_javascript page.title%>');">
+          <li id="page_<%=page.id%>" class="page">
             <div class="draghandle">
               <%=image_tag("drag-handle.png")%>
             </div>
@@ -10,8 +10,23 @@
             <%=image_tag("delete.png", :class => "image_button",
                          :alt => "Delete page",
                          :style => "padding: 0; padding-left: 2px; margin: 0; vertical-align: top;",
-              :onClick => "if (confirm('Do you really want to delete the page \"#{page.title}\"?')) { deletePage(#{page.id}); } return false;") %>
+                         :id => "delete_page_#{page.id}")%>
           </li>
+          <script type="text/javascript">
+            pageclicked = function() {
+              switchPage(<%=page.id%>, '<%=escape_javascript page.title%>');
+            };
+            deletepageclicked = function(event) {
+              if (confirm('Do you really want to delete the page \"<%=escape_javascript page.title %>\"?')) {
+                deletePage(<%=page.id%>);
+              }
+              Event.stop(event);
+            }
+            Event.observe("page_<%=page.id%>", "click", pageclicked);
+            Event.observe("delete_page_<%=page.id%>", "click", deletepageclicked);
+            addEventToUnload("page_<%=page.id%>", "click", pageclicked);
+            addEventToUnload("delete_page_<%=page.id%>", "click", deletepageclicked);
+          </script>
   <% end -%>
 </ul>
 <%= sortable_element "pagelist", :handle => "draghandle", :url => questionnaire_pages_path(@questionnaire) + ';sort' %>

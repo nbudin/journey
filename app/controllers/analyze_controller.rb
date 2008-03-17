@@ -49,16 +49,14 @@ class AnalyzeController < ApplicationController
         csv << (["id"] + @responses.collect { |r| r.id })
         @columns.each do |col|
           csv << ([col.caption] + @responses.collect do |r|
-            ans = r.answer_for_question(col)
-            ans ? ans.value : ""
+            Answer.value(:question => col, :response => r)
           end)
         end
       else
         csv << (["id"] + @columns.collect { |c| c.caption })
         @responses.each do |resp|
-          csv << ([resp.id] + @columns.collect do |c| 
-            ans = resp.answer_for_question(c)
-            ans ? ans.value : ""
+          csv << ([resp.id] + @columns.collect do |c|
+            Answer.value(:question => c, :response => resp)
           end)
         end
       end
@@ -67,9 +65,6 @@ class AnalyzeController < ApplicationController
   
   def aggregate
     @questionnaire = Questionnaire.find(params[:id])
-    @answers = @questionnaire.responses.collect { |r| r.submitted ? r.answers : nil }
-    @answers.flatten!
-    @answers = @answers.select { |a| not a.nil? }
     @fields = @questionnaire.fields
     
     @answercounts = {}
@@ -77,17 +72,13 @@ class AnalyzeController < ApplicationController
       @answercounts[field.id] = {}
     end
     
-    @answers.each do |answer|
-      if @fields.include? answer.question
-        qid = answer.question.id
-        val = answer.value || 'No answer'
-        if val.length == 0
-          val = 'No answer'
+    @fields.each do |question|
+      @questionnaire.valid_responses.each do |resp|
+        val = Answer.value(:question => question, :response => resp) || "No answer"
+        if not @answercounts[question.id].has_key? val
+          @answercounts[question.id][val] = 0
         end
-        if not @answercounts[qid].has_key? val
-          @answercounts[qid][val] = 0
-        end
-        @answercounts[qid][val] += 1
+        @answercounts[question.id][val] += 1
       end
     end
   end

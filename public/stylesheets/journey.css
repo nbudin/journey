@@ -38,6 +38,13 @@ table.itemheader tr > td:first-child {
         text-align: left;
 }
 
+.errors {
+        background-color: #fcc;
+        border: 1px #f00 solid;
+        padding-left: 1em;
+        padding-right: 1em;
+}
+
 #questionnaireedit {
     width: 100%;
     margin-bottom: 1em;

@@ -35,10 +35,10 @@
         <% end %>
 <% end %>
 
-<% if flash[:errors] -%>
+<% if flash[:error_messages] -%>
         <div style="color: red; font-size: 125%;">There were errors processing your request:</div>
         <ul>
-                <% flash[:errors].each do |error| -%>
+                <% flash[:error_messages].each do |error| -%>
                         <li style="color: red"><%= error %></li>
                 <% end -%>
         </ul>

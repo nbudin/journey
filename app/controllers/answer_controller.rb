@@ -25,7 +25,7 @@ class AnswerController < ApplicationController
       end
     end
   rescue
-    @flash[:errors] = [$!.to_s]
+    @flash[:error_messages] = [$!.to_s]
   end
 
   def index
@@ -72,7 +72,7 @@ class AnswerController < ApplicationController
   def save_session
     @resp = Response.find(session["response_#{params[:id]}"])
     if not @resp.questionnaire.allow_finish_later and not @resp.submitted
-      @flash[:errors] = ["This questionnaire does not allow you to resume answering later."]
+      @flash[:error_messages] = ["This questionnaire does not allow you to resume answering later."]
       redirect_to :action => "answer", :id => @resp.questionnaire.id, :page => params[:current_page]
     end
 
@@ -121,7 +121,7 @@ class AnswerController < ApplicationController
       if offset != -1
         errors = validate_answers(@resp, @page)
         if errors.length > 0
-          flash[:errors] = errors
+          flash[:error_messages] = errors
           redirect_to :action => "index", :id => @resp.questionnaire.id, :page => params[:current_page]
           return
         end

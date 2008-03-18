@@ -14,7 +14,7 @@
 			<% count = @answercounts[field.id][answer]
 			pct = ((count / tot) * 100).round.to_i -%>
 			<tr>
-				<td><%=h answer %></td>
+				<td style="text-align: right"><%=h answer %></td>
 				<td>
 					<span style="background-color: #333333; color: white; font-size: 80%;">
 						<% (pct / 3).times do %>

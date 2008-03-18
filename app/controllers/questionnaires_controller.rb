@@ -7,14 +7,15 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires.xml
   def index
     p = logged_in? ? logged_in_person : nil
+    per_page = 8
     all_questionnaires = Questionnaire.find(:all, :order => 'id DESC')
     permitted_questionnaires = all_questionnaires.select do |q|
       q.is_open or (p and Questionnaire.permission_names.any? { |pn| p.permitted?(q, pn) })
     end
-    pager = ::Paginator.new(permitted_questionnaires.size, 5) do |offset, per_page|
-      permitted_questionnaires[offset, per_page]
+    pager = ::Paginator.new(permitted_questionnaires.size, per_page) do |offset, pp|
+      permitted_questionnaires[offset, pp]
     end
-    @questionnaires = returning WillPaginate::Collection.new(params[:page] || 1, 5, permitted_questionnaires.size) do |p|
+    @questionnaires = returning WillPaginate::Collection.new(params[:page] || 1, per_page, permitted_questionnaires.size) do |p|
       p.replace pager.page(params[:page]).items
     end
 

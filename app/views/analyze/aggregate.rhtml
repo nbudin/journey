@@ -5,24 +5,26 @@
 		<div class="responseheader">
 			<%= field.caption %> (<%= field.class.to_s %>)
 		</div>
+		<table>
 		<% tot = 0.0
 		@answercounts[field.id].values.each do |val|
 			tot += val
 		end -%>
 		<% @answercounts[field.id].keys.sort.each do |answer| -%>
 			<% count = @answercounts[field.id][answer]
-			pct = ((count / tot) * 100).round.to_i -%> 
-			<span style="float: left;">
-				<%= answer %>
-			</span>
-			<div style="margin-left: 10em;">
-				<span style="background-color: #333333; color: white; font-size: 80%;">
-					<% (pct / 3).times do %>
-						&nbsp;
-					<% end %>
-				</span>
-				&nbsp;<%= "#{count} (#{pct}%)" %>
-			</div>
+			pct = ((count / tot) * 100).round.to_i -%>
+			<tr>
+				<td><%=h answer %></td>
+				<td>
+					<span style="background-color: #333333; color: white; font-size: 80%;">
+						<% (pct / 3).times do %>
+							&nbsp;
+						<% end %>
+					</span>
+					&nbsp;<%= "#{count} (#{pct}%)" %>
+				</td>
+			</tr>
 		<% end -%>
+		</table>
 	</div>
 <% end -%>

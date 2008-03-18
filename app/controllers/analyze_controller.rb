@@ -65,7 +65,7 @@ class AnalyzeController < ApplicationController
   
   def aggregate
     @questionnaire = Questionnaire.find(params[:id])
-    @fields = @questionnaire.fields
+    @fields = @questionnaire.fields.select { |f| not f.kind_of? FreeformField }
     
     @answercounts = {}
     @fields.each do |field|
@@ -75,6 +75,9 @@ class AnalyzeController < ApplicationController
     @fields.each do |question|
       @questionnaire.valid_responses.each do |resp|
         val = Answer.value(:question => question, :response => resp) || "No answer"
+        if val.length == 0
+          val = "No answer"
+        end
         if not @answercounts[question.id].has_key? val
           @answercounts[question.id][val] = 0
         end

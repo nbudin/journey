@@ -13,7 +13,7 @@ require 'mongrel_cluster/recipes'
 # form the root of the application path.
 
 set :application, "journey"
-set :repository, "http://journey-questionnaires.googlecode.com/svn/trunk"
+set :repository, "http://journey-questionnaires.googlecode.com/svn/branches/2.0.2"
 
 # =============================================================================
 # ROLES
@@ -31,7 +31,7 @@ role :db,  "journey.aegames.org", :primary => true
 # =============================================================================
 # OPTIONAL VARIABLES
 # =============================================================================
-set :deploy_to, "/var/www/journey-test" # defaults to "/u/apps/#{application}"
+set :deploy_to, "/var/www/journey" # defaults to "/u/apps/#{application}"
 set :use_sudo, true
 set :checkout, "export"
 set :user, "www-data"            # defaults to the currently logged in user
@@ -66,7 +66,7 @@ task :after_update_code do
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
   imagesdir = "#{deploy_to}/#{shared_dir}/public/images"
   run "for f in #{imagesdir}/*; do ln -nfs $f #{release_path}/public/images/; done"
-  #run "cd #{release_path} ; rake bootstrap RAILS_ENV=production"
+#  run "cd #{release_path} ; rake bootstrap RAILS_ENV=production"
 end
 
 #task :after_symlink, :roles => [:web, :app] do
@@ -76,4 +76,4 @@ end
 #task :after_setup do
 #  run "rake bootstrap"
 #end
-
+  

@@ -1,7 +1,7 @@
 --- 
 user: www-data
-cwd: /var/www/journey-test/current/
-port: "8100"
+cwd: /var/www/journey/current/
+port: "8000"
 environment: production
 group: www-data
 address: 127.0.0.1

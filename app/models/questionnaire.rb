@@ -61,6 +61,9 @@ class Questionnaire < ActiveRecord::Base
       if custom_css
         xml.custom_css(custom_css)
       end
+      if welcome_text
+        xml.welcome_text(welcome_text)
+      end
       pages.each do |page|
         xml.page(:title => page.title) do
           page.questions.each do |question|
@@ -91,6 +94,8 @@ class Questionnaire < ActiveRecord::Base
         q.custom_html = element.text
       elsif element.name == 'custom_css'
         q.custom_css = element.text
+      elsif element.name == 'welcome_text'
+        q.welcome_text = element.text
       elsif element.name == 'page'
         p = q.pages.new :title => element.attributes['title']
         element.each_element do |question|

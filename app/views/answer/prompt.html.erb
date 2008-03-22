@@ -1,9 +1,11 @@
 <h1><%=h @questionnaire.title %></h1>
 
+<p><%= @questionnaire.welcome_text %></p>
+
+<hr/>
+
 <% if logged_in? -%>
-  <% if @responses.length > 0 -%>
-      <p>Welcome, back, <%= logged_in_person.name %>!</p>
-      
+  <% if @responses.length > 0 -%>    
       <p>
         <% if @responses.length > 1 -%>
           You have started multiple responses to this questionnaire before.
@@ -55,8 +57,6 @@
     </p>
   <% end -%>
 <% else -%>
-  <p>Welcome!</p>
-  
   <% if @questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response -%>
     <p>You aren't currently logged into this site.  You can still answer this questionnaire if you wish.  However, logging in
       will give you the following benefits:</p>

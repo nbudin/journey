@@ -61,6 +61,7 @@ class QuestionnairesController < ApplicationController
         @questionnaire = Questionnaire.from_xml(params[:file].read)
       rescue Exception => ex
         flash[:error_messages] = ["There was an error parsing the JQML file you uploaded.  Please check to make sure it is a valid JQML file."]
+        flash[:error_messages] << $!.to_s
         redirect_to :action => "index"
         return
       end

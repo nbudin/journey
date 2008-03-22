@@ -70,6 +70,11 @@ class Questionnaire < ActiveRecord::Base
             xml.question(:type => question.class.to_s, :required => question.required) do
               xml.caption(question.caption)
               xml.default_answer(question.default_answer)
+              if question.kind_of? Field
+                if question.purpose
+                  xml.purpose(question.purpose)
+                end
+              end
               if question.kind_of? RangeField
                 xml.range(:min => question.min, :max => question.max, :step => question.step)
               end
@@ -121,6 +126,11 @@ class Questionnaire < ActiveRecord::Base
           question.each_element('default_answer') do |default_answer|
             da = default_answer.text
             logger.info "Default answer is #{da}"
+          end
+          
+          question.each_element('purpose') do |purpose|
+            sfa = q.special_field_associations.new :question => ques, :purpose => purpose.text
+            q.special_field_associations << sfa
           end
           
           if ques.kind_of? RangeField

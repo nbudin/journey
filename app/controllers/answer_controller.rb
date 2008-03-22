@@ -1,31 +1,50 @@
 class AnswerController < ApplicationController
   def resume
-    if params[:session_code]
-      session_id = params[:session_code].split('-')[0].to_i
-      @resp = Response.find(session_id)
-      if @resp.session_code != params[:session_code]
-        raise "The session code you entered could not be retrieved.  Please try again."
-      else
-        # If this is an amended response, we want to retract the submitted response set.
-        if @resp.submitted
-          if not @resp.questionnaire.allow_amend_response
-            raise "This questionnaire does not allow you to amend submitted responses."
-          end
-          @resp.submitted = false
-          @resp.save
-        else
-          if not @resp.questionnaire.allow_finish_later
-            raise "This questionnaire does not allow you to resume a session."
-          end
+    @resp = Response.find(params[:id])
+    if @resp.person != logged_in_person
+      raise "That response does not belong to you.  Either log in as a different person, or start a new response."
+    else
+      # If this is an amended response, we want to retract the submitted response set.
+      if @resp.submitted
+        if not @resp.questionnaire.allow_amend_response
+          raise "This questionnaire does not allow you to amend submitted responses."
         end
-
-        qid = @resp.questionnaire.id
-        session["response_#{qid}"] = @resp.id
-        redirect_to :action => 'index', :id => qid, :page => @resp[:saved_page]
+        @resp.submitted = false
+        @resp.save
+      else
+        if not @resp.questionnaire.allow_finish_later
+          raise "This questionnaire does not allow you to resume a session."
+        end
       end
+
+      qid = @resp.questionnaire.id
+      session["response_#{qid}"] = @resp.id
+      redirect_to :action => 'index', :id => qid, :page => @resp[:saved_page]
     end
   rescue
     @flash[:error_messages] = [$!.to_s]
+    redirect_to :action => 'prompt', :id => @resp.questionnaire.id
+  end
+  
+  def prompt
+    @questionnaire = Questionnaire.find(params[:id])
+    
+    if logged_in?
+      @responses = Response.find_all_by_person_id(logged_in_person.id)
+    end
+  end
+  
+  def start
+    @questionnaire = Questionnaire.find(params[:id])
+    
+    @resp = Response.new :questionnaire => @questionnaire
+    if logged_in?
+      @resp.person = logged_in_person
+    end
+    @resp.save!
+    session["response_#{@questionnaire.id}"] = @resp.id
+    
+    redirect_to :action => 'index', :id => @questionnaire.id
   end
 
   def index
@@ -34,16 +53,40 @@ class AnswerController < ApplicationController
       redirect_to :action => 'questionnaire_closed', :id => params[:id]
     else
       response_key = "response_#{@questionnaire.id}"
-      if session[response_key]
+      if not session[response_key]
+        redirect_to :action => 'prompt', :id => @questionnaire.id
+      else
         @resp = Response.find(session[response_key])
-      else
-        @resp = Response.create :questionnaire => @questionnaire
-        session[response_key] = @resp.id
-      end
-      if params[:page]
-        @page = @resp.questionnaire.pages[params[:page].to_i - 1]
-      else
-        @page = @resp.questionnaire.pages[0]
+        if params[:page]
+          @page = @resp.questionnaire.pages[params[:page].to_i - 1]
+        else
+          @page = @resp.questionnaire.pages[0]
+        end
+      
+        if logged_in?
+          @page.questions.each do |question|
+            if not question.respond_to? 'purpose'
+              next
+            end
+            purpose = question.purpose
+            if purpose
+              answer = @resp.answer_for_question(question)
+              if not answer
+                value = nil
+                if purpose == 'name'
+                  value = logged_in_person.name
+                elsif purpose == 'email'
+                  value = logged_in_person.primary_email_address
+                elsif purpose == 'gender'
+                  value = logged_in_person.gender
+                end
+                if not (value.nil? or value == '')
+                  @resp.answers.create :question => question, :value => value
+                end
+              end
+            end
+          end
+        end
       end
     end
   end
@@ -79,8 +122,6 @@ class AnswerController < ApplicationController
     if not (@resp.submitted and not @resp.questionnaire.allow_amend_response)
       @page = @resp.questionnaire.pages[params[:current_page].to_i - 1]
       @resp.saved_page = params[:current_page]
-      @resp.session_code = SHA1.sha1("#{@resp.questionnaire.id}_#{@page.id}_#{Time.now.to_s}").to_s[0..5]
-      @resp.session_code = "#{@resp.id}-#{@resp.session_code}"
       @resp.save
     end
 

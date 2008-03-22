@@ -2,25 +2,13 @@ class Response < ActiveRecord::Base
   belongs_to :questionnaire
   validates_associated :questionnaire
   has_many :answers, :dependent => :destroy
+  belongs_to :person
   
   def self.per_page
     20
   end
   
   def after_create
-#    self.questionnaire.pages.each do |page|
-#      page.questions.each do |question|
-#        if question.kind_of? Field
-#          a = Answer.new
-#          a.response = self
-#          a.question = question
-#          if question.default_answer
-#            a.value = question.default_answer
-#          end
-#          a.save!
-#        end
-#      end
-#    end
   end
   
   def verify_answers_for_page(page)

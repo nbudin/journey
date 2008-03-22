@@ -1,26 +1,21 @@
 <% if not @resp.submitted -%>
 	<h1>Session saved</h1>
+	
+	<p>You have saved your response in progress to this questionnaire.  When you come back to this site and log in, you'll be
+	  able to pick it up where you left off.</p>
 <% else -%>
 	<h1>Thank you!</h1>
 	
 	<p>You have successfully submitted your answers to the <%= @resp.questionnaire.title %> questionnaire.  <b>To leave this application, simply close your web browser window.</b></p>
 <% end -%>
 
-<% if @resp.session_code -%>
-	<div class="infobox">
-		<% if not @resp.submitted -%>
-			<h2>Resuming your session</h2>
-		<% else -%>
-			<h2>If you want to go back and change your answers</h2>
-		<% end -%>
-		<p>Your session code is <b><%=@resp.session_code%></b>.  
-			<% if not @resp.submitted -%>
-				To resume answering the questionnaire at any time,
-			<% else -%>
-				To change your answers to the questionnaire at any time,
-			<% end -%>
-		visit <%= link_to "this page", :action => 'resume' %> and type in the code.  Or, simply
-		<%= link_to "bookmark this link", :action => 'resume', :session_code => @resp.session_code %>.  <b>(Note that amending your answer will "un-submit" your previous response, so you will have to go back to the end of the questionnaire and press "Finish" again.)</b></p>
-	</div>
-<% end -%>
+<ul>
+  <li>
+    <%= link_to "To go back to the front page of this questionnaire, click here.", :action => 'prompt', :id => @resp.questionnaire.id %>
+  </li>
+  <li>
+    <%= link_to "To return to the main page of Journey, click here.", questionnaires_path %>
+  </li>
+</ul>
+
 	

@@ -6,9 +6,6 @@
         <tr>
             <th style="width: 20em" id="responsefromheader">Response from</th>
             <th class="minimizable">Submit Date</th>
-						<% if @questionnaire.allow_finish_later -%>
-						  <th class="minimizable">Session Code</th>
-		        <% end -%>
             <% header_fields.each do |header| %>
                 <th class="minimizable"><%= header.question.caption %></th>
             <% end %>
@@ -25,14 +22,6 @@
                     <b>Partial</b>
 								  <% end -%>
 								</td>
-						    <% if @questionnaire.allow_finish_later -%>
-									<td class="minimizable">  
-                    <% if response.session_code -%>
-                      <%= link_to response.session_code, :controller => "answer", :action => "resume",
-                        :session_code => response.session_code %>
-                    <% end -%>
-								  </td>
-                <% end -%>
                 <% header_fields.each do |header| %>
 										<% answer = response.special_answer(header.purpose) -%>
                     <td class="minimizable">

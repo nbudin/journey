@@ -75,9 +75,13 @@ class QuestionnairesController < ApplicationController
     if params[:file]
       begin
         @questionnaire = Questionnaire.from_xml(params[:file].read)
+        logger.debug @questionnaire.taggings
       rescue Exception => ex
         flash[:error_messages] = ["There was an error parsing the JQML file you uploaded.  Please check to make sure it is a valid JQML file."]
-        flash[:error_messages] << $!.to_s
+        m = ex.message.to_s
+        if m.length < 500
+          flash[:error_messages] << m
+        end
         redirect_to :action => "index"
         return
       end

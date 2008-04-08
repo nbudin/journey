@@ -76,6 +76,13 @@ class Questionnaire < ActiveRecord::Base
     xml.instruct! unless options[:skip_instruct]
 
     xml.questionnaire(:title => title) do
+      if taggings.size > 0
+        xml.tags do
+          tag_names.each do |name|
+            xml.tag(:name => name)
+          end
+        end
+      end
       if custom_html
         xml.custom_html(custom_html)
       end
@@ -122,6 +129,12 @@ class Questionnaire < ActiveRecord::Base
         q.custom_css = element.text
       elsif element.name == 'welcome_text'
         q.welcome_text = element.text
+      elsif element.name == 'tags'
+        element.each_element("tag") do |tag|
+          t = Tag.find_or_create_by_name(tag.attributes['name'])
+          tagging = q.taggings.new :tag => t
+          q.taggings << tagging
+        end
       elsif element.name == 'page'
         p = q.pages.new :title => element.attributes['title']
         element.each_element do |question|

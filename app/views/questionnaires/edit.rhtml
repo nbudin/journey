@@ -77,6 +77,8 @@ function createPage() {
 <% ae_form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
                 
             <%= f.text_field "title" %>
+            <%= f.label "Tags" %>
+            <%= text_field_tag "questionnaire[tags]", @questionnaire.tag_names.join(", ") %>
             <%= f.text_area "custom_html", :rows => 4 %>
             <%= f.text_area "custom_css", :rows => 4 %>
             <%= f.text_area "welcome_text", :rows => 4 %><br/>

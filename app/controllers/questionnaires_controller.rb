@@ -8,7 +8,23 @@ class QuestionnairesController < ApplicationController
   def index
     p = logged_in? ? logged_in_person : nil
     per_page = 8
-    all_questionnaires = Questionnaire.find(:all, :order => 'id DESC')
+    conditions = []
+    condition_vars = {}
+    if params[:title] and params[:title] != ''
+      conditions.push("lower(title) like :title")
+      condition_vars[:title] ="%#{params[:title].downcase}%"
+    end
+    find_conditions = [conditions.join(" and "), condition_vars]
+    all_questionnaires = if params[:tag] and params[:tag] != ''
+      t = Tag.find_by_name(params[:tag])
+      if t.nil?
+        []
+      else
+        t.questionnaires(:conditions => find_conditions, :order => 'id DESC')
+      end
+    else
+      Questionnaire.find(:all, :conditions => find_conditions, :order => 'id DESC')
+    end
     permitted_questionnaires = all_questionnaires.select do |q|
       q.is_open or (p and Questionnaire.permission_names.any? { |pn| p.permitted?(q, pn) })
     end

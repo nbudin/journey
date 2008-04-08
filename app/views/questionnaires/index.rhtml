@@ -34,7 +34,19 @@
 
 <% p = logged_in? ? logged_in_person : nil-%>
 
-<div id="questionnaire_list" style="border-top: 1px black solid;">
+<div id="filter_params" style="border-top: 1px black solid;">
+  <% form_tag({}, {:method => "get"}) do  %>
+    <table style="width: 100%">
+      <tr>
+        <td>Title: <%= text_field_tag "title", params[:title] %></td>
+        <td>Tag: <%= text_field_tag "tag", params[:tag] %></td>
+        <td><%= submit_tag "Search" %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+
+<div id="questionnaire_list">
 	<% for questionnaire in @questionnaires %>
 		<%= render :partial => "summary", :locals => {:questionnaire => questionnaire} %>
 	<% end %>

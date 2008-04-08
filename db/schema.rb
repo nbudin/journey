@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 27) do
+ActiveRecord::Schema.define(:version => 29) do
 
   create_table "answers", :force => true do |t|
     t.integer  "response_id"
@@ -43,6 +43,21 @@ ActiveRecord::Schema.define(:version => 27) do
   create_table "larps_questionnaires", :id => false, :force => true do |t|
     t.integer "larp_id"
     t.integer "questionnaire_id"
+  end
+
+  create_table "open_id_authentication_associations", :force => true do |t|
+    t.integer "issued"
+    t.integer "lifetime"
+    t.string  "handle"
+    t.string  "assoc_type"
+    t.binary  "server_url"
+    t.binary  "secret"
+  end
+
+  create_table "open_id_authentication_nonces", :force => true do |t|
+    t.integer "timestamp",  :null => false
+    t.string  "server_url"
+    t.string  "salt",       :null => false
   end
 
   create_table "pages", :force => true do |t|
@@ -117,5 +132,24 @@ ActiveRecord::Schema.define(:version => 27) do
     t.integer "question_id"
     t.string  "purpose"
   end
+
+  create_table "taggings", :force => true do |t|
+    t.integer  "tag_id"
+    t.integer  "tagged_id"
+    t.string   "tagged_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["tagged_id", "tagged_type"], :name => "index_taggings_on_tagged_id_and_tagged_type"
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
 
 end

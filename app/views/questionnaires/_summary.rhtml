@@ -42,6 +42,10 @@
       <br/>
       <i>By <%=h authors %></i>
     <% end -%>
+    <% if questionnaire.tags.length > 0 -%>
+      <br/>
+      Tags: <b><%=h questionnaire.tag_names.join(", ") %></b>
+    <% end -%>
     <p>
       <%= pluralize(questionnaire.pages.count, "page") %><br/>
       <%= pluralize(questionnaire.fields.count, "question") %>

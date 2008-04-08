@@ -15,6 +15,8 @@ class Questionnaire < ActiveRecord::Base
     :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::field_types)}"
   has_many :decorators, :through => :pages, :class_name => 'Question', :order => "pages.position, questions.position",
     :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::decorator_types)}"
+  has_many :taggings, :as => :tagged, :dependent => :destroy
+  has_many :tags, :through => :taggings
 
   def Questionnaire.special_field_purposes
     %w( name address phone email gender )
@@ -47,6 +49,25 @@ class Questionnaire < ActiveRecord::Base
   def special_field(purpose)
     assn = special_field_associations.find_by_purpose(purpose)
     assn.nil? ? nil : assn.question
+  end
+  
+  def tag_names
+    tags.collect {|t| t.name}
+  end
+  
+  def tags=(taglist)
+    names = taglist.split(/\s*,\s*/)
+    names.each do |name|
+      if not tags.find_by_name(name)
+        t = Tag.find_or_create_by_name(name)
+        taggings.create :tag => t
+      end
+    end
+    taggings.each do |tagging|
+      if not names.include?(tagging.tag.name)
+        tagging.destroy
+      end
+    end
   end
 
   def to_xml(options = {})

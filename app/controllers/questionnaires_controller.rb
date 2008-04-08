@@ -31,8 +31,8 @@ class QuestionnairesController < ApplicationController
     pager = ::Paginator.new(permitted_questionnaires.size, per_page) do |offset, pp|
       permitted_questionnaires[offset, pp]
     end
-    @questionnaires = returning WillPaginate::Collection.new(params[:page] || 1, per_page, permitted_questionnaires.size) do |p|
-      p.replace pager.page(params[:page]).items
+    @questionnaires = returning WillPaginate::Collection.new(params[:page] || 1, per_page, permitted_questionnaires.size) do |paginator|
+      paginator.replace pager.page(params[:page]).items
     end
 
     respond_to do |format|

@@ -55,25 +55,19 @@ set :scm, :subversion               # defaults to :subversion
 # must match the options given for the servers to select (like :primary => true)
 #desc "Restart the FCGI processes on the app server as a regular user."
 
-desc "Tell Passenger to restart this app"
-task :restart, :roles => :app do
-  run "touch #{current_path}/tmp/restart.txt"
+namespace :deploy do
+  desc "Tell Passenger to restart this app"
+  task :restart, :roles => :app do
+    run "touch #{current_path}/tmp/restart.txt"
+  end
+  
+  desc "Link in database config, images, and frozen rails"
+  task :after_update_code do
+    run "rm -f #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
+    imagesdir = "#{deploy_to}/#{shared_dir}/public/images"
+    run "for f in #{imagesdir}/*; do ln -nfs $f #{release_path}/public/images/; done"
+  #  run "cd #{release_path} ; rake bootstrap RAILS_ENV=production"
+  end
 end
-
-desc "Link in database config, images, and frozen rails"
-task :after_update_code do
-  run "rm -f #{release_path}/config/database.yml"
-  run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
-  imagesdir = "#{deploy_to}/#{shared_dir}/public/images"
-  run "for f in #{imagesdir}/*; do ln -nfs $f #{release_path}/public/images/; done"
-#  run "cd #{release_path} ; rake bootstrap RAILS_ENV=production"
-end
-
-#task :after_symlink, :roles => [:web, :app] do
-#  run "chmod a+x #{current_path}/public/dispatch.fcgi"
-#end
-
-#task :after_setup do
-#  run "rake bootstrap"
-#end
   

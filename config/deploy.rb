@@ -2,8 +2,6 @@
 # (http://manuals.rubyonrails.com/read/book/17). It allows you to automate
 # (among other things) the deployment of your application.
 
-require 'mongrel_cluster/recipes'
-
 # =============================================================================
 # REQUIRED VARIABLES
 # =============================================================================
@@ -35,7 +33,7 @@ set :deploy_to, "/var/www/journey" # defaults to "/u/apps/#{application}"
 set :use_sudo, true
 set :checkout, "export"
 set :user, "www-data"            # defaults to the currently logged in user
-set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
+#set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 set :scm, :subversion               # defaults to :subversion
 # set :svn, "/path/to/svn"       # defaults to searching the PATH
 # set :darcs, "/path/to/darcs"   # defaults to searching the PATH
@@ -56,9 +54,11 @@ set :scm, :subversion               # defaults to :subversion
 # narrow the set of servers to a subset of a role by specifying options, which
 # must match the options given for the servers to select (like :primary => true)
 #desc "Restart the FCGI processes on the app server as a regular user."
-#task :restart, :roles => :app do
-#  run "#{current_path}/script/process/reaper --dispatcher=dispatch.fcgi"
-#end
+
+desc "Tell Passenger to restart this app"
+task :restart, :roles => :app do
+  run "touch #{current_path}/tmp/restart.txt"
+end
 
 desc "Link in database config, images, and frozen rails"
 task :after_update_code do

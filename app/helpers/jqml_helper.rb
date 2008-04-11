@@ -1,2 +1,2 @@
-module JQMLHelper
+module JqmlHelper
 end

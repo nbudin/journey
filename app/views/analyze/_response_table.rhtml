@@ -20,16 +20,16 @@
                     <%=response.submitted_at%>
                   <% else -%>
                     <b>Partial</b>
-								  <% end -%>
-								</td>
-                <% header_fields.each do |header| %>
-										<% answer = response.special_answer(header.purpose) -%>
-                    <td class="minimizable">
-												<% if answer -%>
-														<%= response.special_answer(header.purpose).value %>
-												<% end -%>
-										</td>
-                <% end %>
+                      <% end -%>
+                    </td>
+                    <% header_fields.each do |header| %>
+                      <% answer = response.special_answer(header.purpose) -%>
+                      <td class="minimizable">
+                        <% if answer -%>
+                          <%= response.special_answer(header.purpose).value %>
+                        <% end -%>
+                      </td>
+                    <% end %>
                 <td class="minimizable"><%= response.id %></td>
             </tr>
         <% end %>

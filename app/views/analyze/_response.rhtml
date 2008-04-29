@@ -1,29 +1,29 @@
-    <div class="response" id="response">
-      <% last_page = nil -%>
-    	<% resp.questionnaire.fields.each do |question| -%>
-        <% if last_page != question.page
-            last_page = question.page -%>
-          <p><b><%=h question.page.title %></b></p>
-        <% end -%>
-          
-        <% answer = resp.answer_for_question(question) -%>
-    		<table class="question" id="question<%=resp.id%>_<%=question.id%>">
-    			<tr class="<%= cycle("odd", "even") %>">
-    				<td class="caption">
-    					<%= question.caption %>
-    				</td>
-    				<td class="questionbody">
-                <% if question.kind_of? CheckBoxField -%>
-                    <%= check_box_tag "answer_#{question.id}", 'checked', answer, :disabled => true -%>
-                <% else -%>
-                    <% if answer.nil? -%>
-                        &nbsp;
-                    <% else -%>
-                        <%=simple_format(answer.value) %>
-                    <% end -%>
-                <% end -%>
-    				</td>
-    			</tr>
-    		</table>
-    	<% end -%>
-    </div>
+<div class="response" id="response">
+  <% last_page = nil -%>
+  <% resp.questionnaire.fields.each do |question| -%>
+    <% if last_page != question.page
+      last_page = question.page -%>
+      <p><b><%=h question.page.title %></b></p>
+    <% end -%>
+  
+    <% answer = resp.answer_for_question(question) -%>
+    <table class="question" id="question<%=resp.id%>_<%=question.id%>">
+      <tr class="<%= cycle("odd", "even") %>">
+        <td class="caption">
+          <%= question.caption %>
+        </td>
+        <td class="questionbody">
+          <% if question.kind_of? CheckBoxField -%>
+            <%= check_box_tag "answer_#{question.id}", 'checked', answer, :disabled => true -%>
+          <% else -%>
+            <% if answer.nil? -%>
+              &nbsp;
+            <% else -%>
+              <%=simple_format(answer.value) %>
+            <% end -%>
+          <% end -%>
+        </td>
+      </tr>
+    </table>
+  <% end -%>
+</div>

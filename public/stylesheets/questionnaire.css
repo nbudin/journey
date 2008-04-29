@@ -145,6 +145,16 @@ form.purposeselector, form.typeselector {
   overflow: auto;
 }
 
+
+.response td.questionbody p:first-child {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.response td.caption {
+    vertical-align: top;
+}
+
 form.inplaceeditor-form {
   display: inline;
 }

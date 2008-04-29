@@ -19,7 +19,7 @@
                     <% if answer.nil? -%>
                         &nbsp;
                     <% else -%>
-                        <%=h answer.value %>
+                        <%=simple_format(answer.value) %>
                     <% end -%>
                 <% end -%>
     				</td>

@@ -155,6 +155,21 @@ form.purposeselector, form.typeselector {
     vertical-align: top;
 }
 
+.response table.question {
+    border-top: #aaa 1px solid;
+    border-bottom: #aaa 1px solid;
+}
+
+.response table.question {
+    border-collapse: collapse;
+}
+
+.response .pageheader {
+    margin-bottom: 2px;
+    font-size: 105%;
+    font-weight: bold;
+}
+
 form.inplaceeditor-form {
   display: inline;
 }

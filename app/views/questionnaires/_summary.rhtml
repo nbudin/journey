@@ -23,7 +23,7 @@
   <div id="questionnairesummary_<%=questionnaire.id%>_closed">
     <table style="width: 100%;">
       <td style="width: 25%; overflow: hidden;">
-        <b><%= link_to_function questionnaire.title do |page|
+        <b><%= link_to_function format_title(questionnaire.title) do |page|
           page.hide "questionnairesummary_#{questionnaire.id}_closed"
           page.show "questionnairesummary_#{questionnaire.id}_open"
           end%></b>
@@ -34,7 +34,7 @@
     </table>
   </div>
   <div id="questionnairesummary_<%=questionnaire.id%>_open" style="display: none;">
-    <h3 style="display: inline; margin-top: 0;"><%= link_to_function questionnaire.title do |page|
+    <h3 style="display: inline; margin-top: 0;"><%= link_to_function format_title(questionnaire.title) do |page|
           page.hide "questionnairesummary_#{questionnaire.id}_open"
           page.show "questionnairesummary_#{questionnaire.id}_closed"
           end%></h3>

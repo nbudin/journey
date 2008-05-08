@@ -1,42 +1,13 @@
 <%= start_question @question %>
 <% if @editing -%>
-  <span id="selectorbody_<%= @question.id  %>">
+  <%= render :partial => "questions/selectorstart" %>
     <% @question.question_options.each do |option| -%>
       <%= option.option %>
       <%= radio_button "question[]", "default_answer", option.option,
                     :onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);",
                     :style => "vertical-align: middle;" %>
     <% end -%>
-    <%= button_to_function "Edit options", :style => "display: inline;" do |page|
-      page["selectorbody_#{@question.id}"].hide
-      page["selectoredit_#{@question.id}"].show
-      page["selectoredit_iframe_#{@question.id}"].hide
-      page["selectoredit_iframe_#{@question.id}"].src = questionnaire_page_question_path(@questionnaire, @page, @question) + "/edit_options"
-    end%>
-  </span>
-  <span id="selectoredit_<%= @question.id %>" style="display: none;">
-    <table>
-      <tr>
-        <td style="width: 400px;"><iframe style="position: absolute; top: 0; width: 400px; z-index: 1000; border: 1px black solid; display: none;" id="selectoredit_iframe_<%=@question.id%>"></iframe></td>
-        <script type="text/javascript">
-          Event.observe('selectoredit_iframe_<%=@question.id%>', 'load', function() {
-            iframe = $('selectoredit_iframe_<%=@question.id%>');
-            if (!iframe.visible()) {
-              new Effect.BlindDown(iframe, {duration: 0.25});
-            }
-        });
-        </script>
-        <td>
-          <%= button_to_function "Done", :style => "display: inline;" do |page|
-                page["selectoredit_iframe_#{@question.id}"].hide
-                page["selectorbody_#{@question.id}"].show
-                page["selectoredit_#{@question.id}"].hide
-                page << "reloadQuestion(#{@question.id});"
-          end%>
-        </td>
-      </tr>
-    </table>
-  </span>
+  <%= render :partial => "questions/selectorend" %>
 <% else -%>
 	<% @question.question_options.each do |option| -%>
 		<%= option.option %> <%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option %>

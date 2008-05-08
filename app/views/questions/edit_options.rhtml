@@ -1,0 +1,16 @@
+<%= javascript_include_tag :defaults %>
+<%= javascript_include_tag 'jester', :plugin => 'jipe' %>
+<%= javascript_include_tag 'jipe', :plugin => 'jipe' %>
+<%= javascript_include_tag 'questionnaireedit' %>
+<script type="text/javascript">
+  setupQuestionnaireEditing(<%= @questionnaire.id %>, <%= @page.id %>);
+</script>
+
+<style type="text/css">
+  body {
+    margin: 0;
+  }
+</style>
+
+<% @editing = true -%>
+<%= render :partial => "selector_edit" %>

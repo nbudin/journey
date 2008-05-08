@@ -25,7 +25,7 @@
   <%= javascript_include_tag 'jipe', :plugin => 'jipe' %>
 </head>
 <body>
-<% if @questionnaire -%>
+<% if @questionnaire and not @suppress_custom_html -%>
         <%= @questionnaire.custom_html %>
 <% end -%>
 

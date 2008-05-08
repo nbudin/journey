@@ -1,9 +1,8 @@
 class QuestionsController < ApplicationController
   perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
-  require_permission "edit", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
+  require_permission "edit", {:only => [:destroy, :new, :edit, :create, :update, :sort, :edit_options]}.update(perm_options)
 
-  layout "answer"
-  layout nil, :only => [:edit]
+  layout "answer", :except => [:edit]
   before_filter :get_questionnaire_and_page
 
   # GET /questions
@@ -40,6 +39,13 @@ class QuestionsController < ApplicationController
   def edit
     @question = Question.find(params[:id])
     check_forged_path
+  end
+  
+  # GET /questions/1;edit_options
+  def edit_options
+    @question = Question.find(params[:id])
+    check_forged_path
+    @suppress_custom_html = true
   end
 
   # POST /questions

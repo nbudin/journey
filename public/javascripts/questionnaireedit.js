@@ -94,17 +94,17 @@ function addOption(questionId, newOption) {
   el.newOption = newOption;
   el.questionId = questionId;
   QuestionOption.create({question_id: questionId, 'option': newOption}, function() {
-    el.value = "";
-    el.hide();
-    reloadQuestion(this.questionId);
+      el.value = "";
+      el.disabled = false;
+      window.location.reload();
   }.bind(el));
 }
 
 function removeOption(questionId, optionId) {
   if (confirm("Do you really want to remove this option?")) {
     QuestionOption.destroy({id: optionId, question_id: questionId}, function() {
-      reloadQuestion(this);
-    }.bind(questionId));
+        $('option_'+this).remove();
+    }.bind(optionId));
   }
 }
 

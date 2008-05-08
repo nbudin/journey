@@ -1,0 +1,39 @@
+<ul style="border-collapse: collapse; width: 100%; display: table; margin: 0; vertical-align: middle;" id="options">
+  <li style="display: table-row; text-align: center; font-weight: bold;">
+    <div style="display: table-cell;"></div>
+    <div style="display: table-cell;">Option</div>
+    <div style="display: table-cell;">Mapped Value</div>
+  </li>
+  <% @question.question_options.each do |option| -%>
+    <li id="option_<%=option.id%>" class="question_option <%= cycle(:odd, :even) %>" style="display: table-row;">
+      <div class="draghandle" style="cursor: move; width: 10px; display: table-cell;">
+         <%=image_tag("drag-handle.png")%>
+      </div>
+      <div style="display: table-cell;">
+        <%= jipe_editor(option, "option", :class => "QuestionOption", :question_id => @question.id) %>
+      </div>
+      <div style="display: table-cell;">
+      </div>
+      <div style="display: table-cell; width: 16px;">
+        <%= image_tag "remove.png", :class => "image_button",
+                        :onClick => "removeOption(#{@question.id}, #{option.id});" %>
+      </div>
+    </li>
+  <% end -%>
+  <li style="display: table-row;">
+    <div style="display: table-cell;"></div>
+    <div style="display: table-cell;"><%= text_field_tag "question_#{@question.id}_add_option", "", :style => "width: 95%;" %></div>
+    <div style="display: table-cell;"><%= image_tag "add.png", :class => "image_button",
+		:onClick => "addOption(#{@question.id}, $('question_#{@question.id}_add_option').value);" %></div>
+<script type="text/javascript">
+  Event.observe('question_<%=@question.id%>_add_option', 'keyup', function (evt) {
+		if (evt.keyCode == 13) {
+			addOption(<%=@question.id%>, $('question_<%=@question.id%>_add_option').value);
+		}
+	});
+</script>
+  </li>
+</ul>
+<%= sortable_element "options", :handle => "draghandle", :only => "question_option",
+              :url => questionnaire_page_question_question_options_path(@questionnaire, @page, @question) + '/sort',
+              :complete => "window.location.reload();" %>

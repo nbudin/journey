@@ -71,6 +71,15 @@ class QuestionOptionsController < ApplicationController
       end
     end
   end
+  
+  def sort
+    @question_options = @question.question_options
+    @question_options.each do |option|
+      option.position = params['options'].index(option.id.to_s) + 1
+      option.save!
+    end
+    render :nothing => true
+  end
 
   # DELETE /question_options/1
   # DELETE /question_options/1.xml

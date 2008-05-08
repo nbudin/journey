@@ -1,5 +1,5 @@
 class SelectorField < Field
-  has_many :question_options, :dependent => :destroy, :foreign_key => 'question_id'
+  has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id'
   
   def options_for_select
     return question_options.collect { |o| [ o.option, o.option ] }

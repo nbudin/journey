@@ -47,4 +47,15 @@ class Answer < ActiveRecord::Base
       return v
     end
   end
+  
+  def output_value
+    v = self.value
+    if question.kind_of?(SelectorField)
+      opt = question.question_options.find_by_option(v)
+      if opt.output_value
+        v = opt.output_value
+      end
+    end
+    return v
+  end
 end

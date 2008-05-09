@@ -2,7 +2,7 @@
   <li style="display: table-row; text-align: center; font-weight: bold;">
     <div style="display: table-cell;"></div>
     <div style="display: table-cell;">Option</div>
-    <div style="display: table-cell;">Mapped Value</div>
+    <div style="display: table-cell;">Output Value</div>
   </li>
   <% @question.question_options.each do |option| -%>
     <li id="option_<%=option.id%>" class="question_option <%= cycle(:odd, :even) %>" style="display: table-row;">
@@ -13,6 +13,7 @@
         <%= jipe_editor(option, "option", :class => "QuestionOption", :question_id => @question.id) %>
       </div>
       <div style="display: table-cell;">
+        <%= jipe_editor(option, "output_value", :class => "QuestionOption", :question_id => @question.id) %>
       </div>
       <div style="display: table-cell; width: 16px;">
         <%= image_tag "remove.png", :class => "image_button",
@@ -22,7 +23,8 @@
   <% end -%>
   <li style="display: table-row;">
     <div style="display: table-cell;"></div>
-    <div style="display: table-cell;"><%= text_field_tag "question_#{@question.id}_add_option", "", :style => "width: 95%;" %></div>
+    <div style="display: table-cell;"><%= text_field_tag "question_#{@question.id}_add_option", "", :style => "position: absolute; width: 80%;" %>&nbsp;</div>
+    <div style="display: table-cell;"></div>
     <div style="display: table-cell;"><%= image_tag "add.png", :class => "image_button",
 		:onClick => "addOption(#{@question.id}, $('question_#{@question.id}_add_option').value);" %></div>
 <script type="text/javascript">

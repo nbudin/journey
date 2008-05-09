@@ -108,7 +108,7 @@ class Questionnaire < ActiveRecord::Base
               end
               if question.kind_of? SelectorField
                 question.question_options.each do |option|
-                  xml.option(option.option)
+                  xml.option(option.option, :output_value => option.output_value)
                 end
               end
             end
@@ -179,6 +179,9 @@ class Questionnaire < ActiveRecord::Base
             optrows = {}
             question.each_element('option') do |option|
               o = QuestionOption.new :option => option.text
+              if option.has_attribute?("output_value")
+                o.output_value = option.attributes["output_value"]
+              end
               ques.question_options << o
               optrows[option.text] = o
               logger.info("Inserted optrows[#{option.text}] with id #{o.id}")

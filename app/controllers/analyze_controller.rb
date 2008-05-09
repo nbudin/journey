@@ -49,14 +49,14 @@ class AnalyzeController < ApplicationController
         csv << (["id"] + @responses.collect { |r| r.id })
         @columns.each do |col|
           csv << ([col.caption] + @responses.collect do |r|
-            Answer.output_value(:question => col, :response => r)
+            r.answer_for_question(col).output_value
           end)
         end
       else
         csv << (["id"] + @columns.collect { |c| c.caption })
         @responses.each do |resp|
           csv << ([resp.id] + @columns.collect do |c|
-            Answer.output_value(:question => c, :response => resp)
+            resp.answer_for_question(c).output_value
           end)
         end
       end

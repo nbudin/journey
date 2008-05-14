@@ -74,7 +74,8 @@ class AnalyzeController < ApplicationController
     
     @fields.each do |question|
       @questionnaire.valid_responses.each do |resp|
-        val = resp.answer_for_question(question).output_value || "No answer"
+        ans = resp.answer_for_question(question)
+        val = (ans ? ans.output_value : nil) || "No answer"
         if val.length == 0
           val = "No answer"
         end

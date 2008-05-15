@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 30) do
+ActiveRecord::Schema.define(:version => 31) do
 
   create_table "answers", :force => true do |t|
     t.integer  "response_id"
@@ -106,14 +106,16 @@ ActiveRecord::Schema.define(:version => 30) do
   end
 
   create_table "questionnaires", :force => true do |t|
-    t.text    "title"
-    t.boolean "is_open"
-    t.string  "custom_html",          :default => ""
-    t.string  "custom_css",           :default => ""
-    t.boolean "allow_finish_later",   :default => true, :null => false
-    t.boolean "allow_amend_response", :default => true, :null => false
-    t.string  "rss_secret"
-    t.text    "welcome_text"
+    t.text     "title"
+    t.boolean  "is_open"
+    t.string   "custom_html",          :default => ""
+    t.string   "custom_css",           :default => ""
+    t.boolean  "allow_finish_later",   :default => true, :null => false
+    t.boolean  "allow_amend_response", :default => true, :null => false
+    t.string   "rss_secret"
+    t.text     "welcome_text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "questions", :force => true do |t|

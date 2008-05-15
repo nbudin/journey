@@ -37,7 +37,8 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       format.html # index.rhtml
-      format.xml  { render :xml => @questionnaires.to_xml }
+      format.xml  { render :action => "index.rxml", :layout => false, :content_type => "text/xml" }
+      format.rss  { render :action => "index.rxml", :layout => false, :content_type => "text/xml" }
     end
   end
 

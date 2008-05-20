@@ -16,7 +16,7 @@
                         margin-top: 0.5em;
                 }
 
-                <% if @questionnaire -%>
+                <% if @questionnaire and not @suppress_custom_css -%>
                         <%= @questionnaire.custom_css %>
                 <% end -%>
   </style>

@@ -46,6 +46,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     check_forged_path
     @suppress_custom_html = true
+    @suppress_custom_css = true
   end
 
   # POST /questions

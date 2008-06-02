@@ -16,7 +16,7 @@ function sizeResponseViewer() {
 showingResponseId = null;
 function showResponse(id) {  
     if (showingResponseId == null) {
-        document.getElementsByClassName('minimizable').each(function(element) {
+        $$('.minimizable').each(function(element) {
             element.hide();
         });
         $('responseviewer').show();
@@ -35,7 +35,7 @@ function showResponse(id) {
 
 function hideResponse() {
     if (showingResponseId != null) {
-        document.getElementsByClassName('minimizable').each(function(element) {
+        $$('.minimizable').each(function(element) {
             element.show();
         });
         $('responseviewer').hide();

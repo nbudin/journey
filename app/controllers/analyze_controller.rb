@@ -17,8 +17,13 @@ class AnalyzeController < ApplicationController
     
     @responses = @questionnaire.valid_responses.paginate :page => params[:page]
     
-    if request.xml_http_request?
-      render :partial => 'response_table', :layout => false
+    respond_to do |format|
+      format.html # index.rhtml
+      format.js do
+        render :update do |page|
+          page.replace_html 'responses', :partial => 'response_table'
+        end
+      end
     end
   end
   

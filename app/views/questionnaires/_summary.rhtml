@@ -28,7 +28,15 @@
           page.show "questionnairesummary_#{questionnaire.id}_open"
           end%></b>
       </td>
-      <td style="width: 75%; overflow: hidden;">
+      <td style="width: 25%; overflow: hidden;">
+        <% if questionnaire.tags.length > 0 %>
+          Tags:
+          <span style="font-size: 90%; font-weight: bold;">
+           <%=h questionnaire.tag_names.join(", ") %>
+          </span>
+        <% end -%>
+      </td>
+      <td style="width: 50%; overflow: hidden;">
         <%= h authors %>
       </td>
     </table>

@@ -15,9 +15,17 @@
   <%= javascript_include_tag 'jester', :plugin => 'jipe' %>
   <%= javascript_include_tag 'jipe', :plugin => 'jipe' %>
   <%= javascript_include_tag 'browserdetect.js' %>
+  <%= javascript_include_tag 'lowpro' %>
   <% if @rss_url %>
     <link rel="alternate" title="RSS Feed" href="<%=@rss_url%>" type="application/rss+xml"/>
   <% end %>
+  <script type="text/javascript">
+      Event.addBehavior.reassignAfterAjax = true;
+      Event.addBehavior({
+         'div.pagination a' : Remote.Link,
+         'form.filterbar' : Remote.Form
+      });
+  </script>
 </head>
 <body id="body">
 

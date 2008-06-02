@@ -14,3 +14,7 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+
+# Possibly remove this later, but for now, the ActiveRecord logs are annoying me
+config.active_record.logger = Logger.new(STDOUT)
+config.active_record.logger.level = Logger::INFO

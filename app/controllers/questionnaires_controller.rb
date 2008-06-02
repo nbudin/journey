@@ -39,6 +39,11 @@ class QuestionnairesController < ApplicationController
       format.html # index.rhtml
       format.xml  { render :action => "index.rxml", :layout => false, :content_type => "text/xml" }
       format.rss  { render :action => "index.rxml", :layout => false, :content_type => "text/xml" }
+      format.js do
+        render :update do |page|
+          page.replace_html 'questionnaire_list', :partial => 'paged_results'
+        end
+      end
     end
   end
 

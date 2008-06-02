@@ -314,6 +314,14 @@ div.special_purpose img {
     vertical-align: top;
 }
 
+form.filterbar input {
+    width: 80%;
+}
+
+form.filterbar input[type='submit'] {
+    width: auto;
+}
+
   .pagination {
     padding: 3px;
     margin: 3px;

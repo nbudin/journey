@@ -1,0 +1,9 @@
+<% p = logged_in? ? logged_in_person : nil-%>
+
+<div id="questionnaire_list">
+	<% for questionnaire in @questionnaires %>
+		<%= render :partial => "summary", :locals => {:questionnaire => questionnaire} %>
+	<% end %>
+        <%= will_paginate @questionnaires %>
+</div>					
+

@@ -32,25 +32,16 @@
 	</div>
 </div>
 
-<% p = logged_in? ? logged_in_person : nil-%>
-
 <div id="filter_params" style="border-top: 1px black solid; background-color: #FFE5C0;">
-  <% form_tag({}, {:method => "get"}) do  %>
-    <table style="width: 100%">
-      <tr>
-        <td style="width: 0; padding-right: 1em;"><b>Search&nbsp;filters</b></td>
-        <td>Title: <%= text_field_tag "title", params[:title] %></td>
-        <td>Tag: <%= text_field_tag "tag", params[:tag] %></td>
-        <td style="text-align: right;"><%= submit_tag "Search" %></td>
-      </tr>
-    </table>
+  <% form_tag({}, {:method => "get", :class => "filterbar"}) do  %>
+      <table style="width: 100%">
+        <tr>
+          <td style="width: 25%;"><%= text_field_tag "title", params[:title] %></td>
+          <td style="width: 25%;"><%= text_field_tag "tag", params[:tag] %></td>
+          <td style="text-align: right;"><%= submit_tag "Filter" %></td>
+        </tr>
+      </table>
   <% end %>
 </div>
 
-<div id="questionnaire_list">
-	<% for questionnaire in @questionnaires %>
-		<%= render :partial => "summary", :locals => {:questionnaire => questionnaire} %>
-	<% end %>
-</div>					
-
-<%= will_paginate @questionnaires %>
+<%= render :partial => 'paged_results' %>

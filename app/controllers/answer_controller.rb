@@ -30,7 +30,7 @@ class AnswerController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
     
     if logged_in?
-      @responses = Response.find_all_by_person_id(logged_in_person.id)
+      @responses = @questionnaire.responses.find_all_by_person_id(logged_in_person.id)
     end
   end
   

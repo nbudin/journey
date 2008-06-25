@@ -34,6 +34,8 @@ end
 #   inflect.uncountable %w( fish sheep )
 # end
 
+#Mime::Type.register("text/css", :css)
+
 # Set up the workdir, make sure it exists
 JOURNEY_WORKDIR = File.join(File.expand_path(RAILS_ROOT), "working_copies")
 FileUtils.mkdir_p JOURNEY_WORKDIR

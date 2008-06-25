@@ -5,10 +5,10 @@
 <head>
   <title>Questionnaire: <%= controller.action_name %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <%= stylesheet_link_tag 'questionnaire', :media => "all" %>
-  <%= stylesheet_link_tag 'journey', :media => "all" %>
+  <%= dynamic_stylesheet_link_tag 'questionnaire', :media => "all" %>
+  <%= dynamic_stylesheet_link_tag 'journey', :media => "all" %>
   <!--[if IE 7]>
-    <%= stylesheet_link_tag 'ie7hacks.css' %>
+    <%= dynamic_stylesheet_link_tag 'ie7hacks' %>
   <![endif]-->
     <style type="text/css">
                 body {

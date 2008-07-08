@@ -29,10 +29,10 @@ role :db,  "journey.aegames.org", :primary => true
 # =============================================================================
 # OPTIONAL VARIABLES
 # =============================================================================
-set :deploy_to, "/var/www/journey" # defaults to "/u/apps/#{application}"
-set :use_sudo, true
+set :deploy_to, "/home/nbudin/journey.aegames.org" # defaults to "/u/apps/#{application}"
+set :use_sudo, false
 set :checkout, "export"
-set :user, "www-data"            # defaults to the currently logged in user
+#set :user, "www-data"            # defaults to the currently logged in user
 #set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 set :scm, :subversion               # defaults to :subversion
 # set :svn, "/path/to/svn"       # defaults to searching the PATH

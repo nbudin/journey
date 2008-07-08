@@ -59,7 +59,7 @@ if %w[#{only_list.join(' ')}].include?(ENV['RAILS_ENV'])
             path_options = [gem_name, gem_name.split('-').join('/')].uniq
             code = <<-eos
 require_options = #{path_options.inspect}
-if require_lib = require_options.find { |path|  File.directory?(File.join(File.dirname(__FILE__), 'lib', path)) }
+if require_lib = require_options.find { |path|  File.directory?(File.join(File.dirname(__FILE__), 'lib', path)) || File.file?(File.join(File.dirname(__FILE__), 'lib', path + ".rb")) }
   require File.join(File.dirname(__FILE__), 'lib', require_lib)
 else
   puts msg = "ERROR: Please update \#{File.expand_path __FILE__} with the require path for linked RubyGem #{gem_name}"

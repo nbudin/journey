@@ -35,6 +35,12 @@ class AnalyzeController < ApplicationController
     @resp = Response.find(params[:id])
     @questionnaire = @resp.questionnaire
   end
+  
+  def edit_response
+    @resp = Response.find(params[:id])
+    @questionnaire = @resp.questionnaire
+    @editing = true
+  end
 
   def rss
     @questionnaire = Questionnaire.find(params[:id])

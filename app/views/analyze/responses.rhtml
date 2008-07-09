@@ -43,6 +43,18 @@ function hideResponse() {
     showingResponseId = null;
 }
 
+function editResponse() {
+    $('responseviewer').update('<div class="responsecontainer" style="text-align: center; height: '+$('responsetable').offsetHeight+'px;"><%=image_tag "throbber.gif", :alt => "Loading..." %></div>');
+    sizeResponseViewer();
+    new Ajax.Updater(
+        'responseviewer',
+        '<%= url_for :action => 'edit_response' %>',
+        {
+            parameters: 'id='+showingResponseId,
+            onComplete: sizeResponseViewer
+        });
+}
+
 function deleteResponse() {
   $('response_wait_toolbar').hide();
   $('response_toolbar').hide();

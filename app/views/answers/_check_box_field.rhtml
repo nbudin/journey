@@ -1,0 +1,5 @@
+<% if @editing -%>
+	<%= check_box_tag "answer[#{@question.id}]", 'checked', value %>
+<% else -%>
+	<%= check_box_tag "answer[#{@question.id}]", 'checked', value, :disabled => true %>
+<% end -%>

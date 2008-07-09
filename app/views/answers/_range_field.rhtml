@@ -1,0 +1,20 @@
+<% if @editing -%>
+  <% n = ((@question.max - @question.min + @question.step) / @question.step)
+  odd = n % 2 == 1
+  if odd
+          median = ((n/2) * @question.step) + @question.min
+  end -%>
+  <%= @question.min %>
+  <% @question.min.step(@question.max, @question.step) do |i| -%>
+          <% if odd and i == median -%>
+                  [
+          <% end -%>
+          <%= radio_button_tag "answer[#{@question.id}]", i, value == i.to_s %>
+          <% if odd and i == median -%>
+                  ] 
+          <% end -%>
+  <% end -%>
+  <%= @question.max %>
+<% else -%>
+  <%= value  %>
+<% end -%>

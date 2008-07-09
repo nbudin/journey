@@ -1,0 +1,2 @@
+class AnnotationField < FreeformField
+end

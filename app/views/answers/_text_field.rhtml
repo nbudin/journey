@@ -1,0 +1,5 @@
+<% if @editing -%>
+	<%= text_field_tag "answer[#{@question.id}]", value %>
+<% else -%>
+	<%= simple_format value %>
+<% end -%>

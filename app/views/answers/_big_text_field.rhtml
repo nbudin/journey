@@ -1,0 +1,5 @@
+<% if @editing -%>
+	<%= text_area_tag "answer[#{@question.id}]", value, :rows => 4 %>
+<% else -%>
+	<%= simple_format value %>
+<% end -%>

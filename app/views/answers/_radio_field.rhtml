@@ -1,0 +1,7 @@
+<% if @editing -%>
+  <% @question.question_options.each do |option| -%>
+    <%= option.option %> <%= radio_button_tag "answer[#{@question.id}]", option.option, value == option.option %>
+  <% end -%>
+<% else -%>
+  <%= simple_format value %>
+<% end -%>

@@ -47,6 +47,20 @@ module ApplicationHelper
   rescue Exception => e
     return render(:inline => "<%= start_question @question %><b>Error rendering #{question.class.name} \##{question.id} (#{h e.message})</b><%= end_question @question %>")
   end
+  
+  def render_answer(question, answer)
+    @answer = answer
+    @question = question
+    if answer
+      value = answer.value
+    else
+      value = nil
+    end
+    return render(:partial => "answers/" + @question.attributes['type'].tableize.singularize,
+                  :locals => { 'value' => value })
+    rescue Exception => e
+      return "<b>Error rendering answer to #{@question.class.name} \##{@question.id} (#{h e.message})</b>"
+  end
 
   def start_question(question, options = {})
     options = {

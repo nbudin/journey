@@ -9,20 +9,8 @@
     <% answer = resp.answer_for_question(question) -%>
     <table class="question" id="question<%=resp.id%>_<%=question.id%>">
       <tr class="<%= cycle("odd", "even") %>">
-        <td class="caption">
-          <%= question.caption %>
-        </td>
-        <td class="questionbody">
-          <% if question.kind_of? CheckBoxField -%>
-            <%= check_box_tag "answer_#{question.id}", 'checked', answer, :disabled => true -%>
-          <% else -%>
-            <% if answer.nil? -%>
-              &nbsp;
-            <% else -%>
-              <%=simple_format(answer.output_value) %>
-            <% end -%>
-          <% end -%>
-        </td>
+        <td class="caption"><%= question.caption %></td>
+        <td class="questionbody"><%= render_answer(question, answer)  %></td>
       </tr>
     </table>
   <% end -%>

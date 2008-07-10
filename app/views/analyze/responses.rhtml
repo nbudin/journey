@@ -55,6 +55,18 @@ function editResponse() {
         });
 }
 
+function saveEditedResponse() {
+    params = $('edited_response').serialize(true);
+    $('responseviewer').update('<div class="responsecontainer" style="text-align: center; height: '+$('responsetable').offsetHeight+'px;"><%=image_tag "throbber.gif", :alt => "Loading..." %></div>');
+    new Ajax.Updater(
+        'responseviewer',
+        '<%= url_for :action => 'update_response' %>/' + showingResponseId,
+        {
+            parameters: params,
+            onComplete: sizeResponseViewer
+        });
+}
+
 function deleteResponse() {
   $('response_wait_toolbar').hide();
   $('response_toolbar').hide();

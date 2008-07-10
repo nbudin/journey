@@ -5,6 +5,7 @@ require 'iconv'
 class AnalyzeController < ApplicationController
   layout "global", :except => [:rss, :csv]
   require_permission "view_answers", :class_name => "Questionnaire", :only => [:responses, :response_table, :aggregate]
+  require_permission "edit_answers", :class_name => "Questionnaire", :only => [:edit_response, :update_response]
 
   def responses 
     sort = params[:sort_column] || 'id'
@@ -40,6 +41,36 @@ class AnalyzeController < ApplicationController
     @resp = Response.find(params[:id])
     @questionnaire = @resp.questionnaire
     @editing = true
+  end
+  
+  def answer_given(question_id)
+    return (params[:answer] and params[:answer][question_id.to_s] and
+      params[:answer][question_id.to_s].length > 0)
+  end
+  
+  def update_response
+    @resp = Response.find(params[:id])
+    @questionnaire = @resp.questionnaire
+
+    @questionnaire.questions.each do |question|
+      if question.kind_of? Field
+        ans = Answer.find_answer(@resp, question)
+        if answer_given(question.id)
+          if ans.nil?
+            ans = Answer.new :question_id => question.id, :response_id => @resp.id
+          end
+          ans.value = params[:answer][question.id.to_s]
+          ans.save
+        else
+          # No answer provided
+          if not ans.nil?
+            ans.destroy
+          end
+        end
+      end
+    end
+    
+    render :action => 'view_response', :id => @resp.id
   end
 
   def rss

@@ -14,5 +14,7 @@
     		</tr>
     	</table>
     </div>
-    <%= render :partial => 'response', :locals => { :resp => @resp } %>
+    <% form_tag({ :action => 'update_response', :id => @resp.id }, { :id => 'edited_response' }) do |f| %>
+      <%= render :partial => 'response', :locals => { :resp => @resp } %>
+    <% end %>
 </div>

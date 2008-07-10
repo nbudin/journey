@@ -156,7 +156,7 @@ class AnalyzeController < ApplicationController
   def check_edit_answers_permission
     @resp = Response.find(params[:id])
     @questionnaire = @resp.questionnaire
-    if not logged_in and logged_in_person.permitted?("edit_answers", @questionnaire)
+    if not logged_in? and logged_in_person.permitted?("edit_answers", @questionnaire)
       access_denied
     end
   end

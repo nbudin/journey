@@ -13,7 +13,7 @@
 # form the root of the application path.
 
 set :application, "journey"
-set :repository, "http://journey-questionnaires.googlecode.com/svn/trunk"
+set :repository, "http://journey-questionnaires.googlecode.com/svn/branches/2.5"
 
 # =============================================================================
 # ROLES
@@ -31,7 +31,7 @@ role :db,  "century.dreamhost.com", :primary => true
 # =============================================================================
 # OPTIONAL VARIABLES
 # =============================================================================
-set :deploy_to, "/home/natbudin/journey-trunk.aegames.org" # defaults to "/u/apps/#{application}"
+set :deploy_to, "/home/natbudin/journey.aegames.org" # defaults to "/u/apps/#{application}"
 #set :use_sudo, true
 set :checkout, "export"
 set :user, "natbudin"            # defaults to the currently logged in user

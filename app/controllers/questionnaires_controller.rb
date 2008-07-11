@@ -53,6 +53,7 @@ class QuestionnairesController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
 
     respond_to do |format|
+      format.html {}
       format.xml do
         if logged_in? and logged_in_person.permitted?(@questionnaire, "edit")
           render :xml => @questionnaire.to_xml

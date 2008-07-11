@@ -2,7 +2,28 @@
 
 <div id="questionnaire_list">
 	<% for questionnaire in @questionnaires %>
-		<%= render :partial => "summary", :locals => {:questionnaire => questionnaire} %>
+          <% authors = questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
+          <div class="questionnairesummary">  
+            <div id="questionnairesummary_<%=questionnaire.id%>_closed">
+              <table style="width: 100%;">
+                <td style="width: 25%; overflow: hidden;">
+                  <b><%= link_to_function(format_title(questionnaire.title), 
+                         "new Ajax.Updater('questionnairesummary_#{questionnaire.id}_closed', '#{questionnaire_url(questionnaire.id)}', {'method': 'GET'});")%></b>
+                </td>
+                <td style="width: 25%; overflow: hidden;">
+                  <% if questionnaire.tags.length > 0 %>
+                    Tags:
+                    <span style="font-size: 90%; font-weight: bold;">
+                     <%=h questionnaire.tag_names.join(", ") %>
+                    </span>
+                  <% end -%>
+                </td>
+                <td style="width: 50%; overflow: hidden;">
+                  <%= h authors %>
+                </td>
+              </table>
+            </div>
+          </div>
 	<% end %>
         <%= will_paginate @questionnaires %>
 </div>					

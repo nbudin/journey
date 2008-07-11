@@ -5,7 +5,7 @@ require 'iconv'
 class AnalyzeController < ApplicationController
   layout "global", :except => [:rss, :csv]
   require_permission "view_answers", :class_name => "Questionnaire", :only => [:responses, :response_table, :aggregate]
-  require_permission "edit_answers", :class_name => "Questionnaire", :only => [:edit_response, :update_response]
+  before_filter :check_edit_answers_permission, :only => [:edit_response, :update_response]
 
   def responses 
     sort = params[:sort_column] || 'id'
@@ -150,6 +150,14 @@ class AnalyzeController < ApplicationController
     rescue Iconv::IllegalSequence
       # this won't work in excel but might work other places
       render :text => output.string
+    end
+  end
+  
+  def check_edit_answers_permission
+    @resp = Response.find(params[:id])
+    @questionnaire = @resp.questionnaire
+    if not logged_in? and logged_in_person.permitted?(@questionnaire, "edit_answers")
+      access_denied
     end
   end
 end

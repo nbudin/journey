@@ -179,7 +179,7 @@ class Questionnaire < ActiveRecord::Base
             optrows = {}
             question.each_element('option') do |option|
               o = QuestionOption.new :option => option.text
-              if option.has_attribute?("output_value")
+              if option.attributes["output_value"]
                 o.output_value = option.attributes["output_value"]
               end
               ques.question_options << o

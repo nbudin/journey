@@ -43,7 +43,7 @@ module ApplicationHelper
       end
     end
     return render(:partial => "questions/" + question.attributes['type'].tableize.singularize,
-                  :locals => { 'value' => value })
+                  :locals => { :value => value })
   rescue Exception => e
     return render(:inline => "<%= start_question @question %><b>Error rendering #{question.class.name} \##{question.id} (#{h e.message})</b><%= end_question @question %>")
   end

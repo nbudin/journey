@@ -3,6 +3,6 @@
 	<%= check_box "question[]", "default_answer",
 		:onChange => "updateDefault(#{@question.id}, this.checked);"%>
 <% else -%>
-	<%= check_box_tag "question[#{@question.id}]", 'checked', value %>
+	<%= check_box_tag "question[#{@question.id}]", 'checked', (value and value != '') %>
 <% end -%>
 <%= end_question @question %>

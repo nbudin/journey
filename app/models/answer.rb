@@ -52,7 +52,7 @@ class Answer < ActiveRecord::Base
     v = self.value
     if question.kind_of?(SelectorField)
       opt = question.question_options.find_by_option(v)
-      if opt.output_value
+      if opt.output_value and opt.output_value != ''
         v = opt.output_value
       end
     end

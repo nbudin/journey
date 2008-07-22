@@ -52,7 +52,11 @@ module ApplicationHelper
     @answer = answer
     @question = question
     if answer
-      value = answer.value
+      if not @editing
+        value = answer.output_value
+      else
+        value = answer.value
+      end
     else
       value = nil
     end

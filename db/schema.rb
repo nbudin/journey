@@ -1,5 +1,5 @@
 # This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of ActiveRecord to incrementally modify your database, and
+# please use the migrations feature of Active Record to incrementally modify your database, and
 # then regenerate this schema definition.
 #
 # Note that this schema.rb definition is the authoritative source for your database schema. If you need
@@ -9,34 +9,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 31) do
+ActiveRecord::Schema.define(:version => 20080716192702) do
 
   create_table "answers", :force => true do |t|
-    t.integer  "response_id"
-    t.integer  "question_id", :default => 0, :null => false
+    t.integer  "response_id", :limit => 11
+    t.integer  "question_id", :limit => 11, :default => 0, :null => false
     t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "answers", ["response_id"], :name => "index_answers_on_response_id"
+
   create_table "characters", :force => true do |t|
     t.string  "name"
-    t.integer "larp_id"
+    t.integer "larp_id", :limit => 11
   end
 
   create_table "checkouts", :force => true do |t|
-    t.integer "project_id"
-    t.integer "user_id"
+    t.integer "project_id", :limit => 11
+    t.integer "user_id",    :limit => 11
     t.string  "path"
   end
 
   create_table "engine_schema_info", :id => false, :force => true do |t|
     t.string  "engine_name"
-    t.integer "version"
+    t.integer "version",     :limit => 11
   end
 
   create_table "larp_runs", :force => true do |t|
-    t.integer  "larp_id"
+    t.integer  "larp_id", :limit => 11
     t.string   "venue"
     t.datetime "when"
   end
@@ -46,13 +48,13 @@ ActiveRecord::Schema.define(:version => 31) do
   end
 
   create_table "larps_questionnaires", :id => false, :force => true do |t|
-    t.integer "larp_id"
-    t.integer "questionnaire_id"
+    t.integer "larp_id",          :limit => 11
+    t.integer "questionnaire_id", :limit => 11
   end
 
   create_table "open_id_authentication_associations", :force => true do |t|
-    t.integer "issued"
-    t.integer "lifetime"
+    t.integer "issued",     :limit => 11
+    t.integer "lifetime",   :limit => 11
     t.string  "handle"
     t.string  "assoc_type"
     t.binary  "server_url"
@@ -60,33 +62,45 @@ ActiveRecord::Schema.define(:version => 31) do
   end
 
   create_table "open_id_authentication_nonces", :force => true do |t|
-    t.integer "timestamp",  :null => false
+    t.integer "timestamp",  :limit => 11, :null => false
     t.string  "server_url"
-    t.string  "salt",       :null => false
+    t.string  "salt",                     :null => false
   end
 
   create_table "pages", :force => true do |t|
-    t.integer "questionnaire_id", :default => 0, :null => false
-    t.integer "position"
+    t.integer "questionnaire_id", :limit => 11, :default => 0, :null => false
+    t.integer "position",         :limit => 11
     t.string  "title"
   end
 
-  create_table "permissions", :force => true do |t|
-    t.integer "role_id"
-    t.string  "permission"
-    t.integer "permissioned_id"
+  create_table "permission_caches", :force => true do |t|
+    t.integer "person_id",         :limit => 11
+    t.integer "permissioned_id",   :limit => 11
     t.string  "permissioned_type"
-    t.integer "person_id"
+    t.string  "permission_name"
+    t.boolean "result"
+  end
+
+  add_index "permission_caches", ["person_id"], :name => "index_permission_caches_on_person_id"
+  add_index "permission_caches", ["permissioned_id", "permissioned_type"], :name => "index_permission_caches_on_permissioned"
+  add_index "permission_caches", ["permission_name"], :name => "index_permission_caches_on_permission_name"
+
+  create_table "permissions", :force => true do |t|
+    t.integer "role_id",           :limit => 11
+    t.string  "permission"
+    t.integer "permissioned_id",   :limit => 11
+    t.string  "permissioned_type"
+    t.integer "person_id",         :limit => 11
   end
 
   create_table "permissions_roles", :id => false, :force => true do |t|
-    t.integer "permission_id", :default => 0, :null => false
-    t.integer "role_id",       :default => 0, :null => false
+    t.integer "permission_id", :limit => 11, :default => 0, :null => false
+    t.integer "role_id",       :limit => 11, :default => 0, :null => false
   end
 
   create_table "players", :id => false, :force => true do |t|
-    t.integer "larp_run_id"
-    t.integer "user_id"
+    t.integer "larp_run_id", :limit => 11
+    t.integer "user_id",     :limit => 11
   end
 
   add_index "players", ["larp_run_id", "user_id"], :name => "index_players_on_larp_run_id_and_user_id", :unique => true
@@ -99,9 +113,9 @@ ActiveRecord::Schema.define(:version => 31) do
   end
 
   create_table "question_options", :force => true do |t|
-    t.integer "question_id",  :default => 0, :null => false
-    t.text    "option",                      :null => false
-    t.integer "position",     :default => 0, :null => false
+    t.integer "question_id",  :limit => 11, :default => 0, :null => false
+    t.text    "option",                                    :null => false
+    t.integer "position",     :limit => 11, :default => 0, :null => false
     t.string  "output_value"
   end
 
@@ -120,21 +134,21 @@ ActiveRecord::Schema.define(:version => 31) do
 
   create_table "questions", :force => true do |t|
     t.string  "type",           :limit => 100, :default => "",    :null => false
-    t.integer "position",                      :default => 0,     :null => false
+    t.integer "position",       :limit => 11,  :default => 0,     :null => false
     t.text    "caption",                                          :null => false
     t.boolean "required",                      :default => false, :null => false
-    t.integer "min",                           :default => 0,     :null => false
-    t.integer "max",                           :default => 0,     :null => false
-    t.integer "step",                          :default => 1,     :null => false
-    t.integer "page_id",                       :default => 0,     :null => false
+    t.integer "min",            :limit => 11,  :default => 0,     :null => false
+    t.integer "max",            :limit => 11,  :default => 0,     :null => false
+    t.integer "step",           :limit => 11,  :default => 1,     :null => false
+    t.integer "page_id",        :limit => 11,  :default => 0,     :null => false
     t.string  "default_answer"
   end
 
   create_table "responses", :force => true do |t|
-    t.integer  "questionnaire_id", :default => 0,     :null => false
-    t.integer  "saved_page"
-    t.boolean  "submitted",        :default => false, :null => false
-    t.integer  "person_id"
+    t.integer  "questionnaire_id", :limit => 11, :default => 0,     :null => false
+    t.integer  "saved_page",       :limit => 11
+    t.boolean  "submitted",                      :default => false, :null => false
+    t.integer  "person_id",        :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "submitted_at"
@@ -148,14 +162,14 @@ ActiveRecord::Schema.define(:version => 31) do
   end
 
   create_table "special_field_associations", :force => true do |t|
-    t.integer "questionnaire_id"
-    t.integer "question_id"
+    t.integer "questionnaire_id", :limit => 11
+    t.integer "question_id",      :limit => 11
     t.string  "purpose"
   end
 
   create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "tagged_id"
+    t.integer  "tag_id",      :limit => 11
+    t.integer  "tagged_id",   :limit => 11
     t.string   "tagged_type"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -179,20 +193,20 @@ ActiveRecord::Schema.define(:version => 31) do
     t.string   "firstname",       :limit => 40
     t.string   "lastname",        :limit => 40
     t.string   "salt",            :limit => 40, :default => "", :null => false
-    t.integer  "verified",                      :default => 0
+    t.integer  "verified",        :limit => 11, :default => 0
     t.string   "role",            :limit => 40
     t.string   "security_token",  :limit => 40
     t.datetime "token_expiry"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "logged_in_at"
-    t.integer  "deleted",                       :default => 0
+    t.integer  "deleted",         :limit => 11, :default => 0
     t.datetime "delete_after"
   end
 
   create_table "users_roles", :id => false, :force => true do |t|
-    t.integer "user_id", :default => 0, :null => false
-    t.integer "role_id", :default => 0, :null => false
+    t.integer "user_id", :limit => 11, :default => 0, :null => false
+    t.integer "role_id", :limit => 11, :default => 0, :null => false
   end
 
 end

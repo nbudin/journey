@@ -56,32 +56,39 @@ class AnswerController < ApplicationController
       if not session[response_key]
         redirect_to :action => 'prompt', :id => @questionnaire.id
       else
-        @resp = Response.find(session[response_key])
-        if params[:page]
-          @page = @resp.questionnaire.pages[params[:page].to_i - 1]
+        begin
+          @resp = Response.find(session[response_key])
+        rescue ActiveRecord::RecordNotFound
+          # bad response ID, it may have been deleted by an admin
+          session[response_key] = nil
+          redirect_to :action => prompt, :id => params[:id]
         else
-          @page = @resp.questionnaire.pages[0]
-        end
-      
-        if logged_in?
-          @page.questions.each do |question|
-            if not question.respond_to? 'purpose'
-              next
-            end
-            purpose = question.purpose
-            if purpose
-              answer = @resp.answer_for_question(question)
-              if not answer
-                value = nil
-                if purpose == 'name'
-                  value = logged_in_person.name
-                elsif purpose == 'email'
-                  value = logged_in_person.primary_email_address
-                elsif purpose == 'gender'
-                  value = logged_in_person.gender
-                end
-                if not (value.nil? or value == '')
-                  @resp.answers.create :question => question, :value => value
+          if params[:page]
+            @page = @resp.questionnaire.pages[params[:page].to_i - 1]
+          else
+            @page = @resp.questionnaire.pages[0]
+          end
+
+          if logged_in?
+            @page.questions.each do |question|
+              if not question.respond_to? 'purpose'
+                next
+              end
+              purpose = question.purpose
+              if purpose
+                answer = @resp.answer_for_question(question)
+                if not answer
+                  value = nil
+                  if purpose == 'name'
+                    value = logged_in_person.name
+                  elsif purpose == 'email'
+                    value = logged_in_person.primary_email_address
+                  elsif purpose == 'gender'
+                    value = logged_in_person.gender
+                  end
+                  if not (value.nil? or value == '')
+                    @resp.answers.create :question => question, :value => value
+                  end
                 end
               end
             end

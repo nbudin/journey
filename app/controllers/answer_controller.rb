@@ -56,7 +56,13 @@ class AnswerController < ApplicationController
       if not session[response_key]
         redirect_to :action => 'prompt', :id => @questionnaire.id
       else
-        @resp = Response.find(session[response_key])
+        begin
+          @resp = Response.find(session[response_key])
+        rescue ActiveRecord::ResourceNotFound
+          # bad response ID, it may have been deleted by an admin
+          session[response_key] = nil
+          redirect_to :action => prompt, :id => params[:id]
+        end
         if params[:page]
           @page = @resp.questionnaire.pages[params[:page].to_i - 1]
         else

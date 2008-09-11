@@ -58,7 +58,7 @@ class AnswerController < ApplicationController
       else
         begin
           @resp = Response.find(session[response_key])
-        rescue ActiveRecord::ResourceNotFound
+        rescue ActiveRecord::RecordNotFound
           # bad response ID, it may have been deleted by an admin
           session[response_key] = nil
           redirect_to :action => prompt, :id => params[:id]

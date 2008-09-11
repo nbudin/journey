@@ -36,7 +36,7 @@ function updateDefaultForRadioGroup(questionId, newDefault) {
       }
     }
   } else {
-    button = $("question_"+questionId+"_default_answer_"+newDefault.toLowerCase().gsub(/ /, '_').gsub(/[^a-z]/, ''));
+    button = $("question_"+questionId+"_default_answer_"+newDefault.toLowerCase().gsub(/ /, '_').gsub(/[^a-z_]/, ''));
     button.checked = true;
   }
   button.newDefault = newDefault;

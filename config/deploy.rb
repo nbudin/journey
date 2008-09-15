@@ -24,9 +24,9 @@ set :repository, "http://journey-questionnaires.googlecode.com/svn/trunk"
 # be used to single out a specific subset of boxes in a particular role, like
 # :primary => true.
 
-role :web, "century.dreamhost.com"
-role :app, "century.dreamhost.com"
-role :db,  "century.dreamhost.com", :primary => true
+role :web, "ps3789.dreamhostps.com"
+role :app, "ps3789.dreamhostps.com"
+role :db,  "ps3789.dreamhostps.com", :primary => true
 
 # =============================================================================
 # OPTIONAL VARIABLES

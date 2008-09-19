@@ -1,0 +1,91 @@
+function sizeResponseViewer() {
+    width = ($('responsetable').offsetWidth - $('responsefromheader').offsetWidth);
+    height = ($('responsetable').offsetHeight - 4);
+    if ($('response') != null) {
+        $('response').style.height = (height - $('responseheader').offsetHeight - 5) + "px";
+    }
+    $('responseviewer').style.width = width + "px";
+    $('responseviewer').style.height = height + "px";
+    $('responseviewer').style.top = ($('responsetable').offsetTop) + 'px';
+    $('responseviewer').style.left = ($('responsefromheader').offsetLeft + 10 + $('responsefromheader').offsetWidth) + 'px';
+}
+
+ResponseViewer = {};
+ResponseViewer.showingResponseId = null;
+
+function showResponse(id) {  
+    showResponseViewer(id);
+    new Ajax.Request(
+        '<%= questionnaire_responses_url(@questionnaire) %>/' + id,
+        { method: 'get' });
+}
+
+function showResponseToolbar(which) {
+    $('response_wait_toolbar').hide();
+    $('response_show_toolbar').hide();
+    $('response_edit_toolbar').hide();
+    $('response_delete_toolbar').hide();
+    $('response_'+which+'_toolbar').show();
+}
+
+function showResponseViewer(id) {
+    showResponseToolbar('show');
+    $('responseviewer').show();
+    sizeResponseViewer();
+    ResponseViewer.showingResponseId = id;
+}
+
+function hideResponseViewer() {
+    $('responseviewer').hide();
+}
+
+function showResponseThrobber() {
+    showResponseToolbar('wait');
+    $('responsebody').update('<div style="text-align: center;"><%=image_tag "throbber.gif", :alt => "Loading..." %></div>');
+}
+
+function editResponse() {
+    showResponseThrobber();
+    new Ajax.Request(
+        '<%= questionnaire_responses_path(@questionnaire) %>/' + ResponseViewer.showingResponseId + '/edit.js', 
+        { 'method': 'get' });
+}
+
+function showResponseEditor(id) {
+    showResponseToolbar('edit');
+    ResponseViewer.showingResponseId = id;
+    sizeResponseViewer();
+}
+
+function saveEditedResponse() {
+    params = $('edited_response').serialize(true);
+    showResponseThrobber();
+    new Ajax.Request(
+        '<%= questionnaire_responses_path %>/' + ResponseViewer.showingResponseId + '.js',
+        {
+			method: 'put',
+            parameters: params
+        });
+}
+
+function deleteResponse() {
+  showResponseToolbar('delete');
+}
+
+function cancelDelete() {
+  showResponseToolbar('show');
+}
+
+function confirmDelete() {
+  showResponseThrobber();
+  new Ajax.Request(
+      '<%= questionnaire_responses_url @questionnaire %>/'+ResponseViewer.showingResponseId,
+      {
+          method: 'delete',
+          onSuccess: function (req, header) { window.location.reload(); },
+          onFailure: function (req, header) { 
+            alert(resp.responseText);
+            cancelDelete();
+          }
+      });
+}

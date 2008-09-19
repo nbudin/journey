@@ -2,6 +2,12 @@ require 'journey_questionnaire'
 
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def javascript(url)
+    content_for :javascript do
+      javascript_include_tag url
+    end
+  end
+  
   def dynamic_stylesheet_link_tag(action, *args)
     stylesheet_link_tag(url_for(:controller => 'stylesheets', :action => action, :format => 'css'), *args)
   end
@@ -51,19 +57,19 @@ module ApplicationHelper
   def render_answer(question, answer)
     @answer = answer
     @question = question
-    if answer
+    value = if answer
       if not @editing
-        value = answer.output_value
+        answer.output_value
       else
-        value = answer.value
+        answer.value
       end
     else
-      value = nil
+      nil
     end
     return render(:partial => "answers/" + @question.attributes['type'].tableize.singularize,
-                  :locals => { 'value' => value })
-    rescue Exception => e
-      return "<b>Error rendering answer to #{@question.class.name} \##{@question.id} (#{h e.message})</b>"
+                  :locals => { :value => value })
+  rescue Exception => e
+    return "<b>Error rendering answer to #{@question.class.name} \##{@question.id} (#{h e.message})</b>"
   end
 
   def start_question(question, options = {})

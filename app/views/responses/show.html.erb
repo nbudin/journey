@@ -1,3 +1,1 @@
-
-<%= link_to 'Edit', edit_questionnaire_response_path(@questionnaire, @response) %> |
-<%= link_to 'Back', questionnaire_responses_path(@questionnaire) %>
+<%= render :partial => "response", :locals => {:resp => @resp} %>

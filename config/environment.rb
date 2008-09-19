@@ -22,10 +22,9 @@ Rails::Initializer.run do |config|
   # (enables use of different database adapters for development and test environments)
   config.active_record.schema_format = :ruby
 
-  # See Rails::Configuration for more options
+  config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
+    :source => 'http://gems.github.com'
 end
-
-Mime::Type.register("text/css", :css)
 
 # Add new inflection rules using the following format 
 # (all these examples are active by default):

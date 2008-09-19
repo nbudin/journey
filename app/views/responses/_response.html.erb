@@ -1,6 +1,7 @@
 <div class="response" id="response">
   <% last_page = nil -%>
-  <% resp.questionnaire.fields.each do |question| -%>
+
+  <% @questionnaire.fields.each do |question| -%>
     <% if last_page != question.page
       last_page = question.page -%>
       <p class="pageheader"><%=h question.page.title %></p>

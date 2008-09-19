@@ -34,11 +34,12 @@ class QuestionnairesController < ApplicationController
     @questionnaires = returning WillPaginate::Collection.new(params[:page] || 1, per_page, permitted_questionnaires.size) do |paginator|
       paginator.replace pager.page(params[:page]).items
     end
+    
+    @rss_url = formatted_questionnaires_url("rss")
 
     respond_to do |format|
-      format.html # index.rhtml
-      format.xml  { render :action => "index.rxml", :layout => false, :content_type => "text/xml" }
-      format.rss  { render :action => "index.rxml", :layout => false, :content_type => "text/xml" }
+      format.html { }
+      format.rss  { render :layout => false }
       format.js do
         render :update do |page|
           page.replace_html 'questionnaire_list', :partial => 'paged_results'

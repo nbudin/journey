@@ -7,22 +7,84 @@ class ResponsesController < ApplicationController
   # GET /responses
   # GET /responses.xml
   def index
-    @responses = @questionnaire.responses
-
+    sort = params[:sort_column] || 'id'
+    if params[:reverse] == "true"
+      sort = "#{sort} DESC"
+    end
+    
+    @rss_url = formatted_questionnaire_responses_url(@questionnaire, "rss", :secret => @questionnaire.rss_secret)
+    
+    @responses = @questionnaire.valid_responses.paginate :page => params[:page]
+    
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @responses }
+      format.html # index.rhtml
+      format.js do
+        render :update do |page|
+          page.replace_html 'responses', :partial => 'response_table'
+        end
+      end
+      format.rss do 
+        if params[:secret] != @questionnaire.rss_secret
+          throw "Provided secret does not match questionnaire"
+        end
+        render :layout => false
+      end
+      format.csv do
+        @responses = @questionnaire.valid_responses
+        @columns = @questionnaire.fields
+        
+        stream_csv(@questionnaire.title + ".csv") do |csv|
+          if params[:rotate]
+            csv << (["id"] + @responses.collect { |r| r.id })
+            @columns.each do |col|
+              csv << ([col.caption] + @responses.collect do |r|
+                a = r.answer_for_question(col)
+                if a
+                  a.output_value
+                else
+                  ""
+                end
+              end)
+            end
+          else
+            csv << (["id"] + @columns.collect { |c| c.caption })
+            @responses.each do |resp|
+              csv << ([resp.id] + @columns.collect do |c|
+                a = resp.answer_for_question(c)
+                if a
+                  a.output_value
+                else
+                  ""
+                end
+              end)
+            end
+          end
+        end
+      end
+    end
+  end
+  
+  def responseviewer
+    respond_to do |format|
+      format.js { render :layout => false }
     end
   end
 
   # GET /responses/1
   # GET /responses/1.xml
   def show
-    @response = Response.find(params[:id])
+    @resp = Response.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @response }
+      format.html
+      format.js do
+        content = render_to_string(:layout => false)
+        render :update do |page|
+          page.replace_html 'responsebody', content
+          page.replace_html 'responsetitle', @resp.title
+          page.call 'showResponseViewer', @resp.id
+        end
+      end
     end
   end
 
@@ -39,7 +101,20 @@ class ResponsesController < ApplicationController
 
   # GET /responses/1/edit
   def edit
-    @response = Response.find(params[:id])
+    @resp = Response.find(params[:id])
+    @editing = true
+    
+    respond_to do |format|
+      format.html
+      format.js do
+        content = render_to_string(:layout => false)
+        render :update do |page|
+          page.replace_html 'responsebody', content
+          page.replace_html 'responsetitle', "Editing #{@resp.title}"
+          page.call 'showResponseEditor', @resp.id
+        end
+      end
+    end
   end
 
   # POST /responses
@@ -62,16 +137,40 @@ class ResponsesController < ApplicationController
   # PUT /responses/1
   # PUT /responses/1.xml
   def update
-    @response = Response.find(params[:id])
+    def answer_given(question_id)
+      return (params[:answer] and params[:answer][question_id.to_s] and
+         params[:answer][question_id.to_s].length > 0)
+    end
+    
+    @resp = Response.find(params[:id])
+
+    @questionnaire.questions.each do |question|
+      if question.kind_of? Field
+        ans = Answer.find_answer(@resp, question)
+        if answer_given(question.id)
+          if ans.nil?
+            ans = Answer.new :question_id => question.id, :response_id => @resp.id
+          end
+          ans.value = params[:answer][question.id.to_s]
+          ans.save
+        else
+          # No answer provided
+          if not ans.nil?
+            ans.destroy
+          end
+        end
+      end
+    end
 
     respond_to do |format|
-      if @response.update_attributes(params[:response])
-        flash[:notice] = 'Response was successfully updated.'
-        format.html { redirect_to(questionnaire_response_url(@questionnaire, @response)) }
+      if @resp.update_attributes(params[:response])
+        format.html { redirect_to(questionnaire_response_url(@questionnaire, @resp)) }
+        format.js { redirect_to (formatted_questionnaire_response_url(@questionnaire, @resp, "js")) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @response.errors, :status => :unprocessable_entity }
+        format.js { render :action => "edit" }
+        format.xml  { render :xml => @resp.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -85,6 +184,53 @@ class ResponsesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(questionnaire_responses_url(@questionnaire)) }
       format.xml  { head :ok }
+    end
+  end
+  
+  def aggregate
+    @fields = @questionnaire.fields.select { |f| not f.kind_of? FreeformField }
+    
+    @answercounts = {}
+    @fields.each do |field|
+      @answercounts[field.id] = {}
+    end
+    
+    @fields.each do |question|
+      @questionnaire.valid_responses.each do |resp|
+        ans = resp.answer_for_question(question)
+        val = (ans ? ans.output_value : nil) || "No answer"
+        if val.length == 0
+          val = "No answer"
+        end
+        if not @answercounts[question.id].has_key? val
+          @answercounts[question.id][val] = 0
+        end
+        @answercounts[question.id][val] += 1
+      end
+    end
+  end
+  
+  private
+  def stream_csv(filename)
+    if request.env['HTTP_USER_AGENT'] =~ /msie/i
+      headers['Pragma'] = 'public'
+      headers['Content-type'] = 'text/plain'
+      headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
+      headers['Expires'] = "0"
+    else
+      headers['Content-Type'] ||= 'text/csv'
+    end
+    headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
+    
+    output = StringIO.new
+    csv = FasterCSV.new(output, :row_sep => "\r\n")
+    yield csv
+    begin
+      c = Iconv.new('ISO-8859-15', 'UTF-8')
+      render :text => c.iconv(output.string)
+    rescue Iconv::IllegalSequence
+      # this won't work in excel but might work other places
+      render :text => output.string
     end
   end
   

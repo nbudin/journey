@@ -1,0 +1,30 @@
+<div class="responseheader" id="responseheader">
+    <table width="100%">
+            <tr>
+                    <td align="left" id="responsetitle">
+                    </td>
+                    <td align="right">
+                      <span id="response_wait_toolbar" style="display: none;">
+                        Please wait...
+                      </span>
+                      <span id="response_delete_toolbar" style="display: none;">
+                        Are you sure? <%= button_to_function "Yes", 'confirmDelete();' %>
+                        <%= button_to_function "No", 'cancelDelete();' %>
+                      </span>
+                      <span id="response_show_toolbar">
+                        <% if logged_in_person.permitted?(@questionnaire, "edit_answers") %>
+                          <%= button_to_function "Edit", 'editResponse();' %>
+                          <%= button_to_function "Delete", 'deleteResponse();' %>
+                        <% end -%>
+                        <%= button_to_function "Close", 'hideResponseViewer();' %>
+                      </span>
+                      <span id="response_edit_toolbar" style="display: none;">
+                        <%= button_to_function "Save", 'saveEditedResponse();' %>
+    			<%= button_to_function "Cancel", 'showResponse(showingResponseId);' %>
+    		      </span>
+                    </td>
+            </tr>
+    </table>
+</div>
+<div id="responsebody">
+</div>

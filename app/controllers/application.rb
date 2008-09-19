@@ -3,5 +3,4 @@
 
 class ApplicationController < ActionController::Base
   layout "global"
-  around_filter :retardase_inhibitor
 end

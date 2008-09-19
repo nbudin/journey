@@ -6,17 +6,17 @@
     <table id="responsetable" style="width: 100%;">
         <tr>
             <th style="width: 20em" id="responsefromheader">Response from</th>
-            <th class="minimizable">Submit Date</th>
+            <th>Submit Date</th>
             <% header_fields.each do |header| %>
-                <th class="minimizable"><%= header.question.caption %></th>
+                <th><%= header.question.caption %></th>
             <% end %>
-            <th class="minimizable">ID</th>
+            <th>ID</th>
             <th></th>
         </tr>
         <% @responses.each do |response| %>
             <tr class="<%=cycle "even", "odd" %>" style="height: 0">
-                <td><%=link_to_function ellipsize(response.title,35), "showResponse(#{response.id})"%></td>
-                <td class="minimizable">
+                <td><%=link_to ellipsize(response.title,35), questionnaire_response_path(@questionnaire, response), :class => "viewresponse" %></td>
+                <td>
                   <% if response.submitted -%>
                     <%=response.submitted_at%>
                   <% else -%>
@@ -25,13 +25,13 @@
                     </td>
                     <% header_fields.each do |header| %>
                       <% answer = response.special_answer(header.purpose) -%>
-                      <td class="minimizable">
+                      <td>
                         <% if answer -%>
                           <%= response.special_answer(header.purpose).value %>
                         <% end -%>
                       </td>
                     <% end %>
-                <td class="minimizable"><%= response.id %></td>
+                <td><%= response.id %></td>
             </tr>
         <% end %>
 				<% (Response.per_page - @responses.length).times do %>

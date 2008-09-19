@@ -1,3 +1,6 @@
+require 'fastercsv'
+require 'iconv'
+
 class ResponsesController < ApplicationController
   perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
   require_permission "edit_answers", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
@@ -61,6 +64,12 @@ class ResponsesController < ApplicationController
           end
         end
       end
+    end
+  end
+  
+  def print
+    respond_to do |format|
+      format.html { render :layout => "print" }
     end
   end
   

@@ -3,14 +3,14 @@
 <h1>Responses for "<%= @questionnaire.title %>"</h1>
 
 <ul class="tabstrip">
-	<li id="view_tab" class="<%= link_tab_class 'responses' %>">
+	<li id="view_tab" class="<%= link_tab_class 'index' %>">
 		<%= link_to "View", questionnaire_responses_path(@questionnaire) %>
 	</li>
 	<li id="aggregate_tab" class="<%= link_tab_class 'aggregate' %>">
 		<%= link_to "Aggregate", questionnaire_responses_path(@questionnaire) + "/aggregate" %>
 	</li>
 	<li id="print_tab" class="link">
-		<%= link_to "Print", :controller => 'print', :action => 'responses', :id => params[:id] %>
+		<%= link_to "Print", questionnaire_responses_path(@questionnaire) + "/print" %>
 	</li>
   <li id="export_tab">
     <%= link_to_function "Export", "selectTab('export');"%>

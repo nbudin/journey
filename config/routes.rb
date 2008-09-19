@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
         questions.resources :question_options, :collection => { :sort => :post }
       end
     end
-    questionnaires.resources :responses, :collection => { :responseviewer => :get, :aggregate => :get }
+    questionnaires.resources :responses, :collection => { :responseviewer => :get, :aggregate => :get, :print => :get }
   end
 
   # Add your own custom routes here.

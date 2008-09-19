@@ -1,5 +1,5 @@
 class PrintController < ApplicationController
   def responses
-    @questionnaire = Questionnaire.find(params[:id])
+    redirect_to questionnaire_responses_url(params[:id]) + "/print", :status => :moved_permanently
   end
 end

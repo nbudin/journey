@@ -197,24 +197,27 @@ class ResponsesController < ApplicationController
   end
   
   def aggregate
-    @fields = @questionnaire.fields.select { |f| not f.kind_of? FreeformField }
-    
-    @answercounts = {}
-    @fields.each do |field|
-      @answercounts[field.id] = {}
-    end
-    
-    @fields.each do |question|
-      @questionnaire.valid_responses.each do |resp|
-        ans = resp.answer_for_question(question)
-        val = (ans ? ans.output_value : nil) || "No answer"
-        if val.length == 0
-          val = "No answer"
+    respond_to do |format|
+      format.html do
+        @fields = @questionnaire.fields.select { |f| not f.kind_of? FreeformField }
+      end
+      format.json do
+        @question = Question.find(params[:question_id])
+        @answercounts = {}
+        
+        @questionnaire.valid_responses.each do |resp|
+          ans = resp.answer_for_question(@question)
+          val = (ans ? ans.output_value : nil) || "No answer"
+          if val.length == 0
+            val = "No answer"
+          end
+          if not @answercounts.has_key? val
+            @answercounts[val] = 0
+          end
+          @answercounts[val] += 1
         end
-        if not @answercounts[question.id].has_key? val
-          @answercounts[question.id][val] = 0
-        end
-        @answercounts[question.id][val] += 1
+        
+        render :json => {"title" => @question.caption, "data" => @answercounts}
       end
     end
   end

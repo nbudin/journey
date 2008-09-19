@@ -1,30 +1,95 @@
 <%= render :partial => "analyze_toolbar" %>
+<% javascript javascript_path("js-class.js") -%>
+<% javascript javascript_path("bluff.js") -%>
+<% javascript javascript_path("excanvas.js") -%>
 
-<% @fields.each do |field| -%>
-	<div>
-		<div class="responseheader">
-			<%= field.caption %> (<%= field.class.to_s %>)
-		</div>
-		<table>
-		<% tot = 0.0
-		@answercounts[field.id].values.each do |val|
-			tot += val
-		end -%>
-		<% @answercounts[field.id].keys.sort.each do |answer| -%>
-			<% count = @answercounts[field.id][answer]
-			pct = ((count / tot) * 100).round.to_i -%>
-			<tr>
-				<td style="text-align: right"><%=h answer %></td>
-				<td>
-					<span style="background-color: #333333; color: white; font-size: 80%;">
-						<% (pct / 3).times do %>
-							&nbsp;
-						<% end %>
-					</span>
-					&nbsp;<%= "#{count} (#{pct}%)" %>
-				</td>
-			</tr>
-		<% end -%>
-		</table>
-	</div>
-<% end -%>
+<script type="text/javascript">
+	
+	Aggregate = {};
+	Aggregate.prevGraph = null;
+	
+	function renderGraph(title, data) {	
+		if (Aggregate.prevGraph != null) {
+			Aggregate.prevGraph.clear();
+		}
+		
+		// Make a graph object with canvas id and width
+        var g = new Bluff.Pie('graph', ("" + $('graph').offsetWidth + "x" + $('graph').offsetHeight));
+        
+        // Set theme and options
+        g.set_theme({
+          colors: ['#bad032', '#512f00', '#ff9500', '#5ba5ff', '#ff7474',
+                   '#00d686', '#8d0081'],
+          marker_color: '#afaf00',
+          font_color: 'black',
+          background_colors: ['white', 'white']
+        });
+        g.title = title;
+        
+		seriesNames = [];
+		
+        // Add data and labels
+		for (series in data) {
+			seriesNames.push(series);
+		}
+		
+		seriesNames.sort(function(a, b) {
+			if (a == "No answer") {
+				return -1;
+			}
+			if (b == "No answer") {
+				return 1;
+			}
+			if (a < b) {
+				return -1;
+			}
+			if (a == b) {
+				return 0;
+			}
+			return 1;
+		});
+		
+		for (i=0; i<seriesNames.length; i++) {
+			series = seriesNames[i];
+			if (series == "No answer") {
+				g.data(series, data[series], "#888888");
+			} else {
+				g.data(series, data[series]);
+			}
+		}
+        
+        // Render the graph
+        g.draw();
+		Aggregate.prevGraph = g;
+	}
+	
+	function seriesSelected(evt) {
+		seriesId = Event.element(evt).value;
+		new Ajax.Request('<%= questionnaire_responses_url(@questionnaire)%>/aggregate.json',
+			{
+				'method': 'get',
+				'parameters': {
+					'question_id': seriesId
+				},
+				'onSuccess': function (transport) {
+					ret = transport.responseJSON;
+					renderGraph(ret['title'], ret['data']);
+				}
+			});
+	}
+	
+	Event.observe(window, 'load', function() {
+		Event.observe('fields', 'change', seriesSelected);
+	});
+</script>
+
+<div id="aggregate_container" style="position: relative; width: 100%; height: 600px;">
+<div style="width: 25%; height: 100%; position: absolute;">
+<%= select_tag "fields", options_for_select(@fields.collect { |f| [ f.caption, f.id ] }), 
+	{ :multiple => true, :style => "width: 100%; height: 100%;" } %>
+</div>
+
+<canvas style="width: 75%; height: 100%; left: 25%; position: absolute;" id="graph"></canvas>
+</div>
+
+

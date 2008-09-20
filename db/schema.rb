@@ -32,11 +32,6 @@ ActiveRecord::Schema.define(:version => 20080716192702) do
     t.string  "path"
   end
 
-  create_table "engine_schema_info", :id => false, :force => true do |t|
-    t.string  "engine_name"
-    t.integer "version",     :limit => 11
-  end
-
   create_table "larp_runs", :force => true do |t|
     t.integer  "larp_id", :limit => 11
     t.string   "venue"
@@ -68,34 +63,9 @@ ActiveRecord::Schema.define(:version => 20080716192702) do
   end
 
   create_table "pages", :force => true do |t|
-    t.integer "questionnaire_id", :limit => 11, :default => 0, :null => false
+    t.integer "questionnaire_id", :limit => 11, :null => false
     t.integer "position",         :limit => 11
     t.string  "title"
-  end
-
-  create_table "permission_caches", :force => true do |t|
-    t.integer "person_id",         :limit => 11
-    t.integer "permissioned_id",   :limit => 11
-    t.string  "permissioned_type"
-    t.string  "permission_name"
-    t.boolean "result"
-  end
-
-  add_index "permission_caches", ["person_id"], :name => "index_permission_caches_on_person_id"
-  add_index "permission_caches", ["permissioned_id", "permissioned_type"], :name => "index_permission_caches_on_permissioned"
-  add_index "permission_caches", ["permission_name"], :name => "index_permission_caches_on_permission_name"
-
-  create_table "permissions", :force => true do |t|
-    t.integer "role_id",           :limit => 11
-    t.string  "permission"
-    t.integer "permissioned_id",   :limit => 11
-    t.string  "permissioned_type"
-    t.integer "person_id",         :limit => 11
-  end
-
-  create_table "permissions_roles", :id => false, :force => true do |t|
-    t.integer "permission_id", :limit => 11, :default => 0, :null => false
-    t.integer "role_id",       :limit => 11, :default => 0, :null => false
   end
 
   create_table "players", :id => false, :force => true do |t|
@@ -113,17 +83,17 @@ ActiveRecord::Schema.define(:version => 20080716192702) do
   end
 
   create_table "question_options", :force => true do |t|
-    t.integer "question_id",  :limit => 11, :default => 0, :null => false
-    t.text    "option",                                    :null => false
-    t.integer "position",     :limit => 11, :default => 0, :null => false
+    t.integer "question_id",  :limit => 11, :null => false
+    t.text    "option",                     :null => false
+    t.integer "position",     :limit => 11, :null => false
     t.string  "output_value"
   end
 
   create_table "questionnaires", :force => true do |t|
     t.text     "title"
     t.boolean  "is_open"
-    t.text     "custom_html"
-    t.text     "custom_css"
+    t.string   "custom_html",          :default => ""
+    t.string   "custom_css",           :default => ""
     t.boolean  "allow_finish_later",   :default => true, :null => false
     t.boolean  "allow_amend_response", :default => true, :null => false
     t.string   "rss_secret"
@@ -140,7 +110,7 @@ ActiveRecord::Schema.define(:version => 20080716192702) do
     t.integer "min",            :limit => 11,  :default => 0,     :null => false
     t.integer "max",            :limit => 11,  :default => 0,     :null => false
     t.integer "step",           :limit => 11,  :default => 1,     :null => false
-    t.integer "page_id",        :limit => 11,  :default => 0,     :null => false
+    t.integer "page_id",        :limit => 11,                     :null => false
     t.string  "default_answer"
   end
 
@@ -152,13 +122,6 @@ ActiveRecord::Schema.define(:version => 20080716192702) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "submitted_at"
-  end
-
-  create_table "roles", :force => true do |t|
-    t.string  "name",        :default => "",    :null => false
-    t.string  "description"
-    t.boolean "omnipotent",  :default => false, :null => false
-    t.boolean "system_role", :default => false, :null => false
   end
 
   create_table "special_field_associations", :force => true do |t|
@@ -185,28 +148,5 @@ ActiveRecord::Schema.define(:version => 20080716192702) do
   end
 
   add_index "tags", ["name"], :name => "index_tags_on_name", :unique => true
-
-  create_table "users", :force => true do |t|
-    t.string   "login",           :limit => 80, :default => "", :null => false
-    t.string   "salted_password", :limit => 40, :default => "", :null => false
-    t.string   "email",           :limit => 60, :default => "", :null => false
-    t.string   "firstname",       :limit => 40
-    t.string   "lastname",        :limit => 40
-    t.string   "salt",            :limit => 40, :default => "", :null => false
-    t.integer  "verified",        :limit => 11, :default => 0
-    t.string   "role",            :limit => 40
-    t.string   "security_token",  :limit => 40
-    t.datetime "token_expiry"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "logged_in_at"
-    t.integer  "deleted",         :limit => 11, :default => 0
-    t.datetime "delete_after"
-  end
-
-  create_table "users_roles", :id => false, :force => true do |t|
-    t.integer "user_id", :limit => 11, :default => 0, :null => false
-    t.integer "role_id", :limit => 11, :default => 0, :null => false
-  end
 
 end

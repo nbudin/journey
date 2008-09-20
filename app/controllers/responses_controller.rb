@@ -219,6 +219,7 @@ class ResponsesController < ApplicationController
         
         ret = {"title" => @question.caption, :type => @question.class.name, "data" => @answercounts}
         if @question.kind_of? RangeField
+          ret["min"] = @question.min
           ret["max"] = @question.max
         end
         render :json => ret

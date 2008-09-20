@@ -36,7 +36,6 @@
 		var g;
 		if (data['type'] == 'RangeField') {
 		  g = new Bluff.Line('graph', size);
-		  g.title = data['title'];
 		  g.hide_legend = true;
 		  g.minimum_value = 0;
 		  g.x_axis_label = "Answer";
@@ -58,13 +57,13 @@
       dataSeries = [];
       labels = {};
       counter = 0;
-      for (i=parseInt(seriesNames[0]); i < parseInt(seriesNames[seriesNames.length-1]); i++) {
+      for (i=parseInt(data['min']); i <= parseInt(data['max']); i++) {
         if (data['data'][i.toString()] != undefined) {
           dataSeries.push(data['data'][i.toString()]);
         } else {
           dataSeries.push(0);
         }
-        labels[counter] = i;
+        labels[counter] = i.toString();
         counter++;
       }
       
@@ -74,15 +73,13 @@
       g = new Bluff.Pie('graph', size);
       
       // Set theme and options
-      
-      g.title = data['title'];
 	
     	seriesNames.sort(function(a, b) {
     		if (a == "No answer") {
-    			return -1;
+    			return 1;
     		}
     		if (b == "No answer") {
-    			return 1;
+    			return -1;
     		}
     		if (a < b) {
     			return -1;
@@ -95,10 +92,18 @@
 	
     	for (i=0; i<seriesNames.length; i++) {
     		series = seriesNames[i];
-    		if (series == "No answer") {
-    			g.data(series, data['data'][series], "#888888");
+    		if (series == "No answer" || series == "false") {
+    		  if (data['type'] == "CheckBoxField") {
+    		    g.data("no", data['data'][series], "#888888");
+    		  } else {
+    			  g.data(series, data['data'][series], "#888888");
+    			}
     		} else {
-    			g.data(series, data['data'][series]);
+    		  if (data['type'] == "CheckBoxField") {
+    		    g.data("yes", data['data'][series]);
+    		  } else {
+    			  g.data(series, data['data'][series]);
+    			}
     		}
     	}
     }

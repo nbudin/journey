@@ -24,17 +24,17 @@ set :repository, "http://journey-questionnaires.googlecode.com/svn/trunk"
 # be used to single out a specific subset of boxes in a particular role, like
 # :primary => true.
 
-role :web, "ps3789.dreamhostps.com"
-role :app, "ps3789.dreamhostps.com"
-role :db,  "ps3789.dreamhostps.com", :primary => true
+role :web, "sakai.natbudin.com"
+role :app, "sakai.natbudin.com"
+role :db,  "sakai.natbudin.com", :primary => true
 
 # =============================================================================
 # OPTIONAL VARIABLES
 # =============================================================================
-set :deploy_to, "/home/natbudin/journey-trunk.aegames.org" # defaults to "/u/apps/#{application}"
+set :deploy_to, "/var/www/journey-trunk.aegames.org" # defaults to "/u/apps/#{application}"
 #set :use_sudo, true
 set :checkout, "export"
-set :user, "natbudin"            # defaults to the currently logged in user
+set :user, "www-data"            # defaults to the currently logged in user
 #set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 set :scm, :subversion               # defaults to :subversion
 # set :svn, "/path/to/svn"       # defaults to searching the PATH

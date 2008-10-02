@@ -18,14 +18,14 @@ config.action_controller.perform_caching             = true
 # Disable delivery errors if you bad email addresses should just be ignored
 # config.action_mailer.raise_delivery_errors = false
 
-config.action_mailer.delivery_method = :sendmail
+config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
-  :address => "mail.journey.aegames.org",
+  :address => "localhost",
   :port => 25,
   :domain => "journey.aegames.org",
-  :authentication => :login,
-  :user_name => "noreply@journey.aegames.org",
-  :password => "dontstopbelievin",
+#  :authentication => :login,
+#  :user_name => "noreply@journey.aegames.org",
+#  :password => "dontstopbelievin",
 }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true

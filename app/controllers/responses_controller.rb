@@ -14,13 +14,36 @@ class ResponsesController < ApplicationController
     if params[:reverse] == "true"
       sort = "#{sort} DESC"
     end
-    
+        
     @rss_url = formatted_questionnaire_responses_url(@questionnaire, "rss", :secret => @questionnaire.rss_secret)
     
     @responses = @questionnaire.valid_responses.paginate :page => params[:page]
     
     respond_to do |format|
-      format.html # index.rhtml
+      format.html do
+        default_columns = ["title", "submitted_at"]
+        default_columns += @questionnaire.special_field_associations.select { |sfa| sfa.purpose != 'name' }.collect { |sfa| sfa.question }
+        default_columns.push("id")
+        
+        @columns = []
+        1.upto(5) do |i|
+          colspec = params["column_#{i}".to_sym]
+          thiscol = if colspec
+            if md = /^question_(\d+)$/.match(colspec)
+              q = Question.find(md[1])
+              if q and q.questionnaire == @questionnaire
+                q
+              end
+            elsif [:id, :submitted_at].include?(colspec.to_sym)
+              colspec
+            end
+          end
+          if thiscol.nil?
+            thiscol = default_columns.shift
+          end
+          @columns.push(thiscol)
+        end
+      end
       format.js do
         render :update do |page|
           page.replace_html 'responses', :partial => 'response_table'

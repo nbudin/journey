@@ -4,10 +4,10 @@
 
 <ul class="tabstrip">
 	<li id="view_tab" class="<%= link_tab_class 'index' %>">
-		<%= link_to "View", questionnaire_responses_path(@questionnaire) %>
+		<%= link_to "Responses", questionnaire_responses_path(@questionnaire) %>
 	</li>
 	<li id="aggregate_tab" class="<%= link_tab_class 'aggregate' %>">
-		<%= link_to "Aggregate", questionnaire_responses_path(@questionnaire) + "/aggregate" %>
+		<%= link_to "Questions", questionnaire_responses_path(@questionnaire) + "/aggregate" %>
 	</li>
 	<li id="print_tab" class="link">
 		<%= link_to "Print", questionnaire_responses_path(@questionnaire) + "/print" %>

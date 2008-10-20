@@ -23,9 +23,9 @@ Rails::Initializer.run do |config|
   config.active_record.schema_format = :ruby
 
   # See Rails::Configuration for more options
-  config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
-    :source => 'http://gems.github.com'
 end
+
+require "will_paginate"
 
 Mime::Type.register("text/css", :css)
 

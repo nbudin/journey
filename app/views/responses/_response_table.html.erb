@@ -5,33 +5,35 @@
     <% header_fields = @questionnaire.special_field_associations.select { |sfa| sfa.purpose != 'name' }%>
     <table id="responsetable" style="width: 100%;">
         <tr>
-            <th style="width: 20em" id="responsefromheader">Response from</th>
-            <th>Submit Date</th>
-            <% header_fields.each do |header| %>
-                <th><%= header.question.caption %></th>
-            <% end %>
-            <th>ID</th>
-            <th></th>
+          <th></th>
+          <% @columns.each do |column| -%>
+            <th>
+              <% if column.kind_of? Question -%>
+                <%= column.caption %>
+              <% else -%>
+                <%= column.humanize %>
+              <% end -%>
+            </th>
+          <% end -%>
         </tr>
         <% @responses.each do |response| %>
             <tr class="<%=cycle "even", "odd" %>" style="height: 0">
-                <td><%=link_to ellipsize(response.title,35), questionnaire_response_path(@questionnaire, response), :class => "viewresponse" %></td>
+              <td><%=link_to "V", questionnaire_response_path(@questionnaire, response), :class => "viewresponse" %></td>
+              <% @columns.each do |column| -%>
                 <td>
-                  <% if response.submitted -%>
-                    <%=response.submitted_at%>
+                  <% if column.kind_of? Question -%>
+                    <%= response.answer_for_question(column).output_value %>
+                  <% elsif column == "submitted_at" -%>
+                    <% if response.submitted -%>
+                      <%= response.submitted_at %>
+                    <% else -%>
+                      <b>Partial</b>
+                    <% end -%>
                   <% else -%>
-                    <b>Partial</b>
-                      <% end -%>
-                    </td>
-                    <% header_fields.each do |header| %>
-                      <% answer = response.special_answer(header.purpose) -%>
-                      <td>
-                        <% if answer -%>
-                          <%= response.special_answer(header.purpose).value %>
-                        <% end -%>
-                      </td>
-                    <% end %>
-                <td><%= response.id %></td>
+                    <%= response.send(column) %>
+                  <% end -%>
+                </td>
+              <% end -%>
             </tr>
         <% end %>
 				<% (Response.per_page - @responses.length).times do %>

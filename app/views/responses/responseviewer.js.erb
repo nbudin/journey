@@ -1,5 +1,8 @@
 function sizeResponseViewer() {
-    width = ($('responsetable').offsetWidth - $('responsefromheader').offsetWidth);
+    headers = $$('#responsetable th');
+    startColumn = 2;
+    leftside = headers[startColumn].offsetLeft;
+    width = ($('responsetable').offsetWidth - leftside + $('responsetable').offsetLeft);
     height = ($('responsetable').offsetHeight - 4);
     if ($('response') != null) {
         $('response').style.height = (height - $('responseheader').offsetHeight - 5) + "px";
@@ -7,7 +10,7 @@ function sizeResponseViewer() {
     $('responseviewer').style.width = width + "px";
     $('responseviewer').style.height = height + "px";
     $('responseviewer').style.top = ($('responsetable').offsetTop) + 'px';
-    $('responseviewer').style.left = ($('responsefromheader').offsetLeft + 10 + $('responsefromheader').offsetWidth) + 'px';
+    $('responseviewer').style.right = ($('responsetable').offsetLeft) + 'px';
 }
 
 ResponseViewer = {};

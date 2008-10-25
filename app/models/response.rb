@@ -45,7 +45,7 @@ class Response < ActiveRecord::Base
   def special_answers
     questionnaire.special_field_associations.collect do |sfa|
       answer_for_question sfa.question
-    end
+    end.compact
   end
   
   def title

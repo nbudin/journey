@@ -102,6 +102,7 @@ table.itemheader tr > td:first-child {
     clear: left;
     top: -3px;
     border-top: 1px black solid;
+    overflow: auto;
 }
 
 #questionnaireedit #editpage {
@@ -149,13 +150,13 @@ table.itemheader tr > td:first-child {
 }
 
 #questionnaireedit #pages li.page div.caption {
-    float: left;
-    display: inline;
     width: 182px; /* +5px if we get rid of drag handles */
     overflow: hidden;
     white-space: nowrap;
     line-height: 16px;
     text-align: right;
+    position: absolute;
+    right: 20px;
 }
 
 #questionnaireedit #pages li.page a {

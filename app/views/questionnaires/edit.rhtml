@@ -86,6 +86,7 @@ function createPage() {
               Open for responses? <%= f.check_box "is_open" %>
               Allow "Finish Later"? <%= f.check_box "allow_finish_later" %>
               Allow "Amend Response"? <%= f.check_box "allow_amend_response" %>
+              Advertise logins? <%= f.check_box "advertise_login"%>
             <br/>
                     <%= submit_tag "Save changes" %>&nbsp;
             </p>
@@ -128,6 +129,7 @@ body {
 function sizeQuestionnaireEdit() {
   newHeight = getInnerHeight() - $('editpage').offsetTop - 15;
   $('editpage').style.height = newHeight + "px";
+  $('pages').style.height = newHeight + "px";
 }
 
 Event.observe(window, 'load', sizeQuestionnaireEdit);

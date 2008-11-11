@@ -128,6 +128,7 @@ body {
 function sizeQuestionnaireEdit() {
   newHeight = getInnerHeight() - $('editpage').offsetTop - 15;
   $('editpage').style.height = newHeight + "px";
+  $('pages').style.height = newHeight + "px";
 }
 
 Event.observe(window, 'load', sizeQuestionnaireEdit);

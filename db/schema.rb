@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 31) do
+ActiveRecord::Schema.define(:version => 2147483647) do
 
   create_table "answers", :force => true do |t|
     t.integer  "response_id"
@@ -18,6 +18,18 @@ ActiveRecord::Schema.define(:version => 31) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "answers", ["response_id"], :name => "index_answers_on_response_id"
+
+  create_table "auth_tickets", :force => true do |t|
+    t.string   "secret",     :limit => 40
+    t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "expires_at"
+  end
+
+  add_index "auth_tickets", ["secret"], :name => "secret", :unique => true
 
   create_table "characters", :force => true do |t|
     t.string  "name"
@@ -71,6 +83,18 @@ ActiveRecord::Schema.define(:version => 31) do
     t.string  "title"
   end
 
+  create_table "permission_caches", :force => true do |t|
+    t.integer "person_id"
+    t.integer "permissioned_id"
+    t.string  "permissioned_type"
+    t.string  "permission_name"
+    t.boolean "result"
+  end
+
+  add_index "permission_caches", ["person_id"], :name => "index_permission_caches_on_person_id"
+  add_index "permission_caches", ["permissioned_id", "permissioned_type"], :name => "index_permission_caches_on_permissioned"
+  add_index "permission_caches", ["permission_name"], :name => "index_permission_caches_on_permission_name"
+
   create_table "permissions", :force => true do |t|
     t.integer "role_id"
     t.string  "permission"
@@ -116,6 +140,7 @@ ActiveRecord::Schema.define(:version => 31) do
     t.text     "welcome_text"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "advertise_login",      :default => true
   end
 
   create_table "questions", :force => true do |t|
@@ -127,7 +152,7 @@ ActiveRecord::Schema.define(:version => 31) do
     t.integer "max",                           :default => 0,     :null => false
     t.integer "step",                          :default => 1,     :null => false
     t.integer "page_id",                       :default => 0,     :null => false
-    t.string  "default_answer"
+    t.text    "default_answer"
   end
 
   create_table "responses", :force => true do |t|

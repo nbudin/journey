@@ -50,7 +50,7 @@ class Response < ActiveRecord::Base
   
   def title
     name_answer = special_answer('name')
-    if name_answer.nil?
+    if name_answer.nil? or name_answer.value.blank?
       "Response ID\##{id}"
     else
       name = name_answer.value

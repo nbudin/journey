@@ -9,7 +9,7 @@ currentPage = null;
 
 function switchPage(id, title) {
   if (id != null) {
-    $('pageview').src = '<%= edit_questionnaire_page_url(@questionnaire, 9999) + "/" %>'.replace(/9999/, id+'');
+    $('pageview').src = '<%= edit_questionnaire_page_url(@questionnaire, 9999) %>'.replace(/9999/, id+'');
   } else {
     $('pageview').src = 'about:blank';
   }

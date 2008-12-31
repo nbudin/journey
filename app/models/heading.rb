@@ -1,3 +1,7 @@
 class Heading < Question
-  validates_presence_of :caption
+  before_save do |field|
+    if field.caption.blank?
+      field.caption = "Click here to type."
+    end
+  end
 end

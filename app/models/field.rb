@@ -1,12 +1,6 @@
 class Field < Question
   has_one :special_field_association, :foreign_key => :question_id
   
-  before_save do |field|
-    if field.caption.blank?
-      field.caption = "Click here to type a question."
-    end
-  end
-  
   def purpose
     if special_field_association.nil?
       nil

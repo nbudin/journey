@@ -59,6 +59,11 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.save and @question.update_attribute(:type, params[:question][:type])
         @question = Question.find(@question.id)
+        if @question.kind_of? Field
+          # get the default field caption in
+          @question.caption = "Click here to type a question."
+          @question.save
+        end
         format.html { redirect_to question_url(@question) }
         format.xml  { head :created, :location => formatted_questionnaire_page_question_url(@questionnaire, @page, @question, 'xml') }
         format.json { head :created, :location => formatted_questionnaire_page_question_url(@questionnaire, @page, @question, 'json') }

@@ -1,0 +1,49 @@
+<% if not is_display -%>
+  <li>
+    <%= link_to_function(image_tag("clear-field.png", :class => "image_button",
+                  :alt => "Clear default answer" ) + " Clear default answer",
+                  "updateDefault#{is_radio_group ? "ForRadioGroup" : ""}(#{question.id}, ''); toggleDropdown(#{question.id});")%>
+  </li>
+<% end -%>
+<% if question.respond_to? 'purpose' -%>
+      <li>
+            <% if @question.purpose.nil? -%>
+                    <%= link_to_function(image_tag("set-special-purpose.png", :class => "image_button",
+                                           :alt => "Set special purpose") + " Set special purpose",
+                                         "setSpecialPurpose(#{question.id}); toggleDropdown(#{question.id});") %>
+            <% else -%>
+                    <%= link_to_function(image_tag("unset-special-purpose.png", :class => "image_button",
+                                           :alt => "Remove special purpose") + " Remove special purpose (#{question.purpose})",
+                                         "setSpecialPurpose(#{question.id}, ''); toggleDropdown(#{question.id});") %>
+            <% end -%>
+      </li>
+<% end -%>
+<% if question.kind_of? Field -%>
+  <li>
+    <% if @question.layout == "left" %>
+      <%= link_to_function(image_tag("top-layout.png", :class => "image_button",
+                                     :alt => "Put question above input box") + " Put question above answer",
+                                     "setLayout(#{question.id}, 'top');") %>
+    <% else -%>
+      <%= link_to_function(image_tag("left-layout.png", :class => "image_button",
+                                     :alt => "Put question beside input box") + " Put question beside answer",
+                                     "setLayout(#{question.id}, 'left');") %>
+    <% end -%>
+  </li>
+<% end -%>
+<li>
+      <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
+                                     :alt => "Duplicate question") + " Duplicate question",
+                           "duplicateQuestion(#{question.id}, 1); toggleDropdown(#{question.id});") %>
+</li>
+<li>
+      <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
+                                     :alt => "Duplicate question many times") + " Duplicate question many times",
+                           "duplicateQuestion(#{question.id}, prompt('How many times?')); toggleDropdown(#{question.id});") %>
+</li>
+<li>                              
+  <%=link_to_function(image_tag("delete.png", :class => "image_button", :alt => "Delete question",
+                                :style => "padding: 0; margin: 0;") + " Delete question",
+                                "if (confirm('Do you really want to delete this question?')) { deleteQuestion(#{question.id}); }  toggleDropdown(#{question.id});",
+                                :style => "padding: 0; margin: 0;")%>
+</li>

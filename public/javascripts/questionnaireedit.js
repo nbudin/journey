@@ -195,6 +195,19 @@ function setSpecialPurpose(questionId, purpose) {
   }
 }
 
+function setLayout(questionId, layout) {
+  if (layout == null) {
+    alert('Multiple layout selection not yet implemented.');
+  } else {
+    Question.find(questionId, function(q) {
+      q.layout = layout;
+      q.save(function() {
+        reloadQuestion(questionId);
+      });
+    });
+  }
+}
+
 function toggleDropdown(questionId) {
   dropdownicon = $('dropdown_icon_'+questionId)
   $$('.selected_dropdown_icon').each(function(ddi) {

@@ -1,37 +1,35 @@
-<table class="question">
-<tr>
+<div class="question layout-<%= @question.layout %>">
 <% if @editing -%>
-  <td class="draghandle">
-    <div class="draghandle">
-      <%=image_tag("drag-handle.png")%>
-    </div>
-  </td>
+  <span class="draghandle">
+    <%=image_tag("drag-handle.png")%>
+  </span>
 <% end -%>
-<% if not is_display -%>
-<td class="caption<% if @question.required %> required<% end %>" id="question_<%=@question.id%>_header">
-  <% if @editing -%>
-    <%= jipe_image_toggle(@question, "required", "required.png", "not-required.png",
-        :class => "Question", 
-        :on_complete => "function () { 
-          e = $('question_#{@question.id}_header'); 
-          if (this.record[this.field]) {
-            e.addClassName('required');
-          } else {
-            e.removeClassName('required');
-          }
-          new Effect.Highlight('question_#{@question.id}_caption');
-          } ") %>
+<span class="questionandcaption">
+  <% if not is_display -%>
+    <span class="caption<% if @question.required %> required<% end %>" id="question_<%=@question.id%>_header">
+      <% if @editing -%>
+        <%= jipe_image_toggle(@question, "required", "required.png", "not-required.png",
+            :class => "Question", 
+            :on_complete => "function () { 
+              e = $('question_#{@question.id}_header'); 
+              if (this.record[this.field]) {
+                e.addClassName('required');
+              } else {
+                e.removeClassName('required');
+              }
+              new Effect.Highlight('question_#{@question.id}_caption');
+              } ") %>
+      <% end -%>
+              <%= jipe_editor(@question, "caption", :class => "Question",
+      :editing => @editing ) %>
+    </span>
   <% end -%>
-          <%= jipe_editor(@question, "caption", :class => "Question",
-  :editing => @editing ) %>
-</td>
-<% end -%>
-<td class="questionbody" id="questionbody_<%=@question.id%>" style="width: 100%;">
-<% if @editing and @question.respond_to? "purpose" -%>
-  <% if not (@question.purpose.nil? or @question.purpose == "") -%>
-    <div class="special_purpose">
-      <%= image_tag "set-special-purpose.png", :alt => "Special purpose field" %>
-      <%=h @question.purpose %>
-    </div>
+  <span class="questionbody" id="questionbody_<%=@question.id%>">
+  <% if @editing and @question.respond_to? "purpose" -%>
+    <% if not (@question.purpose.nil? or @question.purpose == "") -%>
+      <span class="special_purpose">
+        <%= image_tag "set-special-purpose.png", :alt => "Special purpose field" %>
+        <%=h @question.purpose %>
+      </span>
+    <% end -%>
   <% end -%>
-<% end -%>

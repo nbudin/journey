@@ -3,6 +3,13 @@ class Question < ActiveRecord::Base
   acts_as_list :scope => :page_id
   has_many :answers, :dependent => :destroy
   
+  Layouts = {
+    :left => "left",
+    :top => "top"
+  }
+  
+  validates_inclusion_of :layout, :in => Layouts.values
+  
   def questionnaire
     page.questionnaire
   end
@@ -12,6 +19,7 @@ class Question < ActiveRecord::Base
     c.page = self.page
     c.caption = self.caption
     c.required = self.required
+    c.layout = self.layout
     
     return c
   end

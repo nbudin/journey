@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081110234100) do
+ActiveRecord::Schema.define(:version => 20090131220840) do
 
   create_table "answers", :force => true do |t|
     t.integer  "response_id"
@@ -144,15 +144,16 @@ ActiveRecord::Schema.define(:version => 20081110234100) do
   end
 
   create_table "questions", :force => true do |t|
-    t.string  "type",           :limit => 100, :default => "",    :null => false
-    t.integer "position",                      :default => 0,     :null => false
-    t.text    "caption",                                          :null => false
-    t.boolean "required",                      :default => false, :null => false
-    t.integer "min",                           :default => 0,     :null => false
-    t.integer "max",                           :default => 0,     :null => false
-    t.integer "step",                          :default => 1,     :null => false
-    t.integer "page_id",                       :default => 0,     :null => false
+    t.string  "type",           :limit => 100, :default => "",     :null => false
+    t.integer "position",                      :default => 0,      :null => false
+    t.text    "caption",                                           :null => false
+    t.boolean "required",                      :default => false,  :null => false
+    t.integer "min",                           :default => 0,      :null => false
+    t.integer "max",                           :default => 0,      :null => false
+    t.integer "step",                          :default => 1,      :null => false
+    t.integer "page_id",                       :default => 0,      :null => false
     t.text    "default_answer"
+    t.string  "layout",                        :default => "left"
   end
 
   create_table "responses", :force => true do |t|

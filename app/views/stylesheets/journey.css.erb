@@ -277,12 +277,13 @@ div#toolbox input[type='button'] {
 
 ul.dropdown {
     position: absolute;
-    top: 100%;
+    top: 16px;
     right: 0;
     border: #666 1px solid;
     background-color: #fff;
     padding: 2px;
     z-index: 100;
+    width: 20em;
 }
 
 ul.dropdown li {
@@ -298,8 +299,12 @@ ul.dropdown li a {
     color: #000;
 }
 
-.selected_dropdown_icon {
+img.image_button.selected_dropdown_icon {
     background-color: #fff;
+    border: 1px black solid;
+    border-bottom: 1px white solid;
+    z-index: 101;
+    padding-bottom: 1px;
 }
 
 div.special_purpose {

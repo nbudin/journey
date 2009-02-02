@@ -3,6 +3,7 @@ pageindex = @questionnaire.pages.index(@page)
 fieldcount = 0 -%>
 
 <%= javascript_include_tag 'questionnaireedit' %>
+<%= javascript_include_tag "layout.js" %>
 <script type="text/javascript">
   setupQuestionnaireEditing(<%= @questionnaire.id %>, <%= @page.id %>);
 </script>
@@ -62,15 +63,19 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
       <tr>
         <td style="width: 8em;">
           <b>Add Fields</b><br/>
-          <i>Click any of these buttons to add that type of field to the page.</i>
+          <p style="font-size: 80%; line-height: 1.0; font-style: italic; margin-top: 2px;">Click any of these buttons to add that type of field to the page.</p>
         </td>
         <td>
-          <ul>
+          <ul class="tabstrip">
+            <li id="fields_tab"><%= link_to_function "Questions", "selectTab('fields');" %></li>
+            <li id="decorators_tab"><%= link_to_function "Display elements", "selectTab('decorators');" %></li>
+          </ul>
+          <ul id="decorators" style="display: none;" class="tabpage">
             <% Journey::Questionnaire::decorator_types.each do |t| -%>
               <%= button_to_function h(t), "addQuestion('#{t}');" %>
             <% end -%>
           </ul>
-          <ul>
+          <ul id="fields" style="display: none;" class="tabpage">
             <% Journey::Questionnaire::field_types.each do |t| -%>
               <%= button_to_function h(t), "addQuestion('#{t}');" %>
             <% end -%>

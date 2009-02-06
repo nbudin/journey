@@ -2,7 +2,9 @@
 # (http://manuals.rubyonrails.com/read/book/17). It allows you to automate
 # (among other things) the deployment of your application.
 
-#require 'mongrel_cluster/recipes'
+set :stages, %w{aegames research}
+set :default_stage, "aegames"
+require 'capistrano/ext/multistage'
 
 # =============================================================================
 # REQUIRED VARIABLES
@@ -31,7 +33,6 @@ role :db,  "sakai.natbudin.com", :primary => true
 # =============================================================================
 # OPTIONAL VARIABLES
 # =============================================================================
-set :deploy_to, "/var/www/research.natbudin.com" # defaults to "/u/apps/#{application}"
 #set :use_sudo, true
 set :checkout, "export"
 set :user, "www-data"            # defaults to the currently logged in user

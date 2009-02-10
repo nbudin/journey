@@ -4,7 +4,7 @@ require 'pages_controller'
 # Re-raise errors caught by the controller.
 class PagesController; def rescue_action(e) raise e end; end
 
-class PagesControllerTest < Test::Unit::TestCase
+class PagesControllerTest < ActionController::TestCase
   fixtures :pages
 
   def setup

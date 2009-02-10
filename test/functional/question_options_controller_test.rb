@@ -4,7 +4,7 @@ require 'question_options_controller'
 # Re-raise errors caught by the controller.
 class QuestionOptionsController; def rescue_action(e) raise e end; end
 
-class QuestionOptionsControllerTest < Test::Unit::TestCase
+class QuestionOptionsControllerTest < ActionController::TestCase
   fixtures :question_options
 
   def setup

@@ -4,7 +4,7 @@ require 'analyze_controller'
 # Re-raise errors caught by the controller.
 class AnalyzeController; def rescue_action(e) raise e end; end
 
-class AnalyzeControllerTest < Test::Unit::TestCase
+class AnalyzeControllerTest < ActionController::TestCase
   def setup
     @controller = AnalyzeController.new
     @request    = ActionController::TestRequest.new

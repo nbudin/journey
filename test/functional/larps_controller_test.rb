@@ -4,7 +4,7 @@ require 'larps_controller'
 # Re-raise errors caught by the controller.
 class LarpsController; def rescue_action(e) raise e end; end
 
-class LarpsControllerTest < Test::Unit::TestCase
+class LarpsControllerTest < ActionController::TestCase
   fixtures :larps
 
   def setup

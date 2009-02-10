@@ -4,7 +4,7 @@ require 'repository_controller'
 # Re-raise errors caught by the controller.
 class RepositoryController; def rescue_action(e) raise e end; end
 
-class RepositoryControllerTest < Test::Unit::TestCase
+class RepositoryControllerTest < ActionController::TestCase
   def setup
     @controller = RepositoryController.new
     @request    = ActionController::TestRequest.new

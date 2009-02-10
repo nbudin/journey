@@ -4,7 +4,7 @@ require 'print_controller'
 # Re-raise errors caught by the controller.
 class PrintController; def rescue_action(e) raise e end; end
 
-class PrintControllerTest < Test::Unit::TestCase
+class PrintControllerTest < ActionController::TestCase
   def setup
     @controller = PrintController.new
     @request    = ActionController::TestRequest.new

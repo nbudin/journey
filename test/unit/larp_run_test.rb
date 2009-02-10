@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class LarpRunTest < Test::Unit::TestCase
-  fixtures :larp_runs
-
+class LarpRunTest < ActiveSupport::TestCase
   # Replace this with your real tests.
   def test_truth
     assert true

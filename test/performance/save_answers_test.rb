@@ -2,8 +2,7 @@ require 'test_helper'
 require 'performance_test_help'
 
 class SaveAnswersTest < ActionController::PerformanceTest
-  # Replace this with your real tests.
-  def test_homepage
+  def test_save_answers
     get '/'
   end
 end

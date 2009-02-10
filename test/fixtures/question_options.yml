@@ -1,5 +1,30 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-first:
+burger:
   id: 1
-another:
+  question_id: 5
+  position: 1
+  option: Burger
+  
+fries:
   id: 2
+  question_id: 5
+  position: 2
+  option: Fries
+  
+coke:
+  id: 3
+  question_id: 5
+  position: 3
+  option: Coke
+  
+male:
+  id: 4
+  question_id: 8
+  position: 1
+  option: male
+  
+female:
+  id: 5
+  question_id: 8
+  position: 2
+  option: female

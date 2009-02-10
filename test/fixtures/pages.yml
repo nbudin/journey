@@ -1,5 +1,12 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-one:
+comprehensive1:
   id: 1
-two:
+  questionnaire_id: 1
+  position: 1
+  title: Comprehensive Page 1
+  
+comprehensive2:
   id: 2
+  questionnaire_id: 1
+  position: 2
+  title: Comprehensive Page 2

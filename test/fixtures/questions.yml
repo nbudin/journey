@@ -1,5 +1,74 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-one:
+annotation_field:
   id: 1
-two:
+  page_id: 1
+  position: 1
+  type: AnnotationField
+  caption: Casting
+  
+big_text_field:
   id: 2
+  page_id: 1
+  position: 2
+  type: BigTextField
+  caption: Tell me about your childhood.
+  default_answer: I don't wanna.
+  required: true
+  
+check_box_field:
+  id: 3
+  page_id: 1
+  position: 3
+  type: CheckBoxField
+  caption: Would you like fries with that?
+  
+divider:
+  id: 4
+  page_id: 1
+  position: 4
+  type: Divider
+  
+drop_down_field:
+  id: 5
+  page_id: 1
+  position: 5
+  type: DropDownField
+  caption: Choose from the following choices.
+  
+heading:
+  id: 6
+  page_id: 1
+  position: 6
+  type: Heading
+  caption: NO SRSLY LISTEN
+  
+label:
+  id: 7
+  page_id: 1
+  position: 7
+  type: Label
+  caption: Please?
+  
+radio_field:
+  id: 8
+  page_id: 1
+  position: 8
+  type: RadioField
+  caption: Gender
+  
+range_field:
+  id: 9
+  page_id: 1
+  position: 9
+  type: RangeField
+  caption: Choose a number from 1 to 10.
+  min: 1
+  max: 10
+  
+text_field:
+  id: 10
+  page_id: 1
+  position: 10
+  type: TextField
+  caption: Favorite Color
+  

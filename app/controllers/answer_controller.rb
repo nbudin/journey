@@ -115,7 +115,7 @@ class AnswerController < ApplicationController
   end
 
   def answer_given(question_id)
-    return (params[:question] and params[:question][question_id.to_s] and
+    return (params[:question] and not params[:question][question_id.to_s].blank? and
       params[:question][question_id.to_s].length > 0)
   end
 

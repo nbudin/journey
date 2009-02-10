@@ -1,3 +1,5 @@
+require 'journey_questionnaire'
+
 class Page < ActiveRecord::Base
   belongs_to :questionnaire
   acts_as_list :scope => :questionnaire_id

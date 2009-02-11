@@ -1,5 +1,5 @@
 class StylesheetsController < ApplicationController
-  #caches_page :ie7hacks, :scaffold, :journey, :questionnaire
+  caches_page :ie7hacks, :scaffold, :journey, :questionnaire
   layout nil
   
   def ie7hacks

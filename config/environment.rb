@@ -6,6 +6,9 @@ RAILS_GEM_VERSION = '2.3.0' unless defined? RAILS_GEM_VERSION
 # you don't control web/app server and can't set it the proper way
 ENV['RAILS_ENV'] ||= 'production'
 
+gem 'rack-cache'
+require 'rack/cache'
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 #require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
@@ -24,6 +27,10 @@ Rails::Initializer.run do |config|
 
   config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
+
+  config.middleware.use(Rack::Cache) do
+    import 'config/rack_cache_config'
+  end
 end
 
 # Add new inflection rules using the following format 

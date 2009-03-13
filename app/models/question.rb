@@ -2,6 +2,7 @@ class Question < ActiveRecord::Base
   belongs_to :page
   acts_as_list :scope => :page_id
   has_many :answers, :dependent => :destroy
+  has_one :special_field_association, :dependent => :destroy
   
   def questionnaire
     page.questionnaire

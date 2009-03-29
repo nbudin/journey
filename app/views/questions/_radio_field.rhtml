@@ -6,11 +6,13 @@
       <%= radio_button "question[]", "default_answer", option.option,
                     :onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);",
                     :style => "vertical-align: middle;" %>
+      <span class="radiospacer">&nbsp;</span>
     <% end -%>
   <%= render :partial => "questions/selectorend" %>
 <% else -%>
 	<% @question.question_options.each do |option| -%>
 		<%= option.option %> <%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option %>
+		<span class="radiospacer">&nbsp;</span>
 	<% end -%>
 <% end -%>
 <%= end_question(@question, :is_radio_group => true) %>

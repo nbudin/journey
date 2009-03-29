@@ -1,7 +1,7 @@
 <% if not is_display -%>
   <li>
     <%= link_to_function(image_tag("clear-field.png", :class => "image_button",
-                  :alt => "Clear default answer" ) + " Clear default answer",
+                  :alt => "Erase default answer" ) + " Erase default answer",
                   "updateDefault#{is_radio_group ? "ForRadioGroup" : ""}(#{question.id}, ''); toggleDropdown(#{question.id});")%>
   </li>
 <% end -%>
@@ -33,17 +33,17 @@
 <% end -%>
 <li>
       <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
-                                     :alt => "Duplicate question") + " Duplicate question",
+                                     :alt => "Duplicate field") + " Duplicate field",
                            "duplicateQuestion(#{question.id}, 1); toggleDropdown(#{question.id});") %>
 </li>
 <li>
       <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
-                                     :alt => "Duplicate question many times") + " Duplicate question many times",
+                                     :alt => "Duplicate field many times") + " Duplicate field many times",
                            "duplicateQuestion(#{question.id}, prompt('How many times?')); toggleDropdown(#{question.id});") %>
 </li>
 <li>                              
-  <%=link_to_function(image_tag("delete.png", :class => "image_button", :alt => "Delete question",
-                                :style => "padding: 0; margin: 0;") + " Delete question",
+  <%=link_to_function(image_tag("delete.png", :class => "image_button", :alt => "Delete field",
+                                :style => "padding: 0; margin: 0;") + " Delete field",
                                 "if (confirm('Do you really want to delete this question?')) { deleteQuestion(#{question.id}); }  toggleDropdown(#{question.id});",
                                 :style => "padding: 0; margin: 0;")%>
 </li>

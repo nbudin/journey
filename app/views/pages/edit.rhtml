@@ -66,18 +66,26 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           <p style="font-size: 80%; line-height: 1.0; font-style: italic; margin-top: 2px;">Click any of these buttons to add that type of field to the page.</p>
         </td>
         <td>
-          <ul class="tabstrip">
+          <ul class="tabstrip alwaysopen" style="margin: 0;">
             <li id="fields_tab"><%= link_to_function "Questions", "selectTab('fields');" %></li>
             <li id="decorators_tab"><%= link_to_function "Display elements", "selectTab('decorators');" %></li>
+            <li id="specials_tab"><%= link_to_function "Advanced", "selectTab('specials');" %></li>
           </ul>
-          <ul id="decorators" style="display: none;" class="tabpage">
+          <ul id="decorators" style="display: none; margin: 0;" class="tabpage">
             <% Journey::Questionnaire::decorator_types.each do |t| -%>
-              <%= button_to_function h(t), "addQuestion('#{t}');" %>
+              <%= button_to_function h(eval(t).friendly_name), "addQuestion('#{t}');" %>
             <% end -%>
           </ul>
-          <ul id="fields" style="display: none;" class="tabpage">
+          <ul id="fields" style="display: none; margin: 0;" class="tabpage">
             <% Journey::Questionnaire::field_types.each do |t| -%>
-              <%= button_to_function h(t), "addQuestion('#{t}');" %>
+              <% if not t == "AnnotationField" -%>
+                <%= button_to_function h(eval(t).friendly_name), "addQuestion('#{t}');" %>
+              <% end -%>
+            <% end -%>
+          </ul>
+          <ul id="specials" style="display: none; margin: 0;" class="tabpage">
+            <% %w{ AnnotationField }.each do |t| -%>
+              <%= button_to_function h(eval(t).friendly_name), "addQuestion('#{t}');" %>
             <% end -%>
           </ul>
         </td>
@@ -85,6 +93,10 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           <b><%= link_to_function "&darr;",
             "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle(); sizeToolboxSpacer();",
             :style => "text-decoration: none; color: #754500;" %></b>
+          <br/>
+          <span class="button"><%= image_tag("left-layout.png") %></span>
+          <br/>
+          <span class="button"><%= image_tag("top-layout.png") %></span>
         </td>
       </tr>
     </table>
@@ -114,4 +126,5 @@ function sizeToolboxSpacer() {
 
 Event.observe(window, 'load', sizeToolboxSpacer);
 Event.observe(window, 'resize', sizeToolboxSpacer);
+Event.observe(window, 'load', function() { selectTab('fields'); });
 </script>

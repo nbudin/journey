@@ -8,7 +8,7 @@ function observeTabSelected(f) {
 function selectTab(name) {
   $$('.tabpage').each(function(page) { page.hide(); });
   $$('ul.tabstrip li').each(function(tab) { tab.removeClassName('selected')});
-  if (selectedTabName != name) {
+  if (selectedTabName != name || $$('ul.tabstrip')[0].hasClassName('alwaysopen')) {
     $(name).show();
     $(name+'_tab').addClassName('selected');
     selectedTabName = name;

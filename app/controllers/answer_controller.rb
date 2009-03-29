@@ -1,4 +1,6 @@
 class AnswerController < ApplicationController
+  before_filter :check_required_login, :only => [:start]
+  
   def resume
     @resp = Response.find(params[:id])
     if @resp.person != logged_in_person
@@ -184,6 +186,14 @@ class AnswerController < ApplicationController
         @resp.save
         redirect_to :action => "index", :id => @resp.questionnaire.id, :page => new_page
       end
+    end
+  end
+  
+  private
+  def check_required_login
+    @questionnaire = Questionnaire.find params[:id]
+    if @questionnaire.require_login and not logged_in?
+      redirect_to :action => "prompt", :id => params[:id]
     end
   end
 end

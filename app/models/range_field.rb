@@ -3,6 +3,10 @@ class RangeField < Field
   validates_numericality_of :min, :max, :step, :integer => true
   validates_exclusion_of :step, :in => [0]
   
+  def self.friendly_name
+    "Numeric range"
+  end
+  
   validate :range_boundaries
   def range_boundaries
     if step > 0

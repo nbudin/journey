@@ -60,7 +60,12 @@
     </p>
   <% end -%>
 <% else -%>
-  <% if @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
+  <% if @questionnaire.require_login -%>
+    <p>You aren't logged into this site.  In order to answer this questionnaire, you must 
+    <%= link_to "log in", :controller => "auth", :action => "login" %>.  Or, if you don't have an account,
+      you can <%= link_to "click here to sign up for one", :controller => "account", :action => "signup" %>.
+    </p>
+  <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
     <p>You aren't currently logged into this site.  You can still answer this questionnaire if you wish.  However, logging in
       will give you the following benefits:</p>
     

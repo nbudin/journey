@@ -10,6 +10,10 @@ class Question < ActiveRecord::Base
   
   validates_inclusion_of :layout, :in => Layouts.values
   
+  def self.friendly_name
+    self.name
+  end
+  
   def questionnaire
     page.questionnaire
   end

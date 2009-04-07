@@ -117,7 +117,7 @@
 	
 	function seriesSelected(evt) {
 		seriesId = Event.element(evt).value;
-		new Ajax.Request('<%= questionnaire_responses_url(@questionnaire)%>/aggregate.json',
+		new Ajax.Request('<%= responses_url(@questionnaire)%>/aggregate.json',
 			{
 				'method': 'get',
 				'parameters': {

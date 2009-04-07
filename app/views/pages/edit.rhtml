@@ -5,7 +5,7 @@ fieldcount = 0 -%>
 <%= javascript_include_tag 'questionnaireedit' %>
 <%= javascript_include_tag "layout.js" %>
 <script type="text/javascript">
-  setupQuestionnaireEditing(<%= @questionnaire.id %>, <%= @page.id %>);
+    setupQuestionnaireEditing(<%= @questionnaire.id %>, <%= @page.id %>, '<%= ActionController::Base.relative_url_root %>');
 </script>
 
 <div class="answerpage" id="answerpage">
@@ -38,7 +38,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           <% end -%>
           </ul>
           <%= sortable_element "questions", :handle => "draghandle",
-              :url => questionnaire_page_questions_path(@questionnaire, @page) + '/sort',
+              :url => questions_path(@questionnaire, @page) + '/sort',
               :complete => "window.location.reload();" %>
           <div class="navbuttons">
             <% if pageindex > 0 -%>
@@ -69,7 +69,8 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           <ul class="tabstrip alwaysopen" style="margin: 0;">
             <li id="fields_tab"><%= link_to_function "Questions", "selectTab('fields');" %></li>
             <li id="decorators_tab"><%= link_to_function "Display elements", "selectTab('decorators');" %></li>
-            <li id="specials_tab"><%= link_to_function "Advanced", "selectTab('specials');" %></li>
+	    <li id="specials_tab"><%= link_to_function "Special fields", "selectTab('specials');" %></li>
+            <li id="advanced_tab"><%= link_to_function "Advanced", "selectTab('advanced');" %></li>
           </ul>
           <ul id="decorators" style="display: none; margin: 0;" class="tabpage">
             <% Journey::Questionnaire::decorator_types.each do |t| -%>
@@ -83,7 +84,12 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
               <% end -%>
             <% end -%>
           </ul>
-          <ul id="specials" style="display: none; margin: 0;" class="tabpage">
+	  <ul id="specials" style="display: none; margin: 0;" class="tabpage">
+	    <% Questionnaire.special_field_purposes.each do |purpose| -%>
+	      <%= button_to_function h(purpose.humanize), "addQuestion('#{Questionnaire.special_field_type(purpose)}', '#{purpose}');" %>
+            <% end -%>
+	  </ul>
+          <ul id="advanced" style="display: none; margin: 0;" class="tabpage">
             <% %w{ AnnotationField }.each do |t| -%>
               <%= button_to_function h(eval(t).friendly_name), "addQuestion('#{t}');" %>
             <% end -%>

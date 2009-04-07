@@ -8,7 +8,7 @@
         links << link_to('Edit', edit_questionnaire_path(@questionnaire))
       end
       if p.permitted?(@questionnaire, "view_answers")
-        links << link_to(pluralize(@questionnaire.valid_responses.count, "Response"), questionnaire_responses_path(@questionnaire))
+        links << link_to(pluralize(@questionnaire.valid_responses.count, "Response"), responses_path(@questionnaire))
       end
       if p.permitted?(@questionnaire, "destroy")
         links << link_to('Delete', questionnaire_path(@questionnaire), :confirm => 'Are you sure?', :method => :delete)

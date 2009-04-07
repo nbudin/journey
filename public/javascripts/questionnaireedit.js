@@ -1,9 +1,13 @@
-setupQuestionnaireEditing = function(questionnaireId, pageId) {
+setupQuestionnaireEditing = function(questionnaireId, pageId, sitePrefix) {
+  if (!sitePrefix) {
+    sitePrefix = "";
+  }
   this.questionnaireId = questionnaireId;
   this.pageId = pageId;
-  Resource.model("Page", {prefix: '/questionnaires/'+questionnaireId, format: 'json'});
-  Resource.model("Question", {prefix: '/questionnaires/'+questionnaireId+'/pages/'+pageId, format: 'json'});
-  Resource.model("QuestionOption", {prefix: '/questionnaires/'+questionnaireId+'/pages/'+pageId+'/questions/:question_id/', format: 'json'});
+  this.sitePrefix = sitePrefix;
+  Resource.model("Page", {prefix: sitePrefix + '/questionnaires/'+questionnaireId, format: 'json'});
+  Resource.model("Question", {prefix: sitePrefix + '/questionnaires/'+questionnaireId+'/pages/'+pageId, format: 'json'});
+  Resource.model("QuestionOption", {prefix: sitePrefix + '/questionnaires/'+questionnaireId+'/pages/'+pageId+'/questions/:question_id/', format: 'json'});
 }.bind(this);
                     
 function updateDefault(questionId, newDefault) {
@@ -51,7 +55,7 @@ function updateDefaultForRadioGroup(questionId, newDefault) {
 
 function reloadQuestion(questionId) {
   new Ajax.Updater("question_"+questionId,
-                   "/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+"/edit",
+                   sitePrefix+"/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+"/edit",
                    { method: "get", evalScripts: true });
 }
 
@@ -59,32 +63,43 @@ function makeReloadFunction(questionId) {
   return function() {reloadQuestion(questionId)};
 }
 
-function addQuestion(typ) {
-    Question.create({ 'type': typ },
-                  function (q) {
-                    newli = document.createElement('li');
-                    newli.setAttribute('id', 'question_'+q.id);
-                    newli.setAttribute('class', 'question');
-                    newli.setAttribute('position', 'relative');
-                    $('questions').appendChild(newli);
-                    new Ajax.Updater("question_"+q.id,
-                                     "/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+q.id+"/edit",
-                                     { method: "get", evalScripts: true, insertion: Insertion.Bottom});
-                    Sortable.create("questions",
-                                    { handle:'draghandle',
-                                      onUpdate:function() {
-                                        new Ajax.Request('/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions/sort",
-                                                         { asynchronous:true,
-                                                            evalScripts:true,
-                                                            onComplete: function(request){
-                                                              window.location.reload();
-                                                            },
-                                                            parameters: Sortable.serialize("questions")
-                                                          }
-                                                        )
-                                        }
-                                    });
-                  });
+function questionAdded(q) {
+    if (q.purpose == "gender") {
+	QuestionOption.create({question_id: q.id, 'option': 'male'});
+	QuestionOption.create({question_id: q.id, 'option': 'female'});
+    }
+
+    newli = document.createElement('li');
+    newli.setAttribute('id', 'question_'+q.id);
+    newli.setAttribute('class', 'question');
+    newli.setAttribute('position', 'relative');
+    $('questions').appendChild(newli);
+    new Ajax.Updater("question_"+q.id,
+                     sitePrefix+"/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+q.id+"/edit",
+                     { method: "get", evalScripts: true, insertion: Insertion.Bottom});
+    Sortable.create("questions",
+                    { handle:'draghandle',
+                      onUpdate:function() {
+                          new Ajax.Request(sitePrefix+'/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions/sort",
+                                           { asynchronous:true,
+                                             evalScripts:true,
+                                             onComplete: function(request){
+                                                 window.location.reload();
+                                             },
+                                             parameters: Sortable.serialize("questions")
+                                           }
+                                          )
+                      }
+                    });
+}
+
+function addQuestion(typ, purpose) {
+    attrs = {'type': typ};
+    if (purpose) {
+	attrs.purpose = purpose;
+	attrs.caption = purpose.capitalize();
+    }
+    q = Question.create(attrs, questionAdded);
 }
 
 function addOption(questionId, newOption) {
@@ -115,7 +130,7 @@ function deleteQuestion(questionId) {
 }
 
 function duplicateQuestion(questionId, times) {
-  new Ajax.Request('/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+"/duplicate",
+  new Ajax.Request(sitePrefix+'/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions/"+questionId+"/duplicate",
                    { onComplete: function(request) {
                       window.location.reload();
                     },
@@ -125,7 +140,7 @@ function duplicateQuestion(questionId, times) {
 
 function setSpecialPurpose(questionId, purpose) {
   if (purpose == null) {
-    new Ajax.Request('/questionnaires/'+questionnaireId+'/available_special_field_purposes.xml',
+    new Ajax.Request(sitePrefix+'/questionnaires/'+questionnaireId+'/available_special_field_purposes.xml',
                      { 'method': 'get',
                        'onSuccess': function(transport) {
                           body = $('questionbody_'+questionId);
@@ -189,7 +204,7 @@ function setSpecialPurpose(questionId, purpose) {
     Question.find(questionId, function(q) {
       q.purpose = purpose;
       q.save(function() {
-        reloadQuestion(questionId);
+          reloadQuestion(questionId);
       });
     });
   }

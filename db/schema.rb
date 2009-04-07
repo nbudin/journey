@@ -91,9 +91,9 @@ ActiveRecord::Schema.define(:version => 20090131220840) do
     t.boolean "result"
   end
 
-  add_index "permission_caches", ["person_id"], :name => "index_permission_caches_on_person_id"
-  add_index "permission_caches", ["permissioned_id", "permissioned_type"], :name => "index_permission_caches_on_permissioned"
   add_index "permission_caches", ["permission_name"], :name => "index_permission_caches_on_permission_name"
+  add_index "permission_caches", ["permissioned_id", "permissioned_type"], :name => "index_permission_caches_on_permissioned"
+  add_index "permission_caches", ["person_id"], :name => "index_permission_caches_on_person_id"
 
   create_table "permissions", :force => true do |t|
     t.integer "role_id"
@@ -115,6 +115,11 @@ ActiveRecord::Schema.define(:version => 20090131220840) do
 
   add_index "players", ["larp_run_id", "user_id"], :name => "index_players_on_larp_run_id_and_user_id", :unique => true
 
+  create_table "plugin_schema_info", :id => false, :force => true do |t|
+    t.string  "plugin_name"
+    t.integer "version"
+  end
+
   create_table "projects", :force => true do |t|
     t.string "name",     :null => false
     t.string "repo_url", :null => false
@@ -125,7 +130,7 @@ ActiveRecord::Schema.define(:version => 20090131220840) do
   create_table "question_options", :force => true do |t|
     t.integer "question_id",  :default => 0, :null => false
     t.text    "option",                      :null => false
-    t.integer "position",     :default => 0, :null => false
+    t.integer "position"
     t.string  "output_value"
   end
 
@@ -134,18 +139,19 @@ ActiveRecord::Schema.define(:version => 20090131220840) do
     t.boolean  "is_open"
     t.text     "custom_html"
     t.text     "custom_css"
-    t.boolean  "allow_finish_later",   :default => true, :null => false
-    t.boolean  "allow_amend_response", :default => true, :null => false
+    t.boolean  "allow_finish_later",   :default => true,  :null => false
+    t.boolean  "allow_amend_response", :default => true,  :null => false
     t.string   "rss_secret"
     t.text     "welcome_text"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "advertise_login",      :default => true
+    t.boolean  "require_login",        :default => false
   end
 
   create_table "questions", :force => true do |t|
     t.string  "type",           :limit => 100, :default => "",     :null => false
-    t.integer "position",                      :default => 0,      :null => false
+    t.integer "position"
     t.text    "caption",                                           :null => false
     t.boolean "required",                      :default => false,  :null => false
     t.integer "min",                           :default => 0,      :null => false

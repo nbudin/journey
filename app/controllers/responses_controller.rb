@@ -15,35 +15,35 @@ class ResponsesController < ApplicationController
       sort = "#{sort} DESC"
     end
         
-    @rss_url = formatted_questionnaire_responses_url(@questionnaire, "rss", :secret => @questionnaire.rss_secret)
+    @rss_url = responses_url(@questionnaire, :format => "rss", :secret => @questionnaire.rss_secret)
     
     @responses = @questionnaire.valid_responses.paginate :page => params[:page]
     
-    respond_to do |format|
-      format.html do
-        default_columns = ["title", "submitted_at"]
-        default_columns += @questionnaire.special_field_associations.select { |sfa| sfa.purpose != 'name' }.collect { |sfa| sfa.question }
-        default_columns.push("id")
-        
-        @columns = []
-        1.upto(5) do |i|
-          colspec = params["column_#{i}".to_sym]
-          thiscol = if colspec
-            if md = /^question_(\d+)$/.match(colspec)
-              q = Question.find(md[1])
-              if q and q.questionnaire == @questionnaire
-                q
-              end
-            elsif [:id, :submitted_at].include?(colspec.to_sym)
-              colspec
-            end
-          end
-          if thiscol.nil?
-            thiscol = default_columns.shift
-          end
-          @columns.push(thiscol)
-        end
+    default_columns = ["title", "submitted_at"]
+    default_columns += @questionnaire.special_field_associations.select { |sfa| sfa.purpose != 'name' }.collect { |sfa| sfa.question }
+    default_columns.push("id")
+    
+    @columns = []
+    1.upto(5) do |i|
+      colspec = params["column_#{i}".to_sym]
+      thiscol = if colspec
+                  if md = /^question_(\d+)$/.match(colspec)
+                    q = Question.find(md[1])
+                    if q and q.questionnaire == @questionnaire
+                      q
+                    end
+                  elsif [:id, :submitted_at].include?(colspec.to_sym)
+                    colspec
+                  end
+                end
+      if thiscol.nil?
+        thiscol = default_columns.shift
       end
+      @columns.push(thiscol)
+    end
+
+    respond_to do |format|
+      format.html { }
       format.js do
         render :update do |page|
           page.replace_html 'responses', :partial => 'response_table'
@@ -157,7 +157,7 @@ class ResponsesController < ApplicationController
     respond_to do |format|
       if @response.save
         flash[:notice] = 'Response was successfully created.'
-        format.html { redirect_to(questionnaire_response_url(@questionnaire, @response)) }
+        format.html { redirect_to(response_url(@questionnaire, @response)) }
         format.xml  { render :xml => @response, :status => :created, :location => @response }
       else
         format.html { render :action => "new" }
@@ -196,8 +196,8 @@ class ResponsesController < ApplicationController
 
     respond_to do |format|
       if @resp.update_attributes(params[:response])
-        format.html { redirect_to(questionnaire_response_url(@questionnaire, @resp)) }
-        format.js { redirect_to (formatted_questionnaire_response_url(@questionnaire, @resp, "js")) }
+        format.html { redirect_to(response_url(@questionnaire, @resp)) }
+        format.js { redirect_to (response_url(@questionnaire, @resp, :format => "js")) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -214,7 +214,7 @@ class ResponsesController < ApplicationController
     @response.destroy
 
     respond_to do |format|
-      format.html { redirect_to(questionnaire_responses_url(@questionnaire)) }
+      format.html { redirect_to(responses_url(@questionnaire)) }
       format.xml  { head :ok }
     end
   end

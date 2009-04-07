@@ -4,13 +4,13 @@
 
 <ul class="tabstrip">
 	<li id="view_tab" class="<%= link_tab_class 'index' %>">
-		<%= link_to "Responses", questionnaire_responses_path(@questionnaire) %>
+		<%= link_to "Responses", responses_path(@questionnaire) %>
 	</li>
 	<li id="aggregate_tab" class="<%= link_tab_class 'aggregate' %>">
-		<%= link_to "Questions", questionnaire_responses_path(@questionnaire) + "/aggregate" %>
+		<%= link_to "Questions", responses_path(@questionnaire) + "/aggregate" %>
 	</li>
 	<li id="print_tab" class="link">
-		<%= link_to "Print", questionnaire_responses_path(@questionnaire) + "/print" %>
+		<%= link_to "Print", responses_path(@questionnaire) + "/print" %>
 	</li>
   <li id="export_tab">
     <%= link_to_function "Export", "selectTab('export');"%>
@@ -19,8 +19,8 @@
 
 <div id="export" style="display: none;" class="tabpage">
 	<p><b>Export to a spreadsheet</b></p>
-	<%= link_to "One response per row", formatted_questionnaire_responses_path(@questionnaire, "csv") %><br/>
-	<%= link_to "One response per column", formatted_questionnaire_responses_path(@questionnaire, "csv", :rotate => true) %>
+	<%= link_to "One response per row", responses_path(@questionnaire, :format => "csv") %><br/>
+	<%= link_to "One response per column", responses_path(@questionnaire, :format => "csv", :rotate => true) %>
 </div>
 
 <div style="border-top: 1px black solid;">

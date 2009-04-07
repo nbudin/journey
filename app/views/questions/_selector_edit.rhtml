@@ -37,5 +37,5 @@
   </li>
 </ul>
 <%= sortable_element "options", :handle => "draghandle", :only => "question_option",
-              :url => questionnaire_page_question_question_options_path(@questionnaire, @page, @question) + '/sort',
+              :url => question_options_path(@questionnaire, @page, @question) + '/sort',
               :complete => "window.location.reload();" %>

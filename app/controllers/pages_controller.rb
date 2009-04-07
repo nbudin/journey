@@ -52,9 +52,9 @@ class PagesController < ApplicationController
     respond_to do |format|
       if @page.save
         flash[:notice] = 'Page was successfully created.'
-        format.html { redirect_to questionnaire_page_url(@questionnaire, @page) }
-        format.xml  { head :created, :location => formatted_questionnaire_page_url(@questionnaire, @page, 'xml') }
-        format.json { head :created, :location => formatted_questionnaire_page_url(@questionnaire, @page, 'json') }
+        format.html { redirect_to page_url(@questionnaire, @page) }
+        format.xml  { head :created, :location => page_url(@questionnaire, @page, :format => 'xml') }
+        format.json { head :created, :location => page_url(@questionnaire, @page, :format => 'json') }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @page.errors.to_xml }
@@ -73,7 +73,7 @@ class PagesController < ApplicationController
       if @page.update_attributes(params[:page])
         flash[:notice] = 'Page was successfully updated.'
         format.json { head :ok }
-        format.html { redirect_to questionnaire_page_url(@questionnaire, @page) }
+        format.html { redirect_to page_url(@questionnaire, @page) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -91,7 +91,7 @@ class PagesController < ApplicationController
     @page.destroy
 
     respond_to do |format|
-      format.html { redirect_to questionnaire_pages_url(@questionnaire) }
+      format.html { redirect_to pages_url(@questionnaire) }
       format.xml  { head :ok }
     end
   end

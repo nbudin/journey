@@ -2,7 +2,7 @@
       page["selectorbody_#{@question.id}"].hide
       page["selectoredit_#{@question.id}"].show
       page["selectoredit_iframe_#{@question.id}"].hide
-      page["selectoredit_iframe_#{@question.id}"].src = questionnaire_page_question_path(@questionnaire, @page, @question) + "/edit_options"
+      page["selectoredit_iframe_#{@question.id}"].src = question_path(@questionnaire, @page, @question) + "/edit_options"
     end%>
   </span>
   <span id="selectoredit_<%= @question.id %>" style="display: none;">

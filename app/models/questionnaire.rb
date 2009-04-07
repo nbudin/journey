@@ -22,6 +22,16 @@ class Questionnaire < ActiveRecord::Base
   def Questionnaire.special_field_purposes
     %w( name address phone email gender )
   end
+
+  def Questionnaire.special_field_type(purpose)
+    if %w( address ).include?(purpose)
+      "BigTextField"
+    elsif %( gender ).include?(purpose)
+      "RadioField"
+    else
+      "TextField"
+    end
+  end
   
   def used_special_field_purposes
     special_field_associations.collect { |sfa| sfa.purpose }

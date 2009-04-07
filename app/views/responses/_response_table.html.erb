@@ -18,11 +18,13 @@
         </tr>
         <% @responses.each do |response| %>
             <tr class="<%=cycle "even", "odd" %>" style="height: 0">
-              <td><%=link_to "V", questionnaire_response_path(@questionnaire, response), :class => "viewresponse" %></td>
+              <td><%=link_to "V", response_path(@questionnaire, response), :class => "viewresponse" %></td>
               <% @columns.each do |column| -%>
                 <td>
                   <% if column.kind_of? Question -%>
-                    <%= response.answer_for_question(column).output_value %>
+		    <% if ans = response.answer_for_question(column) -%>
+		      <%= ans.output_value %>
+		    <% end -%>
                   <% elsif column == "submitted_at" -%>
                     <% if response.submitted -%>
                       <%= response.submitted_at %>

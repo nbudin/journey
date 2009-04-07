@@ -19,7 +19,7 @@ ResponseViewer.showingResponseId = null;
 function showResponse(id) {  
     showResponseViewer(id);
     new Ajax.Request(
-        '<%= questionnaire_responses_url(@questionnaire) %>/' + id,
+        '<%= responses_url(@questionnaire) %>/' + id,
         { method: 'get' });
 }
 
@@ -50,7 +50,7 @@ function showResponseThrobber() {
 function editResponse() {
     showResponseThrobber();
     new Ajax.Request(
-        '<%= questionnaire_responses_path(@questionnaire) %>/' + ResponseViewer.showingResponseId + '/edit.js', 
+        '<%= responses_path(@questionnaire) %>/' + ResponseViewer.showingResponseId + '/edit.js', 
         { 'method': 'get' });
 }
 
@@ -64,7 +64,7 @@ function saveEditedResponse() {
     params = $('edited_response').serialize(true);
     showResponseThrobber();
     new Ajax.Request(
-        '<%= questionnaire_responses_path %>/' + ResponseViewer.showingResponseId + '.js',
+        '<%= responses_path(@questionnaire) %>/' + ResponseViewer.showingResponseId + '.js',
         {
 			method: 'put',
             parameters: params
@@ -82,7 +82,7 @@ function cancelDelete() {
 function confirmDelete() {
   showResponseThrobber();
   new Ajax.Request(
-      '<%= questionnaire_responses_url @questionnaire %>/'+ResponseViewer.showingResponseId,
+      '<%= responses_url @questionnaire %>/'+ResponseViewer.showingResponseId,
       {
           method: 'delete',
           onSuccess: function (req, header) { window.location.reload(); },

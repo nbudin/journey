@@ -35,7 +35,7 @@ class QuestionnairesController < ApplicationController
       paginator.replace pager.page(params[:page]).items
     end
     
-    @rss_url = formatted_questionnaires_url("rss")
+    @rss_url = questionnaires_url(:format => "rss")
 
     respond_to do |format|
       format.html { }

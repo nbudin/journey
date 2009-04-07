@@ -8,7 +8,7 @@ class AnalyzeController < ApplicationController
   before_filter :check_edit_answers_permission, :only => [:edit_response, :update_response]
 
   def responses 
-    redirect_to questionnaire_responses_path(params[:id]), :status => :moved_permanently
+    redirect_to responses_path(params[:id]), :status => :moved_permanently
   end
   
   def response_table
@@ -17,7 +17,7 @@ class AnalyzeController < ApplicationController
       
   def view_response
     @questionnaire = Response.find(:id).questionnaire
-    redirect_to questionnaire_response_path(@questionnaire, params[:id]), :status => :moved_permanently
+    redirect_to response_path(@questionnaire, params[:id]), :status => :moved_permanently
   end
   
   def edit_response
@@ -27,19 +27,19 @@ class AnalyzeController < ApplicationController
   
   def update_response
     @questionnaire = Response.find(params[:id]).questionnaire
-    redirect_to questionnaire_response_path(@questionnaire, params[:id]), :status => :moved_permanently
+    redirect_to response_path(@questionnaire, params[:id]), :status => :moved_permanently
   end
 
   def rss
-    redirect_to formatted_questionnaire_responses_url(params[:id], "rss", :secret => params[:secret]), :status => :moved_permanently
+    redirect_to responses_url(params[:id], :format => "rss", :secret => params[:secret]), :status => :moved_permanently
   end
   
   def csv
-    redirect_to formatted_questionnaire_responses_url(params[:id], "csv"), :status => :moved_permanently
+    redirect_to responses_url(params[:id], :format => "csv"), :status => :moved_permanently
   end
   
   def aggregate
-    redirect_to questionnaire_responses_path(@questionnaire) + "/aggregate", :status => :moved_permanently
+    redirect_to responses_path(@questionnaire) + "/aggregate", :status => :moved_permanently
   end
   
   private

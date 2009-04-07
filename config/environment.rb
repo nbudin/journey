@@ -1,17 +1,12 @@
 # Be sure to restart your web server when you modify this file.
 
-RAILS_GEM_VERSION = '2.3.0' unless defined? RAILS_GEM_VERSION
+RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 
-# Uncomment below to force Rails into production mode when 
-# you don't control web/app server and can't set it the proper way
-ENV['RAILS_ENV'] ||= 'production'
-
-gem 'rack-cache'
-require 'rack/cache'
+#gem 'rack-cache'
+#require 'rack/cache'
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-#require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
@@ -28,22 +23,7 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
 
-  config.middleware.use(Rack::Cache) do
-    import 'config/rack_cache_config'
-  end
+#  config.middleware.use(Rack::Cache) do
+#    import 'config/rack_cache_config'
+#  end
 end
-
-# Add new inflection rules using the following format 
-# (all these examples are active by default):
-# Inflector.inflections do |inflect|
-#   inflect.plural /^(ox)$/i, '\1en'
-#   inflect.singular /^(ox)en/i, '\1'
-#   inflect.irregular 'person', 'people'
-#   inflect.uncountable %w( fish sheep )
-# end
-
-#Mime::Type.register("text/css", :css)
-
-# Set up the workdir, make sure it exists
-JOURNEY_WORKDIR = File.join(File.expand_path(RAILS_ROOT), "working_copies")
-FileUtils.mkdir_p JOURNEY_WORKDIR

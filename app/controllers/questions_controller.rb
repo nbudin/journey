@@ -52,24 +52,31 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.xml
   def create
+    purpose = params[:question].delete(:purpose)
     @question = Question.new(params[:question])
     @question.caption ||= ""
     @question.page = @page
 
     respond_to do |format|
       if @question.save and @question.update_attribute(:type, params[:question][:type])
+        if purpose
+          SpecialFieldAssociation.create :question => @question, :purpose => purpose, :questionnaire => @questionnaire
+        end
+          
         @question = Question.find(@question.id)
-        if @question.kind_of? Field
+        if @question.kind_of? Field and @question.caption.blank?
           # get the default field caption in
           @question.caption = "Click here to type a question."
           @question.save
         end
+        
         format.html { redirect_to question_url(@question) }
-        format.xml  { head :created, :location => formatted_questionnaire_page_question_url(@questionnaire, @page, @question, 'xml') }
-        format.json { head :created, :location => formatted_questionnaire_page_question_url(@questionnaire, @page, @question, 'json') }
+        format.xml  { head(:created, :location => question_url(@questionnaire, @page, @question, :format => 'xml')) }
+        format.json { head(:created, :location => question_url(@questionnaire, @page, @question, :format => 'json')) }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @question.errors.to_xml }
+        format.xml  { render :xml => @question.errors.to_xml, :status => 500 }
+        format.json { render :json => @question.errors.to_json, :status => 500 }
       end
     end
   end

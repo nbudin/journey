@@ -33,7 +33,7 @@ role :db,  "sakai.natbudin.com", :primary => true
 # =============================================================================
 # OPTIONAL VARIABLES
 # =============================================================================
-#set :use_sudo, true
+set :use_sudo, false
 set :checkout, "export"
 set :user, "www-data"            # defaults to the currently logged in user
 #set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"

@@ -1,0 +1,55 @@
+h1. Scout Rails Instrumentation
+
+h2. Scout Plugin
+
+The instrumentation occurring in the Rails application will be passed into the
+DB queue for processing by the plugin.
+
+
+h2. Rails Plugin
+
+The Rails Plugin (instrumentation hooks) should result in data able to recreate
+a report like the following:
+
+https://gist.github.com/35157034799c6208e690
+
+The data for each action will basically come down to:
+* database query time (min, max, avg)
+* render time (min, max, avg)
+* total time (min, max, avg)
+* slow queries
+** when
+** total time
+** query
+** explain
+** snapshot
+
+This is calculated for each action, totaling/figuring averages for actions
+called multiple times in the same report window.
+
+Each report should also calculate the overall throughput from the number of
+requests.
+
+The instrumentation will mainly hook into the ActionController::Dispatcher class
+which provides us a way to access the calculations that Rails does
+automatically.
+
+We will not be concerned with getting the snapshots from the Rails app, but
+instead this will happen externally.
+
+The Rails app will have the data sent to the external Scout process for queueing
+and eventually for processing. James suggested that either we provide a
+command-line interface that we pipe the data out to or a normal Ruby interface
+to send the data to.
+
+I imagine that this could look something like this:
+
+<pre><code>
+  IO.popen("scout-queue rails", "w") do |queue|
+    queue << Marshall.dump(stats)
+  end
+</code></pre>
+
+The data will eventually get parsed and look something like:
+
+http://bristol.highgroove.com/basecamp/highgroove/scout/table.png

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081110234103) do
+ActiveRecord::Schema.define(:version => 20081110234104) do
 
   create_table "answers", :force => true do |t|
     t.integer  "response_id"
@@ -168,6 +168,8 @@ ActiveRecord::Schema.define(:version => 20081110234103) do
     t.datetime "updated_at"
     t.datetime "submitted_at"
   end
+
+  add_index "responses", ["questionnaire_id"], :name => "index_responses_on_questionnaire_id"
 
   create_table "roles", :force => true do |t|
     t.string  "name",        :default => "",    :null => false

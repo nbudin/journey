@@ -1,0 +1,14 @@
+
+** Welcome to Scout Rails instrumentation! **    
+
+You need to have an account at http://scoutapp.com to use this plugin 
+(if you don't have an account yet, you can leave this plugin in place;
+it won't hurt anything).
+
+Next Steps:
+ 1. Log into your account at http://scoutapp.com. Install the Rails
+    Instrumentation Plugin, and note the Plugin ID.
+ 2. Open the configuration file at /config/scout.yml
+    Put in your Plugin ID for production.
+ 3. Deploy your application and watch the metrics come in at http://scoutapp.com
+

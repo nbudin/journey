@@ -13,9 +13,9 @@ class Questionnaire < ActiveRecord::Base
   has_many :special_fields, :through => :special_field_associations, :source => :question
   has_many :questions, :through => :pages, :order => "pages.position, questions.position"
   has_many :fields, :through => :pages, :class_name => 'Question', :order => "pages.position, questions.position",
-    :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::field_types)}"
+    :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::field_types)}", :include => :page
   has_many :decorators, :through => :pages, :class_name => 'Question', :order => "pages.position, questions.position",
-    :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::decorator_types)}"
+    :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::decorator_types)}", :include => :page
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
 
@@ -58,7 +58,7 @@ class Questionnaire < ActiveRecord::Base
   end
 
   def special_field(purpose)
-    assn = special_field_associations.find_by_purpose(purpose)
+    assn = special_field_associations.select { |sfa| sfa.purpose == purpose }[0]
     assn.nil? ? nil : assn.question
   end
   

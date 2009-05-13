@@ -20,10 +20,10 @@ class QuestionnairesController < ApplicationController
       if t.nil?
         []
       else
-        t.questionnaires(:conditions => find_conditions, :order => 'id DESC', :include => [:taggings, :tags, :permissions])
+        t.questionnaires(:conditions => find_conditions, :order => 'questionnaires.id DESC', :include => [:taggings, :tags, :permissions])
       end
     else
-      Questionnaire.find(:all, :conditions => find_conditions, :order => 'id DESC', :include => [:taggings, :tags, :permissions])
+      Questionnaire.find(:all, :conditions => find_conditions, :order => 'questionnaires.id DESC', :include => [:taggings, :tags, :permissions])
     end
     permitted_questionnaires = all_questionnaires.select do |q|
       q.is_open or (p and Questionnaire.permission_names.any? { |pn| p.permitted?(q, pn) })

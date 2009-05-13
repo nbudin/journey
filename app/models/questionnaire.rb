@@ -1,6 +1,6 @@
 require 'sha1'
 require 'rexml/document'
-require 'lib/journey_questionnaire'
+require 'journey_questionnaire'
 
 class Questionnaire < ActiveRecord::Base
   acts_as_permissioned :permission_names => [:edit, :view_answers, :edit_answers, :destroy]

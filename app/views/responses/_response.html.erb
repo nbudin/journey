@@ -10,7 +10,7 @@
     <% answer = resp.answer_for_question(question) -%>
     <table class="question" id="question<%=resp.id%>_<%=question.id%>">
       <tr class="<%= cycle("odd", "even") %>">
-        <td class="caption"><%= question.caption %></td>
+        <td class="caption" style="width: 20%;"><%= question.caption %></td>
         <td class="questionbody"><%= render_answer(question, answer)  %></td>
       </tr>
     </table>

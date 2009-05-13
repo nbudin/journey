@@ -34,7 +34,7 @@ class Response < ActiveRecord::Base
   end
   
   def answer_for_question(question)
-    answers.find_by_question_id(question.id)
+    answers.select { |a| a.question == question }[0]
   end
   
   def special_answer(purpose)

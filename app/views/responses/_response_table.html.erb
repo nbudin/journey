@@ -3,14 +3,14 @@
 <p>No responses found.</p>
 <% else %>
     <% header_fields = @questionnaire.special_field_associations.select { |sfa| sfa.purpose != 'name' }%>
-    <table id="responsetable" style="width: 100%;">
+    <table id="responsetable" style="width: 100%; border-collapse: collapse;">
         <tr>
           <th></th>
           <% @columns.each do |column| -%>
             <th>
               <% if column.kind_of? Question -%>
                 <%= column.caption %>
-              <% else -%>
+              <% elsif column.kind_of? String -%>
                 <%= column.humanize %>
               <% end -%>
             </th>
@@ -31,7 +31,7 @@
                     <% else -%>
                       <b>Partial</b>
                     <% end -%>
-                  <% else -%>
+                  <% elsif column -%>
                     <%= response.send(column) %>
                   <% end -%>
                 </td>

@@ -39,7 +39,7 @@ class ResponsesController < ApplicationController
       if thiscol.nil?
         thiscol = default_columns.shift
       end
-      @columns.push(thiscol)
+      @columns.push(thiscol) if thiscol
     end
 
     respond_to do |format|
@@ -275,6 +275,10 @@ class ResponsesController < ApplicationController
   end
   
   def get_questionnaire
-    @questionnaire = Questionnaire.find(params[:questionnaire_id])
+    @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => [:special_field_associations, 
+                                                                                { :valid_responses => [:person, :answers],
+                                                                                  :pages => {:questions => :page}
+                                                                                }
+                                                                                ])
   end
 end

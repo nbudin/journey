@@ -1,0 +1,3 @@
+config/database.yml
+config/scout.yml
+log/*

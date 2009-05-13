@@ -1,0 +1,9 @@
+[submodule "vendor/plugins/ae_users"]
+	path = vendor/plugins/ae_users
+	url = git://github.com/nbudin/ae_users.git
+[submodule "vendor/plugins/ae_forms"]
+	path = vendor/plugins/ae_forms
+	url = git://github.com/nbudin/ae_forms.git
+[submodule "vendor/plugins/jipe"]
+	path = vendor/plugins/jipe
+	url = git://github.com/nbudin/jipe.git

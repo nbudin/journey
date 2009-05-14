@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090131220840) do
+ActiveRecord::Schema.define(:version => 20090505120000) do
 
   create_table "answers", :force => true do |t|
     t.integer  "response_id"
@@ -162,6 +162,9 @@ ActiveRecord::Schema.define(:version => 20090131220840) do
     t.string  "layout",                        :default => "left"
   end
 
+  add_index "questions", ["page_id", "type"], :name => "index_questions_on_page_id_and_type"
+  add_index "questions", ["page_id"], :name => "index_questions_on_page_id"
+
   create_table "responses", :force => true do |t|
     t.integer  "questionnaire_id", :default => 0,     :null => false
     t.integer  "saved_page"
@@ -171,6 +174,8 @@ ActiveRecord::Schema.define(:version => 20090131220840) do
     t.datetime "updated_at"
     t.datetime "submitted_at"
   end
+
+  add_index "responses", ["questionnaire_id"], :name => "index_responses_on_questionnaire_id"
 
   create_table "roles", :force => true do |t|
     t.string  "name",        :default => "",    :null => false

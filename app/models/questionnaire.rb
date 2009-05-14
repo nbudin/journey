@@ -6,9 +6,9 @@ class Questionnaire < ActiveRecord::Base
   acts_as_permissioned :permission_names => [:edit, :view_answers, :edit_answers, :destroy]
 
   has_many :pages, :dependent => :destroy, :order => :position
-  has_many :responses, :dependent => :destroy, :order => "id DESC"
+  has_many :responses, :dependent => :destroy, :order => "id DESC", :include => [:person, :answers, :questionnaire]
   has_many :valid_responses, :order => "id DESC", :class_name => "Response",
-    :conditions => "id in (select response_id from answers)"
+    :conditions => "id in (select response_id from answers)", :include => [:person, :answers, :questionnaire]
   has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id
   has_many :special_fields, :through => :special_field_associations, :source => :question
   has_many :questions, :through => :pages, :order => "pages.position, questions.position"

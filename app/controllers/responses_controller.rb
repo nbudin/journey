@@ -275,13 +275,6 @@ class ResponsesController < ApplicationController
   end
   
   def get_questionnaire
-    @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => [:special_field_associations, 
-                                                                                :pages,
-                                                                                { :valid_responses => [:person, 
-                                                                                                       { :answers => [:question],
-                                                                                                         :questionnaire => 
-                                                                                                         [:special_field_associations, :fields]}],
-                                                                                }
-                                                                                ])
+    @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => :valid_responses)
   end
 end

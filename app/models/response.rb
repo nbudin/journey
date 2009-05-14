@@ -1,7 +1,7 @@
 class Response < ActiveRecord::Base
-  belongs_to :questionnaire
+  belongs_to :questionnaire, :include => [:special_field_associations, :fields]
   validates_associated :questionnaire
-  has_many :answers, :dependent => :destroy
+  has_many :answers, :dependent => :destroy, :include => {:question => :question_options}
   belongs_to :person
   
   def self.per_page

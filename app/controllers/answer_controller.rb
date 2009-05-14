@@ -50,7 +50,7 @@ class AnswerController < ApplicationController
   end
 
   def index
-    @questionnaire = Questionnaire.find(params[:id])
+    @questionnaire = Questionnaire.find(params[:id], :include => :pages)
     if not @questionnaire.is_open
       redirect_to :action => 'questionnaire_closed', :id => params[:id]
     else
@@ -143,7 +143,7 @@ class AnswerController < ApplicationController
 
     @page.questions.each do |question|
       if question.kind_of? Field
-        ans = Answer.find_answer(@resp, question)
+        ans = @resp.answer_for_question(question)
         if answer_given(question.id)
           if ans.nil?
             ans = Answer.new :question_id => question.id, :response_id => @resp.id

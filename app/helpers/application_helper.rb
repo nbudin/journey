@@ -41,7 +41,7 @@ module ApplicationHelper
     @question = question
     value = ''
     if params[:controller] == "answer"
-      answer = Answer.find_answer(@resp, question)
+      answer = @resp.answer_for_question(question)
       if answer
         value = answer.value
       else

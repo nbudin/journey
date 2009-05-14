@@ -73,7 +73,7 @@ class QuestionnairesController < ApplicationController
 
   # GET /questionnaires/1;edit
   def edit
-    @questionnaire = Questionnaire.find(params[:id])
+    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions, :pages])
   end
 
   # POST /questionnaires

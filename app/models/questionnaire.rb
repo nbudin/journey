@@ -5,6 +5,7 @@ require 'journey_questionnaire'
 class Questionnaire < ActiveRecord::Base
   acts_as_permissioned :permission_names => [:edit, :view_answers, :edit_answers, :destroy]
 
+  belongs_to :owner, :class_name => "Person"
   has_many :pages, :dependent => :destroy, :order => :position
   has_many :responses, :dependent => :destroy, :order => "responses.id DESC", :include => [:answers, :questionnaire]
   has_many :valid_responses, :order => "responses.id DESC", :class_name => "Response",
@@ -18,6 +19,8 @@ class Questionnaire < ActiveRecord::Base
     :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::decorator_types)}", :include => :page
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
+
+  validate :check_entitlements
 
   def Questionnaire.special_field_purposes
     %w( name address phone email gender )
@@ -219,5 +222,38 @@ class Questionnaire < ActiveRecord::Base
       end
     end
     return q
+  end
+
+  def obtain_owner(options = {})
+    if owner
+      return owner
+    end
+
+    permissions.each do |perm|
+      if perm.person
+        self.owner = perm.person
+        if options[:skip_save] or save
+          return self.owner
+        end
+      end
+    end
+  end
+
+  private
+
+  def check_entitlements
+    if is_open
+      if check_owner = obtain_owner(:skip_save => true)
+        e = Entitlement.find_by_person_id(check_owner.id)
+        if e
+          if e.questionnaire_over_limit?(self)
+            errors.add_to_base("You are already at your limit for open questionnaires.")
+          elsif check_owner != owner
+            owner = check_owner
+            save
+          end
+        end
+      end
+    end
   end
 end

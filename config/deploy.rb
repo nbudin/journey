@@ -8,7 +8,7 @@ set :repository, "git://github.com/nbudin/journey.git"
 
 role :web, "sakai.natbudin.com"
 role :app, "sakai.natbudin.com"
-role :db,  "ishinabe.natbudin.com", :primary => true
+role :db,  "sakai.natbudin.com", :primary => true
 
 set :checkout, "export"
 set :user, "www-data"

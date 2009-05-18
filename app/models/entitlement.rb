@@ -36,7 +36,7 @@ class Entitlement < ActiveRecord::Base
       create_time = response.created_at || Time.new
       month_start = create_time.beginning_of_month
       month_end = create_time.end_of_month
-      others = Response.count(:conditions => ["owner_id = ? and responses.create_time between ? and ? " +
+      others = Response.count(:conditions => ["owner_id = ? and responses.created_at between ? and ? " +
                                               "and responses.id in (select response_id from answers)",
                                               person.id, month_start, month_end],
                               :joins => [:questionnaire])

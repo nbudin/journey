@@ -2,8 +2,8 @@
 # (http://manuals.rubyonrails.com/read/book/17). It allows you to automate
 # (among other things) the deployment of your application.
 
-set :stages, %w{aegames research}
-set :default_stage, "aegames"
+set :stages, %w{trunk}
+set :default_stage, "trunk"
 require 'capistrano/ext/multistage'
 
 # =============================================================================

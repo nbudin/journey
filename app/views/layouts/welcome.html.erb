@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+<head>
+  <title>Journey Surveys</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+        <%= dynamic_stylesheet_link_tag 'journey' %>
+	<%= dynamic_stylesheet_link_tag 'welcome' %>
+        <!--[if IE 7]>
+          <%= dynamic_stylesheet_link_tag 'ie7hacks' %>
+        <![endif]-->
+  <%= ae_form_stylesheet %>
+  <%= javascript_include_tag :defaults %>
+  <%= yield :javascript %>
+</head>
+<body id="body" style="margin: 0; font-family: sans-serif;">
+
+<% if flash[:error_messages] -%>
+    <div class="errors">
+        <h2>There were errors processing your request:</h2>
+        <ul>
+                <% flash[:error_messages].each do |error| -%>
+                        <li><%= error %></li>
+                <% end -%>
+        </ul>
+    </div>
+<% end %>
+
+<div class="topbar">
+    <div style="float: left; vertical-align: middle; padding-top: 5px; padding-left: 5px;">
+        <%= image_tag("journey26-logo.png", :border => "0", :alt => "Journey") %>
+    </div>
+    <div style="float: right; vertical-align: middle; padding-top: 5px; padding-right: 5px;">
+      <%= image_tag("welcome/tagline.png", :alt => "Online surveys that work.") %>
+    </div>
+    <ul>
+      <li><%= link_to "Tour" %></li>
+      <li><%= link_to "Who we are" %></li>
+      <li><%= link_to "Pricing" %></li>
+      <li><%= link_to "Sign up" %></li>
+    </ul>
+</div>
+
+<%= @content_for_layout %>
+
+</body>
+</html>

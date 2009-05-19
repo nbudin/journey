@@ -28,4 +28,10 @@ class StylesheetsController < ApplicationController
       format.css {}
     end
   end
+
+  def welcome
+    respond_to do |format|
+      format.css {}
+    end
+  end
 end

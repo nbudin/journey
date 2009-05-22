@@ -2,16 +2,18 @@
 <% if @editing -%>
   <%= render :partial => "questions/selectorstart" %>
     <% @question.question_options.each do |option| -%>
-      <%= option.option %>
       <%= radio_button "question[]", "default_answer", option.option,
                     :onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);",
                     :style => "vertical-align: middle;" %>
+      <label for="question_<%= @question.id %>_option_<%= option.id %>"><%= option.option %></label>
       <span class="radiospacer">&nbsp;</span>
     <% end -%>
   <%= render :partial => "questions/selectorend" %>
 <% else -%>
 	<% @question.question_options.each do |option| -%>
-		<%= option.option %> <%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option %>
+    	<%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option, 
+    	                     :id => "question_#{@question.id}_option_#{option.id}" %>  
+		<label for="question_<%= @question.id %>_option_<%= option.id %>"><%= option.option %> </label>
 		<span class="radiospacer">&nbsp;</span>
 	<% end -%>
 <% end -%>

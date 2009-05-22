@@ -6,7 +6,7 @@
 <% end -%>
 <span class="questionandcaption">
   <% if not is_display -%>
-    <span class="caption<% if @question.required %> required<% end %>" id="question_<%=@question.id%>_header">
+    <label class="caption<% if @question.required %> required<% end %>" id="question_<%=@question.id%>_header" for="question_<%= @question.id %>">
       <% if @editing -%>
         <%= jipe_image_toggle(@question, "required", "required.png", "not-required.png",
             :class => "Question", 
@@ -22,7 +22,7 @@
       <% end -%>
               <%= jipe_editor(@question, "caption", :class => "Question",
       :editing => @editing ) %>
-    </span>
+    </label>
   <% end -%>
   <span class="questionbody" id="questionbody_<%=@question.id%>">
   <% if @editing and @question.respond_to? "purpose" -%>

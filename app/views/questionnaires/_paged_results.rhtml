@@ -4,13 +4,14 @@
 	<% for questionnaire in @questionnaires %>
           <% authors = questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
           <div class="questionnairesummary">  
-            <div id="questionnairesummary_<%=questionnaire.id%>_closed">
+            <div id="questionnairesummary_<%=questionnaire.id%>">
               <table style="width: 100%;">
-                <td style="width: 25%; overflow: hidden;">
-                  <b><%= link_to_function(format_title(questionnaire.title), 
-                         "new Ajax.Updater('questionnairesummary_#{questionnaire.id}_closed', '#{questionnaire_url(questionnaire.id)}', {'method': 'GET'});")%></b>
+                <td style="width: 50%; overflow: hidden;">
+                  <b><%= link_to format_title(questionnaire.title), @questionnaire %></b>
+                  (<%= link_to_function("show details",
+                         "new Ajax.Request('#{questionnaire_url(questionnaire.id, :format => 'js')}', {'method': 'GET'});")%>)
                 </td>
-                <td style="width: 25%; overflow: hidden;">
+                <td style="width: 20%; overflow: hidden;">
                   <% if questionnaire.tags.length > 0 %>
                     Tags:
                     <span style="font-size: 90%; font-weight: bold;">
@@ -18,13 +19,13 @@
                     </span>
                   <% end -%>
                 </td>
-                <td style="width: 50%; overflow: hidden;">
+                <td style="width: 30%; overflow: hidden;">
                   <%= h authors %>
                 </td>
               </table>
             </div>
           </div>
 	<% end %>
-        <%= will_paginate @questionnaires %>
+  <%= will_paginate @questionnaires %>
 </div>					
 

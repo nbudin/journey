@@ -59,8 +59,19 @@ class QuestionnairesController < ApplicationController
         if logged_in? and logged_in_person.permitted?(@questionnaire, "edit")
           render :xml => @questionnaire.to_xml
         else
-          response.headers["Content-type"] = "text/html"
-          access_denied("Sorry, but you are not allowed to edit this questionnaire.")
+          render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden
+        end
+      end
+      format.js do
+        render :update do |page|
+          page.replace_html "questionnairesummary_#{@questionnaire.id}", :partial => "summary"
+        end
+      end
+      format.json do
+        if logged_in? and logged_in_person.permitted?(@questionnaire, "edit")
+          render :json => @questionnaire
+        else
+          render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden
         end
       end
     end
@@ -74,6 +85,11 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/1;edit
   def edit
     @questionnaire = Questionnaire.find(params[:id], :include => [:permissions, :pages])
+  end
+  
+  # GET /questionnaires/1;customize
+  def customize
+    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
   end
 
   # POST /questionnaires

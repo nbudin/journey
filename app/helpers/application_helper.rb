@@ -96,6 +96,14 @@ module ApplicationHelper
     end
   end
   
+  def toplevel_link_tab_class(ctrlr)
+    if params[:controller] == ctrlr
+      'selected_link'
+    else
+      'link'
+    end
+  end
+  
   def format_title(str)
     ret = str.to_s
     if ret.nil? or ret.length == 0 or ret.strip.length == 0

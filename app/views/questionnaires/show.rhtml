@@ -1,39 +1,54 @@
-<%  links = []
-    p = logged_in? ? logged_in_person : nil
-    if @questionnaire.is_open
-      links << link_to("Answer", :controller => "answer", :action => "index", :id => @questionnaire.id)
-    end
-    if p
-      if p.permitted?(@questionnaire, "edit")
-        links << link_to('Edit', edit_questionnaire_path(@questionnaire))
-      end
-      if p.permitted?(@questionnaire, "view_answers")
-        links << link_to(pluralize(@questionnaire.valid_responses.size, "Response"), responses_path(@questionnaire))
-      end
-      if p.permitted?(@questionnaire, "destroy")
-        links << link_to('Delete', questionnaire_path(@questionnaire), :confirm => 'Are you sure?', :method => :delete)
-      end
-      if p.permitted?(@questionnaire, "edit")
-        links << link_to('Export', questionnaire_path(@questionnaire) + ".xml")
-      end
-    end
-  -%>
-<% authors = @questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
-  <div id="questionnairesummary_<%=@questionnaire.id%>_open">
-    <h3 style="display: inline; margin-top: 0;"><%=format_title(@questionnaire.title)%></h3>
+<h1><%=format_title @questionnaire.title%></h1>
+
+<%= error_messages_for :questionnaire %>
+<%= javascript_include_tag "layout.js" %>
+
+<%= render :partial => "toolbar" %>
+
+<script type="text/javascript">
+  Resource.model("Questionnaire", {prefix: '<%= ActionController::Base.relative_url_root %>', format: 'json'});
+</script>
+
+<% @editing = logged_in? and logged_in_person.permitted?(@questionnaire, "edit") -%>
+
+<div style="border-top: 1px black solid; background-color: #f5ffb8; padding: 1em;">
+<% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
+                
+    <h2 style="display: inline; margin-top: 0;">
+      <%= jipe_editor @questionnaire, :title, :editing => @editing %>
+    </h2>
+    <% authors = @questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
     <% if authors.length > 0 -%>
       <br/>
       <i>By <%=h authors %></i>
     <% end -%>
-    <% if @questionnaire.tags.length > 0 -%>
-      <br/>
-      Tags: <b><%=h @questionnaire.tag_names.join(", ") %></b>
+    
+    <% if @editing -%>
+      <br/>Tags:
+      <%=text_field_tag "questionnaire[tags]", @questionnaire.tag_names.join(", ") %>
+    <% elsif @questionnaire.tags.size > 0 -%>
+      <br/>Tags:
+      <%=h @questionnaire.tag_names.join(", ") %>
     <% end -%>
+    
     <p>
       <%= pluralize(@questionnaire.pages.count, "page") %><br/>
       <%= pluralize(@questionnaire.fields.count, "question") %>
     </p>
-    <p style="margin-bottom: 0;">
-      <%= links.join(" ") %>
-    </p>
-  </div>
+    
+    <h3>Welcome page</h3>
+    
+    <p>The welcome page is the first thing your visitors will see before starting your survey.  You can put any introductory
+    text you'd like on the welcome page.  Use HTML for formatting.</p>
+    
+    <%= f.text_area "welcome_text", :rows => 4 %>
+    
+    <p><%= submit_tag "Save changes" %></p>
+<% end %>
+
+</div>
+
+          
+<div id="restrictions" style="display: none;" class="tabpage">
+    <%= render :partial => "permission/show", :locals => { :item => @questionnaire } %>
+</div>

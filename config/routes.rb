@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :questionnaires, :member => { :pagelist => :get, :available_special_field_purposes => :get } do |questionnaires|
+  map.resources :questionnaires, :member => { :pagelist => :get, :available_special_field_purposes => :get, :customize => :get } do |questionnaires|
     questionnaires.resources :pages, :name_prefix => nil, :collection => { :sort => :post } do |pages|
       pages.resources :questions, :name_prefix => nil, :collection => { :sort => :post }, :member => { :duplicate => :post, :edit_options => :get } do |questions|
         questions.resources :question_options, :name_prefix => nil, :collection => { :sort => :post }

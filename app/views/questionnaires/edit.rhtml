@@ -64,41 +64,7 @@ function createPage() {
 }
 </script>
 
-<ul class="tabstrip">
-  <li id="questionnaire_properties_tab">
-    <%= link_to_function "Questionnaire properties", "selectTab('questionnaire_properties');" %>
-  </li>
-  <li id="restrictions_tab">
-    <%= link_to_function "Restrictions", "selectTab('restrictions');"%>
-  </li>
-</ul>
-
-<div id="questionnaire_properties" style="display: none;" class="tabpage">
-<% ae_form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
-                
-            <%= f.text_field "title" %>
-            <%= f.label "Tags" %>
-            <%= text_field_tag "questionnaire[tags]", @questionnaire.tag_names.join(", ") %>
-            <%= f.text_area "custom_html", :rows => 4 %>
-            <%= f.text_area "custom_css", :rows => 4 %>
-            <%= f.text_area "welcome_text", :rows => 4 %><br/>
-            <p style="margin-left: 25%">
-              Open for responses? <%= f.check_box "is_open" %>
-              Allow "Finish Later"? <%= f.check_box "allow_finish_later" %>
-              Allow "Amend Response"? <%= f.check_box "allow_amend_response" %>
-              Advertise logins? <%= f.check_box "advertise_login"%>
-              Require logins? <%= f.check_box "require_login" %>
-            <br/>
-                    <%= submit_tag "Save changes" %>&nbsp;
-            </p>
-          <% end %>
-</div>
-
-          
-          <div id="restrictions" style="display: none;" class="tabpage">
-            <%= render :partial => "permission/show", :locals => { :item => @questionnaire } %>
-          </div>
-
+<%= render :partial => "toolbar" %>
 
 <div id="questionnaireedit">
   <div id="container">

@@ -8,7 +8,7 @@ class Pages < ActiveRecord::Migration
     create_table "questions", :force => true do |t|
       t.column "type", :string, :limit => 100, :default => "", :null => false
       t.column "position", :integer, :default => 0, :null => false
-      t.column "caption", :text, :default => "", :null => false
+      t.column "caption", :text, :null => false
       t.column "required", :boolean, :default => false, :null => false
       t.column "min", :integer, :default => 0, :null => false
       t.column "max", :integer, :default => 0, :null => false

@@ -1,0 +1,43 @@
+<h1>Publish "<%=format_title @questionnaire.title%>"</h1>
+
+<%= render :partial => "toolbar" %>
+
+<script type="text/javascript">
+  Resource.model("Questionnaire", {prefix: '<%= ActionController::Base.relative_url_root %>', format: 'json'});
+</script>
+
+<div class="propertypage">
+<% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
+
+  <% if @questionnaire.is_open -%>
+    <h3>Survey URL</h3>
+    
+    <p>This is the public URL for your survey.  You can paste it into email, web sites, Twitter, or anywhere else you'd like to
+    link to your survey.</p>
+  
+    <p>
+      <% answer_url = url_for(:controller => "answer", :action => "index", :id => @questionnaire.id, :only_path => false) %>
+      <%= link_to answer_url, answer_url %>
+    </p>
+  <% end -%>
+  
+  <h3>Publishing options</h3>
+  
+  <p>
+    <% if @questionnaire.is_open -%>
+      This survey is currently <b>open</b> for responses.  Closing it will block people from taking the survey.
+    <% else -%>
+      This survey is currently <b>closed</b>.  If you want to allow people to take the survey, you must open it.
+    <% end -%>
+  </p>
+  
+  <p style="margin-left: 1em; vertical-align: middle;">
+    <%= f.radio_button "is_open", true %> <label for="questionnaire_is_open_true">open</label>
+    &nbsp;&nbsp;&nbsp;
+    <%= f.radio_button "is_open", false %> <label for="questionnaire_is_open_false">closed</label>
+  </p>
+  
+  
+    
+  <p><%= submit_tag %></p>
+<% end -%>

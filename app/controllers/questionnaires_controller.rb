@@ -87,8 +87,20 @@ class QuestionnairesController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id], :include => [:permissions, :pages])
   end
   
+  require_permission "edit", :only => [:customize, :publish, :export]
+  
   # GET /questionnaires/1;customize
   def customize
+    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
+  end
+
+  # GET /questionnaires/1;publish
+  def publish
+    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
+  end
+  
+  # GET /questionnaires/1;export
+  def export
     @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
   end
 
@@ -134,7 +146,7 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       if @questionnaire.update_attributes(params[:questionnaire])
-        format.html { redirect_to edit_questionnaire_url(@questionnaire) }
+        format.html { redirect_to :back }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

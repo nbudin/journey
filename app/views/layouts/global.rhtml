@@ -17,6 +17,7 @@
   <%= javascript_include_tag 'browserdetect.js' %>
   <%= javascript_include_tag 'lowpro' %>
   <%= javascript_include_tag 'overlabel' %>
+  <%= javascript_include_tag "layout" %>
   <%= yield :javascript %>
   <% if @rss_url %>
     <link rel="alternate" title="RSS Feed" href="<%=@rss_url%>" type="application/rss+xml"/>

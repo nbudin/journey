@@ -7,7 +7,7 @@
             <div id="questionnairesummary_<%=questionnaire.id%>">
               <table style="width: 100%;">
                 <td style="width: 50%; overflow: hidden;">
-                  <b><%= link_to format_title(questionnaire.title), @questionnaire %></b>
+                  <b><%= link_to format_title(questionnaire.title), questionnaire %></b>
                   (<%= link_to_function("show details",
                          "new Ajax.Request('#{questionnaire_url(questionnaire.id, :format => 'js')}', {'method': 'GET'});")%>)
                 </td>

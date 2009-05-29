@@ -1,0 +1,31 @@
+<ul class="tabstrip">
+	<li id="survey_tab" class="<%= toplevel_link_tab_class 'questionnaires' %>">
+		<%= link_to "Survey", @questionnaire %>
+	</li>
+	<li id="responses_tab" class="<%= toplevel_link_tab_class 'responses' %>">
+		<%= link_to "Responses", responses_path(@questionnaire) %>
+	</li>
+	<% if @questionnaire.is_open -%>
+		<li id="answer_tab" class="<%= link_tab_class 'answer' %>">
+			<%= link_to "Answer", :controller => "answer", :action => "index", :id => @questionnaire.id %>
+		</li>
+	<% end -%>
+</ul>
+
+<ul class="tabstrip2">
+	<li id="main_tab" class="<%= link_tab_class 'show' %>">
+		<%= link_to "Main", @questionnaire %>
+	</li>
+	<li id="questions_tab" class="<%= link_tab_class 'edit' %>">
+		<%= link_to "Questions", edit_questionnaire_path(@questionnaire) %>
+	</li>
+	<li id="customize_tab" class="<%= link_tab_class 'customize' %>">
+		<%= link_to "Customize", questionnaire_path(@questionnaire) + '/customize' %>
+	</li>
+	<li id="publish_tab" class="<%= link_tab_class 'publish' %>">
+		<%= link_to "Publish", questionnaire_path(@questionnaire) + '/publish' %>
+	</li>
+	<li id="export_tab" class="<%= link_tab_class 'export' %>">
+		<%= link_to "Export", questionnaire_path(@questionnaire) + '/export' %>
+	</li>
+</ul>

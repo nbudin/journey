@@ -99,6 +99,20 @@ class AnswerController < ApplicationController
       end
     end
   end
+  
+  def preview
+    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions, :pages])
+    
+    if @questionnaire.pages.size > 0
+      @page = @questionnaire.pages.first
+    
+      @resp = @questionnaire.responses.build
+      @previewing = true
+      render :action => "index"
+    else
+      render :action => "prompt"
+    end
+  end
 
   def questionnaire_closed
     @questionnaire = Questionnaire.find(params[:id])

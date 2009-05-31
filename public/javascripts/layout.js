@@ -38,3 +38,15 @@ function getInnerHeight() {
   
   return y;
 }
+
+function toggleEditor(id, editor) {
+  if (!tinyMCE.get(id) && editor) {
+    tinyMCE.execCommand('mceAddControl', false, id);
+    $(id + '_html').removeClassName('selected');
+    $(id + '_visual').addClassName('selected');
+  } else if (tinyMCE.get(id) && !editor) {
+    tinyMCE.execCommand('mceRemoveControl', false, id);
+    $(id + '_visual').removeClassName('selected');
+    $(id + '_html').addClassName('selected');
+  }
+}

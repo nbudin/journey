@@ -11,7 +11,7 @@
 
 <% @editing = logged_in? and logged_in_person.permitted?(@questionnaire, "edit") -%>
 
-<div style="border-top: 1px black solid; background-color: #f5ffb8; padding: 1em;">
+<div class="propertypage">
 <% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
                 
     <h2 style="display: inline; margin-top: 0;">
@@ -39,11 +39,21 @@
     <h3>Welcome page</h3>
     
     <p>The welcome page is the first thing your visitors will see before starting your survey.  You can put any introductory
-    text you'd like on the welcome page.  Use HTML for formatting.</p>
+    text you'd like on the welcome page.</p>
     
-    <%= f.text_area "welcome_text", :rows => 4 %>
+    <p>For advanced formatting and other customizations, you can insert custom HTML code by clicking the "HTML" tab.</p>
     
-    <p><%= submit_tag "Save changes" %></p>
+    <% if @editing -%>
+      <%= render :partial => "html_editor", :locals => {:obj => @questionnaire, :field => "welcome_text"}%>
+    <% else -%>
+      <div style="border: 1px black solid; background-color: #eee; padding: 0.5em; color: #333;">
+        <%= sanitize @questionnaire.welcome_text %>
+      </div>
+    <% end -%>
+    
+    <% if @editing -%>
+      <p><%= submit_tag "Save changes" %></p>
+    <% end -%>
 <% end %>
 
 </div>

@@ -3,7 +3,8 @@ ActionController::Routing::Routes.draw do |map|
                                               :available_special_field_purposes => :get, 
                                               :customize => :get,
                                               :publish => :get,
-                                              :export => :get } do |questionnaires|
+                                              :export => :get,
+                                              :preview => :get } do |questionnaires|
     questionnaires.resources :pages, :name_prefix => nil, :collection => { :sort => :post } do |pages|
       pages.resources :questions, :name_prefix => nil, :collection => { :sort => :post }, :member => { :duplicate => :post, :edit_options => :get } do |questions|
         questions.resources :question_options, :name_prefix => nil, :collection => { :sort => :post }

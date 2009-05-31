@@ -22,19 +22,22 @@ fieldcount = 0 -%>
 				<%= render_question question %>
 			</div>
 		<% end -%>
-		<div class="navbuttons">
-			<% if pageindex > 0 -%>
-				<%= submit_tag "<< Previous page" %>
-			<% end -%>
-			<% if pageindex < @resp.questionnaire.pages.length - 1 -%>
-				<%= submit_tag "Next page >>" %>
-				<% if logged_in? and @questionnaire.allow_finish_later -%>
-				  <% 5.times { %>&nbsp;<% } %>
-				  <%= submit_tag "Finish later" %>
-				<% end -%>
-			<% else -%>
-				<%= submit_tag "Finish" %>
-			<% end -%>
-		</div>
+		
+		<% unless @previewing -%>
+  		<div class="navbuttons">
+  			<% if pageindex > 0 -%>
+  				<%= submit_tag "<< Previous page" %>
+  			<% end -%>
+  			<% if pageindex < @resp.questionnaire.pages.length - 1 -%>
+  				<%= submit_tag "Next page >>" %>
+  				<% if logged_in? and @questionnaire.allow_finish_later -%>
+  				  <% 5.times { %>&nbsp;<% } %>
+  				  <%= submit_tag "Finish later" %>
+  				<% end -%>
+  			<% else -%>
+  				<%= submit_tag "Finish" %>
+  			<% end -%>
+  		</div>
+  	<% end -%>
 	<% end %>
 </div>

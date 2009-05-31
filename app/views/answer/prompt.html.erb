@@ -1,7 +1,7 @@
 <div class="answerpage" id="answerpage">
 <div class="pagetitle"><%=h @questionnaire.title %></div>
 
-<p><%= @questionnaire.welcome_text %></p>
+<p><%= sanitize @questionnaire.welcome_text %></p>
 
 <hr/>
 

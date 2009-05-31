@@ -1,0 +1,17 @@
+<% if orig.downcase.gsub(/\s/,"") != sanitized.downcase.gsub(/\s/,"") -%>
+  <div style="border: #600 1px solid; background-color: #fcc; color: #600; padding: 0.5em; max-width: 60em;">
+    <h3>Warning: the content you submitted contains unsafe markup that will be stripped out when displayed.</h3>
+    <table>
+      <tr>
+        <td style="width: 50%; border-right: 1px #600 solid; padding-right: 1em; vertical-align: top;">
+          <h4>Original code</h4>
+          <tt><%=simple_format(h(orig)) %></tt>
+        </td>
+        <td style="width: 50%; padding-left: 1em; vertical-align: top;">
+          <h4>Sanitized code (will be displayed)</h4>
+          <tt><%=simple_format(h(sanitized)) %></tt>
+        </td>
+      </tr>
+    </table>
+  </div>
+<% end -%>

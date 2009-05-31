@@ -7,19 +7,26 @@
 </script>
 
 <div class="propertypage">
-<% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
-
-  <h3>Custom HTML</h3>
-  
-  <p>This will be displayed at the top of each page before any of the questions.</p>
-  
-  <%= f.text_area "custom_html", :rows => 4 %>
-  
-  <h3>Custom CSS</h3>
-  
-  <p>You can use this to customize the look and feel of your pages.</p>
-  
-  <%= f.text_area "custom_css", :rows => 4 %>
+  <% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
+    <h2>Preview</h2>
     
-  <p><%= submit_tag %></p>
-<% end -%>
+    <p>This is a preview of how your survey will look.</p>
+    
+    <iframe src="<%= url_for :controller => "answer", :action => "preview", :id => @questionnaire.id %>" style="height: 10em; width: 100%; max-width: 60em; border: 1px black solid;"></iframe>
+
+    <h3>Custom content</h3>
+
+    <p>This will be displayed at the top of each page before any of the questions.</p>
+
+    <%= render :partial => "html_editor", :locals => {:obj => @questionnaire, :field => "custom_html"}%>
+
+    <h3>Custom CSS</h3>
+
+    <p>You can use this to customize the look and feel of your pages.</p>
+
+    <%= f.text_area "custom_css", :rows => 4 %>
+    <%= render :partial => "sanitize_warning", :locals => { :orig => @questionnaire.custom_css, :sanitized => strip_tags(@questionnaire.custom_css) } %>
+
+    <p><%= submit_tag %></p>
+  <% end -%>
+</div>

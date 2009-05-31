@@ -1,0 +1,7 @@
+<% obj_id = "#{obj.class.name.tableize.singularize}_#{field}" -%>
+<ul class="tabstrip tinytabs">
+  <li class="selected" id="<%=obj_id %>_visual"><%= link_to_function "Visual", "toggleEditor('#{obj_id}', true);" %></li>
+  <li id="<%=obj_id %>_html"><%= link_to_function "HTML", "toggleEditor('#{obj_id}', false);" %></li>
+</ul>
+<%= text_area_tag("#{obj.class.name.tableize.singularize}[#{field}]", obj.send(field), :rows => 4, :class => "mceEditor", :id => obj_id) %>
+<%= render :partial => "sanitize_warning", :locals => { :orig => obj.send(field), :sanitized => sanitize(obj.send(field)) } %>

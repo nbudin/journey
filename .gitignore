@@ -1,3 +1,4 @@
 config/database.yml
 config/scout.yml
 log/*
+vendor/plugins/journey_paywall

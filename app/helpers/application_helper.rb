@@ -39,6 +39,7 @@ module ApplicationHelper
 
   def render_question(question)
     @question = question
+    
     value = ''
     if params[:controller] == "answer"
       answer = @resp.answer_for_question(question)
@@ -96,12 +97,15 @@ module ApplicationHelper
     end
   end
   
-  def toplevel_link_tab_class(ctrlr)
+  def toplevel_link_tab_class(ctrlr, options={})
     if params[:controller] == ctrlr
-      'selected_link'
-    else
-      'link'
+      if options[:except].nil? or (not options[:except].include?(params[:action]))
+        if options[:only].nil? or (options[:only].include?(params[:action]))
+          return 'selected_link'
+        end
+      end
     end
+    return 'link'
   end
   
   def format_title(str)

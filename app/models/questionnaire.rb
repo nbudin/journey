@@ -80,6 +80,33 @@ class Questionnaire < ActiveRecord::Base
       end
     end
   end
+  
+  def login_policy
+    if advertise_login
+      if require_login
+        return :required
+      else
+        return :prompt
+      end
+    else
+      return :unadvertised
+    end
+  end
+  
+  def login_policy=(policy)
+    policy = policy.to_sym
+    if policy == :unadvertised
+      advertise_login = false
+      require_login = false
+    elsif policy == :prompt
+      advertise_login = true
+      require_login = false
+    elsif policy == :required
+      advertise_login = true
+      require_login = true
+    end
+  end
+    
 
   def to_xml(options = {})
     options[:indent] ||= 2

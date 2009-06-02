@@ -69,6 +69,7 @@ class QuestionnairesController < ApplicationController
       format.html {}
       format.xml do
         if logged_in? and logged_in_person.permitted?(@questionnaire, "edit")
+          headers["Content-Disposition"] = "attachment; filename=\"#{@questionnaire.title}.xml\""
           render :xml => @questionnaire.to_xml
         else
           render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden
@@ -87,6 +88,14 @@ class QuestionnairesController < ApplicationController
         end
       end
     end
+  end
+  
+  # GET /questionnaires/1;print
+  def print
+    @questionnaire = Questionnaire.find(params[:id], :include => :pages)
+    @resp = Response.new(:questionnaire => @questionnaire)
+    
+    render :layout => "print"
   end
 
   # GET /questionnaires/new

@@ -1,8 +1,8 @@
-<%= javascript_include_tag "layout.js" %>
-
 <h1>Responses for "<%= @questionnaire.title %>"</h1>
 
-<ul class="tabstrip">
+<%= render :partial => "questionnaires/toplevel_tabs" %>
+
+<ul class="tabstrip2">
 	<li id="view_tab" class="<%= link_tab_class 'index' %>">
 		<%= link_to "Responses", responses_path(@questionnaire) %>
 	</li>

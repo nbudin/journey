@@ -1,4 +1,4 @@
-<div class="question layout-<%= @question.layout %>">
+<div class="question<% unless is_display %> layout-<%= @question.layout %><% end %>">
 <% if @editing -%>
   <span class="draghandle">
     <%=image_tag("drag-handle.png")%>

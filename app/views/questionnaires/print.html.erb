@@ -1,0 +1,27 @@
+<% @questionnaire.pages.each_with_index do |page, i| -%>
+  <div class="separate-page">
+    <h1><%=h @questionnaire.title %></h1>
+    <% if @questionnaire.pages.size > 1 -%>
+      <span><h2 style="display: inline;"><%=h page.title %></h2> (page <%= i + 1 %> of <%= @questionnaire.pages.size %>)</span>
+    <% end -%>
+  
+  	<% fieldcount = 0 -%>
+    <% page.questions.each do |question| -%>
+    	<% if question.kind_of? AnnotationField -%>
+    		<% next -%>
+    	<% end -%>
+    	
+			<% if question.kind_of? Field; fieldcount += 1; end 
+			if question.kind_of? Divider; fieldcount = 0; end -%>
+			<div class="question <%= if question.kind_of? Field
+				if fieldcount % 2 == 0
+					"even"
+				else
+					"odd"
+				end
+			end %>" id="question<%=question.id%>">
+				<%= render_question question %>
+			</div>
+		<% end -%>
+  </div>
+<% end -%>

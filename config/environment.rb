@@ -20,10 +20,11 @@ Rails::Initializer.run do |config|
   # (enables use of different database adapters for development and test environments)
   config.active_record.schema_format = :ruby
 
+  config.gem 'paginator'
+  config.gem 'fastercsv'
   config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
-    
-    
+  
   config.action_view.sanitized_allowed_attributes = ['id', 'class', 'style']
 
 #  config.middleware.use(Rack::Cache) do

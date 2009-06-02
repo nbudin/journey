@@ -4,7 +4,8 @@ ActionController::Routing::Routes.draw do |map|
                                               :customize => :get,
                                               :publish => :get,
                                               :export => :get,
-                                              :preview => :get } do |questionnaires|
+                                              :preview => :get,
+                                              :print => :get } do |questionnaires|
     questionnaires.resources :pages, :name_prefix => nil, :collection => { :sort => :post } do |pages|
       pages.resources :questions, :name_prefix => nil, :collection => { :sort => :post }, :member => { :duplicate => :post, :edit_options => :get } do |questions|
         questions.resources :question_options, :name_prefix => nil, :collection => { :sort => :post }

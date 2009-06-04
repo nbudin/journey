@@ -14,7 +14,7 @@ class AnalyzeController < ApplicationController
   def response_table
     
   end
-      
+  
   def view_response
     @questionnaire = Response.find(:id).questionnaire
     redirect_to response_path(@questionnaire, params[:id]), :status => :moved_permanently
@@ -29,7 +29,7 @@ class AnalyzeController < ApplicationController
     @questionnaire = Response.find(params[:id]).questionnaire
     redirect_to response_path(@questionnaire, params[:id]), :status => :moved_permanently
   end
-
+  
   def rss
     redirect_to responses_url(params[:id], :format => "rss", :secret => params[:secret]), :status => :moved_permanently
   end

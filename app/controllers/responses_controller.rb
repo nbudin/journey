@@ -60,7 +60,7 @@ class ResponsesController < ApplicationController
         @columns = @questionnaire.fields
         
         stream_csv(@questionnaire.title + ".csv") do |csv|
-          if params[:rotate]
+          if params[:rotate] == 'true'
             csv << (["id"] + @responses.collect { |r| r.id })
             @columns.each do |col|
               csv << ([col.caption] + @responses.collect do |r|
@@ -197,7 +197,7 @@ class ResponsesController < ApplicationController
     respond_to do |format|
       if @resp.update_attributes(params[:response])
         format.html { redirect_to(response_url(@questionnaire, @resp)) }
-        format.js { redirect_to (response_url(@questionnaire, @resp, :format => "js")) }
+        format.js { redirect_to(response_url(@questionnaire, @resp, :format => "js")) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -248,6 +248,10 @@ class ResponsesController < ApplicationController
         render :json => ret
       end
     end
+  end
+  
+  def export
+    
   end
   
   private

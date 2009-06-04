@@ -9,19 +9,8 @@
 	<li id="aggregate_tab" class="<%= link_tab_class 'aggregate' %>">
 		<%= link_to "Questions", responses_path(@questionnaire) + "/aggregate" %>
 	</li>
-	<li id="print_tab" class="link">
-		<%= link_to "Print", responses_path(@questionnaire) + "/print" %>
-	</li>
   <li id="export_tab">
-    <%= link_to_function "Export", "selectTab('export');"%>
+    <%= link_to "Export/Print", responses_path(@questionnaire) + "/export" %>
   </li>
 </ul>
 
-<div id="export" style="display: none;" class="tabpage">
-	<p><b>Export to a spreadsheet</b></p>
-	<%= link_to "One response per row", responses_path(@questionnaire, :format => "csv") %><br/>
-	<%= link_to "One response per column", responses_path(@questionnaire, :format => "csv", :rotate => true) %>
-</div>
-
-<div style="border-top: 1px black solid;">
-</div>

@@ -11,7 +11,14 @@ ActionController::Routing::Routes.draw do |map|
         questions.resources :question_options, :name_prefix => nil, :collection => { :sort => :post }
       end
     end
-    questionnaires.resources :responses, :name_prefix => nil, :collection => { :responseviewer => :get, :aggregate => :get, :print => :get }
+    questionnaires.resources(:responses, 
+      :name_prefix => nil, 
+      :collection => { 
+        :responseviewer => :get,                                                                        
+        :aggregate => :get, 
+        :print => :get,
+        :export => :get
+      })
   end
 
   # Add your own custom routes here.

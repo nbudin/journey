@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090523171744) do
+ActiveRecord::Schema.define(:version => 20090531154800) do
 
   create_table "answers", :force => true do |t|
     t.integer  "response_id"
@@ -46,6 +46,18 @@ ActiveRecord::Schema.define(:version => 20090523171744) do
     t.string  "engine_name"
     t.integer "version"
   end
+
+  create_table "entitlements", :force => true do |t|
+    t.integer  "person_id"
+    t.boolean  "unlimited"
+    t.datetime "expires_at"
+    t.integer  "open_questionnaires"
+    t.integer  "responses_per_month"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "entitlements", ["person_id"], :name => "index_entitlements_on_person_id"
 
   create_table "larp_runs", :force => true do |t|
     t.integer  "larp_id"
@@ -147,6 +159,7 @@ ActiveRecord::Schema.define(:version => 20090523171744) do
     t.datetime "updated_at"
     t.boolean  "advertise_login",      :default => true
     t.boolean  "require_login",        :default => false
+    t.integer  "owner_id"
     t.integer  "subscription_id"
   end
 
@@ -194,6 +207,7 @@ ActiveRecord::Schema.define(:version => 20090523171744) do
   end
 
   create_table "subscriptions", :force => true do |t|
+    t.string   "name"
     t.boolean  "unlimited"
     t.datetime "expires_at"
     t.integer  "open_questionnaires"

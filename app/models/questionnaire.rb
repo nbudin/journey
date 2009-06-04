@@ -247,4 +247,11 @@ class Questionnaire < ActiveRecord::Base
     end
     return q
   end
+  
+  def self.load_extensions
+    Journey::Questionnaire.extensions.each do |ext|
+      include ext
+    end
+  end
+  self.load_extensions
 end

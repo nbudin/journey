@@ -170,7 +170,10 @@ class QuestionnairesController < ApplicationController
         format.html { redirect_to :back }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html do
+          flash[:error_messages] = @questionnaire.errors.full_messages
+          redirect_to :back 
+        end
         format.xml  { render :xml => @questionnaire.errors.to_xml }
       end
     end

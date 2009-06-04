@@ -51,6 +51,7 @@ table.itemheader tr > td:first-child {
     width: 100%;
     margin-bottom: 1em;
     padding: 0;
+    border-collapse: collapse;
 }
 
 #questionnaireedit #container {
@@ -58,13 +59,10 @@ table.itemheader tr > td:first-child {
 }
 
 #questionnaireedit #pagesheading, #questionnaireedit #pages {
-    left: -210px;
     width: 210px;
-    float: left;
-    position: relative;
 }
 
-#questionnaireedit div {
+#questionnaireedit td {
     margin: 0;
     padding: 0;
 }
@@ -76,8 +74,6 @@ table.itemheader tr > td:first-child {
     padding-right: 0;
     padding-top: 2px;
     padding-bottom: 2px;
-    position: relative;
-    top: 0;
     height: 12pt;
     font-size: 12pt;
     font-weight: bold;
@@ -93,7 +89,6 @@ table.itemheader tr > td:first-child {
 }
 
 #questionnaireedit #pageheading, #questionnaireedit #editpage {
-    width: 100%;
     vertical-align: top;
 }
 
@@ -107,12 +102,7 @@ table.itemheader tr > td:first-child {
 }
 
 #questionnaireedit #editpage {
-    margin-left: -210px;
-    float: left;
-    padding: 0;
     height: 480px;
-    position: relative;
-    top: -3px; /* not really sure why I have to do this */
 }
 
 #questionnaireedit #pages li.page {
@@ -122,9 +112,12 @@ table.itemheader tr > td:first-child {
     margin: 0;
     background-color: #ddd;
     padding: 2px;
-    min-height: 16px;
+    height: 16px;
     display: block;
     cursor: pointer;
+    width: 205px;
+    overflow: hidden;
+    position: relative;
     background-image: url(<%= image_path "page-tab-gradient.png" %>);
 }
 
@@ -144,10 +137,6 @@ table.itemheader tr > td:first-child {
     border-right: 0;
     background-color: #fff;
     background-image: none;
-    
-    /* omg this is fugly */
-    z-index: 1;
-    width: 206px;
 }
 
 #questionnaireedit #pages li.page div.caption {

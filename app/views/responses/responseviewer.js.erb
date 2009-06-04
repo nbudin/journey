@@ -1,16 +1,18 @@
 function sizeResponseViewer() {
     headers = $$('#responsetable th');
     startColumn = 2;
-    leftside = headers[startColumn].offsetLeft;
-    width = ($('responsetable').offsetWidth - leftside + $('responsetable').offsetLeft);
+    startColumnPos = findPos(headers[startColumn]);
+    tablePos = findPos($('responsetable'));
+    leftside = startColumnPos[0];
+    width = ($('responsetable').offsetWidth - leftside + tablePos[0]);
     height = ($('responsetable').offsetHeight - 4);
     if ($('response') != null) {
         $('response').style.height = (height - $('responseheader').offsetHeight - 5) + "px";
     }
     $('responseviewer').style.width = width + "px";
     $('responseviewer').style.height = height + "px";
-    $('responseviewer').style.top = ($('responsetable').offsetTop) + 'px';
-    $('responseviewer').style.right = ($('responsetable').offsetLeft) + 'px';
+    $('responseviewer').style.top = (tablePos[1]) + 'px';
+    $('responseviewer').style.right = (tablePos[0]) + 'px';
 }
 
 ResponseViewer = {};

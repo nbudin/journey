@@ -20,23 +20,33 @@ function selectTab(name) {
   });
 }
 
-function getInnerHeight() {
-  var y;
-  if (window.innerHeight) // all except Explorer
-  {
-    y = window.innerHeight;
+function findPos(obj) {
+  // PPK's cross-browser find pos function from quirksmode.org
+  var curleft = curtop = 0;
+  if (obj.offsetParent) {
+    do {
+      curleft += obj.offsetLeft;
+      curtop += obj.offsetTop;
+    } while (obj = obj.offsetParent);
+    return [curleft, curtop];
   }
-  else if (document.documentElement && document.documentElement.clientHeight)
-    // Explorer 6 Strict Mode
-  {
-    y = document.documentElement.clientHeight;
-  }
-  else if (document.body) // other Explorers
-  {
-    y = document.body.clientHeight;
+}
+
+function getViewportSize() {
+  // Andy Langton's cross-browser viewport size finder
+  
+  if (typeof window.innerWidth != 'undefined') {
+    return [window.innerWidth, window.innerHeight];
   }
   
-  return y;
+  if (typeof document.documentElement != 'undefined' && 
+    typeof document.documentElement.clientWidth != 'undefined' && 
+  document.documentElement.clientWidth != 0) {
+  return [document.documentElement.clientWidth, document.documentElement.clientHeight];
+  }
+  
+  body = document.getElementsByTagName('body')[0];
+  return [body.clientWidht, body.clientHeight];
 }
 
 function toggleEditor(id, editor) {

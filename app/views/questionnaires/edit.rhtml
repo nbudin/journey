@@ -4,7 +4,6 @@
 <%= javascript_include_tag "layout.js" %>
 
 <script type="text/javascript">
-
 currentPage = null;
 
 function switchPage(id, title) {
@@ -66,6 +65,23 @@ function createPage() {
 
 <%= render :partial => "toolbar" %>
 
+<table id="questionnaireedit">
+  <tr style="height: 16px;">
+    <td id="pagesheading" style="top: -3px;">Pages</td>
+    <td id="pageheading"><span id="pagetitle"></span></td>
+  </tr>
+  <tr>
+    <td id="pages">
+      <%= render :partial => "pagelist", :locals => {:questionnaire => @questionnaire} %>
+      <button onClick="createPage();">Create New Page</button>
+    </td>
+    <td id="editpage">
+      <iframe id="pageview" name="pageview" frameborder="0">
+      </iframe>
+    </td>
+  </tr>
+</table>
+<!--
 <div id="questionnaireedit">
   <div id="container">
     <div id="pageheading" style="height: 16px;">
@@ -83,6 +99,7 @@ function createPage() {
     <div style="clear: both;"/>
   </div>
 </div>
+-->
 
 <!-- don't scroll this page -->
 <style type="text/css">
@@ -93,8 +110,15 @@ body {
 
 <!-- make questionnaireedit fill remaining vertical space -->
 <script type="text/javascript">
+var lastViewportSize = [0, 0];
 function sizeQuestionnaireEdit() {
-  newHeight = getInnerHeight() - $('editpage').offsetTop - 15;
+  vpSize = getViewportSize();
+  if (vpSize[0] == lastViewportSize[0] && vpSize[1] == lastViewportSize[1]) {
+    return;
+  }
+  lastViewportSize = vpSize;
+
+  newHeight = vpSize[1] - findPos($('editpage'))[1] - 15;
   $('editpage').style.height = newHeight + "px";
   $('pages').style.height = newHeight + "px";
 }

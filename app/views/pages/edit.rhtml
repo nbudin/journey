@@ -126,7 +126,10 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
 <!-- don't let the toolbox cover stuff -->
 <script type="text/javascript">
 function sizeToolboxSpacer() {
-  newHeight = $('toolbox').offsetHeight + 5;
+  if (!viewportSizeChanged()) {
+    return;
+  }
+  newHeight = findPos($('toolbox'))[1] + 5;
   $('toolboxspacer').style.height = newHeight + "px";
 }
 

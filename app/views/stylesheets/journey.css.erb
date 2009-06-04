@@ -316,24 +316,21 @@ div#toolbox ul.tabstrip {
     margin-bottom: 0;
 }
 
-div#toolbox ul.tabstrip li {
-    background-color: #754500;
-    border: 1px #512f00 solid;
+div#toolbox ul.tabstrip li a {
     padding-left: 0.5em;
     padding-right: 0.5em;
     padding-top: 2px;
     padding-bottom: 0px;
     margin-bottom: 2px;
     background-image: none;
-}
-
-div#toolbox ul.tabstrip li a {
+    background-color: #754500;
+    border: 1px #512f00 solid;
     color: #ffd99c;
     font-weight: bold;
     text-decoration: none;
 }
 
-div#toolbox ul.tabstrip li.selected {
+div#toolbox ul.tabstrip li.selected a {
     background-color: #ffd99c;
     color: #754500;
     border-bottom-color: #ffd99c;
@@ -356,6 +353,9 @@ div#toolbox input[type='button'], div#toolbox span.button {
     background-color: #ffa92e;
     padding: 3px;
     display: inline-block;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
 }
 
 div#toolbox span.button {

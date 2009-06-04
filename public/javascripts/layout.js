@@ -49,6 +49,16 @@ function getViewportSize() {
   return [body.clientWidht, body.clientHeight];
 }
 
+var lastViewportSize = [0, 0];
+function viewportSizeChanged() {
+  vpSize = getViewportSize();
+  if (vpSize[0] == lastViewportSize[0] && vpSize[1] == lastViewportSize[1]) {
+    return false;
+  }
+  lastViewportSize = vpSize;
+  return true;
+}
+
 function toggleEditor(id, editor) {
   if (!tinyMCE.get(id) && editor) {
     tinyMCE.execCommand('mceAddControl', false, id);

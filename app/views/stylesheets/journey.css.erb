@@ -215,6 +215,9 @@ ul.tabstrip {
 
 ul.tabstrip li {
     display: inline;
+}
+
+ul.tabstrip li a {
     border: 1px black solid;
     border-bottom: none;
     padding: 6px;
@@ -236,7 +239,7 @@ ul.tabstrip.tinytabs {
     margin-bottom: 2px;
 }
 
-ul.tabstrip.tinytabs li {
+ul.tabstrip.tinytabs li a {
     padding: 2px;
     background-image: none;
     margin-right: 6px;
@@ -248,16 +251,16 @@ ul.tabstrip li a, ul.tabstrip2 li a {
     color: #000;
 }
 
-ul.tabstrip li.selected {
+ul.tabstrip li.selected a {
     background-color: #ccd87f;
 }
 
-ul.tabstrip li.link {
+ul.tabstrip li.link a {
     background-color: #ffc;
     background-image: url(<%= image_path "link.png" %>);
 }
 
-ul.tabstrip li.selected_link {
+ul.tabstrip li.selected_link a {
     background-color: #fff;
     background-image: none;
     padding-left: 6px;

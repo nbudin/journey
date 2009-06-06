@@ -1,8 +1,7 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class ResponseTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
-  end
+  should_belong_to :questionnaire
+  should_belong_to :person
+  should_have_many :answers
 end

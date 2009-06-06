@@ -5,7 +5,7 @@ require 'pages_controller'
 class PagesController; def rescue_action(e) raise e end; end
 
 class PagesControllerTest < ActionController::TestCase
-  fixtures :pages
+  fixtures :pages, :questionnaires
 
   def setup
     @controller = PagesController.new
@@ -26,7 +26,7 @@ class PagesControllerTest < ActionController::TestCase
   
   def test_should_create_page
     old_count = Page.count
-    post :create, :page => { }
+    post :create, :page => { }, :questionnaire_id => questionnaires(:comprehensive)
     assert_equal old_count+1, Page.count
     
     assert_redirected_to page_path(assigns(:page))
@@ -49,7 +49,8 @@ class PagesControllerTest < ActionController::TestCase
   
   def test_should_destroy_page
     old_count = Page.count
-    delete :destroy, :id => 1
+    page = pages(:comprehensive1)
+    delete :destroy, page_url(page.questionnaire, page)
     assert_equal old_count-1, Page.count
     
     assert_redirected_to pages_path

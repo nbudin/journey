@@ -12,9 +12,9 @@ class Field < Question
   def purpose=(newpurpose)
     if not (newpurpose.nil? or newpurpose == '')
       if special_field_association.nil?
-        sfa = SpecialFieldAssociation.create!(:questionnaire => questionnaire,
-                                              :purpose => newpurpose,
-                                              :question => self)
+        SpecialFieldAssociation.create!(:questionnaire => questionnaire,
+                                        :purpose => newpurpose,
+                                        :question => self)
         reload
       else
         special_field_association.purpose = newpurpose

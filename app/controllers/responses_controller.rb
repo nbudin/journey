@@ -123,11 +123,11 @@ class ResponsesController < ApplicationController
   # GET /responses/new
   # GET /responses/new.xml
   def new
-    @response = Response.new
+    @resp = Response.new
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @response }
+      format.xml  { render :xml => @resp }
     end
   end
 
@@ -155,13 +155,13 @@ class ResponsesController < ApplicationController
     @response = Response.new(params[:response])
 
     respond_to do |format|
-      if @response.save
+      if @resp.save
         flash[:notice] = 'Response was successfully created.'
-        format.html { redirect_to(response_url(@questionnaire, @response)) }
-        format.xml  { render :xml => @response, :status => :created, :location => @response }
+        format.html { redirect_to(response_url(@questionnaire, @resp)) }
+        format.xml  { render :xml => @resp, :status => :created, :location => @resp }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @response.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @resp.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -210,8 +210,8 @@ class ResponsesController < ApplicationController
   # DELETE /responses/1
   # DELETE /responses/1.xml
   def destroy
-    @response = Response.find(params[:id])
-    @response.destroy
+    @resp = Response.find(params[:id])
+    @resp.destroy
 
     respond_to do |format|
       format.html { redirect_to(responses_url(@questionnaire)) }

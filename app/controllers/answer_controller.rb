@@ -24,7 +24,7 @@ class AnswerController < ApplicationController
       redirect_to :action => 'index', :id => qid, :page => @resp[:saved_page]
     end
   rescue
-    @flash[:error_messages] = [$!.to_s]
+    flash[:error_messages] = [$!.to_s]
     redirect_to :action => 'prompt', :id => @resp.questionnaire.id
   end
   
@@ -138,7 +138,7 @@ class AnswerController < ApplicationController
   def save_session
     @resp = Response.find(session["response_#{params[:id]}"])
     if not @resp.questionnaire.allow_finish_later and not @resp.submitted
-      @flash[:error_messages] = ["This questionnaire does not allow you to resume answering later."]
+      flash[:error_messages] = ["This questionnaire does not allow you to resume answering later."]
       redirect_to :action => "answer", :id => @resp.questionnaire.id, :page => params[:current_page]
     end
 

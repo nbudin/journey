@@ -150,15 +150,16 @@ ActiveRecord::Schema.define(:version => 20090606210526) do
   end
 
   create_table "questions", :force => true do |t|
-    t.string  "type",           :limit => 100, :default => "",    :null => false
+    t.string  "type",           :limit => 100, :default => "",     :null => false
     t.integer "position"
-    t.text    "caption",                                          :null => false
-    t.boolean "required",                      :default => false, :null => false
-    t.integer "min",                           :default => 0,     :null => false
-    t.integer "max",                           :default => 0,     :null => false
-    t.integer "step",                          :default => 1,     :null => false
-    t.integer "page_id",                       :default => 0,     :null => false
+    t.text    "caption",                                           :null => false
+    t.boolean "required",                      :default => false,  :null => false
+    t.integer "min",                           :default => 0,      :null => false
+    t.integer "max",                           :default => 0,      :null => false
+    t.integer "step",                          :default => 1,      :null => false
+    t.integer "page_id",                       :default => 0,      :null => false
     t.text    "default_answer"
+    t.string  "layout",                        :default => "left"
   end
 
   add_index "questions", ["page_id", "type"], :name => "index_questions_on_page_id_and_type"
@@ -183,23 +184,10 @@ ActiveRecord::Schema.define(:version => 20090606210526) do
     t.boolean "system_role", :default => false, :null => false
   end
 
-  create_table "schema_info", :id => false, :force => true do |t|
-    t.integer "version", :limit => 8
-  end
-
   create_table "special_field_associations", :force => true do |t|
     t.integer "questionnaire_id"
     t.integer "question_id"
     t.string  "purpose"
-  end
-
-  create_table "subscriptions", :force => true do |t|
-    t.boolean  "unlimited"
-    t.datetime "expires_at"
-    t.integer  "open_questionnaires"
-    t.integer  "responses_per_month"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "taggings", :force => true do |t|

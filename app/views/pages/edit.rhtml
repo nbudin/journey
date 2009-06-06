@@ -24,9 +24,9 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
 
         <ul id="questions">
         <% @page.questions.each do |question| -%>
-          <% if question.kind_of? Field; fieldcount += 1; end
-            if question.kind_of? Divider; fieldcount = 0; end -%>
-              <li class="question <%= if question.kind_of? Field
+          <% if question.kind_of? Questions::Field; fieldcount += 1; end
+            if question.kind_of? Questions::Divider; fieldcount = 0; end -%>
+              <li class="question <%= if question.kind_of? Questions::Field
                  if fieldcount % 2 == 0
                    "even"
                  else

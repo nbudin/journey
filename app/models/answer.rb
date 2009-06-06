@@ -37,7 +37,7 @@ class Answer < ActiveRecord::Base
   
   def value
     v = read_attribute(:value)
-    if question.kind_of?(CheckBoxField)
+    if question.kind_of?(Questions::CheckBoxField)
       if v
         return "true"
       else

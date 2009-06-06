@@ -1,8 +1,13 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class PageTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  context "A new page" do
+    setup do
+      @page = Page.create
+    end
+    
+    should "be called 'untitled'" do
+      assert_match /untitled/i, @page.title
+    end
   end
 end

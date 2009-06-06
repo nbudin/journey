@@ -18,7 +18,7 @@ class QuestionnaireTest < ActiveSupport::TestCase
     end
     
     should "have the title 'untitled'" do
-      assert @questionnaire.title =~ /untitled/i, "its title is actually #{@questionnaire.title}"
+      assert_match /untitled/i, @questionnaire.title
     end
     
     should "have a page to start with" do

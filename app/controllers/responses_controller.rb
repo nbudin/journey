@@ -120,17 +120,6 @@ class ResponsesController < ApplicationController
     end
   end
 
-  # GET /responses/new
-  # GET /responses/new.xml
-  def new
-    @resp = Response.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @resp }
-    end
-  end
-
   # GET /responses/1/edit
   def edit
     @resp = Response.find(params[:id])

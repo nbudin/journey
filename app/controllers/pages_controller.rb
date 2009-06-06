@@ -30,11 +30,6 @@ class PagesController < ApplicationController
     end
   end
 
-  # GET /pages/new
-  def new
-    @page = Page.new
-  end
-
   # GET /pages/1;edit
   def edit
     @page = Page.find(params[:id], :include => {:questions => :special_field_association})

@@ -107,12 +107,4 @@ module ApplicationHelper
     end
     return 'link'
   end
-  
-  def format_title(str)
-    ret = str.to_s
-    if ret.nil? or ret.length == 0 or ret.strip.length == 0
-      ret = "Untitled"
-    end
-    return ret
-  end
 end

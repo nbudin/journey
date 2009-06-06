@@ -17,7 +17,7 @@
   -%>
 <% authors = @questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
   <div id="questionnairesummary_<%=@questionnaire.id%>_open">
-    <h3 style="display: inline; margin-top: 0;"><%= link_to format_title(@questionnaire.title), @questionnaire %></h3>
+    <h3 style="display: inline; margin-top: 0;"><%= link_to @questionnaire.title, @questionnaire %></h3>
     <% if authors.length > 0 -%>
       <br/>
       <i>By <%=h authors %></i>

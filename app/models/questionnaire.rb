@@ -4,6 +4,9 @@ require 'journey_questionnaire'
 
 class Questionnaire < ActiveRecord::Base
   acts_as_permissioned :permission_names => [:edit, :view_answers, :edit_answers, :destroy]
+  
+  before_create :set_untitled
+  after_create :create_initial_page
 
   has_many :pages, :dependent => :destroy, :order => :position
   has_many :responses, :dependent => :destroy, :order => "responses.id DESC", :include => [:answers, :questionnaire]
@@ -40,13 +43,6 @@ class Questionnaire < ActiveRecord::Base
   def unused_special_field_purposes
     usfp = used_special_field_purposes
     Questionnaire.special_field_purposes.select { |p| not usfp.include?(p) }
-  end
-
-  def after_create
-    if pages.length == 0
-      page = Page.create :questionnaire_id => id, :title => "Untitled page"
-      page.insert_at(1)
-    end
   end
 
   def rss_secret
@@ -254,4 +250,17 @@ class Questionnaire < ActiveRecord::Base
     end
   end
   self.load_extensions
+  
+  private
+  def set_untitled
+    if self.title.blank?
+      self.title = "Untitled survey"
+    end
+  end
+  
+  def create_initial_page
+    if pages.size == 0
+      pages.create
+    end
+  end
 end

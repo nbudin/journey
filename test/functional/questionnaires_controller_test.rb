@@ -11,6 +11,8 @@ class QuestionnairesControllerTest < ActionController::TestCase
     @controller = QuestionnairesController.new
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
+    
+    @request[:person] = Person.find(:first).id
   end
 
   def test_should_get_index
@@ -26,7 +28,7 @@ class QuestionnairesControllerTest < ActionController::TestCase
   
   def test_should_create_questionnaire
     old_count = Questionnaire.count
-    post :create, :questionnaire => { }
+    post :create, :questionnaire => { :title => "New questionnaire!" }
     assert_equal old_count+1, Questionnaire.count
     
     assert_redirected_to questionnaire_path(assigns(:questionnaire))

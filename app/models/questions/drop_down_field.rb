@@ -1,4 +1,4 @@
-class DropDownField < SelectorField
+class Questions::DropDownField < Questions::SelectorField
   def self.friendly_name
     "Drop-down menu"
   end

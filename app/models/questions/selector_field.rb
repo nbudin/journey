@@ -1,4 +1,4 @@
-class SelectorField < Field
+class Questions::SelectorField < Questions::Field
   def options_for_select
     return question_options.collect { |o| [ o.option, o.option ] }
   end

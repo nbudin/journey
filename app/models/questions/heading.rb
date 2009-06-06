@@ -1,4 +1,4 @@
-class Heading < Question
+class Questions::Heading < Question
   def caption
     cap = read_attribute :caption
     if cap.blank?

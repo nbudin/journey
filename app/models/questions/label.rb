@@ -1,4 +1,4 @@
-class Label < Question
+class Questions::Label < Question
   def self.friendly_name
     "Display text"
   end

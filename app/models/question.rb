@@ -1,4 +1,6 @@
 class Question < ActiveRecord::Base
+  self.store_full_sti_class = true
+  
   belongs_to :page
   has_one :questionnaire, :through => :page
   acts_as_list :scope => :page_id
@@ -16,10 +18,6 @@ class Question < ActiveRecord::Base
   def self.friendly_name
     self.name
   end
-  
-  #def questionnaire
-  #  page.questionnaire
-  #end
   
   def deepclone
     c = self.class.new

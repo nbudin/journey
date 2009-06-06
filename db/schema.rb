@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090606190433) do
+ActiveRecord::Schema.define(:version => 20090606210526) do
 
   create_table "answers", :force => true do |t|
     t.integer  "response_id"
@@ -147,22 +147,18 @@ ActiveRecord::Schema.define(:version => 20090606190433) do
     t.datetime "updated_at"
     t.boolean  "advertise_login",      :default => true
     t.boolean  "require_login",        :default => false
-    t.integer  "subscription_id"
   end
 
-  add_index "questionnaires", ["subscription_id"], :name => "index_questionnaires_on_subscription_id"
-
   create_table "questions", :force => true do |t|
-    t.string  "type",           :limit => 100, :default => "",     :null => false
+    t.string  "type",           :limit => 100, :default => "",    :null => false
     t.integer "position"
-    t.text    "caption",                                           :null => false
-    t.boolean "required",                      :default => false,  :null => false
-    t.integer "min",                           :default => 0,      :null => false
-    t.integer "max",                           :default => 0,      :null => false
-    t.integer "step",                          :default => 1,      :null => false
-    t.integer "page_id",                       :default => 0,      :null => false
+    t.text    "caption",                                          :null => false
+    t.boolean "required",                      :default => false, :null => false
+    t.integer "min",                           :default => 0,     :null => false
+    t.integer "max",                           :default => 0,     :null => false
+    t.integer "step",                          :default => 1,     :null => false
+    t.integer "page_id",                       :default => 0,     :null => false
     t.text    "default_answer"
-    t.string  "layout",                        :default => "left"
   end
 
   add_index "questions", ["page_id", "type"], :name => "index_questions_on_page_id_and_type"
@@ -185,6 +181,10 @@ ActiveRecord::Schema.define(:version => 20090606190433) do
     t.string  "description"
     t.boolean "omnipotent",  :default => false, :null => false
     t.boolean "system_role", :default => false, :null => false
+  end
+
+  create_table "schema_info", :id => false, :force => true do |t|
+    t.integer "version", :limit => 8
   end
 
   create_table "special_field_associations", :force => true do |t|

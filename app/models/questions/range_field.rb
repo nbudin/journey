@@ -1,4 +1,4 @@
-class RangeField < Field
+class Questions::RangeField < Questions::Field
   validates_presence_of :min, :max, :step
   validates_numericality_of :min, :max, :step, :integer => true
   validates_exclusion_of :step, :in => [0]

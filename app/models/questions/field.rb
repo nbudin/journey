@@ -1,4 +1,4 @@
-class Field < Question
+class Questions::Field < Question
   has_one :special_field_association, :foreign_key => :question_id
   
   def purpose

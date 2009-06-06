@@ -1,2 +1,0 @@
-class FreeformField < Field
-end

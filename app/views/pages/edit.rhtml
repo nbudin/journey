@@ -73,14 +73,14 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
             <li id="advanced_tab"><%= link_to_function "Advanced", "selectTab('advanced');" %></li>
           </ul>
           <ul id="decorators" style="display: none; margin: 0;" class="tabpage">
-            <% Journey::Questionnaire::decorator_types.each do |t| -%>
-              <%= button_to_function h(eval(t).friendly_name), "addQuestion('#{t}');" %>
+            <% Question.decorator_types.each do |klass| -%>
+              <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
             <% end -%>
           </ul>
           <ul id="fields" style="display: none; margin: 0;" class="tabpage">
-            <% Journey::Questionnaire::field_types.each do |t| -%>
-              <% if not t == "AnnotationField" -%>
-                <%= button_to_function h(eval(t).friendly_name), "addQuestion('#{t}');" %>
+            <% Question.field_types.each do |klass| -%>
+              <% if not klass.kind_of? Questions::AnnotationField -%>
+                <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
               <% end -%>
             <% end -%>
           </ul>
@@ -90,8 +90,8 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
             <% end -%>
 	  </ul>
           <ul id="advanced" style="display: none; margin: 0;" class="tabpage">
-            <% %w{ AnnotationField }.each do |t| -%>
-              <%= button_to_function h(eval(t).friendly_name), "addQuestion('#{t}');" %>
+            <% [ Questions::AnnotationField ].each do |klass| -%>
+              <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
             <% end -%>
           </ul>
         </td>

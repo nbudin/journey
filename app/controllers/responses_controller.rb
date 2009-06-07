@@ -222,7 +222,7 @@ class ResponsesController < ApplicationController
   def aggregate
     respond_to do |format|
       format.html do
-        @fields = @questionnaire.fields.select { |f| not f.kind_of? FreeformField }
+        @fields = @questionnaire.fields.select { |f| not f.kind_of? Questions::FreeformField }
       end
       format.json do
         @question = Question.find(params[:question_id])
@@ -241,7 +241,7 @@ class ResponsesController < ApplicationController
         end
         
         ret = {"title" => @question.caption, :type => @question.class.name, "data" => @answercounts}
-        if @question.kind_of? RangeField
+        if @question.kind_of? Questions::RangeField
           ret["min"] = @question.min
           ret["max"] = @question.max
         end

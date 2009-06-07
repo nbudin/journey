@@ -11,14 +11,6 @@ module ApplicationHelper
   def dynamic_stylesheet_link_tag(action, *args)
     stylesheet_link_tag(url_for(:controller => 'stylesheets', :action => action, :format => 'css'), *args)
   end
-  
-  def question_types
-    Journey::Questionnaire::question_types
-  end
-
-  def field_types
-    Journey::Questionnaire::field_types
-  end
 
   def ellipsize(str, len)
     if str.length > len
@@ -36,6 +28,10 @@ module ApplicationHelper
   def create_form_dom_id(klass)
     "#{dom_id(klass)}_create_form"
   end
+  
+  def question_class_template(klass)
+    "#{klass.name.demodulize.tableize.singularize}"
+  end
 
   def render_question(question)
     @question = question
@@ -49,10 +45,9 @@ module ApplicationHelper
         value = @question.default_answer
       end
     end
-    return render(:partial => "questions/" + question.attributes['type'].tableize.singularize,
-                  :locals => { :value => value })
+    return render(:partial => "questions/" + question_class_template(question.class), :locals => { :value => value })
   rescue Exception => e
-    return render(:inline => "<%= start_question @question %><b>Error rendering #{question.class.name} \##{question.id} (#{h e.message})</b><%= end_question @question %>")
+    return render(:inline => "<%= start_question @question %><b>Error rendering #{question.class.name.demodulize} \##{question.id} (#{h e.message})</b><%= end_question @question %>")
   end
   
   def render_answer(question, answer)
@@ -67,10 +62,9 @@ module ApplicationHelper
     else
       nil
     end
-    return render(:partial => "answers/" + @question.attributes['type'].tableize.singularize,
-                  :locals => { :value => value })
+    return render(:partial => "answers/" + question_class_template(question.class), :locals => { :value => value })
   rescue Exception => e
-    return "<b>Error rendering answer to #{@question.class.name} \##{@question.id} (#{h e.message})</b>"
+    return "<b>Error rendering answer to #{@question.class.name.demodulize} \##{@question.id} (#{h e.message})</b>"
   end
 
   def start_question(question, options = {})

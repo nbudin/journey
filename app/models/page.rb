@@ -8,9 +8,9 @@ class Page < ActiveRecord::Base
   
   has_many :questions, :order => :position, :dependent => :destroy, :include => [:page, :question_options, :special_field_association]
   has_many :fields, :class_name => 'Question', :order => :position,
-    :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::field_types)}"
+    :conditions => "type in #{Question.types_for_sql(Question.field_types)}"
   has_many :decorators, :class_name => 'Question', :order => :position,
-    :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::decorator_types)}"
+    :conditions => "type in #{Question.types_for_sql(Question.decorator_types)}"
     
   private
   def set_untitled

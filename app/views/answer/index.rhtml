@@ -10,13 +10,13 @@ fieldcount = 0 -%>
 
 	<% form_tag :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => pageindex + 1 do %>
 		<% @page.questions.each do |question| -%>
-		 	<% if question.kind_of? AnnotationField -%>
+		 	<% if question.kind_of? Questions::AnnotationField -%>
     		<% next -%>
     	<% end -%>
 		
-			<% if question.kind_of? Field; fieldcount += 1; end 
-			if question.kind_of? Divider; fieldcount = 0; end -%>
-			<div class="question <%= if question.kind_of? Field
+			<% if question.kind_of? Questions::Field; fieldcount += 1; end 
+			if question.kind_of? Questions::Divider; fieldcount = 0; end -%>
+			<div class="question <%= if question.kind_of? Questions::Field
 				if fieldcount % 2 == 0
 					"even"
 				else

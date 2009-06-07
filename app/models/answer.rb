@@ -50,7 +50,7 @@ class Answer < ActiveRecord::Base
   
   def output_value
     v = self.value
-    if question.kind_of?(SelectorField)
+    if question.kind_of?(Questions::SelectorField)
       opt = question.question_options.select {|qo| qo.option == v }[0]
       if opt.nil?
         return v

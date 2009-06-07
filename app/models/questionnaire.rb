@@ -16,9 +16,9 @@ class Questionnaire < ActiveRecord::Base
   has_many :special_fields, :through => :special_field_associations, :source => :question
   has_many :questions, :through => :pages, :order => "pages.position, questions.position"
   has_many :fields, :through => :pages, :class_name => 'Question', :order => "pages.position, questions.position",
-    :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::field_types)}", :include => :page
+    :conditions => "type in #{Question.types_for_sql(Question.field_types)}", :include => :page
   has_many :decorators, :through => :pages, :class_name => 'Question', :order => "pages.position, questions.position",
-    :conditions => "type in #{Journey::Questionnaire::types_for_sql(Journey::Questionnaire::decorator_types)}", :include => :page
+    :conditions => "type in #{Question.types_for_sql(Question.decorator_types)}", :include => :page
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
 
@@ -35,7 +35,7 @@ class Questionnaire < ActiveRecord::Base
       "TextField"
     end
   end
-  
+
   def used_special_field_purposes
     special_field_associations.collect { |sfa| sfa.purpose }
   end
@@ -132,15 +132,15 @@ class Questionnaire < ActiveRecord::Base
             xml.question(:type => question.class.to_s, :required => question.required) do
               xml.caption(question.caption)
               xml.default_answer(question.default_answer)
-              if question.kind_of? Field
+              if question.kind_of? Questions::Field
                 if question.purpose
                   xml.purpose(question.purpose)
                 end
               end
-              if question.kind_of? RangeField
+              if question.kind_of? Questions::RangeField
                 xml.range(:min => question.min, :max => question.max, :step => question.step)
               end
-              if question.kind_of? SelectorField
+              if question.kind_of? Questions::SelectorField
                 question.question_options.each do |option|
                   xml.option(option.option, :output_value => option.output_value)
                 end
@@ -176,11 +176,11 @@ class Questionnaire < ActiveRecord::Base
             raise "Found a #{question.name} tag that shouldn't be a direct child of page"
           end
           
-          if not Journey::Questionnaire::question_types.include?(question.attributes['type'])
+          klass = Question.question_class_from_name(question.attributes['type'])
+          unless klass
             raise "#{question.attributes['type']} is not a valid question type"
           end
-          
-          klass = Journey::Questionnaire::question_class(question.attributes['type'])
+
           ques = klass.new(:required => question.attributes['required'], :page => p)
           
           ques.caption = ""
@@ -201,7 +201,7 @@ class Questionnaire < ActiveRecord::Base
             q.special_field_associations << sfa
           end
           
-          if ques.kind_of? RangeField
+          if ques.kind_of? Questions::RangeField
             question.each_element('range') do |range|
               ['min', 'max', 'step'].each do |attrib|
                 ques.send "#{attrib}=", range.attributes[attrib]
@@ -209,7 +209,7 @@ class Questionnaire < ActiveRecord::Base
             end
           end
           
-          if ques.kind_of? SelectorField
+          if ques.kind_of? Questions::SelectorField
             optrows = {}
             question.each_element('option') do |option|
               o = QuestionOption.new :option => option.text

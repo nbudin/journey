@@ -15,6 +15,35 @@ class Question < ActiveRecord::Base
   
   validates_inclusion_of :layout, :in => Layouts.values
   
+  def self.decorator_types
+    [ Questions::Label, 
+      Questions::Divider, 
+      Questions::Heading ]
+  end
+
+  def self.field_types
+    [ Questions::TextField, 
+      Questions::BigTextField, 
+      Questions::RangeField,
+      Questions::CheckBoxField,
+      Questions::DropDownField,
+      Questions::RadioField,
+      Questions::AnnotationField ]
+  end
+  
+  def self.types_for_sql(types)
+    '(' + types.collect { |klass| "'#{klass.name}'" }.join(', ') + ')'
+  end
+  
+  def self.question_types
+    return self.decorator_types + self.field_types
+  end
+  
+  def self.question_class_from_name(name)
+    real_name = name =~ /^Questions::/ ? name : "Questions::#{name}"
+    question_types.select { |klass| klass.name == real_name }.first
+  end
+  
   def self.friendly_name
     self.name
   end

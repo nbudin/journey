@@ -31,8 +31,14 @@ class AnswerController < ApplicationController
   def prompt
     @questionnaire = Questionnaire.find(params[:id])
     
+    @responses = []
     if logged_in?
-      @responses = @questionnaire.responses.find_all_by_person_id(logged_in_person.id)
+      if @questionnaire.allow_finish_later
+        @responses += @questionnaire.responses.find_all_by_person_id(logged_in_person.id, :conditions => ["submitted = ?", false])
+      end
+      if @questionnaire.allow_amend_response
+        @responses += @questionnaire.responses.find_all_by_person_id(logged_in_person.id, :conditions => ["submitted = ?", true])
+      end
     end
   end
   

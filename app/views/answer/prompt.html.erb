@@ -6,14 +6,14 @@
 <hr/>
 
 <% if logged_in? -%>
-  <% if @responses.length > 0 -%>    
+  <% if @all_responses.length > 0 -%>    
       <p>
-        <% if @responses.length > 1 -%>
-          You have started multiple responses to this questionnaire before.
-        <% elsif @responses[0].submitted -%>
-          You have already submitted a response to this questionnaire.
+        <% if @all_responses.length > 1 -%>
+          You have started multiple responses to this survey before.
+        <% elsif @all_responses[0].submitted -%>
+          You have already submitted a response to this survey.
         <% else -%>
-          You have started a response to this questionnaire already, but have not submitted it yet.
+          You have started a response to this survey already, but have not submitted it yet.
         <% end -%>
         Please make a selection from the choices below:
       </p>
@@ -46,13 +46,13 @@
     <p>
       <% if @questionnaire.advertise_login -%>
         <% if @questionnaire.special_fields.length > 0 -%>
-          Since you're logged in, we can pre-fill some of the answers to this questionnaire based on your account information.
+          Since you're logged in, we can pre-fill some of the answers to this survey based on your account information.
           <% if @questionnaire.allow_finish_later -%>
-            In addition, you'll be able to put aside this questionnaire and come back to it later if you wish.
+            In addition, you'll be able to put aside this survey and come back to it later if you wish.
           <% end -%>
         <% else -%>
           <% if @questionnaire.allow_finish_later -%>
-            Since you're logged in, you'll be able to put aside this questionnaire and come back later to it if you wish.
+            Since you're logged in, you'll be able to put aside this survey and come back later to it if you wish.
           <% end -%>
         <% end -%>
       <% end -%>
@@ -61,32 +61,32 @@
   <% end -%>
 <% else -%>
   <% if @questionnaire.require_login -%>
-    <p>You aren't logged into this site.  In order to answer this questionnaire, you must 
+    <p>You aren't logged into this site.  In order to answer this survey, you must 
     <%= link_to "log in", :controller => "auth", :action => "login" %>.  Or, if you don't have an account,
       you can <%= link_to "click here to sign up for one", :controller => "account", :action => "signup" %>.
     </p>
   <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
-    <p>You aren't currently logged into this site.  You can still answer this questionnaire if you wish.  However, logging in
+    <p>You aren't currently logged into this site.  You can still answer this survey if you wish.  However, logging in
       will give you the following benefits:</p>
     
     <ul>
       <% if @questionnaire.special_fields.length > 0 -%>
-        <li>We'll be able to pre-fill some of the answers to this questionnaire based on your account information.</li>
+        <li>We'll be able to pre-fill some of the answers to this survey based on your account information.</li>
       <% end -%>
       <% if @questionnaire.allow_finish_later -%>
-        <li>You'll be able to put aside this questionnaire and come back to it later if you wish.</li>
+        <li>You'll be able to put aside this survey and come back to it later if you wish.</li>
       <% end -%>
       <% if @questionnaire.allow_amend_response -%>
-        <li>You'll be able to amend your response if you change your mind about anything after you submit the questionnaire.</li>
+        <li>You'll be able to amend your response if you change your mind about anything after you submit the survey.</li>
       <% end -%>
     </ul>
     
     <p>To log in, <%= link_to "click here", :controller => "auth", :action => "login" %>.  Or, if you don't have an account,
       you can <%= link_to "click here to sign up for one", :controller => "account", :action => "signup" %>.</p>
     
-    <p>Or, if you prefer, you can <%= link_to "answer this questionnaire without an account", :action => 'start', :id => @questionnaire.id %>.</p>
+    <p>Or, if you prefer, you can <%= link_to "answer this survey without an account", :action => 'start', :id => @questionnaire.id %>.</p>
   <% else -%>
-    <p><%= link_to "Click here to begin answering this questionnaire.", :action => 'start', :id => @questionnaire.id %></p>
+    <p><%= link_to "Click here to begin answering this survey.", :action => 'start', :id => @questionnaire.id %></p>
   <% end -%>
 <% end -%>
 </div>

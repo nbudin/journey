@@ -245,7 +245,7 @@ class Questionnaire < ActiveRecord::Base
   end
   
   def self.load_extensions
-    Journey::Questionnaire.extensions.each do |ext|
+    Journey::QuestionnaireExtensions.extensions.each do |ext|
       include ext
     end
   end

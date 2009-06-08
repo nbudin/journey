@@ -12,6 +12,10 @@ class Page < ActiveRecord::Base
   has_many :decorators, :class_name => 'Question', :order => :position,
     :conditions => "type in #{Question.types_for_sql(Question.decorator_types)}"
     
+  def number
+    questionnaire.pages.index(self) + 1
+  end
+    
   private
   def set_untitled
     if self.title.blank?

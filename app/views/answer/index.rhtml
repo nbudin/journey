@@ -1,14 +1,13 @@
-<% pageindex = @resp.questionnaire.pages.index(@page) 
-fieldcount = 0 -%>
+<% fieldcount = 0 -%>
 
 <div class="answerpage" id="answerpage">
 	<div class="pagetitle"><%= @page.title %></div>
 
 	<% if @resp.questionnaire.pages.length > 1 -%>
-		<div class="pagecount">Page <%= pageindex + 1 %> of <%= @resp.questionnaire.pages.length %></div>
+		<div class="pagecount">Page <%= @page.number %> of <%= @page.questionnaire.pages.size %></div>
 	<% end -%>
 
-	<% form_tag :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => pageindex + 1 do %>
+	<% form_tag :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => @page.number do %>
 		<% @page.questions.each do |question| -%>
 		 	<% if question.kind_of? Questions::AnnotationField -%>
     		<% next -%>
@@ -29,10 +28,10 @@ fieldcount = 0 -%>
 		
 		<% unless @previewing -%>
   		<div class="navbuttons">
-  			<% if pageindex > 0 -%>
+  			<% if @page.number > 1 -%>
   				<%= submit_tag "<< Previous page" %>
   			<% end -%>
-  			<% if pageindex < @resp.questionnaire.pages.length - 1 -%>
+  			<% if @page.number < @resp.questionnaire.pages.size -%>
   				<%= submit_tag "Next page >>" %>
   				<% if logged_in? and @questionnaire.allow_finish_later -%>
   				  <% 5.times { %>&nbsp;<% } %>

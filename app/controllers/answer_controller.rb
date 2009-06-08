@@ -31,8 +31,15 @@ class AnswerController < ApplicationController
   def prompt
     @questionnaire = Questionnaire.find(params[:id])
     
+    @all_responses = @questionnaire.responses.find_all_by_person_id(logged_in_person.id)
+    @responses = []
     if logged_in?
-      @responses = @questionnaire.responses.find_all_by_person_id(logged_in_person.id)
+      if @questionnaire.allow_finish_later
+        @responses += @all_responses.select { |resp| not resp.submitted }
+      end
+      if @questionnaire.allow_amend_response
+        @responses += @all_responses.select { |resp| resp.submitted }
+      end
     end
   end
   
@@ -121,7 +128,7 @@ class AnswerController < ApplicationController
   def validate_answers(resp, page)
     errors = []
     page.questions.each do |question|
-      if question.kind_of? Field and question.required
+      if question.kind_of? Questions::Field and question.required
         if not answer_given(question.id)
             errors << "You didn't answer the question \"#{question.caption}\", which is required."
         end
@@ -156,7 +163,7 @@ class AnswerController < ApplicationController
     @page = @resp.questionnaire.pages[params[:current_page].to_i - 1]
 
     @page.questions.each do |question|
-      if question.kind_of? Field
+      if question.kind_of? Questions::Field
         ans = @resp.answer_for_question(question)
         if answer_given(question.id)
           if ans.nil?

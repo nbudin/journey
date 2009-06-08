@@ -53,9 +53,7 @@
     <div style="float: left; vertical-align: middle; padding-top: 5px; padding-left: 5px;">
         <%= link_to(image_tag("journey26-logo.png", :border => "0", :alt => "Journey 2.6"), questionnaires_url) %>
     </div>
-    <div style="width: 400px; float: right">
-        <%= render :partial => 'auth/auth_form' %>
-    </div>
+    <%= user_options %>
 </div>
 
 <div id="ie_warning" style="display: none; padding-left: 1em; padding-right: 1em; border: #f00 1px solid; background-color: #fcc;">

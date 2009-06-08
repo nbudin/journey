@@ -101,4 +101,8 @@ module ApplicationHelper
     end
     return 'link'
   end
+  
+  def user_options
+    render :partial => "layouts/user_options"
+  end
 end

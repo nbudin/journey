@@ -1,20 +1,13 @@
 <%= render :partial => "toplevel_tabs" %>
 
 <ul class="tabstrip2">
-	<li id="main_tab" class="<%= link_tab_class 'show' %>">
-		<%= link_to "Main", @questionnaire %>
-	</li>
+	<%= tabstrip_li "Main", @questionnaire, :level => 2, :action => 'show' %>
 	<% if logged_in? and logged_in_person.permitted?(@questionnaire, "edit") -%>
-  	<% unless @questionnaire.is_open -%>
-	  	<li id="questions_tab" class="<%= link_tab_class 'edit' %>">
-	  		<%= link_to "Questions", edit_questionnaire_path(@questionnaire) %>
-	  	</li>
-	  	<li id="customize_tab" class="<%= link_tab_class 'customize' %>">
-  			<%= link_to "Customize", questionnaire_path(@questionnaire) + '/customize' %>
-  		</li>
-		<% end -%>
-  	<li id="export_tab" class="<%= link_tab_class 'export' %>">
-  		<%= link_to "Export/Print", questionnaire_path(@questionnaire) + '/export' %>
-  	</li>
+       <%= tabstrip_li "Questions", edit_questionnaire_path(@questionnaire), 
+                        :level => 2, :action => 'edit', :disabled => @questionnaire.is_open %>
+       <%= tabstrip_li "Customize", questionnaire_path(@questionnaire) + '/customize', 
+                        :level => 2, :action => 'customize', :disabled => @questionnaire.is_open %>
+       <%= tabstrip_li "Export/Print", questionnaire_path(@questionnaire) + '/export', 
+                        :level => 2, :action => 'export' %>
   <% end -%>
 </ul>

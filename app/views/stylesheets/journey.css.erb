@@ -212,10 +212,6 @@ ul.tabstrip li a {
     padding: 6px;
     margin-right: 12px;
     background-color: #ddd;
-    background-image: url(<%= image_path "drop-down.png" %>);
-    background-position: 3px;
-    background-repeat: no-repeat;
-    padding-left: 22px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
@@ -240,20 +236,37 @@ ul.tabstrip li a, ul.tabstrip2 li a {
     color: #000;
 }
 
-ul.tabstrip li.selected a {
-    background-color: #ccd87f;
-}
-
-ul.tabstrip li.link a {
+ul.tabstrip li a {
     background-color: #ffc;
-    background-image: url(<%= image_path "link.png" %>);
 }
 
-ul.tabstrip li.selected_link a {
-    background-color: #fff;
-    background-image: none;
-    padding-left: 6px;
+ul.tabstrip li.disabled a, ul.tabstrip li.selected a {
+    cursor: default;
 }
+
+ul.tabstrip li.selected a {
+    background-color: #fff;
+}
+
+ul.tabstrip li.disabled a {
+    background-color: #ccc;
+	color: #555;
+}
+
+ul.tabstrip li.external a, ul.tabstrip li.dropdown a {
+    background-position: 3px;
+    background-repeat: no-repeat;
+    padding-left: 22px;
+}
+
+ul.tabstrip li.dropdown a {
+    background-image: url(<%= image_path "drop-down.png" %>);
+}
+
+ul.tabstrip li.external a {
+    background-image: url(<%= image_path "external-link.png" %>);
+}
+
 
 ul.tabstrip2 {
 	list-style: none;
@@ -281,12 +294,21 @@ ul.tabstrip2 li {
 	padding-right: 3px;
 }
 
-ul.tabstrip2 li.selected_link {
+ul.tabstrip2 li.selected {
 	background-color: #fff;
 }
 
-ul.tabstrip2 li.selected_link a:hover {
+ul.tabstrip2 li.selected a:hover {
 	background-color: #fff;
+}
+
+ul.tabstrip2 li.disabled a {
+    cursor: default;
+	color: #666;
+}
+
+ul.tabstrip2 li.disabled a:hover {
+    background-color: #d2de8c;
 }
 
 div.tabpage {

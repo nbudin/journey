@@ -3,14 +3,8 @@
 <%= render :partial => "questionnaires/toplevel_tabs" %>
 
 <ul class="tabstrip2">
-	<li id="view_tab" class="<%= link_tab_class 'index' %>">
-		<%= link_to "Responses", responses_path(@questionnaire) %>
-	</li>
-	<li id="aggregate_tab" class="<%= link_tab_class 'aggregate' %>">
-		<%= link_to "Questions", responses_path(@questionnaire) + "/aggregate" %>
-	</li>
-  <li id="export_tab">
-    <%= link_to "Export/Print", responses_path(@questionnaire) + "/export" %>
-  </li>
+	<%= tabstrip_li "Responses", responses_path(@questionnaire), :level => 2, :action => 'index' %>
+	<%= tabstrip_li "Questions", responses_path(@questionnaire) + '/aggregate', :level => 2, :action => 'aggregate' %>
+	<%= tabstrip_li "Export/Print", responses_path(@questionnaire) + '/export', :level => 2, :action => 'export' %>
 </ul>
 

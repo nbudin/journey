@@ -3,7 +3,7 @@
 
 <html>
 <head>
-  <title>Questionnaire: <%= controller.action_name %></title>
+  <title><%=h @questionnaire.title%><% if @page %> - Page <%= @page.number %> of <%= @questionnaire.pages.size %><% end %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <%= dynamic_stylesheet_link_tag 'questionnaire' %>
   <%= dynamic_stylesheet_link_tag 'journey' %>

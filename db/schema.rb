@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090606210526) do
+ActiveRecord::Schema.define(:version => 20090609202935) do
 
   create_table "answers", :force => true do |t|
     t.integer  "response_id"
@@ -206,12 +206,19 @@ ActiveRecord::Schema.define(:version => 20090606210526) do
     t.string  "purpose"
   end
 
+  create_table "subscription_plans", :force => true do |t|
+    t.string  "name"
+    t.boolean "unlimited"
+    t.integer "open_questionnaires"
+    t.integer "responses_per_month"
+    t.string  "rebill_period"
+    t.integer "price"
+    t.integer "grace_period"
+  end
+
   create_table "subscriptions", :force => true do |t|
-    t.string   "name"
-    t.boolean  "unlimited"
-    t.datetime "expires_at"
-    t.integer  "open_questionnaires"
-    t.integer  "responses_per_month"
+    t.datetime "last_paid_at"
+    t.integer  "subscription_plan_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

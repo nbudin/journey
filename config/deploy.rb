@@ -15,7 +15,7 @@ require 'capistrano/ext/multistage'
 # form the root of the application path.
 
 set :application, "journey"
-set :repository, "http://journey-questionnaires.googlecode.com/svn/branches/2.5"
+set :repository, "git://github.com/nbudin/journey.git"
 
 # =============================================================================
 # ROLES
@@ -37,11 +37,10 @@ set :use_sudo, false
 set :checkout, "export"
 set :user, "www-data"            # defaults to the currently logged in user
 #set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
-set :scm, :subversion               # defaults to :subversion
-# set :svn, "/path/to/svn"       # defaults to searching the PATH
-# set :darcs, "/path/to/darcs"   # defaults to searching the PATH
-# set :cvs, "/path/to/cvs"       # defaults to searching the PATH
-# set :gateway, "gate.host.com"  # default to no gateway
+set :scm, :git
+set :deploy_via, :remote_cache
+set :git_enable_submodules, 1
+set :branch, "2.5"
 
 # =============================================================================
 # SSH OPTIONS

@@ -1,7 +1,0 @@
-sqlite:
-  adapter: sqlite
-  dbfile: vendor/plugins/scout_rails_instrumentation/test/test.db
-
-sqlite3:
-  adapter: sqlite3
-  dbfile: vendor/plugins/scout_rails_instrumentation/test/test.db

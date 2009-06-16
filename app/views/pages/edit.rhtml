@@ -67,9 +67,9 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
         </td>
         <td>
           <ul class="tabstrip alwaysopen" style="margin: 0;">
-            <li id="fields_tab"><%= link_to_function "Questions", "selectTab('fields');" %></li>
+	    	<li id="specials_tab"><%= link_to_function "Demographics", "selectTab('specials');" %></li>
+			<li id="fields_tab"><%= link_to_function "Questions", "selectTab('fields');" %></li>
             <li id="decorators_tab"><%= link_to_function "Display elements", "selectTab('decorators');" %></li>
-	    <li id="specials_tab"><%= link_to_function "Special fields", "selectTab('specials');" %></li>
             <li id="advanced_tab"><%= link_to_function "Advanced", "selectTab('advanced');" %></li>
           </ul>
           <ul id="decorators" style="display: none; margin: 0;" class="tabpage">
@@ -135,5 +135,5 @@ function sizeToolboxSpacer() {
 
 Event.observe(window, 'load', sizeToolboxSpacer);
 Event.observe(window, 'resize', sizeToolboxSpacer);
-Event.observe(window, 'load', function() { selectTab('fields'); });
+Event.observe(window, 'load', function() { selectTab('specials'); });
 </script>

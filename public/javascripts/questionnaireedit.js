@@ -9,6 +9,8 @@ setupQuestionnaireEditing = function(questionnaireId, pageId, sitePrefix) {
   Resource.model("Question", {prefix: sitePrefix + '/questionnaires/'+questionnaireId+'/pages/'+pageId, format: 'json'});
   Resource.model("QuestionOption", {prefix: sitePrefix + '/questionnaires/'+questionnaireId+'/pages/'+pageId+'/questions/:question_id/', format: 'json'});
 }.bind(this);
+
+var defaultLayout = null;
                     
 function updateDefault(questionId, newDefault) {
   el = $("question_" + questionId + "_default_answer");
@@ -65,8 +67,8 @@ function makeReloadFunction(questionId) {
 
 function questionAdded(q) {
     if (q.purpose == "gender") {
-	QuestionOption.create({question_id: q.id, 'option': 'male'});
-	QuestionOption.create({question_id: q.id, 'option': 'female'});
+		QuestionOption.create({question_id: q.id, 'option': 'male'});
+		QuestionOption.create({question_id: q.id, 'option': 'female'});
     }
 
     newli = document.createElement('li');
@@ -96,10 +98,26 @@ function questionAdded(q) {
 function addQuestion(typ, purpose) {
     attrs = {'type': typ};
     if (purpose) {
-	attrs.purpose = purpose;
-	attrs.caption = purpose.capitalize();
+		attrs.purpose = purpose;
+		attrs.caption = purpose.capitalize();
     }
+	if (defaultLayout == "left" || defaultLayout == "top") {
+		attrs.layout = defaultLayout;
+	}
     q = Question.create(attrs, questionAdded);
+}
+
+function setDefaultLayout(layout) {
+	if (defaultLayout != layout) {
+		defaultLayout = layout;
+		if (layout == "left") {
+			$('top_layout').removeClassName('selected');
+			$('left_layout').addClassName('selected');
+		} else if (layout == "top") {
+			$('left_layout').removeClassName('selected');
+			$('top_layout').addClassName('selected');
+		}
+	}
 }
 
 function addOption(questionId, newOption) {

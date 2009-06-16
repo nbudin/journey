@@ -100,9 +100,9 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
             "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle(); sizeToolboxSpacer();",
             :style => "text-decoration: none; color: #754500;" %></b>
           <br/>
-          <span class="button"><%= image_tag("left-layout.png") %></span>
+          <span class="button" onClick="setDefaultLayout('left');" id="left_layout"><%= image_tag("left-layout.png") %></span>
           <br/>
-          <span class="button"><%= image_tag("top-layout.png") %></span>
+          <span class="button" onClick="setDefaultLayout('top');" id="top_layout"><%= image_tag("top-layout.png") %></span>
         </td>
       </tr>
     </table>

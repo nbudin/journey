@@ -39,7 +39,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           </ul>
           <%= sortable_element "questions", :handle => "draghandle",
               :url => questions_path(@questionnaire, @page) + '/sort',
-              :complete => "window.location.reload();" %>
+              :complete => "zebrifyQuestions();" %>
           <div class="navbuttons">
             <% if pageindex > 0 -%>
               <%= submit_tag "<< Previous page" %>

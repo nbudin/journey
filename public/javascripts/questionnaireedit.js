@@ -11,6 +11,10 @@ setupQuestionnaireEditing = function(questionnaireId, pageId, sitePrefix) {
 }.bind(this);
 
 var defaultLayout = null;
+
+function zebrifyQuestions() {
+	alert("commence zebrification");
+}
                     
 function updateDefault(questionId, newDefault) {
   el = $("question_" + questionId + "_default_answer");
@@ -85,9 +89,7 @@ function questionAdded(q) {
                           new Ajax.Request(sitePrefix+'/questionnaires/'+questionnaireId+"/pages/"+pageId+"/questions/sort",
                                            { asynchronous:true,
                                              evalScripts:true,
-                                             onComplete: function(request){
-                                                 window.location.reload();
-                                             },
+                                             onComplete: zebrifyQuestions,
                                              parameters: Sortable.serialize("questions")
                                            }
                                           )
@@ -143,7 +145,8 @@ function removeOption(questionId, optionId) {
 
 function deleteQuestion(questionId) {
   Question.destroy({id: questionId}, function() {
-    window.location.reload();
+  	$('question_'+questionid).remove();
+    zebrifyQuestions();
   });
 }
 

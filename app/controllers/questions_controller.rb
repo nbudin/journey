@@ -64,7 +64,7 @@ class QuestionsController < ApplicationController
         end
           
         @question = Question.find(@question.id)
-        if @question.kind_of? Field and @question.caption.blank?
+        if @question.kind_of? Questions::Field and @question.caption.blank?
           # get the default field caption in
           @question.caption = "Click here to type a question."
           @question.save

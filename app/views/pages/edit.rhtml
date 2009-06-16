@@ -86,7 +86,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           </ul>
 	  <ul id="specials" style="display: none; margin: 0;" class="tabpage">
 	    <% Questionnaire.special_field_purposes.each do |purpose| -%>
-	      <%= button_to_function h(purpose.humanize), "addQuestion('#{Questionnaire.special_field_type(purpose)}', '#{purpose}');" %>
+	      <%= button_to_function h(purpose.humanize), "addQuestion('#{Questionnaire.special_field_type(purpose).name}', '#{purpose}');" %>
             <% end -%>
 	  </ul>
           <ul id="advanced" style="display: none; margin: 0;" class="tabpage">

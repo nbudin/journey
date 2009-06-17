@@ -2,35 +2,7 @@
 
 <%= javascript_include_tag "layout.js" %>
 
-<ul class="tabstrip">
-  <li id="create_survey_tab" class="dropdown">
-    <%= link_to_function "New survey", "selectTab('create_survey');"%>
-  </li>
-	<li id="import_survey_tab" class="dropdown">
-    <%= link_to_function "Import survey", "selectTab('import_survey');"%>
-  </li>
-</ul>
-
-<div id="create_survey" style="display: none;" class="tabpage">
-	<p><b>Create a new survey</b></p>
-	<div style="max-width: 300px;">
-		<% ae_form_for(:questionnaire, @questionnaire, :url => questionnaires_path) do |f| %>
-		  <%= f.text_field "title" %>
-			<%= submit_tag "Create" %>
-		<% end %>
-	</div>
-</div>
-
-<div id="import_survey" style="display: none;" class="tabpage">
-	<p><b>Import a survey</b></p>
-	<div style="max-width: 300px;">
-	  <% form_tag(questionnaires_path, :multipart => true) do %>
-		  <label for="file">XML file to import</label>
-		  <input type="file" name="file" />
-			<%= submit_tag "Import" %>
-		<% end %>
-	</div>
-</div>
+<%= link_to "Create a new survey, or import one from an XML file &#187;", new_questionnaire_path, :class => "bigbutton" %>
 
 <div id="filter_params" style="border-top: 1px black solid; background-color: #FFE5C0;">
   <% form_tag({}, {:method => "get", :class => "filterbar"}) do  %>

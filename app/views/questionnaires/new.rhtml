@@ -1,11 +1,21 @@
-<h1>New questionnaire</h1>
+<h1>Create or Import a Survey</h1>
 
-<%= error_messages_for :questionnaire %>
-
-<% form_for(:questionnaire, :url => questionnaires_path) do |f| %>
-  <p>
-    <%= submit_tag "Create" %>
-  </p>
-<% end %>
-
-<%= link_to 'Back', questionnaires_path %>
+<div class="propertypage">
+	<h2>Create a new survey</h2>
+		<% form_for(:questionnaire, @questionnaire, :url => questionnaires_path) do |f| %>
+		  <p><label for="questionnaire_title">Title:</label> <%= f.text_field "title" %></p>
+		  <%= submit_tag "Create" %>
+		<% end %>
+	</h2>
+	
+	<h2>Import a survey from XML</h2>
+    <% form_tag(questionnaires_path, :multipart => true) do %>
+	  <p>You can export surveys from Journey in XML format by clicking the "Export" tab in the
+	  survey view.</p>
+	  <p>
+		  <label for="file">XML file to import:</label>
+		  <input type="file" name="file" />
+      </p>
+	  <%= submit_tag "Import" %>
+	<% end %>
+</div>

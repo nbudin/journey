@@ -10,7 +10,7 @@ fieldcount = 0 -%>
 
 <div class="answerpage" id="answerpage">
         <div class="pagetitle"><span id="page_title"><%= @page.title %></span>
-          <%= image_tag("jipe/edit-field.png", { :id => "edit_page_title" }) %>
+          <%= image_tag("jipe/edit-field.png", { :id => "edit_page_title", :alt => "Edit page title", :title => "Edit page title" }) %>
         </div>
 
 <script type="text/javascript">
@@ -100,9 +100,11 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
             "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle(); sizeToolboxSpacer();",
             :style => "text-decoration: none; color: #754500;" %></b>
           <br/>
-          <span class="button" onClick="setDefaultLayout('left');" id="left_layout"><%= image_tag("left-layout.png") %></span>
+          <span class="button" onClick="setDefaultLayout('left');" id="left_layout"><%= image_tag("left-layout.png",
+			:alt => "Question beside answer", :title => "Question beside answer") %></span>
           <br/>
-          <span class="button" onClick="setDefaultLayout('top');" id="top_layout"><%= image_tag("top-layout.png") %></span>
+          <span class="button" onClick="setDefaultLayout('top');" id="top_layout"><%= image_tag("top-layout.png",
+			:alt => "Question above ansewr", :title => "Question above answer") %></span>
         </td>
       </tr>
     </table>

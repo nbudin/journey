@@ -3,10 +3,10 @@
   <% if @editing -%>
       <span class="moreoptions">
           <span class="dropdown_icon" id="dropdown_icon_<%=@question.id%>"
-                onClick="toggleDropdown(<%=@question.id%>);">&nbsp;</span>
+                onClick="toggleDropdown(<%=@question.id%>);" title="More options...">&nbsp;</span>
           <ul id="question_dropdown_<%=@question.id%>" class="dropdown" style="display: none;">
             <span class="selected_dropdown_icon" id="dropdown_close_icon_<%=@question.id%>"
-                  onClick="toggleDropdown(<%=@question.id%>);">&nbsp;</span>
+                  onClick="toggleDropdown(<%=@question.id%>);" title="Hide options">&nbsp;</span>
             <%= render :partial => "questions/moreoptions", :locals => 
               { :is_display => is_display, 
                 :is_radio_group => is_radio_group,

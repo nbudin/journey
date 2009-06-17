@@ -1,7 +1,7 @@
 <div class="question<% unless is_display %> layout-<%= @question.layout %><% end %>">
 <% if @editing -%>
   <span class="draghandle">
-    <%=image_tag("drag-handle.png")%>
+    <%=image_tag("drag-handle.png", :alt => "Drag to change question order", :title => "Drag to change question order")%>
   </span>
 <% end -%>
 <span class="questionandcaption">

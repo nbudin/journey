@@ -22,11 +22,11 @@
   <li>
     <% if @question.layout == "left" %>
       <%= link_to_function(image_tag("top-layout.png", :class => "image_button",
-                                     :alt => "Put question above input box") + " Put question above answer",
+                                     :alt => "Put question above answer") + " Put question above answer",
                                      "setLayout(#{question.id}, 'top');") %>
     <% else -%>
       <%= link_to_function(image_tag("left-layout.png", :class => "image_button",
-                                     :alt => "Put question beside input box") + " Put question beside answer",
+                                     :alt => "Put question beside answer") + " Put question beside answer",
                                      "setLayout(#{question.id}, 'left');") %>
     <% end -%>
   </li>

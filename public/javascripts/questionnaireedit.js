@@ -13,7 +13,24 @@ setupQuestionnaireEditing = function(questionnaireId, pageId, sitePrefix) {
 var defaultLayout = null;
 
 function zebrifyQuestions() {
-	alert("commence zebrification");
+	var i = 1;
+	$$('li.question').each(function(question) {
+		if (!question.hasClassName('ignore-cycle')) {
+			if (question.hasClassName('reset-cycle')) {
+				i = -1;
+			} else {
+				if (i % 2 == 0) {
+					question.addClassName('even');
+					question.removeClassName('odd');
+				}
+				else {
+					question.addClassName('odd');
+					question.removeClassName('even');
+				}
+				i++;
+			}
+		}
+	});
 }
                     
 function updateDefault(questionId, newDefault) {
@@ -82,7 +99,11 @@ function questionAdded(q) {
     $('questions').appendChild(newli);
     new Ajax.Updater("question_"+q.id,
                      sitePrefix+"/questionnaires/"+questionnaireId+"/pages/"+pageId+"/questions/"+q.id+"/edit",
-                     { method: "get", evalScripts: true, insertion: Insertion.Bottom});
+                     { method: "get", 
+					   evalScripts: true, 
+					   insertion: Insertion.Bottom,
+					   onComplete: zebrifyQuestions
+					 });
     Sortable.create("questions",
                     { handle:'draghandle',
                       onUpdate:function() {
@@ -145,7 +166,7 @@ function removeOption(questionId, optionId) {
 
 function deleteQuestion(questionId) {
   Question.destroy({id: questionId}, function() {
-  	$('question_'+questionid).remove();
+  	$('question_'+questionId).remove();
     zebrifyQuestions();
   });
 }

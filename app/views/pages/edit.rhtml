@@ -1,6 +1,4 @@
-<% @editing = true
-pageindex = @questionnaire.pages.index(@page)
-fieldcount = 0 -%>
+<% @editing = true -%>
 
 <%= javascript_include_tag 'questionnaireedit' %>
 <%= javascript_include_tag "layout.js" %>
@@ -19,20 +17,12 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
 </script>
 
         <% if @questionnaire.pages.length > 1 -%>
-                <div class="pagecount">Page <%= pageindex + 1 %> of <%= @questionnaire.pages.length %></div>
+                <div class="pagecount">Page <%= @page.number %> of <%= @questionnaire.pages.length %></div>
         <% end -%>
 
         <ul id="questions">
         <% @page.questions.each do |question| -%>
-          <% if question.kind_of? Questions::Field; fieldcount += 1; end
-            if question.kind_of? Questions::Divider; fieldcount = 0; end -%>
-              <li class="question <%= if question.kind_of? Questions::Field
-                 if fieldcount % 2 == 0
-                   "even"
-                 else
-                   "odd"
-                 end
-              end %>" id="question_<%=question.id%>">
+              <li class="question <%= question_cycle(question) %>" id="question_<%=question.id%>">
                 <%= render_question question %>
               </li>
           <% end -%>
@@ -41,10 +31,10 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
               :url => questions_path(@questionnaire, @page) + '/sort',
               :complete => "zebrifyQuestions();" %>
           <div class="navbuttons">
-            <% if pageindex > 0 -%>
+            <% if @page.number > 1 -%>
               <%= submit_tag "<< Previous page" %>
             <% end -%>
-            <% if pageindex < @questionnaire.pages.length - 1 -%>
+            <% if @page.number < @questionnaire.pages.length -%>
               <%= submit_tag "Next page >>" %>
               <% 5.times { %>&nbsp;<% } %>
               <%= submit_tag "Finish later" %>

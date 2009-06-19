@@ -1,5 +1,3 @@
-<% fieldcount = 0 -%>
-
 <div class="answerpage" id="answerpage">
 	<div class="pagetitle"><%= @page.title %></div>
 
@@ -10,18 +8,9 @@
 	<% form_tag :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => @page.number do %>
 		<% @page.questions.each do |question| -%>
 		 	<% if question.kind_of? Questions::AnnotationField -%>
-    		<% next -%>
-    	<% end -%>
-		
-			<% if question.kind_of? Questions::Field; fieldcount += 1; end 
-			if question.kind_of? Questions::Divider; fieldcount = 0; end -%>
-			<div class="question <%= if question.kind_of? Questions::Field
-				if fieldcount % 2 == 0
-					"even"
-				else
-					"odd"
-				end
-			end %>" id="question<%=question.id%>">
+    			<% next -%>
+    		<% end -%>
+			<div class="question <%= question_cycle(question) %>" id="question<%=question.id%>">
 				<%= render_question question %>
 			</div>
 		<% end -%>

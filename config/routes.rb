@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
                                               :customize => :get,
                                               :publish => :get,
                                               :export => :get,
+                                              :share => :get,
                                               :preview => :get,
                                               :print => :get } do |questionnaires|
     questionnaires.resources :pages, :name_prefix => nil, :collection => { :sort => :post } do |pages|

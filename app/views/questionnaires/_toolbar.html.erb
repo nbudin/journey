@@ -3,11 +3,13 @@
 <ul class="tabstrip2">
 	<%= tabstrip_li "Main", @questionnaire, :level => 2, :action => 'show' %>
 	<% if logged_in? and logged_in_person.permitted?(@questionnaire, "edit") -%>
-       <%= tabstrip_li "Questions", edit_questionnaire_path(@questionnaire), 
+       <%= tabstrip_li "Edit", edit_questionnaire_path(@questionnaire), 
                         :level => 2, :action => 'edit', :disabled => @questionnaire.is_open %>
-       <%= tabstrip_li "Customize", questionnaire_path(@questionnaire) + '/customize', 
+       <%= tabstrip_li "Customize", customize_questionnaire_path(@questionnaire), 
                         :level => 2, :action => 'customize', :disabled => @questionnaire.is_open %>
-       <%= tabstrip_li "Export/Print", questionnaire_path(@questionnaire) + '/export', 
+       <%= tabstrip_li "Export/Print", export_questionnaire_path(@questionnaire), 
                         :level => 2, :action => 'export' %>
+	   <%= tabstrip_li "Share", share_questionnaire_path(@questionnaire), 
+						:level => 2, :action => 'share' %>
   <% end -%>
 </ul>

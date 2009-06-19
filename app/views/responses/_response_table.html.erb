@@ -32,7 +32,10 @@
         </tr>
         <% @responses.each do |response| %>
             <tr class="<%=cycle "even", "odd" %>" style="height: 0">
-              <td style="width: 20px; background-color: white; vertical-align: middle; background-color: #eee; border: 1px #999 solid;"><%=link_to_remote image_tag("view-response.png", :alt => "View response", :style => "margin: 2px;"), :url => response_path(@questionnaire, response, :format => "js"), :class => "viewresponse", :method => "get" %></td>
+              <td style="width: 20px; background-color: white; vertical-align: middle; background-color: #eee; border: 1px #999 solid;">
+			  	<%=link_to_remote image_tag("view-response.png", :alt => "View response", :title => "View response", :style => "margin: 2px;"), 
+					:url => response_path(@questionnaire, response, :format => "js"), :class => "viewresponse", :method => "get" %>
+			  </td>
               <% @columns.each do |column| -%>
                 <td>
                   <% if column.kind_of? Question -%>

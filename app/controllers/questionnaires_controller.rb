@@ -125,6 +125,11 @@ class QuestionnairesController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
   end
   
+  # GET /questionnaires/1;share
+  def share
+    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
+  end
+  
   # POST /questionnaires
   # POST /questionnaires.xml
   require_login :only => [:create]

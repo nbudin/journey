@@ -1,0 +1,16 @@
+<h1>Share "<%=h @questionnaire.title%>"</h1>
+
+<%= render :partial => "toolbar" %>
+
+<div class="propertypage">
+  <h2>Share</h2>
+  
+  <% if logged_in? and logged_in_person.permitted?(@questionnaire, "change_permissions") -%>
+    <p>You can allow other people to make changes to this survey and its responses.  Use the controls below to make changes
+	   to these settings.</p>
+  <% else -%>
+    <p>These are the people who are allowed to make changes to this survey and its responses:</p>
+  <% end -%>
+    
+  <%= render :partial => "permission/show", :locals => { :item => @questionnaire }%>
+</div>

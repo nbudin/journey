@@ -38,17 +38,23 @@
     
     <h3>Welcome page</h3>
     
-    <p>The welcome page is the first thing your visitors will see before starting your survey.  You can put any introductory
-    text you'd like on the welcome page.</p>
     
-    <p>For advanced formatting and other customizations, you can insert custom HTML code by clicking the "HTML" tab.</p>
     
     <% if @editing -%>
+  	  <p>The welcome page is the first thing your visitors will see before starting your survey.  You can put any introductory
+      text you'd like on the welcome page.</p>
+    
+      <p>For advanced formatting and other customizations, you can insert custom HTML code by clicking the "HTML" tab.</p>
+	  
       <%= render :partial => "html_editor", :locals => {:obj => @questionnaire, :field => "welcome_text"}%>
     <% else -%>
-      <div style="border: 1px black solid; background-color: #eee; padding: 0.5em; color: #333;">
-        <%= sanitize @questionnaire.welcome_text %>
-      </div>
+	  <% if @questionnaire.welcome_text.blank? -%>
+	  	<p>This survey has no custom welcome page content.</p>
+	  <% else -%>
+        <div style="border: 1px black solid; background-color: #eee; padding: 0.5em; color: #333;">
+          <%= sanitize @questionnaire.welcome_text %>
+        </div>
+	  <% end -%>
     <% end -%>
     
     <% if @editing -%>

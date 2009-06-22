@@ -20,13 +20,9 @@
     <table id="responsetable" style="width: 100%; border-collapse: collapse;">
         <tr>
           <th></th>
-          <% @columns.each do |column| -%>
+          <% @columns.each_with_index do |column, index| -%>
             <th>
-              <% if column.kind_of? Question -%>
-                <%= column.caption %>
-              <% elsif column.kind_of? String -%>
-                <%= column.humanize %>
-              <% end -%>
+              <%= column_selector(column, index + 1) %>
             </th>
           <% end -%>
         </tr>

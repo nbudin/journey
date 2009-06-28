@@ -177,7 +177,7 @@ class ResponsesController < ApplicationController
     @resp = Response.find(params[:id])
 
     @questionnaire.questions.each do |question|
-      if question.kind_of? Field
+      if question.kind_of? Questions::Field
         ans = Answer.find_answer(@resp, question)
         if answer_given(question.id)
           if ans.nil?

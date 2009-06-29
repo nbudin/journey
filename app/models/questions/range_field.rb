@@ -7,6 +7,10 @@ class Questions::RangeField < Questions::Field
     "Numeric range"
   end
   
+  def is_numeric?
+    true
+  end
+  
   validate :range_boundaries
   def range_boundaries
     if step > 0

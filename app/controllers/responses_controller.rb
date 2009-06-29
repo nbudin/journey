@@ -236,6 +236,7 @@ class ResponsesController < ApplicationController
       end
       format.png do
         do_aggregation
+        @geom = params[:geom] || "640x480"
         render :layout => false
       end
     end
@@ -274,7 +275,7 @@ class ResponsesController < ApplicationController
   end
   
   def do_aggregation
-    @question = Question.find(params[:question_id])
+    @question = @questionnaire.questions.find(params[:question_id], :include => :question_options)
     @answercounts = {}
     
     @questionnaire.valid_responses.each do |resp|

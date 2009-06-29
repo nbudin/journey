@@ -1,31 +1,23 @@
-<%
-graph = {'width' => 500, 
-         'title' => @question.caption, 
-         'data' => []
-         }
-
-if @question.kind_of? Questions::SelectorField
-  graph['type'] = "Pie"
-  @answercounts.each do |answer, count|
-    graph['data'].push({
-      'name' => answer,
-      'values' => [count]
-    })
-  end
-else
-  graph['type'] = "Line"
-  series = { 
-    "name" => @question.caption,
-    "values" => []
-  }
-  graph['labels'] = {}
+if @question.is_numeric?
+  @graph = Gruff::Line.new(@geom)
+  
   i = 0
-  @answercounts.each do |answer, count|
-    graph['labels'][i] = answer
-    series['values'].push(count)
+  labels = {}
+  values = []
+  @question.min.upto(@question.max) do |answer|
+    labels[i] = answer.to_s
+    values.push(@answercounts[answer.to_s] || 0)
     i += 1
   end
+  @graph.labels = labels
+  @graph.data(@question.caption, values)
+else
+  @graph = Gruff::Pie.new(@geom)
+  
+  @answercounts.each do |answer, count|
+    @graph.data(answer, [count])
+  end  
 end
-%>
 
-<%= graph.to_yaml %>
+@graph.title = truncate(@question.caption)
+set_journey_theme(@graph)

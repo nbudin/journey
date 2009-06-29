@@ -48,6 +48,10 @@ class Question < ActiveRecord::Base
     self.name
   end
   
+  def is_numeric?
+    false
+  end
+  
   def deepclone
     c = self.class.new
     c.page = self.page

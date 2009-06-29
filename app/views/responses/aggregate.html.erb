@@ -1,147 +1,23 @@
 <%= render :partial => "analyze_toolbar" %>
-<% javascript javascript_path("js-class.js") -%>
-<% javascript javascript_path("bluff.js") -%>
-<% javascript javascript_path("excanvas.js") -%>
 
 <script type="text/javascript">
-	
-	Aggregate = {};
-	Aggregate.prevGraph = null;
-	
-	function journeyTheme(g) {
-	  g.set_theme({
-      colors: ['#ff9500', '#512f00', '#bad032', '#5ba5ff', '#ff7474',
-               '#00d686', '#8d0081'],
-      marker_color: '#afaf00',
-      font_color: 'black',
-      background_colors: ['white', 'white']
-    });
-  }
-	
-	function renderGraph(data) {	
-		if (Aggregate.prevGraph != null) {
-			Aggregate.prevGraph.clear();
-		}
-		
-		// Make a graph object with canvas id and width
-		size = "" + $('graph').offsetWidth + "x" + $('graph').offsetHeight;
-		
-		seriesNames = [];
-
-        // Add data and labels
-  	for (series in data['data']) {
-  		seriesNames.push(series);
-  	}
-		
-		var g;
-		if (data['type'] == 'RangeField') {
-		  g = new Bluff.Line('graph', size);
-		  g.hide_legend = true;
-		  g.minimum_value = 0;
-		  g.x_axis_label = "Answer";
-		  
-		  seriesNames.sort(function(a, b) {
-		    if (a == "No answer") {
-    			return -1;
-    		}
-    		if (b == "No answer") {
-    			return 1;
-    		}
-    		return parseInt(a) - parseInt(b);
-	    });
-	    
-	    if (seriesNames[0] == "No answer") {
-	      seriesNames = seriesNames.slice(1);
-      }
-      
-      dataSeries = [];
-      labels = {};
-      counter = 0;
-      for (i=parseInt(data['min']); i <= parseInt(data['max']); i++) {
-        if (data['data'][i.toString()] != undefined) {
-          dataSeries.push(data['data'][i.toString()]);
-        } else {
-          dataSeries.push(0);
-        }
-        labels[counter] = i.toString();
-        counter++;
-      }
-      
-      g.labels = labels;
-      g.data("Answers", dataSeries);
-		} else {
-      g = new Bluff.Pie('graph', size);
-      
-      // Set theme and options
-	
-    	seriesNames.sort(function(a, b) {
-    		if (a == "No answer") {
-    			return 1;
-    		}
-    		if (b == "No answer") {
-    			return -1;
-    		}
-    		if (a < b) {
-    			return -1;
-    		}
-    		if (a == b) {
-    			return 0;
-    		}
-    		return 1;
-    	});
-	
-    	for (i=0; i<seriesNames.length; i++) {
-    		series = seriesNames[i];
-    		if (series == "No answer" || series == "false") {
-    		  if (data['type'] == "CheckBoxField") {
-    		    g.data("no", data['data'][series], "#888888");
-    		  } else {
-    			  g.data(series, data['data'][series], "#888888");
-    			}
-    		} else {
-    		  if (data['type'] == "CheckBoxField") {
-    		    g.data("yes", data['data'][series]);
-    		  } else {
-    			  g.data(series, data['data'][series]);
-    			}
-    		}
-    	}
-    }
-        
-        journeyTheme(g);
-        
-        // Render the graph
-        g.draw();
-		Aggregate.prevGraph = g;
+	function seriesSelected() {
+		graph = $('graph');
+		seriesId = $('fields').value;
+		url = "<%= aggregate_responses_url(@questionnaire, :format => :png) %>";
+		url += "?question_id=" + seriesId;
+		url += "&geom=" + graph.offsetWidth + "x" + graph.offsetHeight;
+		graph.src = url;
 	}
-	
-	function seriesSelected(evt) {
-		seriesId = Event.element(evt).value;
-		new Ajax.Request('<%= responses_url(@questionnaire)%>/aggregate.json',
-			{
-				'method': 'get',
-				'parameters': {
-					'question_id': seriesId
-				},
-				'onSuccess': function (transport) {
-					ret = transport.responseJSON;
-					renderGraph(ret);
-				}
-			});
-	}
-	
-	Event.observe(window, 'load', function() {
-		Event.observe('fields', 'change', seriesSelected);
-	});
 </script>
 
 <div id="aggregate_container" style="position: relative; width: 100%; height: 600px;">
 <div style="width: 25%; height: 100%; position: absolute;">
 <%= select_tag "fields", options_for_select(@fields.collect { |f| [ f.caption, f.id ] }), 
-	{ :multiple => true, :style => "width: 100%; height: 100%;" } %>
+	{ :multiple => true, :style => "width: 100%; height: 100%;", :onChange => "seriesSelected()" } %>
 </div>
 
-<canvas style="width: 75%; height: 100%; left: 25%; position: absolute;" id="graph"></canvas>
+<img style="width: 75%; height: 100%; left: 25%; position: absolute;" id="graph" />
 </div>
 
 

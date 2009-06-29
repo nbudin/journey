@@ -3,6 +3,20 @@ class Questions::SelectorField < Questions::Field
     return question_options.collect { |o| [ o.option, o.option ] }
   end
   
+  def is_numeric?
+    question_options.all? do |o|
+      o.effective_output_value =~ /^[+-]?\d*(\.[\d]+)?$/
+    end
+  end
+  
+  def min
+    question_options.collect { |o| o.to_f }.min.floor
+  end
+  
+  def max
+    question_options.collect { |o| o.to_f }.max.ceil
+  end
+  
   def xmlcontent(xml)
     super
     xml.question_options do

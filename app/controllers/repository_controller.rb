@@ -1,2 +1,0 @@
-class RepositoryController < ApplicationController
-end

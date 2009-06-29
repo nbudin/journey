@@ -24,6 +24,6 @@
             </div>
           </div>
 	<% end %>
-  <%= will_paginate @questionnaires %>
+  <%= will_paginate @questionnaires, :renderer => "RemoteLinkRenderer" %>
 </div>					
 

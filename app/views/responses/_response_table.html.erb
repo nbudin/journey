@@ -57,6 +57,7 @@
             </tr>
         <% end%>
     </table>
-    <%= will_paginate @responses %>
+    <%= will_paginate @responses, :renderer => "RemoteLinkRenderer", :remote => {
+		} %>
 <% end %>
   </div>

@@ -1,4 +1,5 @@
 class AnswerController < ApplicationController
+  before_filter :get_questionnaire
   before_filter :check_required_login, :only => [:start]
   
   def resume
@@ -211,8 +212,11 @@ class AnswerController < ApplicationController
   end
   
   private
-  def check_required_login
+  def get_questionnaire
     @questionnaire = Questionnaire.find params[:id]
+  end
+  
+  def check_required_login
     if @questionnaire.require_login and not logged_in?
       redirect_to :action => "prompt", :id => params[:id]
     end

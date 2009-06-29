@@ -33,3 +33,5 @@ Rails::Initializer.run do |config|
 #    import 'config/rack_cache_config'
 #  end
 end
+
+Mime::Type.register "image/png", :png

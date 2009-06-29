@@ -16,6 +16,7 @@
 <% if @count == 0 %>
 <p>No responses found.</p>
 <% else %>
+  <% form_tag({}, :method => "get", :id => "response_table_options") do %>
     <% header_fields = @questionnaire.special_field_associations.select { |sfa| sfa.purpose != 'name' }%>
     <table id="responsetable" style="width: 100%; border-collapse: collapse;">
         <tr>
@@ -59,5 +60,6 @@
     </table>
     <%= will_paginate @responses, :renderer => "RemoteLinkRenderer", :remote => {
 		} %>
+  <% end %>
 <% end %>
   </div>

@@ -53,6 +53,7 @@ module ResponsesHelper
       colspec = column.to_s
     end
     
-    select_tag("column_#{n}", column_selector_options(@questionnaire, colspec))
+    select_tag("column_#{n}", column_selector_options(@questionnaire, colspec),
+      :onChange => "$('response_table_options').submit();")
   end
 end

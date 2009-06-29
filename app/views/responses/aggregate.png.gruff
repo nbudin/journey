@@ -1,0 +1,31 @@
+<%
+graph = {'width' => 500, 
+         'title' => @question.caption, 
+         'data' => []
+         }
+
+if @question.kind_of? Questions::SelectorField
+  graph['type'] = "Pie"
+  @answercounts.each do |answer, count|
+    graph['data'].push({
+      'name' => answer,
+      'values' => [count]
+    })
+  end
+else
+  graph['type'] = "Line"
+  series = { 
+    "name" => @question.caption,
+    "values" => []
+  }
+  graph['labels'] = {}
+  i = 0
+  @answercounts.each do |answer, count|
+    graph['labels'][i] = answer
+    series['values'].push(count)
+    i += 1
+  end
+end
+%>
+
+<%= graph.to_yaml %>

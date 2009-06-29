@@ -1,0 +1,37 @@
+# GruffTemplate
+
+require 'gruff'
+
+class GruffTempPlugin
+  class Template
+    def initialize(view)
+      @view = view
+    end
+    
+    def render(template, locals)
+      yaml = @view.render_template('erb', template, nil, locals)
+      puts yaml
+      y = YAML.load(yaml)
+      puts y.inspect
+      if(y['bar_graph']) then
+        g_prop = y['bar_graph']
+        g = Gruff::Bar.new(g_prop['width'])
+        g_prop.delete('width')
+        g_prop.each { |k,v|
+          if(k == 'data') then
+            g.data(v['name'], v['values'], v['color'])
+          elsif(k == 'theme') then
+            g.send("theme_#{v}")
+          else
+            g.send(k+"=", v)
+          end
+        }
+        g.to_blob
+                  
+      end
+    end
+  end
+end
+
+
+          

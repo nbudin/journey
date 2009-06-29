@@ -219,26 +219,13 @@ class ResponsesController < ApplicationController
     end
   end
   
-  def aggregate
+  def aggregate  
     respond_to do |format|
       format.html do
         @fields = @questionnaire.fields.select { |f| not f.kind_of? Questions::FreeformField }
       end
       format.json do
-        @question = Question.find(params[:question_id])
-        @answercounts = {}
-        
-        @questionnaire.valid_responses.each do |resp|
-          ans = resp.answer_for_question(@question)
-          val = (ans ? ans.output_value : nil) || "No answer"
-          if val.length == 0
-            val = "No answer"
-          end
-          if not @answercounts.has_key? val
-            @answercounts[val] = 0
-          end
-          @answercounts[val] += 1
-        end
+        do_aggregation
         
         ret = {"title" => @question.caption, :type => @question.class.name, "data" => @answercounts}
         if @question.kind_of? Questions::RangeField
@@ -246,6 +233,10 @@ class ResponsesController < ApplicationController
           ret["max"] = @question.max
         end
         render :json => ret
+      end
+      format.png do
+        do_aggregation
+        render :layout => false
       end
     end
   end
@@ -280,5 +271,22 @@ class ResponsesController < ApplicationController
   
   def get_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => :valid_responses)
+  end
+  
+  def do_aggregation
+    @question = Question.find(params[:question_id])
+    @answercounts = {}
+    
+    @questionnaire.valid_responses.each do |resp|
+      ans = resp.answer_for_question(@question)
+      val = (ans ? ans.output_value : nil) || "No answer"
+      if val.length == 0
+        val = "No answer"
+      end
+      if not @answercounts.has_key? val
+        @answercounts[val] = 0
+      end
+      @answercounts[val] += 1
+    end
   end
 end

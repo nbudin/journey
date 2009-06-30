@@ -22,7 +22,6 @@
   <%= javascript_include_tag 'overlabel' %>
   <%= javascript_include_tag "layout" %>
   <%= include_tiny_mce_if_needed %>
-  <%= yield :javascript %>
   <% if @rss_url %>
     <link rel="alternate" title="RSS Feed" href="<%=@rss_url%>" type="application/rss+xml"/>
   <% end %>

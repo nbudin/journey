@@ -1,13 +1,7 @@
 require 'journey_questionnaire'
 
 # Methods added to this helper will be available to all templates in the application.
-module ApplicationHelper
-  def javascript(url)
-    content_for :javascript do
-      javascript_include_tag url
-    end
-  end
-  
+module ApplicationHelper  
   def dynamic_stylesheet_link_tag(action, *args)
     stylesheet_link_tag(url_for(:controller => 'stylesheets', :action => action, :format => 'css'), *args)
   end
@@ -18,10 +12,6 @@ module ApplicationHelper
     else
       str
     end
-  end
-
-  def create_form_dom_id(klass)
-    "#{dom_id(klass)}_create_form"
   end
   
   def question_class_template(klass)

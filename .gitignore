@@ -4,3 +4,4 @@ log/*
 vendor/plugins/journey_paywall
 db/schema.rb
 .loadpath
+.project

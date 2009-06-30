@@ -5,14 +5,14 @@
 <head>
   <title><%=h @questionnaire.title%><% if @page %> - Page <%= @page.number %> of <%= @questionnaire.pages.size %><% end %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <%= dynamic_stylesheet_link_tag 'questionnaire' %>
-  <%= dynamic_stylesheet_link_tag 'journey' %>
+  <%= stylesheet_link_tag 'questionnaire' %>
+  <%= stylesheet_link_tag 'journey' %>
   <!--[if IE 7]>
-    <%= dynamic_stylesheet_link_tag 'ie7hacks' %>
+    <%= stylesheet_link_tag 'ie7hacks' %>
   <![endif]-->
   <!--[if IE 6]>
-    <%= dynamic_stylesheet_link_tag 'ie7hacks' %>
-    <%= dynamic_stylesheet_link_tag 'ie6hacks' %>
+    <%= stylesheet_link_tag 'ie7hacks' %>
+    <%= stylesheet_link_tag 'ie6hacks' %>
   <![endif]-->
   <style type="text/css">
                 body {

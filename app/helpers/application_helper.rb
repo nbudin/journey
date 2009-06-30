@@ -2,10 +2,6 @@ require 'journey_questionnaire'
 
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper  
-  def dynamic_stylesheet_link_tag(action, *args)
-    stylesheet_link_tag(url_for(:controller => 'stylesheets', :action => action, :format => 'css'), *args)
-  end
-
   def ellipsize(str, len)
     if str.length > len
       str[0,len-3] + "..."

@@ -4,4 +4,6 @@
 class ApplicationController < ActionController::Base
   layout "global"
   helper :user_options
+  helper :question_answer
+  helper :tabstrip
 end

@@ -1,153 +1,64 @@
-== Welcome to Rails
+Journey: An online survey application
+Copyright (C) 2006-2009 Nat Budin
 
-Rails is a web-application and persistence framework that includes everything
-needed to create database-backed web-applications according to the
-Model-View-Control pattern of separation. This pattern splits the view (also
-called the presentation) into "dumb" templates that are primarily responsible
-for inserting pre-built data in between HTML tags. The model contains the
-"smart" domain objects (such as Account, Product, Person, Post) that holds all
-the business logic and knows how to persist themselves to a database. The
-controller handles the incoming requests (such as Save New Account, Update
-Product, Show Post) by manipulating the model and directing data to the view.
+WELCOME TO JOURNEY
 
-In Rails, the model is handled by what's called an object-relational mapping
-layer entitled Active Record. This layer allows you to present the data from
-database rows as objects and embellish these data objects with business logic
-methods. You can read more about Active Record in 
-link:files/vendor/rails/activerecord/README.html.
+Journey is an online survey application.  It provides an AJAX-based
+graphical interface for creating surveys, and lets people respond to
+them via the web.  Journey also provides tools for analyzing the
+responses to your surveys.
 
-The controller and view are handled by the Action Pack, which handles both
-layers by its two parts: Action View and Action Controller. These two layers
-are bundled in a single package due to their heavy interdependence. This is
-unlike the relationship between the Active Record and Action Pack that is much
-more separate. Each of these packages can be used independently outside of
-Rails.  You can read more about Action Pack in 
-link:files/vendor/rails/actionpack/README.html.
+INSTALLATION
 
+Journey is a Ruby on Rails application, and uses standard Rails
+deployment techniques.  We have tested Journey using a MySQL database
+backend; theoretically, it should work with other databases, but this
+is not officially supported.
 
-== Getting started
+Briefly, the procedure for deploying Journey is:
 
-1. Run the WEBrick servlet: <tt>ruby script/server</tt> (run with --help for options)
-   ...or if you have lighttpd installed: <tt>ruby script/lighttpd</tt> (it's faster)
-2. Go to http://localhost:3000/ and get "Congratulations, you've put Ruby on Rails!"
-3. Follow the guidelines on the "Congratulations, you've put Ruby on Rails!" screen
+1) Make sure you have the gems installed that Journey needs.  To do
+   this, simply run "rake gems:install" as root, and Rails will find
+   and install the gems it needs.
 
+2) Write a config/database.yml file.  You'll need to configure at
+   least a development or production database (depending on the type
+   of environment you're deploying to), and you'll also need to
+   specify a "users" database.  This can be the same as your main
+   Journey database, or a different one.  If you want to share users
+   and roles between different ae_users-based applications, you'll
+   probably want to use a separate database.
 
-== Example for Apache conf
+3) Run "rake db:migrate" to create the Journey tables.
 
-  <VirtualHost *:80>
-    ServerName rails
-    DocumentRoot /path/application/public/
-    ErrorLog /path/application/log/server.log
-  
-    <Directory /path/application/public/>
-      Options ExecCGI FollowSymLinks
-      AllowOverride all
-      Allow from all
-      Order allow,deny
-    </Directory>
-  </VirtualHost>
+4) Create the database tables needed by the ae_users plugin.  (See
+   the plugin docs for details.)
+   
+5) Start the Journey application server.  Go to the front page using
+   a web browser and verify that it works.
 
-NOTE: Be sure that CGIs can be executed in that directory as well. So ExecCGI
-should be on and ".cgi" should respond. All requests from 127.0.0.1 go
-through CGI, so no Apache restart is necessary for changes. All other requests
-go through FCGI (or mod_ruby), which requires a restart to show changes.
+6) Sign up for an initial user account.  (Click the "Sign up" link
+   in the upper right corner.)
 
+7) Shut down Journey temporarily, and give yourself universal admin
+   privileges in the database.  To do this, insert a row into the
+   "permissions" table.  All you need to fill in is the "person_id"
+   column using the ID from the ae_users "people" table - leave all
+   the other columns as NULL.
 
-== Debugging Rails
+8) Start up Journey again.  You should now be an administrator.
 
-Have "tail -f" commands running on both the server.log, production.log, and
-test.log files. Rails will automatically display debugging and runtime
-information to these files. Debugging info will also be shown in the browser
-on requests from 127.0.0.1.
+LICENSING
 
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-== Breakpoints
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-Breakpoint support is available through the script/breakpointer client. This
-means that you can break out of execution at any point in the code, investigate
-and change the model, AND then resume execution! Example:
-
-  class WeblogController < ActionController::Base
-    def index
-      @posts = Post.find_all
-      breakpoint "Breaking out from the list"
-    end
-  end
-  
-So the controller will accept the action, run the first line, then present you
-with a IRB prompt in the breakpointer window. Here you can do things like:
-
-Executing breakpoint "Breaking out from the list" at .../webrick_server.rb:16 in 'breakpoint'
-
-  >> @posts.inspect
-  => "[#<Post:0x14a6be8 @attributes={\"title\"=>nil, \"body\"=>nil, \"id\"=>\"1\"}>, 
-       #<Post:0x14a6620 @attributes={\"title\"=>\"Rails you know!\", \"body\"=>\"Only ten..\", \"id\"=>\"2\"}>]"
-  >> @posts.first.title = "hello from a breakpoint"
-  => "hello from a breakpoint"
-
-...and even better is that you can examine how your runtime objects actually work:
-
-  >> f = @posts.first 
-  => #<Post:0x13630c4 @attributes={"title"=>nil, "body"=>nil, "id"=>"1"}>
-  >> f.
-  Display all 152 possibilities? (y or n)
-
-Finally, when you're ready to resume execution, you press CTRL-D
-
-
-== Console
-
-You can interact with the domain model by starting the console through script/console. 
-Here you'll have all parts of the application configured, just like it is when the
-application is running. You can inspect domain models, change values, and save to the
-database. Starting the script without arguments will launch it in the development environment.
-Passing an argument will specify a different environment, like <tt>console production</tt>.
-
-
-== Description of contents
-
-app
-  Holds all the code that's specific to this particular application.
-
-app/controllers
-  Holds controllers that should be named like weblog_controller.rb for
-  automated URL mapping. All controllers should descend from
-  ActionController::Base.
-
-app/models
-  Holds models that should be named like post.rb.
-  Most models will descend from ActiveRecord::Base.
-  
-app/views
-  Holds the template files for the view that should be named like
-  weblog/index.rhtml for the WeblogController#index action. All views use eRuby
-  syntax. This directory can also be used to keep stylesheets, images, and so on
-  that can be symlinked to public.
-  
-app/helpers
-  Holds view helpers that should be named like weblog_helper.rb.
-
-config
-  Configuration files for the Rails environment, the routing map, the database, and other dependencies.
-
-components
-  Self-contained mini-applications that can bundle together controllers, models, and views.
-
-lib
-  Application specific libraries. Basically, any kind of custom code that doesn't
-  belong under controllers, models, or helpers. This directory is in the load path.
-    
-public
-  The directory available for the web server. Contains subdirectories for images, stylesheets,
-  and javascripts. Also contains the dispatchers and the default HTML files.
-
-script
-  Helper scripts for automation and generation.
-
-test
-  Unit and functional tests along with fixtures.
-
-vendor
-  External libraries that the application depends on. Also includes the plugins subdirectory.
-  This directory is in the load path.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

@@ -131,10 +131,6 @@ module ApplicationHelper
     end
   end
   
-  def user_options
-    render :partial => "layouts/user_options"
-  end
-  
   def question_cycle(question)
     if question.kind_of? Questions::Divider
       reset_cycle("questions")

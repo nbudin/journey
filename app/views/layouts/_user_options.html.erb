@@ -1,9 +1,0 @@
-<ul class="user_options">
-  <% if logged_in? -%>
-    <li><%= link_to "Profile", :controller => "account", :action => "edit_profile" %></li>
-    <li><%= link_to "Log out", :controller => "auth", :action => "logout" %></li>
-  <% else -%>
-    <li><%= link_to "Log in", :controller => "auth", :action => "login" %></li>
-    <li><%= link_to "Sign up", :controller => "account", :action => "signup" %></li>
-  <% end -%>
-</ul>

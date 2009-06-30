@@ -3,4 +3,5 @@
 
 class ApplicationController < ActionController::Base
   layout "global"
+  helper :user_options
 end

@@ -57,6 +57,50 @@ module ResponsesHelper
       :onChange => "$('response_table_options').submit();")
   end
   
+  def field_selector(id, fields, multiple=false)
+    cur_page = nil
+    submit_button = content_tag(:p, button_to_function("Graph &gt;&gt;", "seriesSelected('#{escape_javascript id}')"))
+    content_tag(:form, :class => "field_selector", :id => id) do
+      selector_html = content_tag(:h3, "Choose questions")
+      
+      if multiple
+        selector_html << content_tag(:p, "Which questions would you like to graph the answers to?  Choose as many as you want from the
+                                          list below, then press the \"graph\" button.")
+      else
+        selector_html << content_tag(:p, "Which question would you like to graph the answers to?  Choose from the list below, then
+                                          press the \"graph\" button.")
+      end
+      
+      selector_html << submit_button
+      
+      selector_html << fields.collect do |field|
+        html = ""
+                  
+        if field.page != cur_page
+          html << content_tag(:h4, h(field.page.title))
+          cur_page = field.page
+        end
+        
+        html << content_tag(:p, :style => "margin: 0;") do
+          field_html = ""
+          field_id = "#{id}_#{field.id}"
+          
+          if multiple
+            field_html << check_box_tag(id, field.id, false, :id => field_id)
+          else
+            field_html << radio_button_tag(id, field.id, false, :id => field_id)
+          end
+          
+          field_html << content_tag(:label, :for => field_id) do
+            h(field.caption)
+          end
+        end
+      end.join("\n")
+      
+      selector_html << submit_button
+    end
+  end
+  
   def set_journey_theme(graph)
     graph.theme = {
       :colors => %w{#bad032 #5ba5ff #ff7474 #00d686 #8d0081 #ff9500 #512f00},

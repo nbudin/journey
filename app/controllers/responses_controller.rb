@@ -223,6 +223,8 @@ class ResponsesController < ApplicationController
     respond_to do |format|
       format.html do
         @fields = @questionnaire.fields.select { |f| not f.kind_of? Questions::FreeformField }
+        @numeric_fields = @fields.select { |f| f.is_numeric? }
+        @nonnumeric_fields = @fields.select { |f| not f.is_numeric? }
       end
       format.json do
         do_aggregation

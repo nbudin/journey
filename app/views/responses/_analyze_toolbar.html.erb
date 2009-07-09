@@ -4,7 +4,7 @@
 
 <ul class="tabstrip2">
 	<%= tabstrip_li "Responses", responses_path(@questionnaire), :level => 2, :action => 'index' %>
-	<%= tabstrip_li "Questions", responses_path(@questionnaire) + '/aggregate', :level => 2, :action => 'aggregate' %>
+	<%= tabstrip_li "Graphs", responses_path(@questionnaire) + '/aggregate', :level => 2, :action => 'aggregate' %>
 	<%= tabstrip_li "Export/Print", responses_path(@questionnaire) + '/export', :level => 2, :action => 'export' %>
 </ul>
 

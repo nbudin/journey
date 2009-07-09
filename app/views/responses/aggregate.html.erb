@@ -1,20 +1,45 @@
 <%= render :partial => "analyze_toolbar" %>
 
 <script type="text/javascript">
-	function seriesSelected() {
+	function seriesSelected(id) {
 		graph = $('graph');
-		seriesId = $('fields').value;
-		url = "<%= aggregate_responses_url(@questionnaire, :format => :png) %>";
-		url += "?question_id=" + seriesId;
+		series = $(id).serialize(true)[id];
+
+		url = "<%= aggregate_responses_url(@questionnaire) %>/";
+		if (series.each) {
+			// it's an array
+			url += "line.png?"
+			series.each(function (question_id) {
+				url += "&question_ids[]=" + question_id;
+			});
+		} else {
+			url += "pie.png?question_id=" + series;
+		}
 		url += "&geom=" + graph.offsetWidth + "x" + graph.offsetHeight;
 		graph.src = url;
 	}
 </script>
 
 <div id="aggregate_container" style="position: relative; width: 100%; height: 600px;">
-	<div style="width: 25%; height: 100%; position: absolute;">
-		<%= select_tag "fields", options_for_select(@fields.collect { |f| [ f.caption, f.id ] }), 
-			{ :multiple => true, :style => "width: 100%; height: 100%;", :onChange => "seriesSelected()" } %>
+	<div style="width: 25%; height: 100%; position: absolute;" id="toolbox">
+		<ul class="tabstrip alwaysopen">
+			<li id="numeric_tab"><%= link_to_function "Numeric", "selectTab('numeric');" %></li>
+			<li id="nonnumeric_tab"><%= link_to_function "Non-numeric", "selectTab('nonnumeric');" %></li>
+		</ul>
+		<div id="numeric" style="display: none; overflow: auto; max-height: 550px; padding-top: 0;" class="tabpage">
+			<%= field_selector "numeric_fields", @numeric_fields, true %>
+		</div>
+		<div id="nonnumeric" style="display: none; overflow: auto; max-height: 550px; padding-top: 0;" class="tabpage">
+			<%= field_selector "nonnumeric_fields", @nonnumeric_fields, false %>
+		</div>
+	</div>
+
+	<div style="width: 70%; left: 25%; z-index: -1; position: absolute; padding: 1em;" id="instructions">
+		<h3>Question graphs</h3>
+		
+		<p>Using this page, you can view graphs of the frequency of each possible answer to the questions
+		in your survey.  The graphs will look different depending on whether the question has numeric
+		answers or not.</p>
 	</div>
 
 	<img style="width: 75%; height: 100%; left: 25%; position: absolute;" id="graph" />

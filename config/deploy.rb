@@ -27,6 +27,7 @@ namespace :deploy do
   task :after_update_code do
     run "rm -f #{release_path}/config/database.yml"
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/newrelic.yml #{release_path}/config/newrelic.yml"
     imagesdir = "#{deploy_to}/#{shared_dir}/public/images"
     run "for f in #{imagesdir}/*; do ln -nfs $f #{release_path}/public/images/; done"
   end

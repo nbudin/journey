@@ -12,12 +12,12 @@
 </script>
 
 <div id="aggregate_container" style="position: relative; width: 100%; height: 600px;">
-<div style="width: 25%; height: 100%; position: absolute;">
-<%= select_tag "fields", options_for_select(@fields.collect { |f| [ f.caption, f.id ] }), 
-	{ :multiple => true, :style => "width: 100%; height: 100%;", :onChange => "seriesSelected()" } %>
-</div>
+	<div style="width: 25%; height: 100%; position: absolute;">
+		<%= select_tag "fields", options_for_select(@fields.collect { |f| [ f.caption, f.id ] }), 
+			{ :multiple => true, :style => "width: 100%; height: 100%;", :onChange => "seriesSelected()" } %>
+	</div>
 
-<img style="width: 75%; height: 100%; left: 25%; position: absolute;" id="graph" />
+	<img style="width: 75%; height: 100%; left: 25%; position: absolute;" id="graph" />
 </div>
 
 

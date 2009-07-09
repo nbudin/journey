@@ -30,6 +30,11 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/newrelic.yml #{release_path}/config/newrelic.yml"
     imagesdir = "#{deploy_to}/#{shared_dir}/public/images"
     run "for f in #{imagesdir}/*; do ln -nfs $f #{release_path}/public/images/; done"
+    
+    # install the paywall
+    run "cd #{current_release} && script/plugin install git+ssh://git@git.sugarpond.net/journey_paywall.git"
+    rails_env = fetch(:rails_env, "production")
+    run "cd #{current_release} && rake journey_paywall:migrate RAILS_ENV=#{rails_env}"
   end
 end
 

@@ -3,7 +3,7 @@
 
 <html>
 <head>
-  <title>Questionnaire: <%= controller.action_name %></title>
+  <title><%=h @questionnaire.title %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <%= stylesheet_link_tag 'questionnaire', :media => "all" %>
   <%= stylesheet_link_tag 'journey', :media => "all" %>

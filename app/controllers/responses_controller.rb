@@ -6,6 +6,7 @@ class ResponsesController < ApplicationController
   require_permission "edit_answers", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
   
   before_filter :get_questionnaire
+  before_filter :set_page_title
   
   # GET /responses
   # GET /responses.xml
@@ -220,6 +221,7 @@ class ResponsesController < ApplicationController
   end
   
   def aggregate  
+    @page_title = "Response graphs"
     @fields = @questionnaire.fields.select { |f| not f.kind_of? Questions::FreeformField }
     @numeric_fields = @fields.select { |f| f.is_numeric? }
     @nonnumeric_fields = @fields.select { |f| not f.is_numeric? }
@@ -251,6 +253,10 @@ class ResponsesController < ApplicationController
       # this won't work in excel but might work other places
       render :text => output.string
     end
+  end
+  
+  def set_page_title
+    @page_title = "Responses"
   end
   
   def get_questionnaire

@@ -1,36 +1,46 @@
 <%= render :partial => "analyze_toolbar" %>
 
 <script type="text/javascript">
-	function seriesSelected(id) {
-		graph = $('graph');
-		series = $(id).serialize(true)[id];
+function seriesSelected(id) {
+	graph = $('graph');
+	series = $(id).serialize(true)[id];
 
-		url = "<%= aggregate_responses_url(@questionnaire) %>/";
-		if (series.each) {
-			// it's an array
-			url += "line.png?"
-			series.each(function (question_id) {
-				url += "&question_ids[]=" + question_id;
-			});
-		} else {
-			url += "pie.png?question_id=" + series;
-		}
-		url += "&geom=" + graph.offsetWidth + "x" + graph.offsetHeight;
-		graph.src = url;
+	url = "<%= response_graphs_url(@questionnaire) %>/";
+	if (series.each) {
+		// it's an array
+		url += "line.png?"
+		series.each(function (question_id) {
+			url += "&question_ids[]=" + question_id;
+		});
+	} else {
+		url += "pie.png?question_id=" + series;
 	}
+	url += "&geom=" + graph.offsetWidth + "x" + graph.offsetHeight;
+	graph.src = url;
+}
+	
+Event.observe(window, 'load', function() { selectTab('numeric'); });
 </script>
 
 <div id="aggregate_container" style="position: relative; width: 100%; height: 600px;">
 	<div style="width: 25%; height: 100%; position: absolute;" id="toolbox">
 		<ul class="tabstrip alwaysopen">
 			<li id="numeric_tab"><%= link_to_function "Numeric", "selectTab('numeric');" %></li>
-			<li id="nonnumeric_tab"><%= link_to_function "Non-numeric", "selectTab('nonnumeric');" %></li>
+			<li id="nonnumeric_tab"><%= link_to_function "Multiple choice", "selectTab('nonnumeric');" %></li>
 		</ul>
 		<div id="numeric" style="display: none; overflow: auto; max-height: 550px; padding-top: 0;" class="tabpage">
-			<%= field_selector "numeric_fields", @numeric_fields, true %>
+			<% if @numeric_fields.size > 0 -%>
+				<%= field_selector "numeric_fields", @numeric_fields, true %>
+			<% else -%>
+				<p>This survey has no numeric questions.</p>
+			<% end -%>
 		</div>
 		<div id="nonnumeric" style="display: none; overflow: auto; max-height: 550px; padding-top: 0;" class="tabpage">
-			<%= field_selector "nonnumeric_fields", @nonnumeric_fields, false %>
+			<% if @nonnumeric_fields.size > 0 -%>
+				<%= field_selector "nonnumeric_fields", @nonnumeric_fields, false %>
+			<% else -%>
+				<p>This survey has no multiple choice questions.</p>
+			<% end -%>
 		</div>
 	</div>
 
@@ -38,8 +48,9 @@
 		<h3>Question graphs</h3>
 		
 		<p>Using this page, you can view graphs of the frequency of each possible answer to the questions
-		in your survey.  The graphs will look different depending on whether the question has numeric
-		answers or not.</p>
+		in your survey.  Questions with numeric answers can be represented as a line graph, possibly
+		including multiple questions on a single graph.  Multiple-choice questions can be represented as a
+		pie graph.</p>
 	</div>
 
 	<img style="width: 75%; height: 100%; left: 25%; position: absolute;" id="graph" />

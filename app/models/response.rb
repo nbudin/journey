@@ -3,6 +3,10 @@ class Response < ActiveRecord::Base
   validates_associated :questionnaire
   has_many :answers, :dependent => :destroy, :include => {:question => :question_options}
   belongs_to :person
+  named_scope :valid, :conditions => "responses.id in (select response_id from answers)"
+  named_scope :no_answer_for, lambda { |question|
+        { :conditions => ["responses.id not in (select response_id from answers where question_id = ?)", question.id] }
+  }
   
   def self.per_page
     20

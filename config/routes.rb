@@ -24,6 +24,9 @@ ActionController::Routing::Routes.draw do |map|
 
   # Add your own custom routes here.
   # The priority is based upon order of creation: first created -> highest priority.
+  map.response_graphs '/questionnaires/:questionnaire_id/responses/graphs/', :controller => "graphs"
+  map.response_graph '/questionnaires/:questionnaire_id/responses/graphs/:action.:format', :controller => "graphs"
+
 
   # Here's a sample route:
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'

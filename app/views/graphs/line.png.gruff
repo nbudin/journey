@@ -1,0 +1,21 @@
+@graph = Gruff::Line.new(@geom)
+  
+i = 0
+labels = {}
+series = {}
+@min.upto(@max) do |answer|
+  labels[i] = answer.to_s
+  @questions.each do |question|
+    series[question] ||= []
+    series[question].push(@counts[question][answer.to_s] || 0)
+  end
+  i += 1
+end
+
+@graph.labels = labels
+series.each do |question, values|
+  @graph.data(question.caption, values)
+end
+
+@graph.title = "Answer frequency"
+set_journey_theme(@graph)

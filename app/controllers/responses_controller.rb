@@ -220,28 +220,9 @@ class ResponsesController < ApplicationController
   end
   
   def aggregate  
-    respond_to do |format|
-      format.html do
-        @fields = @questionnaire.fields.select { |f| not f.kind_of? Questions::FreeformField }
-        @numeric_fields = @fields.select { |f| f.is_numeric? }
-        @nonnumeric_fields = @fields.select { |f| not f.is_numeric? }
-      end
-      format.json do
-        do_aggregation
-        
-        ret = {"title" => @question.caption, :type => @question.class.name, "data" => @answercounts}
-        if @question.kind_of? Questions::RangeField
-          ret["min"] = @question.min
-          ret["max"] = @question.max
-        end
-        render :json => ret
-      end
-      format.png do
-        do_aggregation
-        @geom = params[:geom] || "640x480"
-        render :layout => false
-      end
-    end
+    @fields = @questionnaire.fields.select { |f| not f.kind_of? Questions::FreeformField }
+    @numeric_fields = @fields.select { |f| f.is_numeric? }
+    @nonnumeric_fields = @fields.select { |f| not f.is_numeric? }
   end
   
   def export
@@ -273,23 +254,6 @@ class ResponsesController < ApplicationController
   end
   
   def get_questionnaire
-    @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => :valid_responses)
-  end
-  
-  def do_aggregation
-    @question = @questionnaire.questions.find(params[:question_id], :include => :question_options)
-    @answercounts = {}
-    
-    @questionnaire.valid_responses.each do |resp|
-      ans = resp.answer_for_question(@question)
-      val = (ans ? ans.output_value : nil) || "No answer"
-      if val.length == 0
-        val = "No answer"
-      end
-      if not @answercounts.has_key? val
-        @answercounts[val] = 0
-      end
-      @answercounts[val] += 1
-    end
+    @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => [:valid_responses, :pages])
   end
 end

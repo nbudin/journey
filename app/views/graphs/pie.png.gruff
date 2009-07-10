@@ -1,0 +1,8 @@
+@graph = Gruff::Pie.new(@geom)
+  
+@answercounts.each do |answer, count|
+  @graph.data(answer, [count])
+end
+
+@graph.title = truncate(@question.caption)
+set_journey_theme(@graph)

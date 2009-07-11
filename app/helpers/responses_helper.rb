@@ -77,7 +77,7 @@ module ResponsesHelper
         html = ""
                   
         if field.page != cur_page
-          html << content_tag(:h4, h(field.page.title))
+          html << content_tag(:h4, sanitize(field.page.title))
           cur_page = field.page
         end
         
@@ -92,7 +92,7 @@ module ResponsesHelper
           end
           
           field_html << content_tag(:label, :for => field_id) do
-            h(field.caption)
+            sanitize(field.caption)
           end
         end
       end.join("\n")

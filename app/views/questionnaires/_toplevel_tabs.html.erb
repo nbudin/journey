@@ -2,7 +2,7 @@
 	<%= tabstrip_li "Survey", @questionnaire, :controller => 'questionnaires', :except => ['publish'] %>
 	<% if logged_in? and logged_in_person.permitted?(@questionnaire, "edit") -%>
 	   <%= tabstrip_li "Publish", questionnaire_path(@questionnaire) + '/publish', 
-                        :controller => 'questionnaire', :only => ['publish'] %>
+                        :controller => 'questionnaires', :only => ['publish'] %>
 	<% end -%>
 	<% if logged_in? and logged_in_person.permitted?(@questionnaire, "view_responses") -%>
 	   <%= tabstrip_li "Responses", responses_path(@questionnaire), :controller => 'responses' %>

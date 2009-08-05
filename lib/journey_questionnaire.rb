@@ -41,4 +41,25 @@ module Journey
       @@logged_in_options.dup
     end
   end
+  
+  module SiteOptions
+    @@site_root_if_logged_out = { :controller => "questionnaires", :action => "index" }
+    @@site_root_if_logged_in = { :controller => "questionnaires", :action => "index" }
+    
+    def self.site_root(logged_in)
+      if logged_in
+        @@site_root_if_logged_in
+      else
+        @@site_root_if_logged_out
+      end
+    end
+
+    def self.site_root_if_logged_in=(sr)
+      @@site_root_if_logged_out = sr
+    end
+    
+    def self.site_root_if_logged_out=(sr)
+      @@site_root_if_logged_out = sr
+    end
+  end
 end

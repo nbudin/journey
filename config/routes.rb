@@ -32,7 +32,7 @@ ActionController::Routing::Routes.draw do |map|
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
 
-  map.root :controller => "questionnaires", :action => "index"
+  map.root :controller => "root", :action => "index"
 
   # Allow downloading Web Service WSDL as a file with an extension
   # instead of a file named 'wsdl'

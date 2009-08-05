@@ -10,11 +10,21 @@ class Questions::SelectorField < Questions::Field
   end
   
   def min
-    question_options.collect { |o| o.to_f }.min.floor
+    m = question_options.collect { |o| o.to_f }.min
+    if m
+      m.floor
+    else
+      nil
+    end
   end
   
   def max
-    question_options.collect { |o| o.to_f }.max.ceil
+    m = question_options.collect { |o| o.to_f }.max
+    if m
+      m.ceil
+    else
+      nil
+    end
   end
   
   def xmlcontent(xml)

@@ -80,5 +80,11 @@
 
 <%= @content_for_layout %>
 
+<% if Journey::SiteOptions.footer_partial -%>
+	<div id="footer">
+		<%= render :partial => Journey::SiteOptions.footer_partial %>
+	</div>
+<% end -%>
+
 </body>
 </html>

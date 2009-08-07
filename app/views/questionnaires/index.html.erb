@@ -3,11 +3,9 @@
 <%= javascript_include_tag "layout.js" %>
 
 <% if logged_in? -%>
-  <% link_to new_questionnaire_path, :class => "bigbutton" do -%>
+  <% link_to new_questionnaire_path, :class => "bigbutton", :style => "text-align: center;" do -%>
     Create a new survey, or import one from an XML file &#187;
-    <% Questionnaire.creator_warnings(logged_in_person).each do |warning| -%>
-	  <p style="font-style: italic;"><%=h warning%></p>
-	<% end -%> 
+	<%= render :partial => 'creator_warnings' %> 
   <% end -%>
 <% end -%>
 

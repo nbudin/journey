@@ -4,6 +4,7 @@
 	<h2>Create a new survey</h2>
 		<% form_for(:questionnaire, @questionnaire, :url => questionnaires_path) do |f| %>
 		  <p><label for="questionnaire_title">Title:</label> <%= f.text_field "title" %></p>
+		  <%= render :partial => 'creator_warnings' %> 
 		  <%= submit_tag "Create" %>
 		<% end %>
 	</h2>
@@ -16,6 +17,7 @@
 		  <label for="file">XML file to import:</label>
 		  <input type="file" name="file" />
       </p>
+	  <%= render :partial => 'creator_warnings' %> 
 	  <%= submit_tag "Import" %>
 	<% end %>
 </div>

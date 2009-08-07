@@ -5,7 +5,8 @@
                         :controller => 'questionnaires', :only => ['publish'] %>
 	<% end -%>
 	<% if logged_in? and logged_in_person.permitted?(@questionnaire, "view_answers") -%>
-	   <%= tabstrip_li "Responses", responses_path(@questionnaire), :controller => 'responses' %>
+	   <%= tabstrip_li "Responses (#{@questionnaire.valid_responses.size})", 
+		   responses_path(@questionnaire), :controller => 'responses' %>
 	<% end -%>
 	<%= tabstrip_li "Answer", { :controller => "answer", :action => "index", :id => @questionnaire.id },
                     :class => "external", :disabled => (not @questionnaire.is_open) %>

@@ -10,7 +10,6 @@ role :web, "sakai.natbudin.com"
 role :app, "sakai.natbudin.com"
 role :db,  "sakai.natbudin.com", :primary => true
 
-set :checkout, "export"
 set :user, "www-data"
 set :scm, :git
 set :use_sudo, false

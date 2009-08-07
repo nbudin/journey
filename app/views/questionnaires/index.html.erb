@@ -2,7 +2,14 @@
 
 <%= javascript_include_tag "layout.js" %>
 
-<%= link_to "Create a new survey, or import one from an XML file &#187;", new_questionnaire_path, :class => "bigbutton" %>
+<% if logged_in? -%>
+  <% link_to new_questionnaire_path, :class => "bigbutton" do -%>
+    Create a new survey, or import one from an XML file &#187;
+    <% Questionnaire.creator_warnings(logged_in_person).each do |warning| -%>
+	  <p style="font-style: italic;"><%=h warning%></p>
+	<% end -%> 
+  <% end -%>
+<% end -%>
 
 <div id="filter_params" style="border-top: 1px black solid; background-color: #FFE5C0;">
   <% form_tag({}, {:method => "get", :class => "filterbar"}) do  %>

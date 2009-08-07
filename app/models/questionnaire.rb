@@ -35,6 +35,17 @@ class Questionnaire < ActiveRecord::Base
       Questions::TextField
     end
   end
+  
+  @@creator_warning_hooks = []
+  def Questionnaire.creator_warnings(person)
+    @@creator_warning_hooks.collect do |hook|
+      hook.call(person)
+    end.compact
+  end
+  
+  def Questionnaire.add_creator_warning_hook(hook)
+    @@creator_warning_hooks.push(hook)
+  end
 
   def used_special_field_purposes
     special_field_associations.collect { |sfa| sfa.purpose }

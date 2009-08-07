@@ -13,7 +13,7 @@ module UserOptionsHelper
   end
   
   def render_option(option)
-    if option.conditional.nil? or option.conditional()
+    if option.conditional.nil? or option.eval_conditional(self)
       content_tag(:li) do
         link_to option.caption, option.url
       end

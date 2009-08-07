@@ -23,6 +23,10 @@ module Journey
         @url = url
         @conditional = options[:conditional]
       end
+      
+      def eval_conditional(context)
+        conditional.call(context)
+      end
     end
     
     def self.add_logged_out_option(caption, url, options = {})

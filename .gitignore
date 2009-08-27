@@ -1,5 +1,6 @@
 config/database.yml
 config/scout.yml
+config/journey_paywall.yml
 log/*
 vendor/plugins/journey_paywall
 vendor/plugins/journey_sugarpond_branding

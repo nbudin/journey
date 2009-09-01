@@ -1,4 +1,4 @@
-require 'sha1'
+require 'digest'
 require 'rexml/document'
 require 'journey_questionnaire'
 
@@ -58,7 +58,7 @@ class Questionnaire < ActiveRecord::Base
 
   def rss_secret
     if read_attribute(:rss_secret).nil?
-      self.rss_secret = SHA1.sha1("#{self.id}_#{Time.now.to_s}").to_s[0..5]
+      self.rss_secret = Digest::SHA1.hexdigest("#{self.id}_#{Time.now.to_s}")[0..5]
       self.save
     end
     read_attribute(:rss_secret)

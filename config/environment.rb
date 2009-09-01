@@ -24,7 +24,7 @@ Rails::Initializer.run do |config|
   config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
   config.gem 'rmagick', :lib => 'RMagick'
-  config.gem 'topfunky-gruff', :lib => 'gruff', :source => 'http://gems.github.com'
+  config.gem 'umang-gruff', :lib => 'gruff', :source => 'http://gems.github.com', :version => '~> 0.3.6'
   
   config.action_view.sanitized_allowed_attributes = ['id', 'class', 'style']
 

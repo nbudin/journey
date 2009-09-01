@@ -1,4 +1,4 @@
-require 'fastercsv'
+require 'csv'
 require 'iconv'
 
 class ResponsesController < ApplicationController
@@ -244,7 +244,7 @@ class ResponsesController < ApplicationController
     headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
     
     output = StringIO.new
-    csv = FasterCSV.new(output, :row_sep => "\r\n")
+    csv = CSV.new(output, :row_sep => "\r\n")
     yield csv
     begin
       c = Iconv.new('ISO-8859-15', 'UTF-8')

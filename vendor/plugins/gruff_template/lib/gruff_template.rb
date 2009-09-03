@@ -1,7 +1,5 @@
 # GruffTemplate
 
-require 'gruff'
-
 class GruffTempPlugin
   class Template < ActionView::TemplateHandler 
     include ActionView::TemplateHandlers::Compilable

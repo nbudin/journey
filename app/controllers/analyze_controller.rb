@@ -1,5 +1,4 @@
 require 'journey_questionnaire'
-require 'fastercsv'
 require 'iconv'
 
 class AnalyzeController < ApplicationController

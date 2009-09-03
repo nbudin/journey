@@ -10,7 +10,7 @@ class Questions::SelectorField < Questions::Field
   end
   
   def min
-    m = question_options.collect { |o| o.to_f }.min
+    m = question_options.collect { |o| o.option && o.option.to_f }.compact.min
     if m
       m.floor
     else
@@ -19,7 +19,7 @@ class Questions::SelectorField < Questions::Field
   end
   
   def max
-    m = question_options.collect { |o| o.to_f }.max
+    m = question_options.collect { |o| o.option && o.option.to_f }.compact.max
     if m
       m.ceil
     else

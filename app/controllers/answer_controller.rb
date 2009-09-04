@@ -32,9 +32,10 @@ class AnswerController < ApplicationController
   def prompt
     @questionnaire = Questionnaire.find(params[:id])
     
-    @all_responses = @questionnaire.responses.find_all_by_person_id(logged_in_person.id)
+    @all_responses = []
     @responses = []
     if logged_in?
+      @all_responses = @questionnaire.responses.find_all_by_person_id(logged_in_person.id)
       if @questionnaire.allow_finish_later
         @responses += @all_responses.select { |resp| not resp.submitted }
       end

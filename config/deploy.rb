@@ -6,9 +6,9 @@ set :default_stage, "trunk"
 set :application, "journey"
 set :repository, "git://github.com/nbudin/journey.git"
 
-role :web, "sakai.natbudin.com"
-role :app, "sakai.natbudin.com"
-role :db,  "sakai.natbudin.com", :primary => true
+role :web, "ishinabe.natbudin.com"
+role :app, "ishinabe.natbudin.com"
+role :db,  "ishinabe.natbudin.com", :primary => true
 
 set :user, "www-data"
 set :scm, :git

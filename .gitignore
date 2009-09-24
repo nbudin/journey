@@ -7,3 +7,4 @@ vendor/plugins/journey_sugarpond_branding
 db/schema.rb
 .loadpath
 .project
+*.kpf

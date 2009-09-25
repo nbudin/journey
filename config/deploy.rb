@@ -33,7 +33,7 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/newrelic.yml #{release_path}/config/newrelic.yml"
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/journey_paywall.yml #{release_path}/config/journey_paywall.yml"
     run "rm -r #{release_path}/config/environments && mkdir #{release_path}/config/environments"
-    run "for f in #{release_path}/config/environments/*; do ln -nfs $f #{release_path}/config/environments; done"
+    run "for f in #{deploy_to}/#{shared_dir}/config/environments/*; do ln -nfs $f #{release_path}/config/environments; done"
     imagesdir = "#{deploy_to}/#{shared_dir}/public/images"
     run "for f in #{imagesdir}/*; do ln -nfs $f #{release_path}/public/images/; done"
     

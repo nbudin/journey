@@ -8,6 +8,7 @@ require 'iconv'
 
 class ResponsesController < ApplicationController
   perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
+  require_permission "view_answers", perm_options
   require_permission "edit_answers", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
   
   before_filter :get_questionnaire

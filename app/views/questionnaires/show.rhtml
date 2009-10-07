@@ -39,7 +39,6 @@
     <h3>Welcome page</h3>
     
     
-    
     <% if @editing -%>
   	  <p>The welcome page is the first thing your visitors will see before starting your survey.  You can put any introductory
       text you'd like on the welcome page.</p>
@@ -60,6 +59,19 @@
     <% if @editing -%>
       <p><%= submit_tag "Save changes" %></p>
     <% end -%>
+	
+	<% if logged_in? and logged_in_person.permitted?(@questionnaire, "destroy") -%>
+	  <h3>Delete this survey</h3>
+	
+	  <p>This will <i>permanently</i> delete this survey, along with all the responses to it.
+	    We highly recommend exporting <%= link_to "the survey", :action => "export" %> and
+		<%= link_to "its responses", export_responses_path(@questionnaire) %> before proceeding.</p>
+	  
+	  <%= button_to "Delete this survey", questionnaire_path(@questionnaire), :method => "delete",
+		  :confirm => "Are you sure you wish to delete the survey \"#{@questionnaire.title}\" and all " +
+		              "its responses?  We recommend exporting it to a file first, if you haven't already " +
+		              "done so." %>
+	<% end -%>
 <% end %>
 
 </div>

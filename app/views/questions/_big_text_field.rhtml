@@ -1,9 +1,8 @@
+<%= start_question @question %>
 <% if @editing -%>
-	<%= start_question @question %>
 	<%= text_area "question[]", "default_answer", :rows => 4,
 	    :onChange => "updateDefault(#{@question.id}, this.value);", :id => "question_#{@question.id}" %>
-	<%= end_question @question %>
 <% else -%>
-	<label<%if @question.required%> class="required"<%end%> for="question_<%= @question.id %>"><%=@question.caption%></label>
 	<%= text_area_tag "question[#{@question.id}]", value, :rows => 4, :id => "question_#{@question.id}" %>
 <% end -%>
+<%= end_question @question %>

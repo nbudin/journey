@@ -47,10 +47,8 @@
 <% end %>
 
 <div class="topbar">
-    <div style="float: left;">
-        <%= link_to(image_tag("journey26-logo.png", :border => "0", :alt => "Journey 2.6"), questionnaires_url) %>
-    </div>
     <%= user_options %>
+    <%= link_to(image_tag("journey26-logo.png", :border => "0", :alt => "Journey 2.6"), questionnaires_url) %>
 </div>
 
 <%= @content_for_layout %>

@@ -62,7 +62,7 @@ div.submit {
 }
 
 .questionbody input[type=text], .questionbody textarea {
-        width: 100%;
+        width: 100% !important;
 }
 
 #responseviewer .questionbody input[type=text], #responseviewer .questionbody textarea {
@@ -70,19 +70,35 @@ div.submit {
 }
 
 .layout-top .questionandcaption {
-    display: -moz-inline-stack;
     display: inline-block;
     width: 95%;
     /* height: 100%; */
     vertical-align: middle;
+    position: relative;
+    outline: none;
+}
+
+.layout-left {
+    display: table;
+    display: inline-block;
+    width: 100%;
+}
+
+.layout-left .questionandcaption {
+    display: table-row;
+    -moz-box-orient: horizontal;
+    display: inline-block;
+    width: 100%;
 }
 
 .layout-left .caption {
-    display: -moz-inline-stack;
+    display: table-cell;
     display: inline-block;
     width: 20%;
     /* height: 100%; */
     vertical-align: middle;
+    position: relative;
+    outline: none;
 }
 
 .layout-top .questionbody, .layout-top .caption {
@@ -95,11 +111,16 @@ div.submit {
 }
 
 .layout-left .questionbody {
-    display: -moz-inline-stack;
+    display: table-cell;
     display: inline-block;
     width: 75%;
     /* height: 100%; */
     vertical-align: middle;
+}
+
+.layout-left .questionbody * {
+        position: relative;
+        outline: none;
 }
 
 .moreoptions {
@@ -157,7 +178,6 @@ select {
         height: 50px;
         z-index: 100;
 		padding: 3px 5px;
-        text-align: right;
         vertical-align: middle;
 }
 
@@ -166,10 +186,12 @@ select {
     padding-right: 0.5em;
 	margin: 0;
 	margin-top: 0.5em;
+    text-align: right;
+    float: right;
 }
 
 .topbar ul.user_options li {
-    display: -moz-inline-block;
+    display: -moz-inline-stack;
     display: inline-block;
 	margin: 0.5em;
 }
@@ -182,6 +204,8 @@ select {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+    outline: none;
+    position: relative;
 }
 
 .topbar ul.user_options li a:hover {

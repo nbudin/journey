@@ -176,12 +176,14 @@ class QuestionnairesController < ApplicationController
       if @questionnaire.update_attributes(params[:questionnaire])
         format.html { redirect_to :back }
         format.xml  { head :ok }
+        format.json { head :ok }
       else
         format.html do
           flash[:error_messages] = @questionnaire.errors.full_messages
           redirect_to :back 
         end
         format.xml  { render :xml => @questionnaire.errors.to_xml }
+        format.json { render :json => @questionnaire.errors.to_json }
       end
     end
   end

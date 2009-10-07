@@ -64,6 +64,8 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/1.xml
   def show
     @questionnaire = Questionnaire.find(params[:id])
+    attributes = params[:attributes] || @questionnaire.attribute_names
+    attributes.delete "rss_secret"
 
     respond_to do |format|
       format.html {}
@@ -82,7 +84,7 @@ class QuestionnairesController < ApplicationController
       end
       format.json do
         if logged_in? and logged_in_person.permitted?(@questionnaire, "edit")
-          render :json => @questionnaire
+          render :json => @questionnaire.to_json(:only => attributes)
         else
           render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden
         end

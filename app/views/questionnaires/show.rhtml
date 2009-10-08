@@ -68,10 +68,14 @@
 	We highly recommend exporting <%= link_to "the survey", :action => "export" %> and
 	<%= link_to "its responses", export_responses_path(@questionnaire) %> before proceeding.</p>
   
-  <%= button_to "Delete this survey", questionnaire_path(@questionnaire), :method => "delete",
+  <%= link_to "Delete this survey", questionnaire_path(@questionnaire), :method => "delete",
 	  :confirm => "Are you sure you wish to delete the survey \"#{@questionnaire.title}\" and all " +
 				  "its responses?  We recommend exporting it to a file first, if you haven't already " +
-				  "done so." %>
+				  "done so.",
+	  :style => "border: 1px #f00 solid; background-color: #faa; color: black;
+	             padding: 0.5em; margin: 0.5em; cursor: pointer;
+	             text-decoration: none; font-weight: bold;
+				 border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;" %>
 <% end -%>
 
 </div>

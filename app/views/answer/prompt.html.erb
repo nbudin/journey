@@ -3,92 +3,99 @@
 
 <p><%= sanitize @questionnaire.welcome_text %></p>
 
-<hr/>
-
-<% if logged_in? -%>
-  <% if @all_responses.length > 0 -%>    
-      <p>
-        <% if @all_responses.length > 1 -%>
-          You have started multiple responses to this survey before.
-        <% elsif @all_responses[0].submitted -%>
-          You have already submitted a response to this survey.
-        <% else -%>
-          You have started a response to this survey already, but have not submitted it yet.
-        <% end -%>
-        Please make a selection from the choices below:
-      </p>
+<div class="questionnaire_startbox">
+  <h3>Ready to begin?</h3>
+  <% if logged_in? -%>
+    <% if @all_responses.length > 0 -%>    
+        <p>
+          <% if @all_responses.length > 1 -%>
+            You have started multiple responses to this survey before.
+          <% elsif @all_responses[0].submitted -%>
+            You have already submitted a response to this survey.
+          <% else -%>
+            You have started a response to this survey already, but have not submitted it yet.
+          <% end -%>
+          Please make a selection from the choices below:
+        </p>
         
-      <ul>
-        <% @responses.each do |resp| -%>
+        <ul>
+          <% @responses.each do |resp| -%>
+            <li>
+              Response 
+                <% if resp.created_at -%>
+                  started <%= resp.created_at.strftime("%A, %B %d, %Y at %I:%M %p") %>
+                <% end -%>
+              <% if resp.submitted -%>
+                <% if @questionnaire.allow_amend_response %>
+                  - <%= link_to "Amend response (you will have to re-submit it when done)", :action => 'resume', :id => resp.id %>
+                <% end -%>
+              <% else -%>
+                <% if @questionnaire.allow_finish_later %>
+                  - <%= link_to "Resume answering", :action => 'resume', :id => resp.id %>
+                <% end -%>
+              <% end -%>
+            </li>
+          <% end -%>
           <li>
-            Response 
-              <% if resp.created_at -%>
-                started <%= resp.created_at.strftime("%A, %B %d, %Y at %I:%M %p") %>
-              <% end -%>
-            <% if resp.submitted -%>
-              <% if @questionnaire.allow_amend_response %>
-                - <%= link_to "Amend response (you will have to re-submit it when done)", :action => 'resume', :id => resp.id %>
-              <% end -%>
-            <% else -%>
-              <% if @questionnaire.allow_finish_later %>
-                - <%= link_to "Resume answering", :action => 'resume', :id => resp.id %>
-              <% end -%>
-            <% end -%>
+            <%= link_to "Start new response", :action => 'start', :id => @questionnaire.id %>
           </li>
-        <% end -%>
-        <li>
-          <%= link_to "Start new response", :action => 'start', :id => @questionnaire.id %>
-        </li>
-      </ul>
-  <% else -%>
-    <p>Welcome, <%= logged_in_person.name %>!</p>
+        </ul>
+    <% else -%>
+      <p>Welcome, <%= logged_in_person.name %>!</p>
     
-    <p>
-      <% if @questionnaire.advertise_login -%>
-        <% if @questionnaire.special_fields.length > 0 -%>
-          Since you're logged in, we can pre-fill some of the answers to this survey based on your account information.
-          <% if @questionnaire.allow_finish_later -%>
-            In addition, you'll be able to put aside this survey and come back to it later if you wish.
-          <% end -%>
-        <% else -%>
-          <% if @questionnaire.allow_finish_later -%>
-            Since you're logged in, you'll be able to put aside this survey and come back later to it if you wish.
+      <p>
+        <% if @questionnaire.advertise_login -%>
+          <% if @questionnaire.special_fields.length > 0 -%>
+            Since you're logged in, we can pre-fill some of the answers to this survey based on your account information.
+            <% if @questionnaire.allow_finish_later -%>
+              In addition, you'll be able to put aside this survey and come back to it later if you wish.
+            <% end -%>
+          <% else -%>
+            <% if @questionnaire.allow_finish_later -%>
+              Since you're logged in, you'll be able to put aside this survey and come back later to it if you wish.
+            <% end -%>
           <% end -%>
         <% end -%>
-      <% end -%>
-      <%= link_to "Click here when you're ready to begin.", :action => 'start', :id => @questionnaire.id %>
-    </p>
-  <% end -%>
-<% else -%>
-  <% if @questionnaire.require_login -%>
-    <p>You aren't logged into this site.  In order to answer this survey, you must 
-    <%= link_to "log in", :controller => "auth", :action => "login" %>.  Or, if you don't have an account,
-      you can <%= link_to "click here to sign up for one", :controller => "account", :action => "signup" %>.
-    </p>
-  <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
-    <p>You aren't currently logged into this site.  You can still answer this survey if you wish.  However, logging in
-      will give you the following benefits:</p>
-    
-    <ul>
-      <% if @questionnaire.special_fields.length > 0 -%>
-        <li>We'll be able to pre-fill some of the answers to this survey based on your account information.</li>
-      <% end -%>
-      <% if @questionnaire.allow_finish_later -%>
-        <li>You'll be able to put aside this survey and come back to it later if you wish.</li>
-      <% end -%>
-      <% if @questionnaire.allow_amend_response -%>
-        <li>You'll be able to amend your response if you change your mind about anything after you submit the survey.</li>
-      <% end -%>
-    </ul>
-    
-    <p>To log in, <%= link_to "click here", :controller => "auth", :action => "login" %>.  Or, if you don't have an account,
-      you can <%= link_to "click here to sign up for one", :controller => "account", :action => "signup" %>.</p>
-    
-    <p>Or, if you prefer, you can <%= link_to "answer this survey without an account", :action => 'start', :id => @questionnaire.id %>.</p>
+        <%= link_to "Click here when you're ready to begin.", :action => 'start', :id => @questionnaire.id %>
+      </p>
+    <% end -%>
   <% else -%>
-    <p><%= link_to "Click here to begin answering this survey.", :action => 'start', :id => @questionnaire.id %></p>
+    <% if @questionnaire.require_login -%>
+      <p>You aren't logged into this site.  In order to answer this survey, you must 
+      <%= link_to "log in", :controller => "auth", :action => "login" %>.  Or, if you don't have an account,
+        you can <%= link_to "click here to sign up for one", :controller => "account", :action => "signup" %>.
+      </p>
+    <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
+      <p>
+        <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton" %> 
+        <br/>
+        <%= link_to "Answer this survey without logging in &raquo;", { :action => 'start', :id => @questionnaire.id } %>
+        <br/>
+        <%= link_to_function("Why log in?", :id => "why_login_link") do |page|
+               page['why_login'].show
+               page['why_login_link'].hide
+             end %>
+      </p>
+              
+      <div id="why_login" style="display: none;">
+        <p><b>Why log in?</b></p>
+        <ul>
+          <% if @questionnaire.special_fields.length > 0 -%>
+            <li>We'll be able to pre-fill some of the answers to this survey based on your account information.</li>
+          <% end -%>
+          <% if @questionnaire.allow_finish_later -%>
+            <li>You'll be able to put aside this survey and come back to it later if you wish.</li>
+          <% end -%>
+          <% if @questionnaire.allow_amend_response -%>
+            <li>You'll be able to amend your response if you change your mind about anything after you submit the survey.</li>
+          <% end -%>
+        </ul>
+      </div>
+    <% else -%>
+      <p><%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton" %></p>
+    <% end -%>
   <% end -%>
-<% end -%>
+</div>
 </div>
       
   

@@ -4,19 +4,14 @@
 <p><%= sanitize @questionnaire.welcome_text %></p>
 
 <div class="questionnaire_startbox">
-  <h3>Ready to begin?</h3>
   <% if logged_in? -%>
-    <% if @all_responses.length > 0 -%>    
-        <p>
-          <% if @all_responses.length > 1 -%>
-            You have started multiple responses to this survey before.
-          <% elsif @all_responses[0].submitted -%>
-            You have already submitted a response to this survey.
-          <% else -%>
-            You have started a response to this survey already, but have not submitted it yet.
-          <% end -%>
-          Please make a selection from the choices below:
-        </p>
+    <h3>Welcome, <%=h logged_in_person.name %>!</h3>
+    <span style="font-style: italic; font-size: 95%;">
+      Not <%=h logged_in_person.name %>?  <%= link_to "Click here to log out.", :controller => "auth", :action => "logout" %>
+    </span>
+    
+    <% if @responses.length > 0 -%>    
+        <p>You've already started this survey.</p>
         
         <ul>
           <% @responses.each do |resp| -%>
@@ -41,30 +36,16 @@
           </li>
         </ul>
     <% else -%>
-      <p>Welcome, <%= logged_in_person.name %>!</p>
-    
       <p>
-        <% if @questionnaire.advertise_login -%>
-          <% if @questionnaire.special_fields.length > 0 -%>
-            Since you're logged in, we can pre-fill some of the answers to this survey based on your account information.
-            <% if @questionnaire.allow_finish_later -%>
-              In addition, you'll be able to put aside this survey and come back to it later if you wish.
-            <% end -%>
-          <% else -%>
-            <% if @questionnaire.allow_finish_later -%>
-              Since you're logged in, you'll be able to put aside this survey and come back later to it if you wish.
-            <% end -%>
-          <% end -%>
-        <% end -%>
-        <%= link_to "Click here when you're ready to begin.", :action => 'start', :id => @questionnaire.id %>
+        <%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton" %>
       </p>
     <% end -%>
   <% else -%>
+    <h3>Ready to begin?</h3>
     <% if @questionnaire.require_login -%>
-      <p>You aren't logged into this site.  In order to answer this survey, you must 
-      <%= link_to "log in", :controller => "auth", :action => "login" %>.  Or, if you don't have an account,
-        you can <%= link_to "click here to sign up for one", :controller => "account", :action => "signup" %>.
-      </p>
+      <p>This survey requires you to log into Journey in order to answer it.</p>
+      
+      <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton" %> 
     <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
       <p>
         <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton" %> 

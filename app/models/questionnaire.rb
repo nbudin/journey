@@ -91,24 +91,24 @@ class Questionnaire < ActiveRecord::Base
   def login_policy
     if advertise_login
       if require_login
-        return :required
+        return "required"
       else
-        return :prompt
+        return "prompt"
       end
     else
-      return :unadvertised
+      return "unadvertised"
     end
   end
   
   def login_policy=(policy)
-    policy = policy.to_sym
-    if policy == :unadvertised
+    case policy.to_s
+    when "unadvertised"
       self.advertise_login = false
       self.require_login = false
-    elsif policy == :prompt
+    when "prompt"
       self.advertise_login = true
       self.require_login = false
-    elsif policy == :required
+    when "required"
       self.advertise_login = true
       self.require_login = true
     end

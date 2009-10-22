@@ -8,12 +8,13 @@ require 'iconv'
 
 class ResponsesController < ApplicationController
   perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
-  require_permission "view_answers", perm_options
+  require_permission "view_answers", { :except => [:index] }.update(perm_options)
   require_permission "edit_answers", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
   
   before_filter :get_questionnaire
   before_filter :set_page_title
-  
+  before_filter :require_view_answers_except_rss, :only => [:index]
+    
   # GET /responses
   # GET /responses.xml
   def index
@@ -267,5 +268,11 @@ class ResponsesController < ApplicationController
   
   def get_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => [:valid_responses, :pages])
+  end
+  
+  def require_view_answers_except_rss
+    unless params[:format].to_s == 'rss'
+      do_permission_check(@questionnaire, "view_answers", "Sorry, but you are not permitted to view answers to this survey.")
+    end
   end
 end

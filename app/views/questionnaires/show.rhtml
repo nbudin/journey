@@ -9,7 +9,7 @@
   Resource.model("Questionnaire", {prefix: '<%= ActionController::Base.relative_url_root %>', format: 'json'});
 </script>
 
-<% @editing = logged_in? and logged_in_person.permitted?(@questionnaire, "edit") -%>
+<% @editing = (logged_in? && logged_in_person.permitted?(@questionnaire, "edit")) -%>
 
 <div class="propertypage">
 <% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>

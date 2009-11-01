@@ -1,0 +1,78 @@
+<h1>Publication Settings for "<%=h @questionnaire.title%>"</h1>
+
+<%= render :partial => "toolbar" %>
+
+<script type="text/javascript">
+  Resource.model("Questionnaire", {prefix: '<%= ActionController::Base.relative_url_root %>', format: 'json'});
+  
+  function showHidePublishOptions() {   
+    var disable = ($$('input[name="questionnaire[login_policy]"]:checked').first().value == 'unadvertised');
+
+    $$('#login_only_options input').each(function (input) {
+      if (disable) {
+        input.disable();
+      } else {
+        input.enable();
+      }
+    });
+  }
+  
+  function setupPublishPage() {
+    showHidePublishOptions();
+    $$('input[name="questionnaire[login_policy]"]').each(function (el) {
+      el.observe('change', showHidePublishOptions);
+    });
+    <% if @questionnaire.is_open -%>
+      $('published_only_options').show();
+    <% else -%>
+      $('publish_this_survey').disabled = false;
+    <% end -%>
+  }
+  
+  Event.observe(window, 'load', setupPublishPage);
+</script>
+
+<div class="propertypage">  
+<% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
+  <h3>Publish this survey?</h3>
+  <div style="margin-left: 1em">
+    <p>In order to allow people to take this survey, you must publish it.  You will not be able to edit the questions of the
+      survey while it is published.  At your option, Journey can also list this survey publicly and display it in the new
+      surveys feed.</p>
+    <ul style="list-style-type: none;">
+      <li><%= f.radio_button "publication_mode", "unpublished" %> 
+        <%= f.label "publication_mode_unpublished", "Put this survey in design mode" %></li>
+      <li><%= f.radio_button "publication_mode", "hidden" %> 
+        <%= f.label "publication_mode_hidden", "Publish this survey, but do not put it on the public surveys list" %></li>
+      <li><%= f.radio_button "publication_mode", "publicly_visible" %> 
+        <%= f.label "publication_mode_publicly_visible", "Publish this survey and put it on the public surveys list" %></li>
+    </ul>
+  </div>
+
+  <h3>Logging in</h3>
+  <div id="published_only_options" style="margin-left: 1em">
+    <p>If you wish, you can allow people to log into Journey before taking the survey.  Doing so will enable some further
+      options, such as the ability to submit a partial response and finish answering later.</p>
+      
+    <ul style="list-style-type: none;">
+      <li><%= f.radio_button "login_policy", "unadvertised" %> 
+          <%= f.label "login_policy_unadvertised", "Don't let survey takers log into Journey" %></li>
+      <li><%= f.radio_button "login_policy", "prompt" %> 
+          <%= f.label "login_policy_prompt", "Let survey takers choose whether or not to log in" %></li>
+      <li><%= f.radio_button "login_policy", "required" %> 
+          <%= f.label "login_policy_required", "Require survey takers to log in before taking this survey" %></li>
+    </ul>
+
+    <h4>Additional Features</h4>
+    <ul id="login_only_options" style="list-style-type: none">
+      <li><%= f.check_box "allow_finish_later" %>
+        <%= f.label "allow_finish_later", "Let survey takers submit a partial response and finish answering later" %></li>
+      <li><%= f.check_box "allow_amend_response" %>
+        <%= f.label "allow_amend_response", "Let survey takers amend their response after they've submitted it" %></li>
+    </ul> 
+  </div>
+
+  <p>
+    <%= submit_tag @questionnaire.is_open ? "Save changes" : "Publish this survey" %>
+  </p>
+<% end -%>

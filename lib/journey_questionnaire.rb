@@ -48,7 +48,7 @@ module Journey
   
   module SiteOptions
     @@site_root_if_logged_out = { :controller => "questionnaires", :action => "index" }
-    @@site_root_if_logged_in = { :controller => "questionnaires", :action => "index" }
+    @@site_root_if_logged_in = { :controller => "questionnaires", :action => "my" }
     @@footer_partial = nil
     
     def self.footer_partial=(partial)

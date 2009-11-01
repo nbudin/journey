@@ -1,8 +1,8 @@
 <ul class="tabstrip">
-	<%= tabstrip_li "Survey", @questionnaire, :controller => 'questionnaires', :except => ['publish'] %>
+	<%= tabstrip_li "Survey", @questionnaire, :controller => 'questionnaires' %>
 	<% if logged_in? and logged_in_person.permitted?(@questionnaire, "edit") -%>
 	   <%= tabstrip_li "Publish", questionnaire_path(@questionnaire) + '/publish', 
-                        :controller => 'questionnaires', :only => ['publish'] %>
+                        :controller => 'publish' %>
 	<% end -%>
 	<% if logged_in? and logged_in_person.permitted?(@questionnaire, "view_answers") -%>
 	   <%= tabstrip_li "Responses (#{@questionnaire.valid_responses.size})", 

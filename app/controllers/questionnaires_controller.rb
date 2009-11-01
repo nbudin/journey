@@ -19,7 +19,7 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires.xml
   def index
     p = logged_in? ? logged_in_person : nil
-    per_page = 8
+    per_page = 12
     conditions = []
     condition_vars = {}
     if params[:title] and params[:title] != ''
@@ -35,10 +35,10 @@ class QuestionnairesController < ApplicationController
         t.questionnaires(:conditions => find_conditions, :order => 'id DESC', :include => [:taggings, :tags, :permissions])
       end
     else
-      Questionnaire.find(:all, :conditions => find_conditions, :order => 'id DESC', :include => [:taggings, :tags, :permissions])
+      Questionnaire.all(:conditions => find_conditions, :order => 'id DESC', :include => [:taggings, :tags, :permissions])
     end
     permitted_questionnaires = all_questionnaires.select do |q|
-      q.is_open or (p and Questionnaire.permission_names.any? { |pn| p.permitted?(q, pn) })
+      (q.is_open and q.publicly_visible) or (p and Questionnaire.permission_names.any? { |pn| p.permitted?(q, pn) })
     end
     pager = ::Paginator.new(permitted_questionnaires.size, per_page) do |offset, pp|
       permitted_questionnaires[offset, pp]
@@ -57,6 +57,22 @@ class QuestionnairesController < ApplicationController
           page.replace_html 'questionnaire_list', :partial => 'paged_results'
         end
       end
+    end
+  end
+  
+  def my
+    redirect_to :action => 'index' unless logged_in?
+    
+    @roles = logged_in_person.roles
+    perm_conds = "(person_id = #{logged_in_person.id}"
+    if @roles.length > 0
+      perm_conds << " OR role_id IN (#{@roles.collect {|r| r.id}.join(",")})"
+    end
+    perm_conds << ") AND permissioned_type = 'Questionnaire'"
+    
+    @questionnaires = Questionnaire.all(:order => "id DESC", :include => [:permissions, :tags], 
+                                        :conditions => perm_conds, :joins => :permissions).uniq.select do |q|
+      Questionnaire.permission_names.any? { |pn| logged_in_person.permitted?(q, pn) }
     end
   end
 
@@ -114,11 +130,6 @@ class QuestionnairesController < ApplicationController
   
   # GET /questionnaires/1;customize
   def customize
-    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
-  end
-
-  # GET /questionnaires/1;publish
-  def publish
     @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
   end
   

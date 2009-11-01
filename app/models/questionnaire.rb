@@ -21,7 +21,9 @@ class Questionnaire < ActiveRecord::Base
     :conditions => "type in #{Question.types_for_sql(Question.decorator_types)}", :include => :page
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
-
+  
+  named_scope :publicly_visible, :conditions => { :publicly_visible => true }
+  
   def Questionnaire.special_field_purposes
     %w( name address phone email gender )
   end
@@ -111,6 +113,32 @@ class Questionnaire < ActiveRecord::Base
     when "required"
       self.advertise_login = true
       self.require_login = true
+    end
+  end
+  
+  def publication_mode
+    if is_open
+      if publicly_visible
+        return "publicly_visible"
+      else
+        return "hidden"
+      end
+    else
+      return "unpublished"
+    end
+  end
+  
+  def publication_mode=(mode)
+    case mode.to_s
+    when "unpublished"
+      self.is_open = false
+      self.publicly_visible = false
+    when "hidden"
+      self.is_open = true
+      self.publicly_visible = false
+    when "publicly_visible"
+      self.is_open = true
+      self.publicly_visible = false
     end
   end
     

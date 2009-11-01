@@ -1,13 +1,6 @@
 <h1>Surveys</h1>
 
-<%= javascript_include_tag "layout.js" %>
-
-<% if logged_in? -%>
-  <% link_to new_questionnaire_path, :class => "bigbutton", :style => "text-align: center;" do -%>
-    Create a new survey, or import one from an XML file &#187;
-	<%= render :partial => 'creator_warnings' %> 
-  <% end -%>
-<% end -%>
+<%= render :partial => 'outer_tabs' %>
 
 <div id="filter_params" style="border-top: 1px black solid; background-color: #FFE5C0;">
   <% form_tag({}, {:method => "get", :class => "filterbar"}) do  %>

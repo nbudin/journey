@@ -1,5 +1,5 @@
 <% authors = questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
-<div class="questionnairesummary">  
+<li class="questionnairesummary">  
   <div id="questionnairesummary_<%=questionnaire.id%>">
     <table style="width: 100%;">
       <td style="width: 50%; overflow: hidden;">
@@ -23,4 +23,4 @@
       </td>
     </table>
   </div>
-</div>
+</li>

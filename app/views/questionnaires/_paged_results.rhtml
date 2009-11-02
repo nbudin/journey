@@ -1,7 +1,7 @@
 <% p = logged_in? ? logged_in_person : nil-%>
 
-<div id="questionnaire_list">
+<ul id="questionnaire_list" style="list-style-type: none; padding-left: 0; margin-left: 0;">
 	<%= render :partial => "questionnaire", :collection => @questionnaires %>
   <%= will_paginate @questionnaires, :renderer => "RemoteLinkRenderer" %>
-</div>					
+</ul>					
 

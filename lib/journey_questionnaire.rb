@@ -50,6 +50,7 @@ module Journey
     @@site_root_if_logged_out = { :controller => "questionnaires", :action => "index" }
     @@site_root_if_logged_in = { :controller => "questionnaires", :action => "my" }
     @@footer_partial = nil
+    @@default_layout = "application"
     
     def self.footer_partial=(partial)
       @@footer_partial = partial
@@ -73,6 +74,14 @@ module Journey
     
     def self.site_root_if_logged_out=(sr)
       @@site_root_if_logged_out = sr
+    end
+    
+    def self.default_layout=(layout)
+      @@default_layout = layout
+    end
+    
+    def self.default_layout
+      @@default_layout
     end
   end
 end

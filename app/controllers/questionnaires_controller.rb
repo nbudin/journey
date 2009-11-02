@@ -75,6 +75,15 @@ class QuestionnairesController < ApplicationController
       Questionnaire.permission_names.any? { |pn| logged_in_person.permitted?(q, pn) }
     end
   end
+  
+  def responses
+    redirect_to :action => 'index' unless logged_in?
+    
+    @responses = Response.all(:conditions => { :person_id => logged_in_person.id }, 
+                              :include => { :questionnaire => [:permissions, :tags] },
+                              :order => "created_at DESC")
+    @questionnaires = @responses.collect { |r| r.questionnaire }.uniq
+  end
 
   # GET /questionnaires/1
   # GET /questionnaires/1.xml

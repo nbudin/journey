@@ -1,0 +1,14 @@
+<h2>My Responses</h2>
+
+<ul>
+  <% @responses.each do |resp| -%>
+    <li><%= link_to resp.questionnaire.title, answer_path(resp.questionnaire) %>
+        &ndash; <span style="font-size: 90%;"><%= resp.created_at.strftime "%a, %b %d, %Y" %></span></li>
+  <% end -%>
+</ul>
+
+<div class="footer">
+  <% link_to responses_questionnaires_path, :class => "bigbutton" do -%>
+    View all my responses &raquo;
+  <% end -%>
+</div>

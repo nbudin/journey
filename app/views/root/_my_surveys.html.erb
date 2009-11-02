@@ -1,0 +1,20 @@
+<h2>My Surveys</h2>
+
+<ul style="max-height: 30em;">
+  <% @my_questionnaires.each do |questionnaire| -%>
+    <li>
+      <%= link_to questionnaire.title, questionnaire_path(questionnaire) %>
+      <span style="font-size: 90%">
+        (<%= pluralize questionnaire.valid_responses.count, "response" %>: 
+        <%= link_to "View", responses_path(questionnaire) %>)
+      </span>
+    </li>
+  <% end -%>
+</ul>
+
+<div class="footer">
+  <% link_to new_questionnaire_path, :class => "bigbutton" do -%>
+    Create a survey, or import one from XML &raquo;
+    <%= render :partial => "questionnaires/creator_warnings" %>
+  <% end -%>
+</div>

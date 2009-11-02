@@ -48,3 +48,7 @@ Journey::UserOptions.add_logged_in_option("Admin", {:controller => "permission",
                                             view.logged_in? and view.logged_in_person.administrator?
                                            end)
 Journey::UserOptions.add_logged_in_option("Log out", {:controller => "auth", :action => "logout" })
+
+Journey::Dashboard.add_dashbox("new_surveys", :left)
+Journey::Dashboard.add_dashbox("my_responses", :left)
+Journey::Dashboard.add_dashbox("my_surveys", :right)

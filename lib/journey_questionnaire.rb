@@ -46,6 +46,28 @@ module Journey
     end
   end
   
+  module Dashboard
+    @@left_dashboxes = []
+    @@right_dashboxes = []
+        
+    def self.add_dashbox(partial, column)
+      case column
+      when :left
+        @@left_dashboxes << partial
+      when :right
+        @@right_dashboxes << partial
+      end
+    end
+    
+    def self.left_dashboxes
+      @@left_dashboxes.dup
+    end
+    
+    def self.right_dashboxes
+      @@right_dashboxes.dup
+    end
+  end
+  
   module SiteOptions
     @@site_root_if_logged_out = { :controller => "questionnaires", :action => "index" }
     @@site_root_if_logged_in = { :controller => "questionnaires", :action => "my" }

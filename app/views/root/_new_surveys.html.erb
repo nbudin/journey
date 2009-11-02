@@ -1,0 +1,13 @@
+<h2>New on Journey</h2>
+
+<ul>
+  <% @new_questionnaires.each do |questionnaire| -%>
+    <li><%= link_to questionnaire.title, answer_path(questionnaire) %></li>
+  <% end -%>
+</ul>
+
+<div class="footer">
+  <% link_to questionnaires_path, :class => "bigbutton" do -%>
+    Explore more surveys &raquo;
+  <% end -%>
+</div>

@@ -46,7 +46,8 @@
 
 <div class="topbar">
     <%= user_options %>
-    <%= link_to(image_tag("journey26-logo.png", :border => "0", :alt => "Journey 2.6"), questionnaires_url) %>
+    <%= link_to(image_tag("journey26-logo.png", :border => "0", :alt => "Journey 2.6"),
+				:controller => "root", :action => "dashboard") %>
 </div>
 
 <%= @content_for_layout %>

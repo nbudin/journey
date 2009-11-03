@@ -138,7 +138,7 @@ class Questionnaire < ActiveRecord::Base
       self.publicly_visible = false
     when "publicly_visible"
       self.is_open = true
-      self.publicly_visible = false
+      self.publicly_visible = true
     end
   end
     

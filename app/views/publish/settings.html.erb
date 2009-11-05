@@ -5,21 +5,30 @@
 <script type="text/javascript">
   Resource.model("Questionnaire", {prefix: '<%= ActionController::Base.relative_url_root %>', format: 'json'});
   
-  function showHidePublishOptions() {   
-    var disable = ($$('input[name="questionnaire[login_policy]"]:checked').first().value == 'unadvertised');
-
-    $$('#login_only_options input').each(function (input) {
-      if (disable) {
-        input.disable();
-      } else {
-        input.enable();
-      }
+  function disableInputsIfRadioGroup(radioGroup, disabledValues, divId) {   
+    var value = $$('input[name="' + radioGroup + '"]:checked').first().value;
+    var disabled = disabledValues.any(function (disabledValue) {
+      return (value == disabledValue);
     });
+    
+    if (disabled) {
+      $$('#' + divId + ' input').each(function (input) {
+        input.disable();
+      });
+    }
+  }
+  
+  function showHidePublishOptions() {
+    $$('input').each(function(input) {
+      input.enable();
+    });
+    disableInputsIfRadioGroup("questionnaire[login_policy]", ['unadvertised'], 'login_only_options');
+    disableInputsIfRadioGroup("questionnaire[publication_mode]", ["unpublished"], 'published_only_options');
   }
   
   function setupPublishPage() {
     showHidePublishOptions();
-    $$('input[name="questionnaire[login_policy]"]').each(function (el) {
+    $$('input[name="questionnaire[login_policy]"], input[name="questionnaire[publication_mode]"]').each(function (el) {
       el.observe('change', showHidePublishOptions);
     });
     <% if @questionnaire.is_open -%>

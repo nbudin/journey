@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   helper :user_options
   helper :question_answer
   helper :tabstrip
+  helper :color
   
   private
   def default_layout

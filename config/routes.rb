@@ -30,6 +30,7 @@ ActionController::Routing::Routes.draw do |map|
   map.response_graph '/questionnaires/:questionnaire_id/responses/graphs/:action.:format', :controller => "graphs"
 
   map.answer '/answer/:id', :controller => 'answer', :action => 'index'
+  map.dashboard '/dashboard', :controller => 'root', :action => 'dashboard'
 
   # Here's a sample route:
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
@@ -45,6 +46,4 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action.:format'
   map.connect ':controller/:action/:id.:format'
   map.connect ':controller/:action/:id'
-  map.connect ':action.:format', :controller => 'root'
-  map.connect ':action', :controller => 'root', :format => 'html'
 end

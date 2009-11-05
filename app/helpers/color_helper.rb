@@ -5,15 +5,16 @@ module ColorHelper
       ["Red Pill", "d03200"],
       ["Orange Zest", "ffd032"],
       ["Old Gold", "d0ba32"],
+      ["Leroy Brown", "9a6a00"],
       ["Journey Green", "bad032"],
-      ["Forest Green", "006a32"],
-      ["Sea Blue", "00326a"],
-      ["Sky Blue", "32bad0"],
+      ["Putting Green", "006a32"],
+      ["Blue Pill", "00326a"],
+      ["Blue Meany", "32bad0"],
       ["Indigo Montoya", "6a00d0"],
-      ["Shocking Violet", "ba32d0"],
-      ["Fresh Lavender", "d0bad0"],
+      ["Unshrinking Violet", "ba32d0"],
+      ["Fresh Lavender", "d09ad0"],
       ["Basic Black", "000000"],
-      ["Charcoal Grey", "666666"]
+      ["Stealth Grey", "666666"]
     ]
   end
   

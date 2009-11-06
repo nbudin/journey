@@ -2,107 +2,91 @@
 
 <%= render :partial => "toolbar" %>
 
-<div class="propertypage">
+<style type="text/css">
+#leftbar {
+  float: left;
+  width: 15em;
+}
+
+#leftbar p, #leftbar h2 {
+  padding-left: 8px;
+}
+
+#feature_links {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+#feature_links li {
+  font-weight: bold;
+  text-align: right;
+}
+
+#feature_links li a {
+  display: block;
+  text-decoration: none;
+  padding-right: 0.5em;
+}
+
+#feature_links li a.selected {
+  background-color: white;
+  border-top: 1px black solid;
+  border-bottom: 1px black solid;
+}
+
+#content {
+  margin-left: 15em;
+  height: 60em;
+  background-color: white;
+  border-left: 1px black solid;
+  padding-left: 0.5em;
+}
+
+#content h3 {
+  margin-top: 0;
+}
+</style>
+
+<script type="text/javascript">
+function selectFeature(id, link) {
+  $$('#content .publish_feature').each(function(element) {
+    element.hide();
+  });
+  $$('#feature_links a').each(function(element) {
+    element.removeClassName('selected');
+  });
+  $(id).show();
+  link.addClassName('selected');
+}
+
+document.observe("dom:loaded", function () {
+  selectFeature("link_button", $('link_button_link'));
+});
+</script>
+
+<div class="propertypage" style="padding: 0;">
   <% if @questionnaire.is_open -%>
-    <h2>Spread the word!</h2>
+    <div id="leftbar">
+      <h2 style="margin-top: 0;">Spread the word!</h2>
     
-    <p>Your survey is published and accepting responses!  Here are some ways to
-    get people to your survey:</p>
-    
-    <% if @questionnaire.publicly_visible -%>
-      <h3>New on Journey</h3>
+      <p style="margin-right: 0.5em;">Your survey is published and accepting
+      responses!  Here are some ways to get people to your survey:</p>
       
-      <p>Because you made your survey visible to the public, it's automatically included in the "New on Journey" feed.  You
-      can see the feed or subscribe to it via RSS using <%= link_to "your dashboard", dashboard_path %>.</p>
-    <% end -%>
+      <ul id="feature_links">
+        <li><%= feature_link "Link button", "link_button" %></li>
+        <li><%= feature_link "Direct link", "direct_link" %></li>
+        <li><%= feature_link "Embed your survey", "embed_survey" %></li>
+        <li><%= feature_link "New on Journey", "new_on_journey" %></li>
+      </ul>
+    </div>
     
-    <h3>Direct link</h3>
-    
-    <p>This is the public URL for your survey.  You can paste it into email, web sites, Twitter, or anywhere else you'd like to
-    link to your survey.</p>
-  
-    <p>
-      <% answer_url = url_for(:controller => "answer", :action => "index", :id => @questionnaire.id, :only_path => false) %>
-      <%= link_to answer_url %>
-    </p>
-    
-    <h3>Link button</h3>
-    
-    <p>Create a link button that you can copy and paste into other web sites!  You can customize it below:</p>
-    
-    <form id="link_button_generator" style="max-width: 60em;">
-      <table style="width: 100%;">
-        <tr>
-          <th>Text</th>
-          <td><%= text_field_tag "link_button_text", "Take the survey!" %></td>
-          <td style="border: 1px black solid; background-color: white; vertical-align: top; width: 80%;" rowspan="4">
-            <table style="width: 100%;">
-              <tr style="vertical-align: top;">
-                <td>
-                  <b>Preview</b><br/>
-                  <div id="link_button_preview"></div>
-                </td>
-                <td>
-                  <b>HTML Code</b><br/>
-                  <textarea id="link_button_code"></textarea>
-                </td>
-              </tr>
-            </table>
-          </td>
-          <td id="link_button_code" rowspan="3"></td>
-        </tr>
-        <tr>
-          <th>Color</th>
-          <td><%= select_tag "link_button_base_color", journey_color_select_options %></td>
-        </tr>
-        <tr>
-          <th colspan="2" align="left">
-            Open in new window?
-            <%= check_box_tag "link_button_new_window" %>
-          </th>
-        <tr>
-          <th colspan="2"><button type="submit">Preview &raquo;</button></th>
-        </tr>
-      </table>
-    </form>
-    
-    <script type="text/javascript">
-    document.observe('dom:loaded', function() {
-      $('link_button_generator').observe('submit', function(event) {
-        color = $F('link_button_base_color');
-        
-        html = "<a href=\"" + '<%= answer_url(@questionnaire) %>' + "\" ";
-        if ($('link_button_new_window').checked) {
-          html += "target=\"_blank\" ";
-        }
-        html += "style=\"";
-        html += "border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; ";
-        html += "border: 2px solid " + color + "; ";
-        html += "background-color: " + color + "; ";
-        html += "background-image: url(" + '<%= image_url("white-fade.png") %>' + "); ";
-        html += "background-repeat: repeat-x; background-position: 50% 10%; ";
-        html += "color: black; display: inline-block; font-size: 120%; ";
-        html += "margin: 0.5em; padding: 0.5em; ";
-        html += "text-decoration: none;";
-        html += "\">";
-        html += $F("link_button_text") + " &raquo;";
-        html += "</a>";
-        
-        $('link_button_preview').update(html);
-        $('link_button_code').value = html;
-        
-        event.stop();
-      });
-    });
-    </script>
-    
-    <h3>Embed code</h3>
-    
-    <p>You can embed your survey right into another web site.  The survey will appear in a box
-    with a black border.  Just copy and paste the following HTML code:</p>
-    
-    <textarea><%=h %{<iframe src="#{answer_url @questionnaire}" style="border: 1px black solid; width: 780px; height: 580px;"></iframe>} %></textarea>
-    </textarea>
+    <div id="content">
+      <%= render :partial => "new_on_journey" %>
+      <%= render :partial => "direct_link" %>
+      <%= render :partial => "link_button" %>
+      <%= render :partial => "embed_survey" %>
+    </div>
   <% else -%>
     <p>This survey is currently <b>in design mode</b>.  If you want to allow people to take the survey, you must publish it.
     You cannot edit the survey while it is published.</p>

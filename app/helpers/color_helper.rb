@@ -1,8 +1,8 @@
 module ColorHelper
   def journey_colors
     [
-      ["Dracula Red", "8d0000"],
-      ["Red Pill", "d03200"],
+      ["Red Pill", "8d0000"],
+      ["La Red", "d03200"],
       ["Orange Zest", "ffd032"],
       ["Old Gold", "d0ba32"],
       ["Leroy Brown", "9a6a00"],
@@ -11,7 +11,7 @@ module ColorHelper
       ["Blue Pill", "00326a"],
       ["Blue Meany", "32bad0"],
       ["Indigo Montoya", "6a00d0"],
-      ["Unshrinking Violet", "ba32d0"],
+      ["Purple People Eater", "ba32d0"],
       ["Fresh Lavender", "d09ad0"],
       ["Basic Black", "000000"],
       ["Stealth Grey", "666666"]

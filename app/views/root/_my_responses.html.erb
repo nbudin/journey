@@ -9,7 +9,7 @@
         <i><%=h resp.questionnaire.title %> (survey closed)</i>
       <% end -%>
       <span style="font-size: 90%; float: right;">
-        <%= resp.created_at.strftime "%a, %b %d, %Y" %>
+        <%= time_ago_in_words resp.created_at %> ago
       </span>
     </li>
   <% end -%>

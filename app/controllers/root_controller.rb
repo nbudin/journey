@@ -6,6 +6,8 @@ class RootController < ApplicationController
   def dashboard
     return index unless logged_in?
     
+    @page_title = "Dashboard"
+    
     @roles = logged_in_person.roles
     perm_conds = "person_id = #{logged_in_person.id}"
     if @roles.length > 0

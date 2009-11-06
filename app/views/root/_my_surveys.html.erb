@@ -3,12 +3,12 @@
 <ul style="max-height: 30em;">
   <% @my_questionnaires.each do |questionnaire| -%>
     <li>
-      <%= link_to questionnaire.title, questionnaire_path(questionnaire) %>
       <span style="font-size: 90%; float: right;">
         <% link_to responses_path(questionnaire) do -%>
          <%= pluralize questionnaire.valid_responses.count, "response" %>
         <% end -%>
       </span>
+      <%= link_to questionnaire.title, questionnaire_path(questionnaire) %>
     </li>
   <% end -%>
 </ul>

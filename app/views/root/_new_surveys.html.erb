@@ -3,10 +3,10 @@
 <ul>
   <% @new_questionnaires.each do |questionnaire| -%>
     <li>
-      <%= link_to questionnaire.title, answer_path(questionnaire) %>
       <span style="font-size: 90%; float: right;">
         <%= time_ago_in_words questionnaire.published_at %> ago
       </span>
+      <%= link_to questionnaire.title, answer_path(questionnaire) %>
     </li>
   <% end -%>
 </ul>

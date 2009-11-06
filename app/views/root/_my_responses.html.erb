@@ -3,14 +3,14 @@
 <ul>
   <% @responses.each do |resp| -%>
     <li>
+      <span style="font-size: 90%; float: right;">
+        <%= time_ago_in_words resp.created_at %> ago
+      </span>
       <% if resp.questionnaire.is_open -%>
         <%= link_to resp.questionnaire.title, answer_path(resp.questionnaire) %>
       <% else -%>
         <i><%=h resp.questionnaire.title %> (survey closed)</i>
       <% end -%>
-      <span style="font-size: 90%; float: right;">
-        <%= time_ago_in_words resp.created_at %> ago
-      </span>
     </li>
   <% end -%>
 </ul>

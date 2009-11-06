@@ -7,6 +7,7 @@ class Questionnaire < ActiveRecord::Base
   
   before_create :set_untitled
   after_create :create_initial_page
+  before_save :set_published_at
 
   has_many :pages, :dependent => :destroy, :order => :position
   has_many :responses, :dependent => :destroy, :order => "responses.id DESC", :include => [:answers, :questionnaire]
@@ -291,6 +292,12 @@ class Questionnaire < ActiveRecord::Base
   self.load_extensions
   
   private
+  def set_published_at
+    if is_open and is_open_changed?
+      self.published_at = Time.new
+    end
+  end
+  
   def set_untitled
     if self.title.blank?
       self.title = "Untitled survey"

@@ -16,7 +16,7 @@ class RootController < ApplicationController
                                         :conditions => perm_conds, :joins => :permissions).uniq
     
     @new_questionnaires = Questionnaire.all(:conditions => { :publicly_visible => true, :is_open => true },
-                                            :order => "id DESC", :limit => 8)
+                                            :order => "published_at DESC", :limit => 8)
     
     @responses = Response.all(:conditions => { :person_id => logged_in_person.id }, 
                           :include => { :questionnaire => nil }, :order => "created_at DESC", :limit => 8)

@@ -1,4 +1,13 @@
-<h2>New on Journey</h2>
+<h2>
+  <span style="float: right;">
+    <% link_to questionnaires_url(:format => "rss") do -%>
+      <%= image_tag "feed-icon-24x24.png", :style => "border: none; vertical-align: top",
+          :alt => "Subscribe to RSS feed", :title => "Subscribe to RSS feed" %>
+    <% end -%>
+  </span>
+  New on Journey
+  <div style="clear: both;"></div>
+</h2>
 
 <ul>
   <% @new_questionnaires.each do |questionnaire| -%>

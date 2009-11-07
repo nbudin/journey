@@ -60,22 +60,6 @@ class QuestionnairesController < ApplicationController
     end
   end
   
-  def my
-    redirect_to :action => 'index' unless logged_in?
-    
-    @roles = logged_in_person.roles
-    perm_conds = "(person_id = #{logged_in_person.id}"
-    if @roles.length > 0
-      perm_conds << " OR role_id IN (#{@roles.collect {|r| r.id}.join(",")})"
-    end
-    perm_conds << ") AND permissioned_type = 'Questionnaire'"
-    
-    @questionnaires = Questionnaire.all(:order => "id DESC", :include => [:permissions, :tags], 
-                                        :conditions => perm_conds, :joins => :permissions).uniq.select do |q|
-      Questionnaire.permission_names.any? { |pn| logged_in_person.permitted?(q, pn) }
-    end
-  end
-  
   def responses
     redirect_to :action => 'index' unless logged_in?
     

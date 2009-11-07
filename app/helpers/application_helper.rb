@@ -19,4 +19,25 @@ module ApplicationHelper
     end
     abs_path
   end
+  
+  def globalnav_links
+    links = []
+    
+    if logged_in?
+      links << link_to("Dashboard", dashboard_path)
+    end
+
+    if request.path =~ /^\/questionnaires/
+      links << link_to("Surveys", questionnaires_path)
+      if @questionnaire
+        links << link_to(@questionnaire.title, questionnaire_path(@questionnaire))
+      end
+    elsif @globalnav_links
+      @globalnav_links.each do |name, url|
+        links << link_to(name, url)
+      end
+    end
+    
+    links.collect { |l| "<li>#{l}</li>" }.join("<li>&raquo;</li>")
+  end
 end

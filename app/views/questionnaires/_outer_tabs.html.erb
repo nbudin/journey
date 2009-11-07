@@ -1,6 +1,5 @@
 <ul class="tabstrip">
 	<% if logged_in? -%>
-	  <%= tabstrip_li "My Surveys", my_questionnaires_path, :controller => 'questionnaires', :only => 'my' %>
 	  <%= tabstrip_li "My Responses", { :action => 'responses' }, :controller => 'questionnaires', :only => 'responses' %>
 	<% end -%>
 	<%= tabstrip_li "Explore Surveys", questionnaires_path, :controller => 'questionnaires', :only => 'index' %>

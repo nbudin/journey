@@ -557,3 +557,48 @@ label.overlabel {
 .questionnaire_startbox a.bigbutton {
     margin-left: 0;
 }
+
+.globalnav {
+    border: 2px #bad032 solid;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    margin-top: -2px;
+    display: inline-block;
+    list-style-type: none;
+    padding: 2px 0px;
+    padding-left: 0;
+    margin-left: 0;
+    background-color: #666;
+    background-image: url(<%= image_path("white-fade.png") %>);
+    background-repeat: repeat-x;
+    background-position: bottom;
+    cursor: default;
+}
+
+.globalnav li {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.globalnav li a {
+    margin: 0;
+    padding: 0.5em;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.globalnav li a:hover {
+    background-image: url(<%= image_path("white-fade.png") %>);
+    background-repeat: repeat-x;
+    background-position: 0% 75%;
+}

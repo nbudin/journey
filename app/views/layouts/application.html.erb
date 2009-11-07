@@ -46,9 +46,14 @@
 
 <div class="topbar">
     <%= user_options %>
-    <%= link_to(image_tag("journey26-logo.png", :border => "0", :alt => "Journey 2.6"),
-				:controller => "root", :action => "dashboard") %>
+    <%= image_tag("journey26-logo.png", :alt => "Journey") %>
 </div>
+
+<ul class="globalnav">
+  <%= globalnav_links %>
+</ul>
+
+<div style="clear: both;"></div>
 
 <%= @content_for_layout %>
 

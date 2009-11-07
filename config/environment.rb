@@ -21,6 +21,10 @@ Rails::Initializer.run do |config|
   # (enables use of different database adapters for development and test environments)
   config.active_record.schema_format = :ruby
 
+  if RUBY_VERSION < "1.9"
+    # in 1.9, we can use the built-in csv module
+    config.gem 'fastercsv'
+  end
   config.gem 'paginator'
   config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'

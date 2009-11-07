@@ -12,6 +12,7 @@ role :db,  "ishinabe.natbudin.com", :primary => true
 
 set :user, "www-data"
 set :scm, :git
+set :branch, "stable"
 set :use_sudo, false
 set :deploy_via, :remote_cache
 set :git_enable_submodules, 1

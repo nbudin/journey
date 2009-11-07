@@ -5,6 +5,8 @@ RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 #gem 'rack-cache'
 #require 'rack/cache'
 
+require 'journey_questionnaire'
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
@@ -37,18 +39,3 @@ Rails::Initializer.run do |config|
 #    import 'config/rack_cache_config'
 #  end
 end
-
-Mime::Type.register "image/png", :png
-
-AeUsers.cache_permissions = false
-
-require 'journey_questionnaire'
-
-Journey::UserOptions.add_logged_out_option("Log in", {:controller => "auth", :action => "login" })
-
-Journey::UserOptions.add_logged_in_option("Profile", {:controller => "account", :action => "edit_profile" })
-Journey::UserOptions.add_logged_in_option("Log out", {:controller => "auth", :action => "logout" })
-
-Journey::Dashboard.add_dashbox("new_surveys", :left)
-Journey::Dashboard.add_dashbox("my_responses", :left)
-Journey::Dashboard.add_dashbox("my_surveys", :right)

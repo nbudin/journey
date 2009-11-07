@@ -47,10 +47,6 @@ require 'journey_questionnaire'
 Journey::UserOptions.add_logged_out_option("Log in", {:controller => "auth", :action => "login" })
 
 Journey::UserOptions.add_logged_in_option("Profile", {:controller => "account", :action => "edit_profile" })
-Journey::UserOptions.add_logged_in_option("Admin", {:controller => "permission", :action => "admin" },
-                                          :conditional => lambda do |view|
-                                            view.logged_in? and view.logged_in_person.administrator?
-                                           end)
 Journey::UserOptions.add_logged_in_option("Log out", {:controller => "auth", :action => "logout" })
 
 Journey::Dashboard.add_dashbox("new_surveys", :left)

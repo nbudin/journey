@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :questionnaires, :collection => { :my => :get, :import => :get, :responses => :get },
+  map.resources :questionnaires, :collection => { :responses => :get },
                                  :member => { :pagelist => :get, 
                                               :available_special_field_purposes => :get, 
                                               :customize => :get,

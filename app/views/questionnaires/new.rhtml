@@ -8,4 +8,16 @@
 		  <%= submit_tag "Create" %>
 		<% end %>
 	</h2>
+	
+	<h2>Import a survey from XML</h2>
+    <% form_tag(questionnaires_path, :multipart => true) do %>
+	  <p>You can export surveys from Journey in XML format by clicking the "Export" tab in the
+	  survey view.</p>
+	  <p>
+		  <label for="file">XML file to import:</label>
+		  <input type="file" name="file" />
+      </p>
+	  <%= render :partial => 'creator_warnings' %> 
+	  <%= submit_tag "Import" %>
+	<% end %>
 </div>

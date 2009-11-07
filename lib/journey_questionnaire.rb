@@ -50,12 +50,19 @@ module Journey
     @@left_dashboxes = []
     @@right_dashboxes = []
         
-    def self.add_dashbox(partial, column)
-      case column
+    def self.add_dashbox(partial, column, where='bottom')
+      dashbox_set = case column
       when :left
-        @@left_dashboxes << partial
+        @@left_dashboxes
       when :right
-        @@right_dashboxes << partial
+        @@right_dashboxes
+      end
+      
+      case where.to_sym
+      when :top
+        dashbox_set.insert(0, partial)
+      when :bottom
+        dashbox_set << partial
       end
     end
     

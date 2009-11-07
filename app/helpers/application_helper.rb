@@ -1,14 +1,15 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper    
   def page_title
-    title = ""
+    components = []
     if @page_title
-      title << "#{@page_title} - "
+      components << @page_title
     end
-    if @questionnaire
-      title << "#{h(@questionnaire.title)} - "
+    globalnav_items.reject { |name, url| name == "Dashboard" }.reverse.each do |name, url|
+      components << name
     end
-    title << "Journey"
+    components << "Journey"
+    components.join(" - ")
   end
   
   # by Rob Biedenharn: http://www.mail-archive.com/rubyonrails-talk@googlegroups.com/msg15305.html
@@ -20,24 +21,28 @@ module ApplicationHelper
     abs_path
   end
   
-  def globalnav_links
+  def globalnav_items
     links = []
     
     if logged_in?
-      links << link_to("Dashboard", dashboard_path)
+      links << ["Dashboard", dashboard_path]
     end
 
     if request.path =~ /^\/questionnaires/
-      links << link_to("Surveys", questionnaires_path)
-      if @questionnaire
-        links << link_to(@questionnaire.title, questionnaire_path(@questionnaire))
+      links << ["Surveys", questionnaires_path]
+      if @questionnaire and @questionnaire.id
+        links << [@questionnaire.title, questionnaire_path(@questionnaire)]
       end
     elsif @globalnav_links
       @globalnav_links.each do |name, url|
-        links << link_to(name, url)
+        links << [name, url]
       end
     end
     
-    links.collect { |l| "<li>#{l}</li>" }.join("<li>&raquo;</li>")
+    links
+  end
+  
+  def globalnav_links
+    globalnav_items.collect { |name, url| "<li>#{link_to name, url}</li>" }.join("<li>&raquo;</li>")
   end
 end

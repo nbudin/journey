@@ -1,0 +1,22 @@
+<h2>My Responses</h2>
+
+<ul>
+  <% @responses.each do |resp| -%>
+    <li>
+      <span style="font-size: 90%; float: right;">
+        <%= time_ago_in_words resp.created_at %> ago
+      </span>
+      <% if resp.questionnaire.is_open -%>
+        <%= link_to resp.questionnaire.title, answer_path(resp.questionnaire) %>
+      <% else -%>
+        <i><%=h resp.questionnaire.title %> (survey closed)</i>
+      <% end -%>
+    </li>
+  <% end -%>
+</ul>
+
+<div class="footer">
+  <% link_to responses_questionnaires_path, :class => "bigbutton" do -%>
+    View all my responses &raquo;
+  <% end -%>
+</div>

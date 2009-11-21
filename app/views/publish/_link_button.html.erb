@@ -1,0 +1,76 @@
+<div id="link_button" class="publish_feature">
+  <h3>Link button</h3>
+  
+  <%= image_tag "publish_features/link_button.png" %>
+  
+  <p>Create a link button that you can copy and paste into other web sites!  You can customize it below:</p>
+  
+  <form id="link_button_generator" style="max-width: 60em;">
+    <table style="width: 100%;">
+      <tr>
+        <th><label for="link_button_text">Text:</label></th>
+        <td><%= text_field_tag "link_button_text", "Take the survey!" %></td>
+        <td style="vertical-align: top; width: 80%;" rowspan="4">
+          <div style="border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+                      background-color: #ddd; padding: 7px; margin-left: 7px;">
+            <table style="width: 100%;">
+              <tr style="vertical-align: top;">
+                <td style="width: 50%;">
+                  <b>Preview</b><br/>
+                  <div id="link_button_preview"></div>
+                </td>
+                <td style="width: 50%;">
+                  <b>HTML Code</b> (paste this into other sites)<br/>
+                  <textarea id="link_button_code"></textarea>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+        <td id="link_button_code" rowspan="3"></td>
+      </tr>
+      <tr>
+        <th><label for="link_button_base_color">Color:</label></th>
+        <td><%= select_tag "link_button_base_color", journey_color_select_options %></td>
+      </tr>
+      <tr>
+        <th colspan="2" align="left">
+          <label for="link_button_new_window">Opens in new window:</label>
+          <%= check_box_tag "link_button_new_window" %>
+        </th>
+      <tr>
+        <th colspan="2"><button type="submit">Preview &raquo;</button></th>
+      </tr>
+    </table>
+  </form>
+  
+  <script type="text/javascript">
+  document.observe('dom:loaded', function() {
+    $('link_button_generator').observe('submit', function(event) {
+      color = $F('link_button_base_color');
+      
+      html = "<a href=\"" + '<%= answer_url(@questionnaire) %>' + "\" ";
+      if ($('link_button_new_window').checked) {
+        html += "target=\"_blank\" ";
+      }
+      html += "style=\"";
+      html += "border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; ";
+      html += "border: 2px solid " + color + "; ";
+      html += "background-color: " + color + "; ";
+      html += "background-image: url(" + '<%= image_url("white-fade.png") %>' + "); ";
+      html += "background-repeat: repeat-x; background-position: 50% 10%; ";
+      html += "color: black; display: inline-block; font-size: 120%; ";
+      html += "margin: 0.5em; padding: 0.5em; ";
+      html += "text-decoration: none;";
+      html += "\">";
+      html += $F("link_button_text") + " &raquo;";
+      html += "</a>";
+      
+      $('link_button_preview').update(html);
+      $('link_button_code').value = html;
+      
+      event.stop();
+    });
+  });
+  </script>
+</div>

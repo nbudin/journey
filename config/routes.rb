@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :questionnaires, :member => { :pagelist => :get, 
+  map.resources :questionnaires, :collection => { :responses => :get },
+                                 :member => { :pagelist => :get, 
                                               :available_special_field_purposes => :get, 
                                               :customize => :get,
                                               :publish => :get,
@@ -7,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
                                               :share => :get,
                                               :preview => :get,
                                               :print => :get } do |questionnaires|
+    questionnaires.publish '/publish/:action.:format', :controller => "publish"
     questionnaires.resources :pages, :name_prefix => nil, :collection => { :sort => :post } do |pages|
       pages.resources :questions, :name_prefix => nil, :collection => { :sort => :post }, :member => { :duplicate => :post, :edit_options => :get } do |questions|
         questions.resources :question_options, :name_prefix => nil, :collection => { :sort => :post }
@@ -27,6 +29,8 @@ ActionController::Routing::Routes.draw do |map|
   map.response_graphs '/questionnaires/:questionnaire_id/responses/graphs/', :controller => "graphs"
   map.response_graph '/questionnaires/:questionnaire_id/responses/graphs/:action.:format', :controller => "graphs"
 
+  map.answer '/answer/:id', :controller => 'answer', :action => 'index'
+  map.dashboard '/dashboard', :controller => 'root', :action => 'dashboard'
 
   # Here's a sample route:
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'

@@ -1,0 +1,81 @@
+<style type="text/css">
+#leftcolumn, #rightcolumn {
+  width: 48%;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+#leftcolumn {
+  float: left;
+}
+
+#rightcolumn {
+  float: right;
+}
+
+.dashbox {
+  width: 100%;
+  border: 2px #bad032 solid;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin-bottom: 1em;
+}
+
+.dashbox h2 {
+  margin-top: 0;
+  background-color: #bad032;
+  color: black;
+  padding: 2px;
+  margin-bottom: 2px;
+}
+
+.dashbox ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 2px;
+  overflow: auto;
+}
+
+.dashbox ul li {
+  border: 1px #c1ddff solid;
+  background-color: #daebff;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  margin-bottom: 0.25em;
+  margin-top: 0.25em;
+  padding: 3px;
+}
+
+.dashbox ul li a, .dashbox ul li a:visited {
+    text-decoration: none;
+}
+
+.dashbox ul li a:hover {
+  text-decoration: underline;
+}
+
+.dashbox .footer {
+  text-align: right;
+}
+</style>
+
+<div id="leftcolumn">
+  <% Journey::Dashboard.left_dashboxes.each do |partial| -%>
+    <div class="dashbox">
+      <%= render :partial => partial %>
+    </div>
+  <% end -%>
+</div>
+
+<div id="rightcolumn">
+  <% Journey::Dashboard.right_dashboxes.each do |partial| -%>
+    <div class="dashbox">
+      <%= render :partial => partial %>
+    </div>
+  <% end -%>
+</div>
+
+<div style="clear: both;">
+</div>

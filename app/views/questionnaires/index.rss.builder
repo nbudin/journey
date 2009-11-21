@@ -1,8 +1,8 @@
 xml.instruct! :xml, :version=>"1.0" 
 xml.rss(:version=>"2.0"){
   xml.channel{
-    xml.title("Journey Questionnaires")
-    desc = "Questionnaires in Journey"
+    xml.title("New on Journey")
+    desc = "The newest surveys published on Journey"
     if params[:tag] and params[:tag] != ''
       desc += " tagged as '#{params[:tag]}'"
     end

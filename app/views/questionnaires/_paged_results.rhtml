@@ -1,34 +1,7 @@
 <% p = logged_in? ? logged_in_person : nil-%>
 
-<div id="questionnaire_list">
-	<% for questionnaire in @questionnaires %>
-          <% authors = questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
-          <div class="questionnairesummary">  
-            <div id="questionnairesummary_<%=questionnaire.id%>">
-              <table style="width: 100%;">
-                <td style="width: 50%; overflow: hidden;">
-				  <% if logged_in? and Questionnaire.permission_names.any? { |p| logged_in_person.permitted?(questionnaire, p) } -%>
-                  	<b><%= link_to questionnaire.title, questionnaire %></b>
-				  <% else -%>
-				    <b><%=h questionnaire.title%></b>
-					(<%= link_to "Answer", :controller => "answer", :action => "index", :id => questionnaire.id -%>)
-				  <% end -%>
-                </td>
-                <td style="width: 20%; overflow: hidden;">
-                  <% if questionnaire.tags.length > 0 %>
-                    Tags:
-                    <span style="font-size: 90%; font-weight: bold;">
-                     <%=h questionnaire.tag_names.join(", ") %>
-                    </span>
-                  <% end -%>
-                </td>
-                <td style="width: 30%; overflow: hidden;">
-                  <%= h authors %>
-                </td>
-              </table>
-            </div>
-          </div>
-	<% end %>
+<ul id="questionnaire_list" style="list-style-type: none; padding-left: 0; margin-left: 0;">
+	<%= render :partial => "questionnaire", :collection => @questionnaires %>
   <%= will_paginate @questionnaires, :renderer => "RemoteLinkRenderer" %>
-</div>					
+</ul>					
 

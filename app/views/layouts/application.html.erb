@@ -15,23 +15,21 @@
     <%= stylesheet_link_tag 'ie6hacks' %>
   <![endif]-->
   <%= stylesheet_link_tag 'auth' %>
+  
+  <%= yield :stylesheets %>
+  
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag '/jipe/jester' %>
   <%= javascript_include_tag '/jipe/jipe' %>
   <%= javascript_include_tag 'overlabel' %>
   <%= javascript_include_tag "layout" %>
+  
+  <%= yield :javascripts %>
+  
   <%= include_tiny_mce_if_needed %>
   <% if @rss_url %>
     <link rel="alternate" title="RSS Feed" href="<%=@rss_url%>" type="application/rss+xml"/>
   <% end %>
-  <script type="text/javascript">
-/*      Event.addBehavior.reassignAfterAjax = true;
-      Event.addBehavior({
-         'div.pagination a' : Remote.Link,
-         'a.viewresponse': Remote.Link,
-         'form.filterbar' : Remote.Form
-      });*/
-  </script>
 </head>
 <body id="body">
 
@@ -48,8 +46,14 @@
 
 <div class="topbar">
     <%= user_options %>
-    <%= link_to(image_tag("journey26-logo.png", :border => "0", :alt => "Journey 2.6"), questionnaires_url) %>
+    <%= image_tag("journey26-logo.png", :alt => "Journey") %>
 </div>
+
+<ul class="globalnav">
+  <%= globalnav_links %>
+</ul>
+
+<div style="clear: both;"></div>
 
 <%= @content_for_layout %>
 

@@ -46,10 +46,40 @@ module Journey
     end
   end
   
+  module Dashboard
+    @@left_dashboxes = []
+    @@right_dashboxes = []
+        
+    def self.add_dashbox(partial, column, where='bottom')
+      dashbox_set = case column
+      when :left
+        @@left_dashboxes
+      when :right
+        @@right_dashboxes
+      end
+      
+      case where.to_sym
+      when :top
+        dashbox_set.insert(0, partial)
+      when :bottom
+        dashbox_set << partial
+      end
+    end
+    
+    def self.left_dashboxes
+      @@left_dashboxes.dup
+    end
+    
+    def self.right_dashboxes
+      @@right_dashboxes.dup
+    end
+  end
+  
   module SiteOptions
     @@site_root_if_logged_out = { :controller => "questionnaires", :action => "index" }
-    @@site_root_if_logged_in = { :controller => "questionnaires", :action => "index" }
+    @@site_root_if_logged_in = { :controller => "root", :action => "dashboard" }
     @@footer_partial = nil
+    @@default_layout = "application"
     
     def self.footer_partial=(partial)
       @@footer_partial = partial
@@ -73,6 +103,14 @@ module Journey
     
     def self.site_root_if_logged_out=(sr)
       @@site_root_if_logged_out = sr
+    end
+    
+    def self.default_layout=(layout)
+      @@default_layout = layout
+    end
+    
+    def self.default_layout
+      @@default_layout
     end
   end
 end

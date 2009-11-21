@@ -1,0 +1,9 @@
+<ul class="tabstrip">
+	<% if logged_in? -%>
+	  <%= tabstrip_li "My Responses", { :action => 'responses' }, :controller => 'questionnaires', :only => 'responses' %>
+	<% end -%>
+	<%= tabstrip_li "Explore Surveys", questionnaires_path, :controller => 'questionnaires', :only => 'index' %>
+  <% if logged_in? -%>
+	  <%= tabstrip_li "Create/Import a Survey", new_questionnaire_path, :controller => 'questionnaires', :only => 'new' %>
+	<% end -%>
+</ul>

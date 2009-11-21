@@ -5,6 +5,8 @@ RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 #gem 'rack-cache'
 #require 'rack/cache'
 
+require 'journey_questionnaire'
+
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
@@ -21,6 +23,10 @@ Rails::Initializer.run do |config|
   # (enables use of different database adapters for development and test environments)
   config.active_record.schema_format = :ruby
 
+  if RUBY_VERSION < "1.9"
+    # in 1.9, we can use the built-in csv module
+    config.gem 'fastercsv'
+  end
   config.gem 'paginator'
   config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
@@ -33,18 +39,3 @@ Rails::Initializer.run do |config|
 #    import 'config/rack_cache_config'
 #  end
 end
-
-Mime::Type.register "image/png", :png
-
-AeUsers.cache_permissions = false
-
-require 'journey_questionnaire'
-
-Journey::UserOptions.add_logged_out_option("Log in", {:controller => "auth", :action => "login" })
-
-Journey::UserOptions.add_logged_in_option("Profile", {:controller => "account", :action => "edit_profile" })
-Journey::UserOptions.add_logged_in_option("Admin", {:controller => "permission", :action => "admin" },
-                                          :conditional => lambda do |view|
-                                            view.logged_in? and view.logged_in_person.administrator?
-                                           end)
-Journey::UserOptions.add_logged_in_option("Log out", {:controller => "auth", :action => "logout" })

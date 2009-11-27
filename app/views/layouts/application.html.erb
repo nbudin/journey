@@ -50,9 +50,11 @@
     <%= image_tag("journey26-logo.png", :alt => "Journey") %>
 </div>
 
-<ul class="globalnav">
-  <%= globalnav_links %>
-</ul>
+<% if globalnav_links.size > 0 -%>
+  <ul class="globalnav">
+    <%= globalnav_links %>
+  </ul>
+<% end -%>
 
 <div style="clear: both;"></div>
 

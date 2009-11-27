@@ -76,7 +76,7 @@ module Journey
   end
   
   module SiteOptions
-    @@site_root_if_logged_out = { :controller => "questionnaires", :action => "index" }
+    @@site_root_if_logged_out = { :controller => "root", :action => "welcome" }
     @@site_root_if_logged_in = { :controller => "root", :action => "dashboard" }
     @@footer_partial = nil
     @@default_layout = "application"

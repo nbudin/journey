@@ -1,0 +1,31 @@
+<div style="max-width: 60em; position: relative;">
+  <h1>Welcome!</h1>
+
+  <p>Journey is a site for online surveys.</p>
+  
+  <div id="leftcolumn">
+    <div class="dashbox">
+      <h2>Jump right in</h2>
+
+      <p>We've got lots of surveys!  If you want to see what our subscribers have created,
+        feel free to have a look around.</p>
+    
+      <% link_to(questionnaires_path, { :class => "bigbutton" }) do -%>
+        Explore surveys &raquo;
+      <% end -%>
+    </div>
+  </div>
+  
+  <div id="rightcolumn">
+    <div class="dashbox">
+      <h2>Your dashboard awaits</h2>
+
+      <p>With a free Journey account, you can keep track of the surveys you've taken, and find new surveys
+        using your Journey dashboard.  Signing up is quick and easy!</p>
+    
+      <% link_to({:controller => "auth", :action => "login"}, { :class => "bigbutton" }) do -%>
+        Log in, or sign up free &raquo;
+      <% end -%>
+    </div>
+  </div>
+</div>

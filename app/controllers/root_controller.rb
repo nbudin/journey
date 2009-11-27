@@ -3,6 +3,9 @@ class RootController < ApplicationController
     redirect_to Journey::SiteOptions.site_root(logged_in?), :status => 307
   end
   
+  def welcome
+  end
+  
   def dashboard
     return index unless logged_in?
     

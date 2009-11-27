@@ -6,6 +6,7 @@ class RootController < ApplicationController
   end
   
   def welcome
+    return index if logged_in?
   end
   
   def dashboard

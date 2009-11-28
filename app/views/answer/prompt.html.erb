@@ -5,12 +5,15 @@
 
 <div class="questionnaire_startbox">
   <% if logged_in? -%>
-    <h3>Welcome, <%=h logged_in_person.name %>!</h3>
-    <span style="font-style: italic; font-size: 95%;">
-      Not <%=h logged_in_person.name %>?  <%= link_to "Click here to log out.", :controller => "auth", :action => "logout" %>
-    </span>
+    <% content_for :startbox_heading do -%>
+      <h3>Welcome, <%=h logged_in_person.name %>!</h3>
+      <span style="font-style: italic; font-size: 95%;">
+        Not <%=h logged_in_person.name %>?  <%= link_to "Click here to log out.", :controller => "auth", :action => "logout" %>
+      </span>
+    <% end -%>
     
-    <% if @responses.length > 0 -%>    
+    <% if @responses.length > 0 -%>   
+     <% content_for :startbox_main_option do -%>
         <p>You've already started this survey.</p>
         
         <ul>
@@ -35,47 +38,75 @@
             <%= link_to "Start new response", :action => 'start', :id => @questionnaire.id %>
           </li>
         </ul>
+      <% end -%>
     <% else -%>
-      <p>
-        <%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton" %>
-      </p>
+      <% content_for :startbox_main_option do -%>
+        <p>
+          <%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton" %>
+        </p>
+      <% end -%>
     <% end -%>
   <% else -%>
-    <h3>Ready to begin?</h3>
+    <% content_for :startbox_heading do -%>
+      <h3>Ready to begin?</h3>
+    <% end -%>
     <% if @questionnaire.require_login -%>
-      <p>This survey requires you to log into Journey in order to answer it.</p>
+      <% content_for :startbox_main_option do -%>
+        <p>This survey requires you to log into Journey in order to answer it.</p>
       
-      <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton" %> 
-    <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
-      <p>
         <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton" %> 
-        <br/>
-        <%= link_to "Answer this survey without logging in &raquo;", { :action => 'start', :id => @questionnaire.id } %>
-        <br/>
-        <%= link_to_function("Why log in?", :id => "why_login_link") do |page|
-               page['why_login'].show
-               page['why_login_link'].hide
-             end %>
-      </p>
+      <% end -%>
+    <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
+      <% content_for :startbox_main_option do -%>
+        <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton" %> 
+      <% end -%>
+      <% content_for :startbox_additional_options do -%>
+        <li>
+          <%= link_to "Answer this survey without logging in &raquo;", { :action => 'start', :id => @questionnaire.id } %>
+        </li>
+        <li>
+          <%= link_to_function("Why log in?", :id => "why_login_link") do |page|
+                page['why_login'].show
+                page['why_login_link'].hide
+              end %>
+        </li>
+      <% end -%>
               
-      <div id="why_login" style="display: none;">
-        <p><b>Why log in?</b></p>
-        <ul>
-          <% if @questionnaire.special_fields.length > 0 -%>
-            <li>We'll be able to pre-fill some of the answers to this survey based on your account information.</li>
-          <% end -%>
-          <% if @questionnaire.allow_finish_later -%>
-            <li>You'll be able to put aside this survey and come back to it later if you wish.</li>
-          <% end -%>
-          <% if @questionnaire.allow_amend_response -%>
-            <li>You'll be able to amend your response if you change your mind about anything after you submit the survey.</li>
-          <% end -%>
-        </ul>
-      </div>
+      <% content_for :startbox_additional_content do -%>
+        <div id="why_login" style="display: none;">
+          <p><b>Why log in?</b></p>
+          <ul>
+            <% if @questionnaire.special_fields.length > 0 -%>
+              <li>We'll be able to pre-fill some of the answers to this survey based on your account information.</li>
+            <% end -%>
+            <% if @questionnaire.allow_finish_later -%>
+              <li>You'll be able to put aside this survey and come back to it later if you wish.</li>
+            <% end -%>
+            <% if @questionnaire.allow_amend_response -%>
+              <li>You'll be able to amend your response if you change your mind about anything after you submit the survey.</li>
+            <% end -%>
+          </ul>
+        </div>
+      <% end -%>
     <% else -%>
-      <p><%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton" %></p>
+      <% content_for :startbox_main_option do -%>
+        <p><%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton" %></p>
+      <% end -%>
     <% end -%>
   <% end -%>
+  
+  <% if @questionnaire.allow_preview -%>
+    <% content_for :startbox_additional_options do -%>
+      <li><%= link_to "View a preview of this survey &raquo;", { :action => "preview", :id => @questionnaire.id } %></li>
+    <% end -%>
+  <% end -%>
+  
+  <%= yield :startbox_heading -%>
+  <%= yield :startbox_main_option -%>
+  <ul style="padding-left: 0; margin-left: 0; list-style-type: none;">
+    <%= yield :startbox_additional_options -%>
+  </ul>
+  <%= yield :startbox_additional_content -%>
 </div>
 </div>
       

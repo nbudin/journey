@@ -1,11 +1,20 @@
 <div class="answerpage" id="answerpage">
-	<div class="pagetitle"><%= @page.title %></div>
+	<div class="pagetitle"><%= @page.title %> <% if @previewing %>(Preview)<% end -%></div>
 
 	<% if @resp.questionnaire.pages.length > 1 -%>
 		<div class="pagecount">Page <%= @page.number %> of <%= @page.questionnaire.pages.size %></div>
 	<% end -%>
+	
+	<% if @previewing -%>
+	  <div class="preview_notice">
+	    <b>Note:</b> This is a preview of <%= link_to @questionnaire.title, answer_path(@questionnaire) %>.  Your answers will
+	    not be saved.
+	  </div>
+	<% end -%>
 
-	<% form_tag :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => @page.number do %>
+  <% unless @previewing -%>
+	  <form action="<%= url_for :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => @page.number %>" method="post">
+	<% end -%>
 		<% @page.questions.each do |question| -%>
 		 	<% if question.kind_of? Questions::AnnotationField -%>
     			<% next -%>
@@ -15,7 +24,16 @@
 			</div>
 		<% end -%>
 		
-		<% unless @previewing -%>
+		<% if @previewing -%>
+  		<div class="navbuttons">
+  			<% if @page.number > 1 -%>
+  				<%= button_to "<< Previous page", :page => @page.number - 1, :id => @questionnaire.id %>
+  			<% end -%>
+  			<% if @page.number < @resp.questionnaire.pages.size -%>
+  			  <%= button_to "Next page >>", :page => @page.number + 1, :id => @questionnaire.id %>
+  			<% end -%>
+  		</div>
+		<% else -%>
   		<div class="navbuttons">
   			<% if @page.number > 1 -%>
   				<%= submit_tag "<< Previous page" %>
@@ -31,5 +49,7 @@
   			<% end -%>
   		</div>
   	<% end -%>
-	<% end %>
+	<% unless @previewing -%>
+  </form>
+	<% end -%>
 </div>

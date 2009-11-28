@@ -121,7 +121,7 @@ class AnswerController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id], :include => [:permissions, :pages])
     
     if @questionnaire.pages.size > 0
-      @page = @questionnaire.pages.first
+      @page = @questionnaire.pages[(params[:page] || 1).to_i - 1]
     
       @resp = @questionnaire.responses.build
       @previewing = true

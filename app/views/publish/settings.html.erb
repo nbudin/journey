@@ -55,6 +55,18 @@
         <%= f.label "publication_mode_publicly_visible", "Publish this survey and put it on the public surveys list" %></li>
     </ul>
   </div>
+  
+  <h3>Previewing</h3>
+  <div style="margin-left: 1em">
+    <p>People can look at a preview of this survey before taking it, if you choose to let them.  Do you want
+      to enable this feature?</p>
+    <ul style="list-style-type: none;">
+      <li><%= f.radio_button "allow_preview", true %> 
+        <%= f.label "allow_preview_true", "Yes, let people preview this survey" %></li>
+      <li><%= f.radio_button "allow_preview", false %> 
+        <%= f.label "allow_preview_false", "No, don't let people preview this survey" %></li>
+    </ul>
+  </div>
 
   <h3>Logging in</h3>
   <div id="published_only_options" style="margin-left: 1em">

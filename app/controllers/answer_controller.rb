@@ -57,7 +57,7 @@ class AnswerController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
     
     @resp = Response.new :questionnaire => @questionnaire
-    if logged_in?
+    if @questionnaire.advertise_login and logged_in?
       @resp.person = logged_in_person
     end
     @resp.save!
@@ -88,7 +88,7 @@ class AnswerController < ApplicationController
             @page = @resp.questionnaire.pages[0]
           end
 
-          if logged_in?
+          if @questionnaire.advertise_login and logged_in?
             @page.questions.each do |question|
               if not question.respond_to? 'purpose'
                 next

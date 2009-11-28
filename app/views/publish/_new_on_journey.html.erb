@@ -1,6 +1,8 @@
 <div id="new_on_journey" class="publish_feature">
   <h3>New on Journey</h3>
   
+  <%= image_tag "publish_features/new_on_journey.png" %>
+  
   <% if @questionnaire.publicly_visible -%>        
     <p>Because you made your survey visible to the public, it's automatically included in the "New on Journey" feed.  You
     can see the feed or subscribe to it via RSS using <%= link_to "your dashboard", dashboard_path %>.</p>

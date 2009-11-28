@@ -9,11 +9,12 @@ require 'iconv'
 class ResponsesController < ApplicationController
   perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
   require_permission "view_answers", { :except => [:index] }.update(perm_options)
-  require_permission "edit_answers", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
+  require_permission "edit_answers", {:only => [:new, :edit, :create, :update, :sort]}.update(perm_options)
   
   before_filter :get_questionnaire
   before_filter :set_page_title
   before_filter :require_view_answers_except_rss, :only => [:index]
+  before_filter :require_edit_answers_or_own_response, :only => [:destroy]
     
   # GET /responses
   # GET /responses.xml
@@ -218,11 +219,10 @@ class ResponsesController < ApplicationController
   # DELETE /responses/1
   # DELETE /responses/1.xml
   def destroy
-    @resp = Response.find(params[:id])
     @resp.destroy
 
     respond_to do |format|
-      format.html { redirect_to(responses_url(@questionnaire)) }
+      format.html { redirect_to :back }
       format.xml  { head :ok }
     end
   end
@@ -273,6 +273,13 @@ class ResponsesController < ApplicationController
   def require_view_answers_except_rss
     unless params[:format].to_s == 'rss'
       do_permission_check(@questionnaire, "view_answers", "Sorry, but you are not permitted to view answers to this survey.")
+    end
+  end
+  
+  def require_edit_answers_or_own_response
+    @resp = Response.find(params[:id])
+    unless @questionnaire.allow_delete_responses and logged_in? and logged_in_person == @resp.person
+      do_permission_check(@questionnaire, "edit_answers", "Sorry, but you are not permitted to edit answers to this survey.")
     end
   end
 end

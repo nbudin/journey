@@ -3,6 +3,29 @@
 
 <p><%= sanitize @questionnaire.welcome_text %></p>
 
+<style type="text/css">
+.questionnaire_startbox table th {
+  text-align: left;
+}
+
+.questionnaire_startbox table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.questionnaire_startbox table tr {
+  background-color: #eee;
+}
+
+.questionnaire_startbox table tr.odd {
+  background-color: #ddd;
+}
+
+.questionnaire_startbox table td, .questionnaire_startbox table th {
+  padding: 2px;
+}
+</style>
+
 <div class="questionnaire_startbox">
   <% if logged_in? -%>
     <% content_for :startbox_heading do -%>
@@ -14,30 +37,55 @@
     
     <% if @responses.length > 0 -%>   
      <% content_for :startbox_main_option do -%>
-        <p>You've already started this survey.</p>
+        <p style="margin: 1em; margin-left: 0;">You've already taken this survey.</p>
         
-        <ul>
+        <table>
+          <tr>
+            <th>Response</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
           <% @responses.each do |resp| -%>
-            <li>
-              Response 
-                <% if resp.created_at -%>
-                  started <%= resp.created_at.strftime("%A, %B %d, %Y at %I:%M %p") %>
+            <tr class="<%= cycle "odd", "even" %>">
+              <td>#<%= resp.id %></td>
+              <td>
+                <% if resp.submitted -%>
+                  finished
+                <% else -%>
+                  in progress
                 <% end -%>
-              <% if resp.submitted -%>
-                <% if @questionnaire.allow_amend_response %>
-                  - <%= link_to "Amend response (you will have to re-submit it when done)", :action => 'resume', :id => resp.id %>
+              </td>
+              <td>
+                <% if resp.submitted -%>
+                  <%= resp.submitted_at %>
+                <% else -%>
+                  <%= resp.created_at.strftime("%A, %B %d, %Y at %I:%M %p") %>
                 <% end -%>
-              <% else -%>
-                <% if @questionnaire.allow_finish_later %>
-                  - <%= link_to "Resume answering", :action => 'resume', :id => resp.id %>
+              </td>
+              <td>
+                <% if resp.submitted -%>
+                  <% if @questionnaire.allow_amend_response %>
+                    <%= link_to "Edit", :action => 'resume', :id => resp.id %>
+                  <% end -%>
+                <% else -%>
+                  <% if @questionnaire.allow_finish_later %>
+                    <%= link_to "Resume", :action => 'resume', :id => resp.id %>
+                  <% end -%>
                 <% end -%>
-              <% end -%>
-            </li>
+                <% if @questionnaire.allow_delete_responses %>
+                  <%= link_to "Delete", response_url(@questionnaire, resp), :method => "delete", 
+                        :confirm => "Are you sure you want to delete response \##{resp.id}?" %>
+                <% end -%>
+              </td>
+            </tr>
           <% end -%>
-          <li>
-            <%= link_to "Start new response", :action => 'start', :id => @questionnaire.id %>
-          </li>
-        </ul>
+          <tr class="<%= cycle "odd", "even" %>">
+            <td colspan="4">
+              <%= link_to "Start new response &raquo;", :action => 'start', :id => @questionnaire.id %>
+            </td>
+          </tr>
+        </table>
       <% end -%>
     <% else -%>
       <% content_for :startbox_main_option do -%>

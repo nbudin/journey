@@ -178,7 +178,7 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       if @questionnaire.update_attributes(params[:questionnaire])
-        format.html { redirect_to :back }
+        format.html { redirect_to params[:return_to] || :back }
         format.xml  { head :ok }
         format.json { head :ok }
       else

@@ -2,7 +2,6 @@ class PagesController < ApplicationController
   perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
   require_permission "edit", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
 
-  layout "answer"
   before_filter :get_questionnaire
 
   # GET /pages
@@ -106,6 +105,10 @@ class PagesController < ApplicationController
   end
 
   private 
+  def default_layout
+    "answer"
+  end
+  
   def get_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
   end

@@ -5,7 +5,7 @@ RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 #gem 'rack-cache'
 #require 'rack/cache'
 
-require 'journey_questionnaire'
+require File.join(File.dirname(__FILE__), '..', 'lib', 'journey_questionnaire')
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')

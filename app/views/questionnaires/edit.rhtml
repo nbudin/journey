@@ -47,7 +47,10 @@ function addEventToUnload(element, event, callback) {
 function reloadPagelist() {
   for (i=0; i<eventsToUnload.length; i++) {
     etu = eventsToUnload[i];
-    Event.stopObserving(etu['element'], etu['event'], etu['callback']);
+    try {
+      Event.stopObserving(etu['element'], etu['event'], etu['callback']);
+    } catch (e) {
+    }
   }
   new Ajax.Updater('pagelist', '<%= questionnaire_url(@questionnaire.id) %>/pagelist', { method: 'get', evalScripts: true });
 }

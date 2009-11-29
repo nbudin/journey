@@ -26,7 +26,7 @@
       <%=text_field_tag "questionnaire[tags]", @questionnaire.tag_names.join(", ") %>
     <% elsif @questionnaire.tags.size > 0 -%>
       <br/>Tags:
-      <%= @questionnaire.tag_names.collect { |t| link_to t, questionnaires_path(:tag => t) }.join(", ") %>
+      <%= tag_links @questionnaire %>
     <% end -%>
     
     <p>

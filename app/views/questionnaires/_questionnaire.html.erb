@@ -14,7 +14,7 @@
         <% if questionnaire.tags.length > 0 %>
           Tags:
           <span style="font-size: 90%; font-weight: bold;">
-           <%= questionnaire.tag_names.collect { |t| link_to t, questionnaires_path(:tag => t) }.join(", ") %>
+           <%= tag_links questionnaire %>
           </span>
         <% end -%>
       </td>

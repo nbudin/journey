@@ -1,5 +1,9 @@
 # Methods added to this helper will be available to all templates in the application.
-module ApplicationHelper    
+module ApplicationHelper 
+  def tag_links(questionnaire)
+    questionnaire.tag_names.collect { |t| link_to t, questionnaires_path(:tag => t) }.join(", ")
+  end
+     
   def page_title
     components = []
     if @page_title

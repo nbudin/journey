@@ -92,6 +92,7 @@ class PagesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to pages_url(@questionnaire) }
       format.xml  { head :ok }
+      format.json { head :ok }
     end
   end
   

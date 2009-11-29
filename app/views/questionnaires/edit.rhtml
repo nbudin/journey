@@ -21,7 +21,7 @@ function switchPage(id, title) {
 }
 
 function deletePage(id) {
-  new Ajax.Request('<%= pages_url(@questionnaire) %>/'+id,
+  new Ajax.Request('<%= pages_url(@questionnaire) %>/'+id+'.json',
     {
       method: 'delete',
       onSuccess: function() {

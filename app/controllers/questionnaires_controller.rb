@@ -217,6 +217,9 @@ class QuestionnairesController < ApplicationController
           end
         end)
       end
+      format.json do
+        render :json => @questionnaire.unused_special_field_purposes.to_json
+      end
     end
   end
 

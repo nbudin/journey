@@ -15,11 +15,19 @@ class Questions::RangeField < Questions::Field
   def range_boundaries
     if step > 0
       if min > max
-        errors.add('min', 'cannot be greater than max if step is positive')
+        if min_changed?
+          errors.add('min', "must be at most #{max}")
+        else
+          errors.add('max', "must be at least #{min}")
+        end
       end
     else
       if min < max
-        errors.add('min', 'cannot be less than max if step is negative')
+        if min_changed?
+          errors.add('min', "must be at least #{max} (because step is negative)")
+        else
+          errors.add('max', "must be at most #{min} (because step is negative)")
+        end
       end
     end
   end

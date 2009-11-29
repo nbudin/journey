@@ -13,7 +13,17 @@
 
 <script type="text/javascript">
 new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
-   { externalControl: 'edit_page_title' });
+   { externalControl: 'edit_page_title',
+     onComplete: function () {
+       if (parent != null) {
+         try {
+           parent.document.getElementById('page_<%= @page.id %>').getElementsBySelector('.caption').each(function (caption) {
+             caption.update($('page_title').innerHTML);
+           });
+         } catch (e) {
+         }
+       }
+     } });
 </script>
 
         <% if @questionnaire.pages.length > 1 -%>

@@ -21,14 +21,16 @@ function switchPage(id, title) {
 }
 
 function deletePage(id) {
-  new Ajax.Request('<%= pages_url(@questionnaire) %>/'+id,
+  new Ajax.Request('<%= pages_url(@questionnaire) %>/'+id+'.json',
     {
       method: 'delete',
       onSuccess: function() {
+        Sortable.destroy('pagelist');
         $('page_'+id).remove();
         if (currentPage == id) {
           switchPage(null, "");
         }
+        reloadPagelist();
       },
       onFailure: function(transport) {
         alert("Error while deleting page: "+transport.responseText);
@@ -45,7 +47,10 @@ function addEventToUnload(element, event, callback) {
 function reloadPagelist() {
   for (i=0; i<eventsToUnload.length; i++) {
     etu = eventsToUnload[i];
-    Event.stopObserving(etu['element'], etu['event'], etu['callback']);
+    try {
+      Event.stopObserving(etu['element'], etu['event'], etu['callback']);
+    } catch (e) {
+    }
   }
   new Ajax.Updater('pagelist', '<%= questionnaire_url(@questionnaire.id) %>/pagelist', { method: 'get', evalScripts: true });
 }

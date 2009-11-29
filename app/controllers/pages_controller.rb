@@ -3,6 +3,7 @@ class PagesController < ApplicationController
   require_permission "edit", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
 
   before_filter :get_questionnaire
+  layout "answer"
 
   # GET /pages
   # GET /pages.xml
@@ -92,6 +93,7 @@ class PagesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to pages_url(@questionnaire) }
       format.xml  { head :ok }
+      format.json { head :ok }
     end
   end
   
@@ -105,10 +107,6 @@ class PagesController < ApplicationController
   end
 
   private 
-  def default_layout
-    "answer"
-  end
-  
   def get_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
   end

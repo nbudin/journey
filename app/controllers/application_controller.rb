@@ -2,14 +2,8 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  layout :default_layout
   helper :user_options
   helper :question_answer
   helper :tabstrip
   helper :color
-  
-  private
-  def default_layout
-    Journey::SiteOptions.default_layout
-  end
 end

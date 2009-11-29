@@ -182,9 +182,15 @@ function duplicateQuestion(questionId, times) {
 
 function setSpecialPurpose(questionId, purpose) {
   if (purpose == null) {
-    new Ajax.Request(sitePrefix+'/questionnaires/'+questionnaireId+'/available_special_field_purposes.xml',
+    new Ajax.Request(sitePrefix+'/questionnaires/'+questionnaireId+'/available_special_field_purposes.json',
                      { 'method': 'get',
                        'onSuccess': function(transport) {
+                          var availablePurposes = transport.responseText.evalJSON();
+                          if (availablePurposes.length == 0) {
+                              alert("All special-purpose fields are already in use in this survey.");
+                              return;
+                          }
+                          
                           body = $('questionbody_'+questionId);
                           
                           realChildren = [];
@@ -202,8 +208,7 @@ function setSpecialPurpose(questionId, purpose) {
                           purposeSelector = document.createElement('select');
                           purposeSelector.setAttribute('style', 'margin-right: 3em;');
                           purposeSelector.setAttribute('id', 'purpose_selector_'+questionId);
-                          
-                          availablePurposes = Jester.Tree.parseXML(transport.responseText).available_purposes.purpose;
+
                           function addPurpose(purpose) {
                             option = document.createElement('option');
                             option.setAttribute('value', purpose);
@@ -211,11 +216,7 @@ function setSpecialPurpose(questionId, purpose) {
                             purposeSelector.appendChild(option);
                           }
                           addPurpose('');
-                          if (typeof availablePurposes == "string") {
-                            addPurpose(availablePurposes);
-                          } else {
-                            availablePurposes.each(function(p) {addPurpose(p);});
-                          }
+                          availablePurposes.each(function(p) {addPurpose(p);});
                           
                           body.appendChild(purposeSelector);
                              

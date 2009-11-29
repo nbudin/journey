@@ -33,12 +33,6 @@
         <%= sanitize @questionnaire.custom_html %>
 <% end -%>
 
-<% for name in [:notice, :warning, :message] %>
-        <% if flash[name] %>
-                <%= "<div id=\"#{name}\">#{flash[name]}</div>" %>
-        <% end %>
-<% end %>
-
 <% if flash[:error_messages] -%>
         <div style="color: red; font-size: 125%;">There were errors processing your request:</div>
         <ul>

@@ -97,8 +97,8 @@ class QuestionsController < ApplicationController
         format.json { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @question.errors.to_xml }
-        format.json { render :json => @question.errors.to_json }
+        format.xml  { render :xml => @question.errors.full_messages.to_xml, :status => :bad_request }
+        format.json { render :json => @question.errors.full_messages.join("\n").to_json, :status => :bad_request }
       end
     end
   end

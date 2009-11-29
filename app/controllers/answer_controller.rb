@@ -2,11 +2,7 @@ class AnswerController < ApplicationController
   before_filter :get_questionnaire, :except => [:resume]
   before_filter :check_required_login, :only => [:start]
   
-  
-  private
-  def default_layout
-    "answer"
-  end
+  layout "answer"
   
   public
   

@@ -16,6 +16,9 @@
     <%= stylesheet_link_tag 'ie6hacks' %>
   <![endif]-->
   <%= stylesheet_link_tag 'auth' %>
+  <% Journey::SiteOptions.additional_stylesheets.each do |ss| -%>
+    <%= stylesheet_link_tag ss %>
+  <% end -%>
   
   <%= yield :stylesheets %>
   

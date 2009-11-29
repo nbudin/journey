@@ -79,7 +79,7 @@ module Journey
     @@site_root_if_logged_out = { :controller => "root", :action => "welcome" }
     @@site_root_if_logged_in = { :controller => "root", :action => "dashboard" }
     @@footer_partial = nil
-    @@default_layout = "application"
+    @@additional_stylesheets = []
     
     def self.footer_partial=(partial)
       @@footer_partial = partial
@@ -105,12 +105,12 @@ module Journey
       @@site_root_if_logged_out = sr
     end
     
-    def self.default_layout=(layout)
-      @@default_layout = layout
+    def self.additional_stylesheets
+      @@additional_stylesheets
     end
     
-    def self.default_layout
-      @@default_layout
+    def self.add_additional_stylesheet(ss)
+      @@additional_stylesheets << ss
     end
   end
 end

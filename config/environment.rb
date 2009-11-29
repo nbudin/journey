@@ -23,14 +23,15 @@ Rails::Initializer.run do |config|
   # (enables use of different database adapters for development and test environments)
   config.active_record.schema_format = :ruby
 
-  if RUBY_VERSION < "1.9"
-    # in 1.9, we can use the built-in csv module
-    config.gem 'fastercsv'
-  end
+  config.gem 'fastercsv' if RUBY_VERSION < "1.9"
   config.gem 'paginator'
   config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
     :source => 'http://gems.github.com'
-  config.gem 'rmagick', :lib => 'RMagick'
+  if RUBY_PLATFORM =~ /java/
+    config.gem 'rmagick4j', :lib => "RMagick"
+  else
+    config.gem 'rmagick', :lib => 'RMagick'
+  end
   config.gem 'umang-gruff', :lib => 'gruff', :source => 'http://gems.github.com', :version => '~> 0.3.6'
   
   config.action_view.sanitized_allowed_attributes = ['id', 'class', 'style']

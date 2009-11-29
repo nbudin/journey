@@ -25,10 +25,12 @@ function deletePage(id) {
     {
       method: 'delete',
       onSuccess: function() {
+        Sortable.destroy('pagelist');
         $('page_'+id).remove();
         if (currentPage == id) {
           switchPage(null, "");
         }
+        reloadPagelist();
       },
       onFailure: function(transport) {
         alert("Error while deleting page: "+transport.responseText);

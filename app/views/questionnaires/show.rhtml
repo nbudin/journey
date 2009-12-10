@@ -43,7 +43,19 @@
     
       <p>For advanced formatting and other customizations, you can insert custom HTML code by clicking the "HTML" tab.</p>
 	  
-      <%= render :partial => "html_editor", :locals => {:obj => @questionnaire, :field => "welcome_text"}%>
+	  <div style="border: 1px black solid; background-color: white; padding: 0.5em; max-width: 60em;" id="welcome_page_preview">
+		<%= sanitize @questionnaire.welcome_text %>
+		<p>
+		  <%= button_to_function "Edit welcome text &raquo;" do |page|
+			page['welcome_page_editor'].show
+			page['welcome_page_preview'].hide
+		  end -%>
+		</p>
+	  </div>
+	  
+	  <div id="welcome_page_editor" style="display: none; width: 60em;">
+        <%= render :partial => "html_editor", :locals => {:obj => @questionnaire, :field => "welcome_text"}%>
+	  </div>
     <% else -%>
 	  <% if @questionnaire.welcome_text.blank? -%>
 	  	<p>This survey has no custom welcome page content.</p>

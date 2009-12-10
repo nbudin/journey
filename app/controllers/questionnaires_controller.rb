@@ -176,7 +176,7 @@ class QuestionnairesController < ApplicationController
     respond_to do |format|
       if @questionnaire.save
         @questionnaire.grant(logged_in_person)
-        format.html { redirect_to questionnaires_url }
+        format.html { redirect_to questionnaire_url(@questionnaire) }
         format.xml  { head :created, :location => questionnaire_url(@questionnaire) }
       else
         format.html { redirect_to :action => "index" }

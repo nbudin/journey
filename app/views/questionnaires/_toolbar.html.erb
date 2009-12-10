@@ -6,7 +6,7 @@
        <%= tabstrip_li "Edit", edit_questionnaire_path(@questionnaire), 
                         :level => 2, :action => 'edit', :disabled => @questionnaire.is_open %>
        <%= tabstrip_li "Customize", customize_questionnaire_path(@questionnaire), 
-                        :level => 2, :action => 'customize', :disabled => @questionnaire.is_open %>
+                        :level => 2, :action => 'customize' %>
        <%= tabstrip_li "Export/Print", export_questionnaire_path(@questionnaire), 
                         :level => 2, :action => 'export' %>
 	   <%= tabstrip_li "Share", share_questionnaire_path(@questionnaire), 

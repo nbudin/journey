@@ -2,12 +2,23 @@
 
 <div class="propertypage">
 	<h2>Create a new survey</h2>
-		<% form_for(:questionnaire, @questionnaire, :url => questionnaires_path) do |f| %>
-		  <p><label for="questionnaire_title">Title:</label> <%= f.text_field "title" %></p>
-		  <%= render :partial => 'creator_warnings' %> 
-		  <%= submit_tag "Create" %>
-		<% end %>
-	</h2>
+	<% form_for(:questionnaire, @questionnaire, :url => questionnaires_path) do |f| %>
+	  <p><label for="questionnaire_title">Title:</label> <%= f.text_field "title" %></p>
+	  <%= render :partial => 'creator_warnings' %> 
+	  <%= submit_tag "Create" %>
+	<% end %>
+	
+	<h2>Copy an existing survey</h2>
+	<% form_for(:questionnaire, @questionnaire, :url => questionnaires_path) do |f| %>
+	  <p>
+		<label for="clone_questionnaire_id">Which survey would you like to make a copy of?</label></p>
+	  <p>
+		<%= select_tag "clone_questionnaire_id", options_for_select(
+		@cloneable_questionnaires.collect {|q| [q.title, q.id]}
+	  ) %>
+	  </p>
+	  <%= submit_tag "Copy" %>
+	<% end %>
 	
 	<h2>Import a survey from XML</h2>
     <% form_tag(questionnaires_path, :multipart => true) do %>

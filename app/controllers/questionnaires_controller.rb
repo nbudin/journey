@@ -112,6 +112,16 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/new
   def new
     @questionnaire = Questionnaire.new
+    
+    @roles = logged_in_person.roles
+    perm_conds = "permission = 'edit' and (person_id = #{logged_in_person.id}"
+    if @roles.length > 0
+      perm_conds << " OR role_id IN (#{@roles.collect {|r| r.id}.join(",")})"
+    end
+    perm_conds << ")"
+    
+    @cloneable_questionnaires = Questionnaire.all(:order => "id DESC",
+                                        :conditions => perm_conds, :joins => :permissions).uniq
   end
 
   # GET /questionnaires/1;edit
@@ -153,6 +163,10 @@ class QuestionnairesController < ApplicationController
         redirect_to :action => "index"
         return
       end
+    elsif params[:clone_questionnaire_id]
+      @questionnaire = Questionnaire.find(params[:clone_questionnaire_id]).deepclone
+      @questionnaire.title = "Copy of #{@questionnaire.title}"
+      @questionnaire.is_open = false
     else
       p = params[:questionnaire] || {}
       p[:title] ||= "Untitled questionnaire"

@@ -142,7 +142,29 @@ class Questionnaire < ActiveRecord::Base
       self.publicly_visible = true
     end
   end
+  
+  def deepclone
+    new_questionnaire = self.clone
+    pages.each do |page|
+      new_page = new_questionnaire.pages.build(page.attributes)
+      page.questions.each do |question|
+        new_question = new_page.questions.build(question.attributes)
+        new_question.type = question.type
+        if question.respond_to?(:purpose) && question.purpose
+          new_sfa = new_questionnaire.special_field_associations.build(:question => new_question,
+                                                                       :purpose => question.purpose)
+        end
+        question.question_options do |option|
+          new_option = new_question.question_options.build(option.attributes)
+        end
+      end
+    end
+    taggings.each do |tagging|
+      new_questionnaire.taggings.build(:tag => tagging.tag)
+    end
     
+    return new_questionnaire
+  end
 
   def to_xml(options = {})
     options[:indent] ||= 2

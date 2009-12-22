@@ -154,7 +154,7 @@ class Questionnaire < ActiveRecord::Base
           new_sfa = new_questionnaire.special_field_associations.build(:question => new_question,
                                                                        :purpose => question.purpose)
         end
-        question.question_options do |option|
+        question.question_options.each do |option|
           new_option = new_question.question_options.build(option.attributes)
         end
       end

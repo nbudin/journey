@@ -27,8 +27,7 @@ class Question < ActiveRecord::Base
       Questions::RangeField,
       Questions::CheckBoxField,
       Questions::DropDownField,
-      Questions::RadioField,
-      Questions::AnnotationField ]
+      Questions::RadioField ]
   end
   
   def self.types_for_sql(types)

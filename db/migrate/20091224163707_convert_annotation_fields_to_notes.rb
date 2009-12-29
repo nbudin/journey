@@ -1,4 +1,10 @@
 class ConvertAnnotationFieldsToNotes < ActiveRecord::Migration
+  class Questions::AnnotationField < Questions::FreeformField
+    def self.friendly_name
+      "Admin notes"
+    end
+  end
+  
   def self.up
     add_column :responses, :notes, :text
     
@@ -26,11 +32,34 @@ class ConvertAnnotationFieldsToNotes < ActiveRecord::Migration
           
           r.save
         end
+        
+        annotation_fields.each do |field|
+          field.destroy
+        end
       end
     end
   end
 
   def self.down
+    needs_annotation = Questionnaire.all(:include => :responses).select do |q|
+      q.responses.any? { |r| !r.notes.blank? }
+    end
+    
+    needs_annotation.each do |q|
+      say "Creating 'Notes' AnnotationField for '#{q.title}'"
+      field = Questions::AnnotationField.new(:caption => "Notes")
+      page = q.pages.first || q.pages.create
+      page.questions.insert(0, field)
+      page.save!
+      field.save!
+      
+      say "Converting response notes to AnnotationField answers for '#{q.title}'"
+      q.responses.each do |r|
+        next if r.notes.blank?
+        
+        r.answers.create(:question => field, :value => r.notes)
+      end
+    end
     
     remove_column :responses, :notes
   end

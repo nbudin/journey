@@ -1,7 +1,8 @@
 <%= start_question @question %>
 <% if @editing -%>
-	<%= check_box "question[]", "default_answer",
-		:onChange => "updateDefault(#{@question.id}, this.checked);"%>
+	<%= check_box_tag "question[#{@question.id}][default_answer]", "checked",
+                (@question.default_answer and @question.default_answer != ''),
+		:onChange => "updateDefault(#{@question.id}, this.checked ? 'checked' : '');"%>
 <% else -%>
 	<%= check_box_tag "question[#{@question.id}]", 'checked', (value and value != '') %>
 <% end -%>

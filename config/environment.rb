@@ -12,7 +12,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence those specified here
-    
+
   config.action_controller.session = {
       :key         => '_journey_aegames_org-trunk_session',
       :secret      => 'ca837e0d9bfed2129139ac1712cf768687981f043aca55c15b424d1deee830babca9bf84afea63d9fd18164f9b026b5c5846b3cb1d64d8febeab9618d24a385f',
@@ -32,7 +32,7 @@ Rails::Initializer.run do |config|
   else
     config.gem 'rmagick', :lib => 'RMagick'
   end
-  config.gem 'umang-gruff', :lib => 'gruff', :source => 'http://gems.github.com', :version => '~> 0.3.6'
+  config.gem 'gruff', :version => '~> 0.3.6'
   
   config.action_view.sanitized_allowed_attributes = ['id', 'class', 'style']
 

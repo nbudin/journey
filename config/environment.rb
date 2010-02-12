@@ -32,7 +32,7 @@ Rails::Initializer.run do |config|
   else
     config.gem 'rmagick', :lib => 'RMagick'
   end
-  config.gem 'umang-gruff', :lib => 'gruff', :source => 'http://gems.github.com', :version => '~> 0.3.6'
+  config.gem 'gruff', :version => '~> 0.3.6'
   
   config.action_view.sanitized_allowed_attributes = ['id', 'class', 'style']
 

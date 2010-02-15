@@ -17,11 +17,7 @@ is not officially supported.
 
 Briefly, the procedure for deploying Journey is:
 
-1) Make sure you have the gems installed that Journey needs.  To do
-   this, simply run "rake gems:install" as root, and Rails will find
-   and install the gems it needs.
-
-2) Write a config/database.yml file.  You'll need to configure at
+1) Write a config/database.yml file.  You'll need to configure at
    least a development or production database (depending on the type
    of environment you're deploying to), and you'll also need to
    specify a "users" database.  This can be the same as your main
@@ -29,24 +25,33 @@ Briefly, the procedure for deploying Journey is:
    and roles between different ae_users-based applications, you'll
    probably want to use a separate database.
 
-3) Run "rake db:migrate" to create the Journey tables.
+2) Make sure you have the gems installed that Journey needs.  To do
+   this, simply run "rake gems:install" as root, and Rails will find
+   and install the gems it needs.
 
-4) Create the database tables needed by the ae_users plugin.  (See
+3) Run "git submodule update --init" in the application root, in
+   order to pull in the ae_users plugin.
+
+4) Run "rake db:migrate" to create the Journey tables.  If you're
+   using a production database, this should be 
+   "rake db:migrate RAILS_ENV=production" instead.
+
+5) Create the database tables needed by the ae_users plugin.  (See
    the plugin docs for details.)
    
-5) Start the Journey application server.  Go to the front page using
+6) Start the Journey application server.  Go to the front page using
    a web browser and verify that it works.
 
-6) Sign up for an initial user account.  (Click the "Sign up" link
+7) Sign up for an initial user account.  (Click the "Sign up" link
    in the upper right corner.)
 
-7) Shut down Journey temporarily, and give yourself universal admin
+8) Shut down Journey temporarily, and give yourself universal admin
    privileges in the database.  To do this, insert a row into the
    "permissions" table.  All you need to fill in is the "person_id"
    column using the ID from the ae_users "people" table - leave all
    the other columns as NULL.
 
-8) Start up Journey again.  You should now be an administrator.
+9) Start up Journey again.  You should now be an administrator.
 
 LICENSING
 

@@ -30,7 +30,7 @@
 </head>
 <body>
 <% if @questionnaire and not @suppress_custom_html -%>
-        <%= sanitize @questionnaire.custom_html %>
+        <%= @questionnaire.custom_html %>
 <% end -%>
 
 <% if flash[:error_messages] -%>

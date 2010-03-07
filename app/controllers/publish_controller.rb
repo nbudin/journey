@@ -3,11 +3,14 @@ class PublishController < ApplicationController
   before_filter :get_questionnaire
   
   def index
+    if @questionnaire.is_open
+      render :action => "widgets"
+    end
   end
   
   def settings
   end
-  
+
   private
   def get_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => [:permissions])

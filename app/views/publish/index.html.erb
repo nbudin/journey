@@ -86,8 +86,15 @@ document.observe("dom:loaded", function () {
       <%= render :partial => "embed_survey" %>
     </div>
   <% else -%>
-    <p>This survey is currently <b>in design mode</b>.  If you want to allow people to take the survey, you must publish it.
-    You cannot edit the survey while it is published.</p>
+    <p>
+      <% if @questionnaire.publication_mode == "unpublished" -%>
+        This survey is currently <b>in design mode</b>.  
+      <% else -%>
+        This survey is currently <b>closed to new responses</b>.
+      <% end -%>
+      If you want to allow people to take the survey, you must publish it.
+      You cannot edit the survey while it is published.
+    </p>
     
     <% link_to({ :questionnaire_id => @questionnaire.id, :action => "settings" }, { :class => "bigbutton" }) do -%>
       Publish this survey &raquo;

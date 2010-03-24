@@ -28,7 +28,7 @@ class ResponsesController < ApplicationController
     
     @responses = @questionnaire.valid_responses.paginate :page => params[:page]
     
-    default_columns = ["title", "submitted_at"]
+    default_columns = ["title", "submitted_at", "notes"]
     default_columns += @questionnaire.special_field_associations.select { |sfa| sfa.purpose != 'name' }.collect { |sfa| sfa.question }
     default_columns.push("id")
     
@@ -41,7 +41,7 @@ class ResponsesController < ApplicationController
                     if q and q.questionnaire == @questionnaire
                       q
                     end
-                  elsif [:id, :submitted_at].include?(colspec.to_sym)
+                  elsif [:id, :submitted_at, :notes].include?(colspec.to_sym)
                     colspec
                   end
                 end

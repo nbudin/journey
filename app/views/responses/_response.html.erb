@@ -1,6 +1,19 @@
 <div class="response" id="response">
   <% last_page = nil -%>
 
+  <table class="question" id="notes">
+    <tr>
+      <td class="caption" style="width: 20%;">Notes</td>
+      <td class="questionbody">
+        <% if @editing -%>
+          <%= text_area_tag "response[notes]", resp.notes %>
+        <% else -%>
+          <%= simple_format resp.notes %>
+        <% end -%>
+      </td>
+    </tr>
+  </table>
+
   <% @questionnaire.fields.each do |question| -%>
     <% if last_page != question.page
       last_page = question.page -%>

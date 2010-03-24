@@ -29,6 +29,7 @@ module ResponsesHelper
   def column_selector_options(questionnaire, selected)
     options = [column_selector_header_option("General response fields"),
                column_selector_meta_option("Title", "title", selected),
+               column_selector_meta_option("Notes", "notes", selected),
                column_selector_meta_option("Submitted at", "submitted_at", selected),
                column_selector_meta_option("Response ID", "id", selected)]
     questionnaire.pages.each do |page|

@@ -7,10 +7,6 @@
   
   	<% fieldcount = 0 -%>
     <% page.questions.each do |question| -%>
-    	<% if question.kind_of? Questions::AnnotationField -%>
-    		<% next -%>
-    	<% end -%>
-    	
 			<% if question.kind_of? Questions::Field; fieldcount += 1; end 
 			if question.kind_of? Questions::Divider; fieldcount = 0; end -%>
 			<div class="question <%= if question.kind_of? Questions::Field

@@ -1,11 +1,4 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-annotation_field:
-  id: 1
-  page_id: 1
-  position: 1
-  type: Questions::AnnotationField
-  caption: Casting
-  
 big_text_field:
   id: 2
   page_id: 1

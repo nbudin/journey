@@ -70,7 +70,6 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
 	    	<li id="specials_tab"><%= link_to_function "Demographics", "selectTab('specials');" %></li>
 			<li id="fields_tab"><%= link_to_function "Questions", "selectTab('fields');" %></li>
             <li id="decorators_tab"><%= link_to_function "Display elements", "selectTab('decorators');" %></li>
-            <li id="advanced_tab"><%= link_to_function "Advanced", "selectTab('advanced');" %></li>
           </ul>
           <ul id="decorators" style="display: none; margin: 0;" class="tabpage">
             <% Question.decorator_types.each do |klass| -%>
@@ -79,9 +78,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           </ul>
           <ul id="fields" style="display: none; margin: 0;" class="tabpage">
             <% Question.field_types.each do |klass| -%>
-              <% if not klass.kind_of? Questions::AnnotationField -%>
-                <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
-              <% end -%>
+              <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
             <% end -%>
           </ul>
 	  <ul id="specials" style="display: none; margin: 0;" class="tabpage">
@@ -89,11 +86,6 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
 	      <%= button_to_function h(purpose.humanize), "addQuestion('#{Questionnaire.special_field_type(purpose).name}', '#{purpose}');" %>
             <% end -%>
 	  </ul>
-          <ul id="advanced" style="display: none; margin: 0;" class="tabpage">
-            <% [ Questions::AnnotationField ].each do |klass| -%>
-              <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
-            <% end -%>
-          </ul>
         </td>
         <td style="text-align: right; vertical-align: top;">
           <b><%= link_to_function "&darr;",

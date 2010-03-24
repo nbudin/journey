@@ -125,13 +125,17 @@ class Questionnaire < ActiveRecord::Base
         return "hidden"
       end
     else
-      return "unpublished"
+      if published_at
+        return "closed"
+      else
+        return "unpublished"
+      end
     end
   end
   
   def publication_mode=(mode)
     case mode.to_s
-    when "unpublished"
+    when "unpublished", "closed"
       self.is_open = false
       self.publicly_visible = false
     when "hidden"

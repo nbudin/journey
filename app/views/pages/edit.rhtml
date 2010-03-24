@@ -78,9 +78,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           </ul>
           <ul id="fields" style="display: none; margin: 0;" class="tabpage">
             <% Question.field_types.each do |klass| -%>
-              <% if not klass.kind_of? Questions::AnnotationField -%>
-                <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
-              <% end -%>
+              <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
             <% end -%>
           </ul>
 	  <ul id="specials" style="display: none; margin: 0;" class="tabpage">

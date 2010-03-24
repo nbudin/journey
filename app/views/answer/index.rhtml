@@ -16,9 +16,6 @@
 	  <form action="<%= url_for :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => @page.number %>" method="post">
 	<% end -%>
 		<% @page.questions.each do |question| -%>
-		 	<% if question.kind_of? Questions::AnnotationField -%>
-    			<% next -%>
-    		<% end -%>
 			<div class="question <%= question_cycle(question) %>" id="question<%=question.id%>">
 				<%= render_question question %>
 			</div>

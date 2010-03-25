@@ -5,4 +5,3 @@
 </ul>
 <%= text_area_tag("#{obj.class.name.tableize.singularize}[#{field}]", obj.send(field), :rows => 4, :class => "mceEditor",
                   :style => "width: 60em;", :id => obj_id) %>
-<%= render :partial => "sanitize_warning", :locals => { :orig => obj.send(field), :sanitized => sanitize(obj.send(field)) } %>

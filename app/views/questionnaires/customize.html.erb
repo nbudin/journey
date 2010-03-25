@@ -23,7 +23,6 @@
     <p>You can use this to customize the look and feel of your pages.</p>
 
     <%= f.text_area "custom_css", :rows => 4 %>
-    <%= render :partial => "sanitize_warning", :locals => { :orig => @questionnaire.custom_css, :sanitized => strip_tags(@questionnaire.custom_css) } %>
 
     <p><%= submit_tag %></p>
   <% end -%>

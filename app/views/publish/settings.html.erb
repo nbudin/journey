@@ -21,7 +21,7 @@
       input.enable();
     });
     disableInputsIfRadioGroup("questionnaire[login_policy]", ['unadvertised'], 'login_only_options');
-    disableInputsIfRadioGroup("questionnaire[publication_mode]", ["unpublished"], 'published_only_options');
+    disableInputsIfRadioGroup("questionnaire[publication_mode]", ["unpublished", "closed"], 'published_only_options');
   }
   
   function setupPublishPage() {
@@ -49,12 +49,18 @@
       survey while it is published.  At your option, Journey can also list this survey publicly and display it in the new
       surveys feed.</p>
     <ul style="list-style-type: none;">
-      <li><%= f.radio_button "publication_mode", "unpublished" %> 
-        <%= f.label "publication_mode_unpublished", "Put this survey in design mode" %></li>
+      <% if @questionnaire.published_at -%>
+        <li><%= f.radio_button "publication_mode", "closed" %> 
+          <%= f.label "publication_mode_closed", "Close this survey to new responses (you can edit the questions while it is closed)" %></li>
+      <% else -%>
+        <li><%= f.radio_button "publication_mode", "unpublished" %> 
+          <%= f.label "publication_mode_unpublished", "Leave this survey in design mode" %></li>
+      <% end -%>
       <li><%= f.radio_button "publication_mode", "hidden" %> 
         <%= f.label "publication_mode_hidden", "Publish this survey, but do not put it on the public surveys list" %></li>
       <li><%= f.radio_button "publication_mode", "publicly_visible" %> 
         <%= f.label "publication_mode_publicly_visible", "Publish this survey and put it on the public surveys list" %></li>
+
     </ul>
   </div>
   

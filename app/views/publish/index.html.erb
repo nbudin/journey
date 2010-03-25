@@ -1,96 +1,17 @@
 <%= render :partial => "toolbar" %>
 
-<style type="text/css">
-#leftbar {
-  float: left;
-  width: 15em;
-}
-
-#leftbar p, #leftbar h2 {
-  padding-left: 8px;
-}
-
-#feature_links {
-  list-style-type: none;
-  padding-left: 0;
-  margin-left: 0;
-}
-
-#feature_links li {
-  font-weight: bold;
-  text-align: right;
-}
-
-#feature_links li a {
-  display: block;
-  text-decoration: none;
-  padding-right: 0.5em;
-}
-
-#feature_links li a.selected {
-  background-color: white;
-  border-top: 1px black solid;
-  border-bottom: 1px black solid;
-}
-
-#content {
-  margin-left: 15em;
-  height: 60em;
-  background-color: white;
-  border-left: 1px black solid;
-  padding-left: 0.5em;
-}
-
-#content h3 {
-  margin-top: 0;
-}
-</style>
-
-<script type="text/javascript">
-function selectFeature(id, link) {
-  $$('#content .publish_feature').each(function(element) {
-    element.hide();
-  });
-  $$('#feature_links a').each(function(element) {
-    element.removeClassName('selected');
-  });
-  $(id).show();
-  link.addClassName('selected');
-}
-
-document.observe("dom:loaded", function () {
-  selectFeature("link_button", $('link_button_link'));
-});
-</script>
-
 <div class="propertypage" style="padding: 0;">
-  <% if @questionnaire.is_open -%>
-    <div id="leftbar">
-      <h2 style="margin-top: 0;">Spread the word!</h2>
-    
-      <p style="margin-right: 0.5em;">Your survey is published and accepting
-      responses!  Here are some ways to get people to your survey:</p>
-      
-      <ul id="feature_links">
-        <li><%= feature_link "Link button", "link_button" %></li>
-        <li><%= feature_link "Direct link", "direct_link" %></li>
-        <li><%= feature_link "Embed your survey", "embed_survey" %></li>
-        <li><%= feature_link "New on Journey", "new_on_journey" %></li>
-      </ul>
-    </div>
-    
-    <div id="content">
-      <%= render :partial => "new_on_journey" %>
-      <%= render :partial => "direct_link" %>
-      <%= render :partial => "link_button" %>
-      <%= render :partial => "embed_survey" %>
-    </div>
-  <% else -%>
-    <p>This survey is currently <b>in design mode</b>.  If you want to allow people to take the survey, you must publish it.
-    You cannot edit the survey while it is published.</p>
-    
-    <% link_to({ :questionnaire_id => @questionnaire.id, :action => "settings" }, { :class => "bigbutton" }) do -%>
-      Publish this survey &raquo;
+  <p>
+    <% if @questionnaire.publication_mode == "unpublished" -%>
+      This survey is currently <b>in design mode</b>.
+    <% else -%>
+      This survey is currently <b>closed to new responses</b>.
     <% end -%>
+    If you want to allow people to take the survey, you must publish it.
+    You cannot edit the survey while it is published.
+  </p>
+
+  <% link_to({ :questionnaire_id => @questionnaire.id, :action => "settings" }, { :class => "bigbutton" }) do -%>
+    Publish this survey &raquo;
   <% end -%>
 </div>

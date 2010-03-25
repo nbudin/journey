@@ -80,6 +80,7 @@ module Journey
     @@site_root_if_logged_in = { :controller => "root", :action => "dashboard" }
     @@footer_partial = nil
     @@additional_stylesheets = []
+    @@prepublish_url_options = nil
     
     def self.footer_partial=(partial)
       @@footer_partial = partial
@@ -87,6 +88,18 @@ module Journey
     
     def self.footer_partial
       @@footer_partial
+    end
+
+    def self.prepublish?
+      !@@prepublish_url_options.nil?
+    end
+    
+    def self.prepublish_url_options=(options)
+      @@prepublish_url_options = options
+    end
+    
+    def self.prepublish_url_options(questionnaire)
+      @@prepublish_url_options.update(:questionnaire_id => questionnaire.id)
     end
     
     def self.site_root(logged_in)

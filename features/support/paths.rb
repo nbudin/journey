@@ -10,6 +10,12 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
+    when /the new questionnaire page/
+      new_questionnaire_path
+    when /the responses page for \"([^\"]*)\"/
+      responses_path(Questionnaire.find_by_title($1))
+    when /the login page/
+      url_for(:controller => "auth", :action => "login")
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

@@ -7,12 +7,7 @@ def password_from_name(firstname, lastname)
 end
 
 Then /^I should be logged in$/ do
-  assert session[:person]
-end
-
-Then /^I should be logged in as (.*) (.*)$/ do |firstname, lastname|
-  person = Person.find_by_firstname_and_lastname(firstname, lastname)
-  assert_equal person.id, session[:person]
+  Then "I should see \"Profile\" within \".topbar .user_options\""
 end
 
 Given /^the user (.*) (.*) exists$/ do |firstname, lastname|
@@ -28,13 +23,13 @@ end
 
 Given /^I log in as (.*) (.*)$/ do |firstname, lastname|
   Given "I am on the home page"
-  unless controller.logged_in?
+  unless page.has_content?("Log out")
     Given "I am on the login page"
     And "I fill in \"Email address\" with \"#{email_address_from_name(firstname, lastname)}\""
     And "I choose \"Yes, my password is:\""
     And "I fill in \"login[password]\" with \"#{password_from_name(firstname, lastname)}\""
     And "I press \"Log in\""
-    Then "I should be logged in as #{firstname} #{lastname}"
+    Then "I should be logged in"
   end
 end
 

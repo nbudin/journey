@@ -19,4 +19,7 @@ gem "nbudin-google4r-checkout", "~> 1.0.11"
 
 group :test do
   gem "shoulda"
+  gem "cucumber-rails"
+  gem "database_cleaner", ">= 0.5.0"
+  gem "capybara", ">= 0.3.5"
 end

@@ -8,3 +8,4 @@ db/schema.rb
 .loadpath
 .project
 *.kpf
+.bundle/*

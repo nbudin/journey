@@ -13,8 +13,6 @@ config.whiny_nils    = true
 config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
 
-config.gem "thoughtbot-shoulda", :lib => "shoulda", :source => "http://gems.github.com"
-
 # Tell ActionMailer not to deliver emails to the real world.
 # The :test delivery method accumulates sent emails in the
 # ActionMailer::Base.deliveries array.

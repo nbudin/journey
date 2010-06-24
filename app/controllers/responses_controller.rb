@@ -24,7 +24,7 @@ class ResponsesController < ApplicationController
       sort = "#{sort} DESC"
     end
         
-    @rss_url = responses_url(@questionnaire, :format => "rss", :secret => @questionnaire.rss_secret)
+    @rss_url = response_rss_url(@questionnaire)
     
     @responses = @questionnaire.valid_responses.paginate :page => params[:page]
     
@@ -237,6 +237,9 @@ class ResponsesController < ApplicationController
   
   def export
     
+  end
+  
+  def subscribe
   end
   
   private

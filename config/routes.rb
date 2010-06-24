@@ -20,7 +20,8 @@ ActionController::Routing::Routes.draw do |map|
         :responseviewer => :get,                                                                        
         :aggregate => :get, 
         :print => :get,
-        :export => :get
+        :export => :get,
+        :subscribe => :get
       })
   end
 

@@ -1,0 +1,16 @@
+<%= render :partial => 'analyze_toolbar' %>
+
+<div class="propertypage">
+  <h2>Subscribe via RSS</h2>
+  
+  <p>You can be notified by RSS when new responses come in.  Just copy the feed URL below into an RSS reader, such as
+    <%= link_to "Google Reader", "http://www.google.com/reader" %> or 
+    <%= link_to "Bloglines", "http://www.bloglines.com "%>.  Desktop RSS readers such as 
+    <%= link_to "FeedDemon", "http://www.feeddemon.com" %> or 
+    <%= link_to "NetNewsWire", "http://netnewswireapp.com/"%> will also work.</p>
+    
+  <p><strong>It's important not to share the URL below indiscriminately.  Treat it like a password, since it can
+    reveal personal information about survey respondents.</strong></p>
+  
+  <%= text_field_tag "feed_url", response_rss_url(@questionnaire), :style => "min-width: 60em;" %>
+</div>

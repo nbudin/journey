@@ -6,4 +6,9 @@ class ApplicationController < ActionController::Base
   helper :question_answer
   helper :tabstrip
   helper :color
+  
+  def response_rss_url(questionnaire)
+    responses_url(questionnaire, :format => "rss", :secret => questionnaire.rss_secret)
+  end
+  helper_method :response_rss_url
 end

@@ -1,4 +1,12 @@
 module NavigationHelpers
+  def find_questionnaire(title)
+    Questionnaire.find_by_title(title)
+  end
+  
+  def find_response(questionnaire_title, response_nth)
+    find_questionnaire(questionnaire_title).responses[response_nth.to_i - 1]
+  end
+  
   # Maps a name to a path. Used by the
   #
   #   When /^I go to (.+)$/ do |page_name|
@@ -13,7 +21,13 @@ module NavigationHelpers
     when /the new questionnaire page/
       new_questionnaire_path
     when /the responses page for \"([^\"]*)\"/
-      responses_path(Questionnaire.find_by_title($1))
+      responses_path(find_questionnaire($1))
+    when /the response page for response \#(\d+) for \"([^\"]*)\"/
+      r = find_response($2, $1)
+      response_path(r.questionnaire, r)
+    when /the response editing page for response \#(\d+) for \"([^\"]*)\"/
+      r = find_response($2, $1)
+      edit_response_path(r.questionnaire, r)
     when /the login page/
       url_for(:controller => "auth", :action => "login")
 

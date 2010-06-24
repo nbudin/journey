@@ -17,6 +17,33 @@ set :use_sudo, false
 set :deploy_via, :remote_cache
 set :git_enable_submodules, 1
 
+namespace :bundler do
+  task :create_symlink, :roles => :app do
+    shared_dir = File.join(shared_path, 'bundle')
+    release_dir = File.join(current_release, '.bundle')
+    run("mkdir -p #{shared_dir} && ln -s #{shared_dir} #{release_dir}")
+  end
+  
+  task :bundle_new_release, :roles => :app do
+    bundler.create_symlink
+    run "cd #{release_path} && bundle install --without test"
+  end
+  
+  task :lock, :roles => :app do
+    run "cd #{current_release} && bundle lock;"
+  end
+  
+  task :unlock, :roles => :app do
+    run "cd #{current_release} && bundle unlock;"
+  end
+end
+
+after "deploy:update_code" do
+  bundler.bundle_new_release
+  run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
+  run "rm -f #{release_path}/config/newrelic.yml"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/config/newrelic.yml #{release_path}/config/newrelic.yml"
+end
   
 after "deploy:migrate", "deploy:migrate_paywall"
 after "deploy:migrations", "deploy:migrate_paywall"
@@ -40,7 +67,7 @@ namespace :deploy do
     
     # install the Sugar Pond plugins
     %w{journey_paywall journey_sugarpond_branding}.each do |plugin|
-      run "cd #{current_release} && script/plugin install -r #{branch} git+ssh://git@git.sugarpond.net/#{plugin}.git"
+      run "cd #{current_release} && script/plugin install -r #{branch} git+ssh://git_aegames@git.sugarpond.net/#{plugin}.git"
     end
   end
 

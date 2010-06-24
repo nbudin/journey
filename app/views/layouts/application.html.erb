@@ -61,7 +61,7 @@
 
 <div style="clear: both;"></div>
 
-<%= @content_for_layout %>
+<%= yield %>
 
 <% if Journey::SiteOptions.footer_partial -%>
 	<div id="footer">

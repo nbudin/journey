@@ -4,15 +4,15 @@ end
 
 Factory.define :basic_questionnaire_page1, :class => :page do |p|
   p.title "The one and only page"
-  p.after_build do |p1|
-    p1.questions << Questions::TextField.new(:page => p1, :caption => "Name")
-    p1.questions << Questions::TextField.new(:page => p1, :caption => "Favorite color")
+  p.questions do |p1|
+    [Questions::TextField.new(:caption => "Name"),
+     Questions::TextField.new(:caption => "Favorite color")]
   end
 end
 
 Factory.define :basic_questionnaire, :parent => :questionnaire do |bq|
   bq.title "Basic questionnaire"
-  bq.after_build do |q|
-    q.pages << Factory.build(:basic_questionnaire_page1, :questionnaire => q)
+  bq.pages do |q|
+    [q.association(:basic_questionnaire_page1)]
   end
 end

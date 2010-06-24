@@ -15,7 +15,7 @@ end
 
 gem 'gruff', '~> 0.3.6'
 
-gem "nbudin-google4r-checkout", "~> 1.0.11"
+gem "google4r-checkout", "1.1.beta2"
 
 group :test do
   gem "factory_girl"

@@ -67,7 +67,7 @@ namespace :deploy do
     
     # install the Sugar Pond plugins
     %w{journey_paywall journey_sugarpond_branding}.each do |plugin|
-      run "cd #{current_release} && script/plugin install -r #{branch} git+ssh://git_aegames@git.sugarpond.net/#{plugin}.git"
+      run "cd #{current_release} && script/plugin install -r #{branch} git+ssh://git_aegames@git.aegames.org/#{plugin}.git"
     end
   end
 

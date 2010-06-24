@@ -63,7 +63,7 @@ function showResponseEditor(id) {
 }
 
 function saveEditedResponse() {
-    params = $('edited_response').serialize(true);
+    params = $$('#responsebody > form')[0].serialize(true);
     showResponseThrobber();
     new Ajax.Request(
         '<%= responses_path(@questionnaire) %>/' + ResponseViewer.showingResponseId + '.js',

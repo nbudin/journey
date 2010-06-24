@@ -124,6 +124,7 @@ class ResponsesController < ApplicationController
           page.replace_html 'responsebody', content
           page.replace_html 'responsetitle', @resp.title
           page.call 'showResponseViewer', @resp.id
+          page << "$$('#responsebody > form input[type=submit]').each(function(elt) { elt.hide(); });"
         end
       end
     end

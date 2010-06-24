@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "rails", "~> 2.3.5"
+gem "rails", "2.3.5"
 gem 'fastercsv' if RUBY_VERSION < "1.9"
 gem 'paginator'
 gem 'will_paginate'

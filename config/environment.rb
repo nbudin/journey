@@ -1,7 +1,5 @@
 # Be sure to restart your web server when you modify this file.
 
-RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
-
 #gem 'rack-cache'
 #require 'rack/cache'
 
@@ -22,17 +20,6 @@ Rails::Initializer.run do |config|
   # Use Active Record's schema dumper instead of SQL when creating the test database
   # (enables use of different database adapters for development and test environments)
   config.active_record.schema_format = :ruby
-
-  config.gem 'fastercsv' if RUBY_VERSION < "1.9"
-  config.gem 'paginator'
-  config.gem 'mislav-will_paginate', :version => '~> 2.3.2', :lib => 'will_paginate', 
-    :source => 'http://gems.github.com'
-  if RUBY_PLATFORM =~ /java/
-    config.gem 'rmagick4j', :lib => "RMagick"
-  else
-    config.gem 'rmagick', :lib => 'RMagick'
-  end
-  config.gem 'gruff', :version => '~> 0.3.6'
   
   config.action_view.sanitized_allowed_attributes = ['id', 'class', 'style']
 

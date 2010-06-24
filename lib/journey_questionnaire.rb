@@ -1,7 +1,7 @@
 module Journey
   module QuestionnaireExtensions
     # use this method to add functionality to the Questionnaire model using modules
-    @@extensions = []
+    @@extensions ||= []
     def self.register_extension(ext)
       @@extensions.push(ext) unless @@extensions.include?(ext)
     end
@@ -12,8 +12,8 @@ module Journey
   end
   
   module UserOptions
-    @@logged_out_options = []
-    @@logged_in_options = []
+    @@logged_out_options ||= []
+    @@logged_in_options ||= []
     
     class UserOption
       attr_reader :caption, :url, :conditional
@@ -47,8 +47,8 @@ module Journey
   end
   
   module Dashboard
-    @@left_dashboxes = []
-    @@right_dashboxes = []
+    @@left_dashboxes ||= []
+    @@right_dashboxes ||= []
         
     def self.add_dashbox(partial, column, where='bottom')
       dashbox_set = case column
@@ -76,11 +76,11 @@ module Journey
   end
   
   module SiteOptions
-    @@site_root_if_logged_out = { :controller => "root", :action => "welcome" }
-    @@site_root_if_logged_in = { :controller => "root", :action => "dashboard" }
-    @@footer_partial = nil
-    @@additional_stylesheets = []
-    @@prepublish_url_options = nil
+    @@site_root_if_logged_out ||= { :controller => "root", :action => "welcome" }
+    @@site_root_if_logged_in ||= { :controller => "root", :action => "dashboard" }
+    @@footer_partial ||= nil
+    @@additional_stylesheets ||= []
+    @@prepublish_url_options ||= nil
     
     def self.footer_partial=(partial)
       @@footer_partial = partial

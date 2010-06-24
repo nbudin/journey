@@ -3,14 +3,14 @@ require File.dirname(__FILE__) + '/../test_helper'
 class QuestionnaireTest < ActiveSupport::TestCase
   fixtures :questionnaires
   
-  should_have_many :pages
-  should_have_many :questions, :through => :pages
-  should_have_many :fields, :through => :pages
-  should_have_many :decorators, :through => :pages
+  should have_many(:pages)
+  should have_many(:questions).through(:pages)
+  should have_many(:fields).through(:pages)
+  should have_many(:decorators).through(:pages)
   
-  should_have_many :responses
-  should_have_many :special_field_associations
-  should_have_many :special_fields, :through => :special_field_associations
+  should have_many(:responses)
+  should have_many(:special_field_associations)
+  should have_many(:special_fields).through(:special_field_associations)
   
   context "A newly created Questionnaire" do
     setup do

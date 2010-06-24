@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 class AnswerTest < ActiveSupport::TestCase
   fixtures :questions, :question_options
   
-  should_belong_to :question
-  should_belong_to :response
+  should belong_to(:question)
+  should belong_to(:response)
   
   context "An answer to a selector field with output values" do
     setup do

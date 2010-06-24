@@ -3,7 +3,13 @@
 
   <table class="question" id="notes">
     <tr>
-      <td class="caption" style="width: 20%;">Notes</td>
+      <td class="caption" style="width: 20%;">
+        <% if @editing -%>
+          <label for="response_notes">Notes</label>
+        <% else -%>
+          Notes
+        <% end -%>
+      </td>
       <td class="questionbody">
         <% if @editing -%>
           <%= text_area_tag "response[notes]", resp.notes %>
@@ -23,7 +29,13 @@
     <% answer = resp.answer_for_question(question) -%>
     <table class="question" id="question<%=resp.id%>_<%=question.id%>">
       <tr class="<%= cycle("odd", "even") %>">
-        <td class="caption" style="width: 20%;"><%= question.caption %></td>
+        <td class="caption" style="width: 20%;">
+          <% if @editing -%>
+            <label for="answer_<%= question.id %>"><%= question.caption %></label>
+          <% else -%>
+            <%= question.caption%>
+          <% end -%>
+        </td>
         <td class="questionbody"><%= render_answer(question, answer)  %></td>
       </tr>
     </table>

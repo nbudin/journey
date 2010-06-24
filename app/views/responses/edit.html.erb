@@ -1,3 +1,5 @@
-<% form_tag({ :action => 'update_response', :id => @resp.id }, { :id => 'edited_response' }) do |f| %>
+<% form_for(@resp, :url => response_path(@questionnaire, @resp)) do %>
   <%= render :partial => 'response', :locals => { :resp => @resp } %>
+  
+  <%= submit_tag "Save changes" %>
 <% end %>

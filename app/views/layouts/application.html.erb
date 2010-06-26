@@ -28,6 +28,11 @@
   <%= javascript_include_tag 'overlabel' %>
   <%= javascript_include_tag "layout" %>
   
+  <%= javascript_include_tag 'jquery-1.4.1.min.js' %>
+  <script type="text/javascript">
+  jQuery.noConflict();
+  </script>
+  
   <%= yield :javascripts %>
   
   <%= include_tiny_mce_if_needed %>

@@ -1,0 +1,81 @@
+.questionnaireedit ul {
+    list-style-type: none;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 0;
+}
+
+.questionnaireedit ul li {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.questionnaireedit ul li.pagehead {
+    border-top: none;
+    background-color: transparent;
+}
+
+.questionnaireedit ul li .question {
+    margin-right: 110px;
+    width: auto;
+    display: block;
+}
+
+.questionnaireedit ul li a.editquestion {
+    float: right;
+    width: 94px;
+    border: 1px #bad032 solid;
+    background-color: #fff;
+    padding: 2px;
+    text-decoration: none;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-top: 2px;
+}
+
+.questionnaireedit ul li .questionedit {
+    background-color: #f5ffb8;
+    padding: 2px;
+}
+
+.questionnaireedit ul li .questionedit form {
+    background-color: #fff;
+    border: 1px #bad032 solid;
+    border-radius: 5px;
+    display: inline-block;
+    width: 304px;
+    vertical-align: top;
+}
+
+.questionnaireedit ul li .questionedit form * {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.questionnaireedit ul li .questionedit form h3 {
+    margin-top: 0;
+    background-color: #bad032;
+    font-size: 12pt;
+    margin: 0;
+    text-align: center;
+}
+
+.questionnaireedit ul li .questionedit form label {
+    float: left;
+    width: 100px;
+    clear: both;
+}
+
+.questionnaireedit ul li .questionedit form input, 
+.questionnaireedit ul li .questionedit form select {
+    float: left;
+    width: 190px;
+}
+
+.questionnaireedit ul li .questionedit form input[type=submit] {
+    float: none;
+    margin-left: 105px;
+    margin-top: 12pt;
+}

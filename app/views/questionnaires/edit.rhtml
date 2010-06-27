@@ -1,110 +1,38 @@
 <%= error_messages_for :questionnaire %>
-<%= javascript_include_tag "layout.js" %>
-
-<script type="text/javascript">
-currentPage = null;
-
-function switchPage(id, title) {
-  if (id != null) {
-    $('pageview').src = '<%= edit_page_url(@questionnaire, 9999) %>'.replace(/9999/, id+'');
-  } else {
-    $('pageview').src = 'about:blank';
-  }
-  $$('.activepage').each(function (page) {
-    page.removeClassName('activepage');
-  });
-  if (id != null) {
-    $('page_'+id).addClassName('activepage');
-  }
-  $('pagetitle').replace('<span id="pagetitle">' + title.escapeHTML() + '</span>');
-  currentPage = id;
-}
-
-function deletePage(id) {
-  new Ajax.Request('<%= pages_url(@questionnaire) %>/'+id+'.json',
-    {
-      method: 'delete',
-      onSuccess: function() {
-        Sortable.destroy('pagelist');
-        $('page_'+id).remove();
-        if (currentPage == id) {
-          switchPage(null, "");
-        }
-        reloadPagelist();
-      },
-      onFailure: function(transport) {
-        alert("Error while deleting page: "+transport.responseText);
-      }
-    }
-  );
-}
-
-eventsToUnload = [];
-function addEventToUnload(element, event, callback) {
-  eventsToUnload.push({'element': element, 'event': event, 'callback': callback});
-}
-
-function reloadPagelist() {
-  for (i=0; i<eventsToUnload.length; i++) {
-    etu = eventsToUnload[i];
-    try {
-      Event.stopObserving(etu['element'], etu['event'], etu['callback']);
-    } catch (e) {
-    }
-  }
-  new Ajax.Updater('pagelist', '<%= questionnaire_url(@questionnaire.id) %>/pagelist', { method: 'get', evalScripts: true });
-}
-
-function createPage() {
-  Sortable.destroy("pagelist");
-  new Ajax.Request('<%= pages_url(@questionnaire) %>',
-    {
-      method: 'post',
-      onSuccess: reloadPagelist
-    }
-  );
-}
-</script>
 
 <%= render :partial => "toolbar" %>
 
-<table id="questionnaireedit">
-  <tr style="height: 16px;">
-    <td id="pagesheading" style="top: -3px;">Pages</td>
-    <td id="pageheading"><span id="pagetitle"></span></td>
-  </tr>
-  <tr>
-    <td id="pages">
-      <%= render :partial => "pagelist", :locals => {:questionnaire => @questionnaire} %>
-      <button onClick="createPage();">Create New Page</button>
-    </td>
-    <td id="editpage">
-      <iframe id="pageview" name="pageview" frameborder="0">
-      </iframe>
-    </td>
-  </tr>
-</table>
+<div class="questionnaireedit">
+  <% @questionnaire.pages.each do |page| %>
+    <div class="pagetitle"><%= page.title %></div>
+    <div class="pagecount">Page <%= page.number %> of <%= @questionnaire.pages.length %></div>
+    <div class="answerpage">
+      <ul class="questions">
+        <% page.questions.each do |question| -%>
+          <% content_tag_for(:li, question, :class => question_cycle(question)) do %>
+            <%= link_to "Modify", edit_question_path(@questionnaire, question.page, question), :class => "editquestion" %>
+            <%= render_question question %>
+          <% end %>
+        <% end -%>
+      </ul>
+    </div>
+  <% end -%>
+</div>
 
-<!-- don't scroll this page -->
-<style type="text/css">
-body {
-  overflow: hidden;
-}
-</style>
-
-<!-- make questionnaireedit fill remaining vertical space -->
 <script type="text/javascript">
-function sizeQuestionnaireEdit() {
-  if (!viewportSizeChanged()) {
-    return;
-  }
+jQuery(function() {
+  jQuery('.questionnaireedit a.editquestion').each(function() {
+    var $this = jQuery(this);
+    var $li = $this.parent();
 
-  newHeight = getViewportSize()[1] - findPos($('editpage'))[1] - 15;
-  $('editpage').style.height = newHeight + "px";
-  $('pages').style.height = newHeight + "px";
-}
+    var href = $this.attr('href');
+    $this.attr('href', '#');
 
-Event.observe(window, 'load', sizeQuestionnaireEdit);
-Event.observe(window, 'resize', sizeQuestionnaireEdit);
-observeTabSelected(sizeQuestionnaireEdit);
+    $this.bind('click', function(evt) {
+      jQuery.get(href, function(data, textStatus, xhr) {
+        $li.empty().append(data);
+      });
+    });
+  });
+});
 </script>

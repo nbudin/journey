@@ -41,7 +41,8 @@ end
 after "deploy:update_code" do
   bundler.bundle_new_release
   run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
-  run "ln -nfs #{deploy_to}/#{shared_dir}/config/unicorn.rb #{release_path}/config/unicorn.rb"
+  run "rm -f #{release_path}/config/newrelic.yml"
+  run "ln -nfs #{deploy_to}/#{shared_dir}/config/newrelic.yml #{release_path}/config/newrelic.yml"
 end
   
 after "deploy:migrate", "deploy:migrate_paywall"

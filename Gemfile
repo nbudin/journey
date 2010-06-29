@@ -6,7 +6,6 @@ gem 'paginator'
 gem 'will_paginate'
 gem "mysql"
 gem "ruby-openid", :require => "openid"
-gem "unicorn"
 
 if RUBY_PLATFORM =~ /java/
   gem 'rmagick4j', :require => "RMagick"

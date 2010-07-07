@@ -1,0 +1,155 @@
+--- 
+dependencies: 
+  fastercsv: 
+    group: 
+    - :default
+    version: ">= 0"
+  google4r-checkout: 
+    group: 
+    - :default
+    version: = 1.1.beta2
+  rails: 
+    group: 
+    - :default
+    version: = 2.3.5
+  gruff: 
+    group: 
+    - :default
+    version: ~> 0.3.6
+  mysql: 
+    group: 
+    - :default
+    version: ">= 0"
+  ruby-openid: 
+    group: 
+    - :default
+    version: ">= 0"
+    require: 
+    - openid
+  shoulda: 
+    group: 
+    - :test
+    version: ">= 0"
+  database_cleaner: 
+    group: 
+    - :test
+    version: ">= 0.5.0"
+  will_paginate: 
+    group: 
+    - :default
+    version: ">= 0"
+  factory_girl: 
+    group: 
+    - :test
+    version: ">= 0"
+  cucumber-rails: 
+    group: 
+    - :test
+    version: ">= 0"
+  rmagick: 
+    group: 
+    - :default
+    version: = 2.11
+    require: 
+    - RMagick
+  bundler: 
+    group: 
+    - :default
+    version: ">= 0"
+  paginator: 
+    group: 
+    - :default
+    version: ">= 0"
+  capybara: 
+    group: 
+    - :test
+    version: ">= 0.3.5"
+  launchy: 
+    group: 
+    - :test
+    version: ">= 0"
+specs: 
+- rake: 
+    version: 0.8.7
+- activesupport: 
+    version: 2.3.5
+- rack: 
+    version: 1.0.1
+- actionpack: 
+    version: 2.3.5
+- actionmailer: 
+    version: 2.3.5
+- activerecord: 
+    version: 2.3.5
+- activeresource: 
+    version: 2.3.5
+- builder: 
+    version: 2.1.2
+- bundler: 
+    version: 0.9.26
+- culerity: 
+    version: 0.2.10
+- mime-types: 
+    version: "1.16"
+- nokogiri: 
+    version: 1.4.2
+- rack-test: 
+    version: 0.5.4
+- ffi: 
+    version: 0.6.3
+- json_pure: 
+    version: 1.4.3
+- selenium-webdriver: 
+    version: 0.0.24
+- capybara: 
+    version: 0.3.9
+- configuration: 
+    version: 1.1.0
+- diff-lcs: 
+    version: 1.1.2
+- trollop: 
+    version: 1.16.2
+- gherkin: 
+    version: 2.0.2
+- term-ansicolor: 
+    version: 1.0.5
+- cucumber: 
+    version: 0.8.3
+- cucumber-rails: 
+    version: 0.3.2
+- database_cleaner: 
+    version: 0.5.2
+- factory_girl: 
+    version: 1.3.1
+- fastercsv: 
+    version: 1.5.3
+- money: 
+    version: 3.0.4
+- google4r-checkout: 
+    version: 1.1.beta2
+- gruff: 
+    version: 0.3.6
+- rubyforge: 
+    version: 2.0.4
+- hoe: 
+    version: 2.6.1
+- launchy: 
+    version: 0.3.5
+- mysql: 
+    version: 2.8.1
+- paginator: 
+    version: 1.1.1
+- rails: 
+    version: 2.3.5
+- rmagick: 
+    version: 2.11.0
+- ruby-openid: 
+    version: 2.1.7
+- shoulda: 
+    version: 2.11.1
+- will_paginate: 
+    version: 2.3.14
+hash: c625285966cee590d882e1e28ad4c0de738b8eec
+sources: 
+- Rubygems: 
+    uri: http://rubygems.org

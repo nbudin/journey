@@ -24,6 +24,43 @@
 .questionnaire_startbox table td, .questionnaire_startbox table th {
   padding: 2px;
 }
+
+.bigbutton.full {
+  width: 388px;
+  text-align: center;
+}
+
+.bigbutton.half {
+  width: 180px;
+  text-align: center;
+  font-size: 115%;
+}
+
+.bigbutton.green {
+  background-color: #6aba32;
+  border-color: #6aba32;
+}
+
+.bigbutton.blue {
+  background-color: #32bad0;
+  border-color: #32bad0;
+}
+
+.bigbutton.gold {
+  background-color: #d0ba32;
+  border-color: #d0ba32;
+}
+
+.bigbutton.lavender {
+  background-color: #d09ad0;
+  border-color: #d09ad0;
+}
+
+.bigbutton.small {
+  font-size: 90%;
+  width: 388px;
+  text-align: center;
+}
 </style>
 
 <div class="questionnaire_startbox">
@@ -90,7 +127,7 @@
     <% else -%>
       <% content_for :startbox_main_option do -%>
         <p>
-          <%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton" %>
+          <%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton full" %>
         </p>
       <% end -%>
     <% end -%>
@@ -102,16 +139,14 @@
       <% content_for :startbox_main_option do -%>
         <p>This survey requires you to log into Journey in order to answer it.</p>
       
-        <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton" %> 
+        <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton full" %> 
       <% end -%>
     <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
       <% content_for :startbox_main_option do -%>
-        <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton" %> 
+        <%= link_to "Log into Journey, or sign up for a free account &raquo;", { :controller => "auth", :action => "login" }, :class => "bigbutton green half" %> 
+        <%= link_to "Answer this survey without logging in &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton half" %>
       <% end -%>
       <% content_for :startbox_additional_options do -%>
-        <li>
-          <%= link_to "Answer this survey without logging in &raquo;", { :action => 'start', :id => @questionnaire.id } %>
-        </li>
         <li>
           <%= link_to_function("Why log in?", :id => "why_login_link") do |page|
                 page['why_login'].show
@@ -138,14 +173,14 @@
       <% end -%>
     <% else -%>
       <% content_for :startbox_main_option do -%>
-        <p><%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton" %></p>
+        <p><%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton full" %></p>
       <% end -%>
     <% end -%>
   <% end -%>
   
   <% if @questionnaire.allow_preview -%>
-    <% content_for :startbox_additional_options do -%>
-      <li><%= link_to "View a preview of this survey &raquo;", { :action => "preview", :id => @questionnaire.id } %></li>
+    <% content_for :startbox_main_option do -%>
+      <%= link_to "View a preview of this survey &raquo;", { :action => "preview", :id => @questionnaire.id }, :class => "bigbutton blue small" %>
     <% end -%>
   <% end -%>
   

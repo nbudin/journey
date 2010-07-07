@@ -52,6 +52,10 @@ dependencies:
     version: = 2.11
     require: 
     - RMagick
+  bundler: 
+    group: 
+    - :default
+    version: ">= 0"
   paginator: 
     group: 
     - :default
@@ -81,6 +85,8 @@ specs:
     version: 2.3.5
 - builder: 
     version: 2.1.2
+- bundler: 
+    version: 0.9.26
 - culerity: 
     version: 0.2.10
 - mime-types: 
@@ -96,7 +102,7 @@ specs:
 - selenium-webdriver: 
     version: 0.0.24
 - capybara: 
-    version: 0.3.8
+    version: 0.3.9
 - configuration: 
     version: 1.1.0
 - diff-lcs: 
@@ -143,7 +149,7 @@ specs:
     version: 2.11.1
 - will_paginate: 
     version: 2.3.14
-hash: 6d97feebbb93545d1c2a204c58908a58ae972498
+hash: c625285966cee590d882e1e28ad4c0de738b8eec
 sources: 
 - Rubygems: 
     uri: http://rubygems.org

@@ -1,155 +1,103 @@
---- 
-dependencies: 
-  fastercsv: 
-    group: 
-    - :default
-    version: ">= 0"
-  google4r-checkout: 
-    group: 
-    - :default
-    version: = 1.1.beta2
-  rails: 
-    group: 
-    - :default
-    version: = 2.3.5
-  gruff: 
-    group: 
-    - :default
-    version: ~> 0.3.6
-  mysql: 
-    group: 
-    - :default
-    version: ">= 0"
-  ruby-openid: 
-    group: 
-    - :default
-    version: ">= 0"
-    require: 
-    - openid
-  shoulda: 
-    group: 
-    - :test
-    version: ">= 0"
-  database_cleaner: 
-    group: 
-    - :test
-    version: ">= 0.5.0"
-  will_paginate: 
-    group: 
-    - :default
-    version: ">= 0"
-  factory_girl: 
-    group: 
-    - :test
-    version: ">= 0"
-  cucumber-rails: 
-    group: 
-    - :test
-    version: ">= 0"
-  rmagick: 
-    group: 
-    - :default
-    version: = 2.11
-    require: 
-    - RMagick
-  bundler: 
-    group: 
-    - :default
-    version: ">= 0"
-  paginator: 
-    group: 
-    - :default
-    version: ">= 0"
-  capybara: 
-    group: 
-    - :test
-    version: ">= 0.3.5"
-  launchy: 
-    group: 
-    - :test
-    version: ">= 0"
-specs: 
-- rake: 
-    version: 0.8.7
-- activesupport: 
-    version: 2.3.5
-- rack: 
-    version: 1.0.1
-- actionpack: 
-    version: 2.3.5
-- actionmailer: 
-    version: 2.3.5
-- activerecord: 
-    version: 2.3.5
-- activeresource: 
-    version: 2.3.5
-- builder: 
-    version: 2.1.2
-- bundler: 
-    version: 0.9.26
-- culerity: 
-    version: 0.2.10
-- mime-types: 
-    version: "1.16"
-- nokogiri: 
-    version: 1.4.2
-- rack-test: 
-    version: 0.5.4
-- ffi: 
-    version: 0.6.3
-- json_pure: 
-    version: 1.4.3
-- selenium-webdriver: 
-    version: 0.0.24
-- capybara: 
-    version: 0.3.9
-- configuration: 
-    version: 1.1.0
-- diff-lcs: 
-    version: 1.1.2
-- trollop: 
-    version: 1.16.2
-- gherkin: 
-    version: 2.0.2
-- term-ansicolor: 
-    version: 1.0.5
-- cucumber: 
-    version: 0.8.3
-- cucumber-rails: 
-    version: 0.3.2
-- database_cleaner: 
-    version: 0.5.2
-- factory_girl: 
-    version: 1.3.1
-- fastercsv: 
-    version: 1.5.3
-- money: 
-    version: 3.0.4
-- google4r-checkout: 
-    version: 1.1.beta2
-- gruff: 
-    version: 0.3.6
-- rubyforge: 
-    version: 2.0.4
-- hoe: 
-    version: 2.6.1
-- launchy: 
-    version: 0.3.5
-- mysql: 
-    version: 2.8.1
-- paginator: 
-    version: 1.1.1
-- rails: 
-    version: 2.3.5
-- rmagick: 
-    version: 2.11.0
-- ruby-openid: 
-    version: 2.1.7
-- shoulda: 
-    version: 2.11.1
-- will_paginate: 
-    version: 2.3.14
-hash: c625285966cee590d882e1e28ad4c0de738b8eec
-sources: 
-- Rubygems: 
-    uri: http://rubygems.org
+GEM
+  remote: http://rubygems.org/
+  specs:
+    actionmailer (2.3.5)
+      actionpack (= 2.3.5)
+    actionpack (2.3.5)
+      activesupport (= 2.3.5)
+      rack (~> 1.0.0)
+    activerecord (2.3.5)
+      activesupport (= 2.3.5)
+    activeresource (2.3.5)
+      activesupport (= 2.3.5)
+    activesupport (2.3.5)
+    builder (2.1.2)
+    capybara (0.3.9)
+      culerity (>= 0.2.4)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (>= 0.0.3)
+    configuration (1.1.0)
+    cucumber (0.9.0)
+      builder (~> 2.1.2)
+      diff-lcs (~> 1.1.2)
+      gherkin (~> 2.2.2)
+      json (~> 1.4.6)
+      term-ansicolor (~> 1.0.5)
+    cucumber-rails (0.3.2)
+      cucumber (>= 0.8.0)
+    culerity (0.2.12)
+    database_cleaner (0.5.2)
+    diff-lcs (1.1.2)
+    factory_girl (1.3.2)
+    fastercsv (1.5.3)
+    ffi (0.6.3)
+      rake (>= 0.8.7)
+    gherkin (2.2.4)
+      json (~> 1.4.6)
+      term-ansicolor (~> 1.0.5)
+      trollop (~> 1.16.2)
+    google4r-checkout (1.1.beta2)
+      money (>= 2.3.0)
+    gruff (0.3.6)
+    hoe (2.6.2)
+      rake (>= 0.8.7)
+      rubyforge (>= 2.0.4)
+    json (1.4.6)
+    json_pure (1.4.6)
+    launchy (0.3.7)
+      configuration (>= 0.0.5)
+      rake (>= 0.8.1)
+    mime-types (1.16)
+    money (3.1.0)
+    mysql (2.8.1)
+    nokogiri (1.4.3.1)
+    paginator (1.1.1)
+      hoe (>= 1.6.0)
+    rack (1.0.1)
+    rack-test (0.5.5)
+      rack (>= 1.0)
+    rails (2.3.5)
+      actionmailer (= 2.3.5)
+      actionpack (= 2.3.5)
+      activerecord (= 2.3.5)
+      activeresource (= 2.3.5)
+      activesupport (= 2.3.5)
+      rake (>= 0.8.3)
+    rake (0.8.7)
+    rmagick (2.11.0)
+    ruby-openid (2.1.8)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
+    rubyzip (0.9.4)
+    selenium-webdriver (0.0.28)
+      ffi (>= 0.6.1)
+      json_pure
+      rubyzip
+    shoulda (2.11.3)
+    term-ansicolor (1.0.5)
+    trollop (1.16.2)
+    will_paginate (2.3.15)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  capybara (>= 0.3.5)
+  cucumber-rails
+  database_cleaner (>= 0.5.0)
+  factory_girl
+  fastercsv
+  google4r-checkout (= 1.1.beta2)
+  gruff (~> 0.3.6)
+  launchy
+  mysql
+  paginator
+  rails (= 2.3.5)
+  rmagick (= 2.11)
+  ruby-openid
+  shoulda
+  will_paginate

@@ -79,7 +79,7 @@ class ResponsesController < ApplicationController
         @responses.each do |resp|
           row = []
           row << resp.id
-          row << resp.submitted_at.strftime("%Y-%m-%d %H:%M:%S")
+          row << resp.submitted_at
           row << resp.notes
           row += @columns.collect { |c| resp.answer_for_question(c).try(:output_value) || "" }
           table << row

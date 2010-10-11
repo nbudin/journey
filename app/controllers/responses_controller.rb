@@ -71,6 +71,7 @@ class ResponsesController < ApplicationController
         table = []
         header = []
         header << "id"
+        header << "Submitted"
         header << "Notes"
         header += @columns.collect { |c| c.caption }
         table << header
@@ -78,6 +79,7 @@ class ResponsesController < ApplicationController
         @responses.each do |resp|
           row = []
           row << resp.id
+          row << resp.submitted_at.strftime("%Y-%m-%d %H:%M:%S")
           row << resp.notes
           row += @columns.collect { |c| resp.answer_for_question(c).try(:output_value) || "" }
           table << row

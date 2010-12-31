@@ -9,9 +9,9 @@
     <div class="answerpage">
       <ul class="questions">
         <% page.questions.each do |question| -%>
-          <% content_tag_for(:li, question, :class => question_cycle(question)) do %>
-            <%= link_to "Modify", edit_question_path(@questionnaire, question.page, question), :class => "editquestion" %>
-            <%= render_question question %>
+          <% content_tag(:li, question, :class => "question #{question_cycle(question)}", 
+                              "data-question-url" => question_url(@questionnaire, question.page, question)) do %>
+            <%= render :partial => "questions/show", :locals => { :question => question } %>
           <% end %>
         <% end -%>
       </ul>

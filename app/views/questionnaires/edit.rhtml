@@ -20,8 +20,21 @@
 </div>
 
 <script type="text/javascript">
-jQuery(function() {
-  jQuery('.questionnaireedit a.editquestion').each(function() {
+function submitQuestionEdit() {
+  var $this = jQuery(this);
+//  $this.disable();
+  var action = $this.attr('action') + '.json';
+  jQuery.post(action, $this.serialize(), function() {
+    var questionUrl = $this.parents('.question[data-question-url]').attr('data-question-url');
+    var $question = $this.parents('.questionedit').find(".question");
+    $question.load(questionUrl);
+    setupQuestionEdit($question);
+  }, "text");
+  return false;
+}
+
+function setupQuestionEdit(partial) {
+  jQuery(partial).find('a.editquestion').each(function() {
     var $this = jQuery(this);
     var $li = $this.parent();
 
@@ -29,10 +42,13 @@ jQuery(function() {
     $this.attr('href', '#');
 
     $this.bind('click', function(evt) {
-      jQuery.get(href, function(data, textStatus, xhr) {
-        $li.empty().append(data);
-      });
+      $li.load(href);
+      $li.find('form').submit(submitQuestionEdit);
     });
   });
+}
+
+jQuery(function() {
+  setupQuestionEdit('.questionnaireedit')
 });
 </script>

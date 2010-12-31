@@ -92,7 +92,7 @@ class QuestionsController < ApplicationController
         if params[:question].has_key?(:purpose)
           @question.purpose = params[:question][:purpose]
         end
-        format.html { redirect_to question_url(@question) }
+        format.html { redirect_to edit_questionnaire_url(@question.questionnaire) }
         format.xml  { head :ok }
         format.json { head :ok }
       else

@@ -36,7 +36,29 @@
 }
 
 .questionnaireedit ul li .questionedit {
-    background-color: #f5ffb8;
+    border: 3px solid #006a32;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.questionnaireedit ul li .questionedit .editcontrols, .questionnaireedit ul li .questionedit .editforms {
+    background-color: #006a32;
+    padding: 2px;
+}
+
+.questionnaireedit ul li .questionedit .editcontrols {
+    text-align: right;
+}
+
+.questionnaireedit ul li .questionedit .editcontrols a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 90%;
+}
+
+.questionnaireedit ul li .questionedit .question {
     padding: 2px;
 }
 
@@ -79,3 +101,4 @@
     margin-left: 105px;
     margin-top: 12pt;
 }
+

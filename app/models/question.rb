@@ -75,4 +75,9 @@ class Question < ActiveRecord::Base
       xmlcontent(xml)
     end
   end
+  
+  # we want to always use Question as the DOM class name
+  def self.model_name
+    @model_name ||= ::ActiveSupport::ModelName.new("Question")
+  end
 end

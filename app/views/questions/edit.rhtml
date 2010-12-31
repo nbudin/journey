@@ -1,37 +1,43 @@
 <div class="questionedit">
+  <div class="editcontrols">
+    <%= link_to "Finished editing", edit_questionnaire_path(@questionnaire), :class => "finishedediting" %>
+  </div>
+  
   <%= render :partial => "questions/show", :locals => { :question => @question } %>
 
-  <% form_for :question, @question, :html => { :method => @question.new_record? ? :post : :put }, 
-              :url => question_path(@questionnaire, @page, @question) do |f| -%>
-    <h3>Options</h3>
+  <div class="editforms">
+    <% form_for @question, :html => { :method => @question.new_record? ? :post : :put }, 
+                :url => question_path(@questionnaire, @page, @question) do |f| -%>
+      <h3>Options</h3>
 
-    <%= f.label :required, "Required?" %>
-    <%= f.check_box :required %>
+      <%= f.label :required, "Required?" %>
+      <%= f.check_box :required %>
     
-    <%= f.label :layout %>
-    <%= f.select :layout, [["Question beside answer", "left"], ["Question above answer", "top"]]%>
+      <%= f.label :layout %>
+      <%= f.select :layout, [["Question beside answer", "left"], ["Question above answer", "top"]]%>
 
-    <%= f.label :default_answer %>
-    <% if @question.kind_of? Questions::FreeformField -%>
-      <%= f.text_field :default_answer %>
-    <% elsif @question.kind_of? Questions::SelectorField -%>
-      <%= f.select :default_answer, @question.options_for_select, :include_blank => true %>
-    <% elsif @question.kind_of? Questions::CheckBoxField -%>
-      <%= f.select :default_answer, [["no", ""], ["yes", "checked"]], :include_blank => true %>
-    <% elsif @question.kind_of? Questions::RangeField -%>
-      <%= f.select :default_answer, (@question.min..@question.max).to_a, :include_blank => true %>
+      <%= f.label :default_answer %>
+      <% if @question.kind_of? Questions::FreeformField -%>
+        <%= f.text_field :default_answer %>
+      <% elsif @question.kind_of? Questions::SelectorField -%>
+        <%= f.select :default_answer, @question.options_for_select, :include_blank => true %>
+      <% elsif @question.kind_of? Questions::CheckBoxField -%>
+        <%= f.select :default_answer, [["no", ""], ["yes", "checked"]], :include_blank => true %>
+      <% elsif @question.kind_of? Questions::RangeField -%>
+        <%= f.select :default_answer, (@question.min..@question.max).to_a, :include_blank => true %>
+      <% end -%>
+      <%= submit_tag "Save changes" %>
     <% end -%>
-    <%= submit_tag "Save changes" %>
-  <% end -%>
 
-  <% form_for @question, :url => question_path(@questionnaire, @page, @question) do |f| -%>
-    <h3>Type</h3>
+    <% form_for @question, :url => question_path(@questionnaire, @page, @question) do |f| -%>
+      <h3>Type</h3>
   
-    <p style="margin-top: 0">This is a <strong><%= @question.class.friendly_name %></strong> field.</p>
+      <p style="margin-top: 0">This is a <strong><%= @question.class.friendly_name %></strong> field.</p>
   
-    <%= f.label :type, "Change to:" %>
-    <%= f.select :type, Question.field_types.reject { |t| t == @question.class}.collect { |t| [t.friendly_name, t.name] }%>
+      <%= f.label :type, "Change to:" %>
+      <%= f.select :type, Question.field_types.reject { |t| t == @question.class}.collect { |t| [t.friendly_name, t.name] }%>
     
-    <%= submit_tag "Convert type" %>
-  <% end -%>
+      <%= submit_tag "Convert type" %>
+    <% end -%>
+  </div>
 </div>

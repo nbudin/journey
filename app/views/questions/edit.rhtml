@@ -1,7 +1,8 @@
 <div class="questionedit">
-  <%= render_question @question %>
+  <%= render :partial => "questions/show", :locals => { :question => @question } %>
 
-  <% form_for @question, :url => question_path(@questionnaire, @page, @question) do |f| -%>
+  <% form_for :question, @question, :html => { :method => @question.new_record? ? :post : :put }, 
+              :url => question_path(@questionnaire, @page, @question) do |f| -%>
     <h3>Options</h3>
 
     <%= f.label :required, "Required?" %>

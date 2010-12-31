@@ -3,10 +3,9 @@ module QuestionAnswerHelper
     "#{klass.name.demodulize.tableize.singularize}"
   end
 
-  def render_question(question)
+  def render_question(question, value="")
     @question = question
     
-    value = ''
     if params[:controller] == "answer"
       answer = @resp.answer_for_question(question)
       if answer

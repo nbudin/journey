@@ -31,6 +31,19 @@
     <% end -%>
   </li>
 <% end -%>
+<% if is_radio_group -%>
+  <li>
+    <% if @question.radio_layout == "vertical" %>
+      <%= link_to_function(image_tag("inline-radio-layout.png", :class => "image_button",
+                                   :alt => "Lay out options horizontally") + " Lay out options horizontally",
+                                   "setRadioLayout(#{question.id}, 'inline');") %>
+    <% else -%>
+      <%= link_to_function(image_tag("vertical-radio-layout.png", :class => "image_button",
+                                   :alt => "Lay out options vertically") + " Lay out options vertically",
+                                   "setRadioLayout(#{question.id}, 'vertical');") %>
+    <% end -%>
+  </li>
+<% end -%>
 <li>
       <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
                                      :alt => "Duplicate field") + " Duplicate field",

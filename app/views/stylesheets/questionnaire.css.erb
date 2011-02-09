@@ -357,3 +357,33 @@ li.question span.draghandle {
 #toolboxspacer {
     height: 150px;
 }
+
+ul.radio-field {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+ul.radio-field li {
+    display: inline;
+}
+
+ul.radio-field.layout-vertical li {
+    display: block;
+    clear: left;
+    margin-bottom: 5px;
+}
+
+ul.radio-field.layout-vertical li:last-child {
+    margin-bottom: 0;
+}
+
+ul.radio-field.layout-vertical li input {
+    float: left;
+}
+
+ul.radio-field.layout-vertical li label {
+    margin-left: 1em;
+    display: inline-block;
+    width: 85%;
+}

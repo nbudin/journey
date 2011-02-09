@@ -11,7 +11,7 @@ gem "ruby-openid", :require => "openid"
 if RUBY_PLATFORM =~ /java/
   gem 'rmagick4j', :require => "RMagick"
 else
-  gem 'rmagick', "2.11", :require => 'RMagick'
+  gem 'rmagick', "~> 2.11", :require => 'RMagick'
 end
 
 gem 'gruff', '~> 0.3.6'

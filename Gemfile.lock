@@ -67,7 +67,7 @@ GEM
       activesupport (= 2.3.5)
       rake (>= 0.8.3)
     rake (0.8.7)
-    rmagick (2.11.0)
+    rmagick (2.13.1)
     ruby-openid (2.1.8)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
@@ -97,7 +97,7 @@ DEPENDENCIES
   mysql
   paginator
   rails (= 2.3.5)
-  rmagick (= 2.11)
+  rmagick (~> 2.11)
   ruby-openid
   shoulda
   will_paginate

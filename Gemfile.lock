@@ -80,6 +80,7 @@ GEM
     term-ansicolor (1.0.5)
     trollop (1.16.2)
     will_paginate (2.3.15)
+    xebec (2.6.0)
 
 PLATFORMS
   ruby
@@ -101,3 +102,4 @@ DEPENDENCIES
   ruby-openid
   shoulda
   will_paginate
+  xebec (= 2.6.0)

@@ -183,7 +183,7 @@ select {
         vertical-align: middle;
 }
 
-.topbar ul.user_options {
+.topbar .user_options ul {
     list-style-type: none;
     padding-right: 0.5em;
 	margin: 0;
@@ -192,14 +192,13 @@ select {
     float: right;
 }
 
-.topbar ul.user_options li {
+.topbar .user_options li {
     display: -moz-inline-stack;
     display: inline-block;
 	margin: 0.5em;
 }
 
-.topbar ul.user_options li a {
-    background-color: #bad032;
+.topbar .user_options li a, .topbar .user_options li.current span {
     color: black;
     padding: 0.2em 0.5em;
     text-decoration: none;
@@ -210,8 +209,17 @@ select {
     position: relative;
 }
 
-.topbar ul.user_options li a:hover {
+.topbar .user_options li a {
+    background-color: #bad032;
+}
+
+.topbar .user_options li a:hover {
     background-color: white;
+}
+
+.topbar .user_options li.current span {
+    background-color: white;
+    cursor: default;
 }
 
 a {

@@ -42,6 +42,7 @@ GEM
     google4r-checkout (1.1.beta2)
       money (>= 2.3.0)
     gruff (0.3.6)
+    heroku_external_db (1.0.0)
     hoe (2.6.2)
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
@@ -94,6 +95,7 @@ DEPENDENCIES
   fastercsv
   google4r-checkout (= 1.1.beta2)
   gruff (~> 0.3.6)
+  heroku_external_db (>= 1.0.0)
   launchy
   mysql
   paginator

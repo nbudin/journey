@@ -8,6 +8,7 @@ gem 'will_paginate'
 gem "mysql"
 gem "ruby-openid", :require => "openid"
 gem "xebec", "2.6.0"
+gem "heroku_external_db", ">= 1.0.0"
 
 if RUBY_PLATFORM =~ /java/
   gem 'rmagick4j', :require => "RMagick"

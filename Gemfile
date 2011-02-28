@@ -19,8 +19,6 @@ end
 
 gem 'gruff', '~> 0.3.6'
 
-gem "google4r-checkout", "1.1.beta2"
-
 group :test do
   gem "factory_girl"
   gem "shoulda"
@@ -28,4 +26,9 @@ group :test do
   gem "launchy"
   gem "database_cleaner", ">= 0.5.0"
   gem "capybara", ">= 0.3.5"
+end
+
+group :sugarpond do
+  gem 'journey_sugarpond_branding', "1.0.0", :git => "git_aegames@git.aegames.org:journey_sugarpond_branding.git", :branch => "stable"
+  gem 'journey_paywall', "1.0.0", :git => "git_aegames@git.aegames.org:journey_paywall.git", :branch => "stable"
 end

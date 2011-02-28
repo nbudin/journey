@@ -1,3 +1,20 @@
+GIT
+  remote: git_aegames@git.aegames.org:journey_paywall.git
+  revision: 11975abd7b5e1fc27704884b5051c88e0c72cba2
+  branch: stable
+  specs:
+    journey_paywall (1.0.0)
+      activerecord (= 2.3.5)
+      google4r-checkout (= 1.1.beta2)
+
+GIT
+  remote: git_aegames@git.aegames.org:journey_sugarpond_branding.git
+  revision: ff38e01a15816a968b279051651b1b51ba60d521
+  branch: stable
+  specs:
+    journey_sugarpond_branding (1.0.0)
+      activesupport (>= 2.3.5)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -48,13 +65,15 @@ GEM
     hoe (2.6.2)
       rake (>= 0.8.7)
       rubyforge (>= 2.0.4)
+    i18n (0.5.0)
     json (1.4.6)
     json_pure (1.4.6)
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
     mime-types (1.16)
-    money (3.1.0)
+    money (3.6.0)
+      i18n (~> 0.4)
     mysql (2.8.1)
     nokogiri (1.4.3.1)
     paginator (1.1.1)
@@ -96,9 +115,10 @@ DEPENDENCIES
   database_cleaner (>= 0.5.0)
   factory_girl
   fastercsv
-  google4r-checkout (= 1.1.beta2)
   gruff (~> 0.3.6)
   heroku_external_db (>= 1.0.0)
+  journey_paywall (= 1.0.0)!
+  journey_sugarpond_branding (= 1.0.0)!
   launchy
   mysql
   paginator

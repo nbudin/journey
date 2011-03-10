@@ -46,7 +46,7 @@ GEM
       json (~> 1.4.6)
     gruff (0.3.6)
     heroku_external_db (1.0.0)
-    hoe (2.9.1)
+    hoe (2.6.1)
       rake (>= 0.8.7)
     json (1.4.6)
     json_pure (1.5.1)

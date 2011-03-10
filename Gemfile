@@ -1,5 +1,7 @@
 source "http://rubygems.org"
 
+puts ENV.inspect
+
 gem 'bundler'
 gem "rails", "2.3.5"
 gem 'fastercsv', :platforms => "ruby_18"

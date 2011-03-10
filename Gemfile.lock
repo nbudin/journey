@@ -1,20 +1,3 @@
-GIT
-  remote: git_aegames@git.aegames.org:journey_paywall.git
-  revision: 11975abd7b5e1fc27704884b5051c88e0c72cba2
-  branch: stable
-  specs:
-    journey_paywall (1.0.0)
-      activerecord (= 2.3.5)
-      google4r-checkout (= 1.1.beta2)
-
-GIT
-  remote: git_aegames@git.aegames.org:journey_sugarpond_branding.git
-  revision: ff38e01a15816a968b279051651b1b51ba60d521
-  branch: stable
-  specs:
-    journey_sugarpond_branding (1.0.0)
-      activesupport (>= 2.3.5)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -30,56 +13,53 @@ GEM
     activesupport (2.3.5)
     ae_users_legacy (0.6.3)
       ruby-openid (>= 2.0.4)
-    builder (2.1.2)
-    capybara (0.3.9)
+    builder (3.0.0)
+    capybara (0.4.1.2)
+      celerity (>= 0.7.9)
       culerity (>= 0.2.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
-      selenium-webdriver (>= 0.0.3)
-    configuration (1.1.0)
-    cucumber (0.9.0)
-      builder (~> 2.1.2)
+      selenium-webdriver (>= 0.0.27)
+      xpath (~> 0.1.3)
+    celerity (0.8.8)
+    childprocess (0.1.7)
+      ffi (~> 0.6.3)
+    configuration (1.2.0)
+    cucumber (0.10.0)
+      builder (>= 2.1.2)
       diff-lcs (~> 1.1.2)
-      gherkin (~> 2.2.2)
+      gherkin (~> 2.3.2)
       json (~> 1.4.6)
       term-ansicolor (~> 1.0.5)
     cucumber-rails (0.3.2)
       cucumber (>= 0.8.0)
-    culerity (0.2.12)
-    database_cleaner (0.5.2)
+    culerity (0.2.15)
+    database_cleaner (0.6.5)
     diff-lcs (1.1.2)
-    factory_girl (1.3.2)
-    fastercsv (1.5.3)
+    factory_girl (1.3.3)
+    fastercsv (1.5.4)
     ffi (0.6.3)
       rake (>= 0.8.7)
-    gherkin (2.2.4)
+    gherkin (2.3.4)
       json (~> 1.4.6)
-      term-ansicolor (~> 1.0.5)
-      trollop (~> 1.16.2)
-    google4r-checkout (1.1.beta2)
-      money (>= 2.3.0)
     gruff (0.3.6)
     heroku_external_db (1.0.0)
-    hoe (2.6.2)
+    hoe (2.9.1)
       rake (>= 0.8.7)
-      rubyforge (>= 2.0.4)
-    i18n (0.5.0)
     json (1.4.6)
-    json_pure (1.4.6)
-    launchy (0.3.7)
+    json_pure (1.5.1)
+    launchy (0.4.0)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
     mime-types (1.16)
-    money (3.6.0)
-      i18n (~> 0.4)
     mysql (2.8.1)
-    nokogiri (1.4.3.1)
+    nokogiri (1.4.4)
     paginator (1.1.1)
       hoe (>= 1.6.0)
     rack (1.0.1)
-    rack-test (0.5.5)
+    rack-test (0.5.7)
       rack (>= 1.0)
     rails (2.3.5)
       actionmailer (= 2.3.5)
@@ -89,20 +69,20 @@ GEM
       activesupport (= 2.3.5)
       rake (>= 0.8.3)
     rake (0.8.7)
-    rmagick (2.11.1)
+    rmagick (2.13.1)
     ruby-openid (2.1.8)
-    rubyforge (2.0.4)
-      json_pure (>= 1.1.7)
     rubyzip (0.9.4)
-    selenium-webdriver (0.0.28)
-      ffi (>= 0.6.1)
+    selenium-webdriver (0.1.3)
+      childprocess (~> 0.1.5)
+      ffi (~> 0.6.3)
       json_pure
       rubyzip
     shoulda (2.11.3)
     term-ansicolor (1.0.5)
-    trollop (1.16.2)
     will_paginate (2.3.15)
     xebec (2.6.0)
+    xpath (0.1.3)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
@@ -117,13 +97,12 @@ DEPENDENCIES
   fastercsv
   gruff (~> 0.3.6)
   heroku_external_db (>= 1.0.0)
-  journey_paywall (= 1.0.0)!
-  journey_sugarpond_branding (= 1.0.0)!
   launchy
   mysql
   paginator
   rails (= 2.3.5)
   rmagick (~> 2.11)
+  rmagick4j
   ruby-openid
   shoulda
   will_paginate

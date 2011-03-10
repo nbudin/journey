@@ -2,7 +2,7 @@ source "http://rubygems.org"
 
 gem 'bundler'
 gem "rails", "2.3.5"
-gem 'fastercsv' if RUBY_VERSION < "1.9"
+gem 'fastercsv', :platforms => "ruby_18"
 gem 'paginator'
 gem 'will_paginate'
 gem "mysql"
@@ -11,13 +11,15 @@ gem "xebec", "2.6.0"
 gem 'ae_users_legacy', '0.6.3', :require => 'ae_users'
 gem "heroku_external_db", ">= 1.0.0"
 
-if RUBY_PLATFORM =~ /java/
-  gem 'rmagick4j', :require => "RMagick"
-else
-  gem 'rmagick', "~> 2.11", :require => 'RMagick'
-end
-
+gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
+gem 'rmagick', "~> 2.11", :require => 'RMagick', :platforms => ['ruby', 'mswin']
 gem 'gruff', '~> 0.3.6'
+
+if ENV["SUGARPOND_USERNAME"] && ENV["SUGARPOND_PASSWORD"]
+  source "http://#{ENV["SUGARPOND_USERNAME"]}:#{ENV["SUGARPOND_PASSWORD"]}@gems.sugarpond.net"
+  gem 'journey_sugarpond_branding', "1.0.0"
+  gem 'journey_paywall', "1.0.0"
+end
 
 group :test do
   gem "factory_girl"
@@ -26,9 +28,4 @@ group :test do
   gem "launchy"
   gem "database_cleaner", ">= 0.5.0"
   gem "capybara", ">= 0.3.5"
-end
-
-group :sugarpond do
-  gem 'journey_sugarpond_branding', "1.0.0", :git => "git_aegames@git.aegames.org:journey_sugarpond_branding.git", :branch => "stable"
-  gem 'journey_paywall', "1.0.0", :git => "git_aegames@git.aegames.org:journey_paywall.git", :branch => "stable"
 end

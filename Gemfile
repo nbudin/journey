@@ -16,6 +16,8 @@ gem 'rmagick', "~> 2.11", :require => 'RMagick', :platforms => ['ruby', 'mswin']
 gem 'gruff', '~> 0.3.6'
 
 if ENV["SUGARPOND_USERNAME"] && ENV["SUGARPOND_PASSWORD"]
+  puts "Detected Sugar Pond username and password in environment, will add Sugar Pond gems"
+  
   source "http://#{ENV["SUGARPOND_USERNAME"]}:#{ENV["SUGARPOND_PASSWORD"]}@gems.sugarpond.net"
   gem 'journey_sugarpond_branding', "1.0.0"
   gem 'journey_paywall', "1.0.0"

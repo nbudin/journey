@@ -52,6 +52,7 @@ GEM
     hoe (2.6.1)
       rake (>= 0.8.7)
     i18n (0.4.2)
+    jipe (1.0.0)
     journey_paywall (1.0.0)
       activerecord (= 2.3.5)
       google4r-checkout (= 1.1.beta2)
@@ -109,6 +110,7 @@ DEPENDENCIES
   gruff (~> 0.3.6)
   heroku_external_db (>= 1.0.0)
   i18n (= 0.4.2)
+  jipe (>= 1.0.0)
   journey_paywall (= 1.0.0)
   journey_sugarpond_branding (= 1.0.0)
   launchy

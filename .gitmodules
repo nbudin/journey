@@ -1,3 +1,0 @@
-[submodule "vendor/plugins/jipe"]
-	path = vendor/plugins/jipe
-	url = git://github.com/nbudin/jipe.git

@@ -63,7 +63,7 @@ function updateDefaultForRadioGroup(questionId, newDefault) {
       }
     }
   } else {
-    button = $("question_"+questionId+"_default_answer_"+newDefault.toLowerCase().gsub(/ /, '_').gsub(/[^a-z_]/, ''));
+    button = $$("input[type=radio][name=\"question["+questionId+"][default_answer]\"][value=\""+newDefault+"\"]")[0];
     button.checked = true;
   }
   button.newDefault = newDefault;

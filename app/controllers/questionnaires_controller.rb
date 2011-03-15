@@ -155,14 +155,18 @@ class QuestionnairesController < ApplicationController
         @questionnaire = Questionnaire.from_xml(params[:file].read)
         logger.debug @questionnaire.taggings
       rescue Exception => ex
-        flash[:error_messages] = ["There was an error parsing the JQML file you uploaded.  Please check to make sure it is a valid JQML file."]
+        flash[:error_messages] = ["There was an error parsing the XML file you uploaded.  Please check to make sure it is a valid Journey survey export."]
         m = ex.message.to_s
         if m.length < 500
           flash[:error_messages] << m
         end
-        redirect_to :action => "index"
+        redirect_to :action => "new"
         return
       end
+    elsif params[:commit] == "Import"
+      flash[:error_messages] = ["Please specify a file to import."]
+      redirect_to :action => "new"
+      return
     elsif params[:clone_questionnaire_id]
       @questionnaire = Questionnaire.find(params[:clone_questionnaire_id]).deepclone
       @questionnaire.title = "Copy of #{@questionnaire.title}"

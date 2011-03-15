@@ -1,7 +1,5 @@
 source "http://rubygems.org"
 
-puts ENV.inspect
-
 gem 'bundler'
 gem "rails", "2.3.5"
 gem 'fastercsv', :platforms => "ruby_18"
@@ -17,13 +15,9 @@ gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
 gem 'rmagick', "~> 2.11", :require => 'RMagick', :platforms => ['ruby', 'mswin']
 gem 'gruff', '~> 0.3.6'
 
-if ENV["SUGARPOND_USERNAME"] && ENV["SUGARPOND_PASSWORD"]
-  puts "Detected Sugar Pond username and password in environment, will add Sugar Pond gems"
-  
-  source "http://#{ENV["SUGARPOND_USERNAME"]}:#{ENV["SUGARPOND_PASSWORD"]}@gems.sugarpond.net"
-  gem 'journey_sugarpond_branding', "1.0.0"
-  gem 'journey_paywall', "1.0.0"
-end
+source "http://gems.sugarpond.net"
+gem 'journey_sugarpond_branding', "1.0.0"
+gem 'journey_paywall', "1.0.0"
 
 group :test do
   gem "factory_girl"

@@ -1,5 +1,6 @@
 GEM
   remote: http://rubygems.org/
+  remote: http://gems.sugarpond.net/
   specs:
     actionmailer (2.3.5)
       actionpack (= 2.3.5)
@@ -44,16 +45,26 @@ GEM
       rake (>= 0.8.7)
     gherkin (2.3.4)
       json (~> 1.4.6)
+    google4r-checkout (1.1.beta2)
+      money (>= 2.3.0)
     gruff (0.3.6)
     heroku_external_db (1.0.0)
     hoe (2.6.1)
       rake (>= 0.8.7)
+    i18n (0.5.0)
+    journey_paywall (1.0.0)
+      activerecord (= 2.3.5)
+      google4r-checkout (= 1.1.beta2)
+    journey_sugarpond_branding (1.0.0)
+      activesupport (>= 2.3.5)
     json (1.4.6)
     json_pure (1.5.1)
     launchy (0.4.0)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
     mime-types (1.16)
+    money (3.6.1)
+      i18n (~> 0.4)
     mysql (2.8.1)
     nokogiri (1.4.4)
     paginator (1.1.1)
@@ -97,6 +108,8 @@ DEPENDENCIES
   fastercsv
   gruff (~> 0.3.6)
   heroku_external_db (>= 1.0.0)
+  journey_paywall (= 1.0.0)
+  journey_sugarpond_branding (= 1.0.0)
   launchy
   mysql
   paginator

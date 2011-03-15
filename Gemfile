@@ -12,7 +12,7 @@ gem 'ae_users_legacy', '0.6.3', :require => 'ae_users'
 gem "heroku_external_db", ">= 1.0.0"
 
 gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
-gem 'rmagick', "~> 2.11", :require => 'RMagick', :platforms => ['ruby', 'mswin']
+gem 'rmagick', "= 2.11", :require => 'RMagick', :platforms => ['ruby', 'mswin']
 gem 'gruff', '~> 0.3.6'
 
 source "http://gems.sugarpond.net"

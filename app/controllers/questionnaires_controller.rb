@@ -22,30 +22,41 @@ class QuestionnairesController < ApplicationController
     per_page = 12
     conditions = []
     condition_vars = {}
+    joins = [:permissions]
     if params[:title] and params[:title] != ''
       conditions.push("lower(title) like :title")
       condition_vars[:title] ="%#{params[:title].downcase}%"
     end
-    find_conditions = [conditions.join(" and "), condition_vars]
-    all_questionnaires = if params[:tag] and params[:tag] != ''
-      t = Tag.find_by_name(params[:tag])
-      if t.nil?
-        []
-      else
-        t.questionnaires(:conditions => find_conditions, :order => 'id DESC', :include => [:taggings, :tags, :permissions])
+    
+    perm_condition = "(is_open = :is_open and publicly_visible = :publicly_visible)"
+    condition_vars.update(:is_open => true, :publicly_visible => true)
+    if p
+      perm_condition << " or (permissions.person_id = :person_id)"
+      condition_vars[:person_id] = p.id
+      if p.roles.size > 0
+        perm_condition << " or (permissions.role_id in (:role_ids))"
+        condition_vars[:role_ids] = p.roles.map(&:id)
       end
-    else
-      Questionnaire.all(:conditions => find_conditions, :order => 'id DESC', :include => [:taggings, :tags, :permissions])
     end
-    permitted_questionnaires = all_questionnaires.select do |q|
-      (q.is_open and q.publicly_visible) or (p and Questionnaire.permission_names.any? { |pn| p.permitted?(q, pn) })
+    conditions << "(#{perm_condition})"
+    
+    if !params[:tag].blank?
+      joins << :tags
+      conditions << "tags.name = :tag_name"
+      condition_vars[:tag_name] = params[:tag]
     end
-    pager = ::Paginator.new(permitted_questionnaires.size, per_page) do |offset, pp|
-      permitted_questionnaires[offset, pp]
-    end
-    @questionnaires = returning WillPaginate::Collection.new(params[:page] || 1, per_page, permitted_questionnaires.size) do |paginator|
-      paginator.replace pager.page(params[:page]).items
-    end
+        
+    find_conditions = [conditions.join(" and "), condition_vars]
+    find_options = {
+      :conditions => [conditions.join(" and "), condition_vars],
+      :order => 'questionnaires.id DESC',
+      :joins => joins,
+      :group => "questionnaires.id",
+      :include => {:tags => [], :permissions => [:person]},
+      :page => params[:page] || 1,
+      :per_page => per_page,
+    }
+    @questionnaires = Questionnaire.paginate(find_options)
     
     @rss_url = questionnaires_url(:format => "rss")
 

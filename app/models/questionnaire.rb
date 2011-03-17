@@ -324,6 +324,10 @@ class Questionnaire < ActiveRecord::Base
     return q
   end
   
+  def authors
+    permitted_people("edit")
+  end
+  
   def self.load_extensions
     Journey::QuestionnaireExtensions.extensions.each do |ext|
       include ext

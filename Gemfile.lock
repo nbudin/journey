@@ -48,9 +48,16 @@ GEM
     google4r-checkout (1.1.beta2)
       money (>= 2.3.0)
     gruff (0.3.6)
+    heroku (1.6.3)
+      json (>= 1.1.0)
+      launchy (>= 0.3.2)
+      rest-client (>= 1.2.0, < 2.0.0)
     heroku_external_db (1.0.0)
     hoe (2.6.1)
       rake (>= 0.8.7)
+    hoptoad_notifier (2.4.8)
+      activesupport
+      builder
     i18n (0.4.2)
     jipe (1.0.0)
     journey_paywall (1.0.4)
@@ -81,6 +88,8 @@ GEM
       activesupport (= 2.3.5)
       rake (>= 0.8.3)
     rake (0.8.7)
+    rest-client (1.6.1)
+      mime-types (>= 1.16)
     rmagick (2.11)
     ruby-openid (2.1.8)
     rubyzip (0.9.4)
@@ -108,7 +117,9 @@ DEPENDENCIES
   factory_girl
   fastercsv
   gruff (~> 0.3.6)
+  heroku
   heroku_external_db (>= 1.0.0)
+  hoptoad_notifier
   i18n (= 0.4.2)
   jipe (>= 1.0.0)
   journey_paywall (= 1.0.4)

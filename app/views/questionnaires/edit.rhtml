@@ -33,6 +33,10 @@ function submitQuestionEdit() {
   return false;
 }
 
+function closeQuestionEdit($li) {
+  $li.load($li.attr('data-question-url') + ' .question');
+}
+
 function setupQuestionEdit(partial) {
   jQuery(partial).find('a.editquestion').each(function() {
     var $this = jQuery(this);
@@ -44,6 +48,7 @@ function setupQuestionEdit(partial) {
     $this.bind('click', function(evt) {
       $li.load(href, function() {
         $li.find('form').submit(submitQuestionEdit);
+        $li.find('a.finishedediting').attr('href', '#').bind('click', function () { closeQuestionEdit($li) });
       });
     });
   });

@@ -3,7 +3,7 @@
     <%= link_to "Finished editing", edit_questionnaire_path(@questionnaire), :class => "finishedediting" %>
   </div>
   
-  <%= render :partial => "questions/show", :locals => { :question => @question } %>
+  <%= render_question @question, @question.default_answer %>
 
   <div class="editforms">
     <% form_for @question, :html => { :method => @question.new_record? ? :post : :put }, 

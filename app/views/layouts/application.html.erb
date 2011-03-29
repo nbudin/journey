@@ -21,7 +21,8 @@
   <% end -%>
   
   <%= yield :stylesheets %>
-  
+
+  <%= hoptoad_javascript_notifier %>  
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag '/jipe/jester' %>
   <%= javascript_include_tag '/jipe/jipe' %>

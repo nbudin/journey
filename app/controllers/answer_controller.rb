@@ -152,7 +152,7 @@ class AnswerController < ApplicationController
     @resp = Response.find(session["response_#{params[:id]}"])
     if not @resp.questionnaire.allow_finish_later and not @resp.submitted
       flash[:error_messages] = ["This questionnaire does not allow you to resume answering later."]
-      redirect_to :action => "answer", :id => @resp.questionnaire.id, :page => params[:current_page]
+      return redirect_to(:action => "answer", :id => @resp.questionnaire.id, :page => params[:current_page])
     end
 
     if not (@resp.submitted and not @resp.questionnaire.allow_amend_response)

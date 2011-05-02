@@ -8,7 +8,7 @@ gem 'will_paginate'
 gem "mysql"
 gem "ruby-openid", :require => "openid"
 gem "xebec", "2.6.0"
-gem 'ae_users_legacy', '0.6.3', :require => 'ae_users'
+gem 'ae_users_legacy', '0.6.6', :require => 'ae_users'
 gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 1.0.0"
 gem 'hoptoad_notifier'

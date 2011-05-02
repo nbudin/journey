@@ -12,7 +12,7 @@ GEM
     activeresource (2.3.5)
       activesupport (= 2.3.5)
     activesupport (2.3.5)
-    ae_users_legacy (0.6.3)
+    ae_users_legacy (0.6.6)
       ruby-openid (>= 2.0.4)
     builder (3.0.0)
     capybara (0.4.1.2)
@@ -109,7 +109,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ae_users_legacy (= 0.6.3)
+  ae_users_legacy (= 0.6.6)
   bundler
   capybara (>= 0.3.5)
   cucumber-rails

@@ -72,7 +72,9 @@ class QuestionnairesController < ApplicationController
   end
   
   def responses
-    redirect_to :action => 'index' unless logged_in?
+    unless logged_in?
+      return redirect_to(:action => 'index')
+    end
     
     @responses = Response.all(:conditions => { :person_id => logged_in_person.id }, 
                               :include => { :questionnaire => [:permissions, :tags] },

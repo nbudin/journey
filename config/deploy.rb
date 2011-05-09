@@ -66,9 +66,9 @@ namespace :deploy do
     run "for f in #{imagesdir}/*; do ln -nfs $f #{release_path}/public/images/; done"
     
     # install the Sugar Pond plugins
-    %w{journey_paywall journey_sugarpond_branding}.each do |plugin|
-      run "cd #{current_release} && script/plugin install -r #{branch} git+ssh://git_aegames@git.aegames.org/#{plugin}.git"
-    end
+#    %w{journey_paywall journey_sugarpond_branding}.each do |plugin|
+#      run "cd #{current_release} && script/plugin install -r #{branch} git+ssh://git_aegames@git.aegames.org/#{plugin}.git"
+#    end
   end
 
   task :migrate_paywall do
@@ -77,3 +77,10 @@ namespace :deploy do
   end
 end
 
+
+
+Dir[File.join(File.dirname(__FILE__), '..', 'vendor', 'gems', 'hoptoad_notifier-*')].each do |vendored_notifier|
+  $: << File.join(vendored_notifier, 'lib')
+end
+
+require 'hoptoad_notifier/capistrano'

@@ -12,37 +12,14 @@ module Journey
   end
   
   module UserOptions
-    @@logged_out_options ||= []
-    @@logged_in_options ||= []
+    @@hooks ||= []
     
-    class UserOption
-      attr_reader :caption, :url, :conditional
-      
-      def initialize(caption, url, options = {})
-        @caption = caption
-        @url = url
-        @conditional = options[:conditional]
-      end
-      
-      def eval_conditional(context)
-        conditional.call(context)
-      end
+    def self.hook(&hook)
+      @@hooks << hook
     end
     
-    def self.add_logged_out_option(caption, url, options = {})
-      @@logged_out_options.push(UserOption.new(caption, url, options))
-    end
-  
-    def self.add_logged_in_option(caption, url, options = {})
-      @@logged_in_options.push(UserOption.new(caption, url, options))
-    end
-    
-    def self.logged_out_options
-      @@logged_out_options.dup
-    end
-    
-    def self.logged_in_options
-      @@logged_in_options.dup
+    def self.hooks
+      @@hooks
     end
   end
   

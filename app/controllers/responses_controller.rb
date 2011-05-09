@@ -68,33 +68,44 @@ class ResponsesController < ApplicationController
         @responses = @questionnaire.valid_responses
         @columns = @questionnaire.fields
         
-        stream_csv(@questionnaire.title + ".csv") do |csv|
-          if params[:rotate] == 'true'
-            csv << (["id"] + @responses.collect { |r| r.id })
-            @columns.each do |col|
-              csv << ([col.caption] + @responses.collect do |r|
-                a = r.answer_for_question(col)
-                if a
-                  a.output_value
-                else
-                  ""
-                end
-              end)
-            end
-          else
-            csv << (["id"] + @columns.collect { |c| c.caption })
-            @responses.each do |resp|
-              csv << ([resp.id] + @columns.collect do |c|
-                a = resp.answer_for_question(c)
-                if a
-                  a.output_value
-                else
-                  ""
-                end
-              end)
+        table = []
+        header = []
+        header << "id"
+        header << "Submitted"
+        header << "Notes"
+        header += @columns.collect { |c| c.caption }
+        table << header
+        
+        @responses.each do |resp|
+          row = []
+          row << resp.id
+          row << resp.submitted_at
+          row << resp.notes
+          row += @columns.collect { |c| resp.answer_for_question(c).try(:output_value) || "" }
+          table << row
+        end
+        
+        if params[:rotate] == 'true'
+          rotated_table = []
+          rows = table.length
+          columns = table.collect { |row| row.length }.max
+          
+          columns.times do |y|
+            rotated_table[y] ||= []
+            rows.times do |x|
+              value = table[x].try(:[], y)
+              rotated_table[y][x] = value
             end
           end
+          table = rotated_table
         end
+        
+        stream_csv(@questionnaire.title + ".csv") do |csv|
+          table.each do |row|
+            csv << row
+          end
+        end
+          
       end
     end
   end

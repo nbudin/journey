@@ -1,20 +1,27 @@
 <%= start_question @question %>
-<% if @editing -%>
-  <%= render :partial => "questions/selectorstart" %>
-    <% @question.question_options.each do |option| -%>
-      <%= radio_button "question[]", "default_answer", option.option,
-                    :onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);",
-                    :style => "vertical-align: middle;" %>
-      <label for="question_<%= @question.id %>_option_<%= option.id %>"><%= option.option %></label>
-      <span class="radiospacer">&nbsp;</span>
-    <% end -%>
-  <%= render :partial => "questions/selectorend" %>
-<% else -%>
-	<% @question.question_options.each do |option| -%>
-    	<%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option, 
-    	                     :id => "question_#{@question.id}_option_#{option.id}" %>  
-		<label for="question_<%= @question.id %>_option_<%= option.id %>"><%= option.option %> </label>
-		<span class="radiospacer">&nbsp;</span>
-	<% end -%>
-<% end -%>
+<ul class="radio-field <%= @question.radio_layout_class %>">
+  <% if @editing -%>
+    <%= render :partial => "questions/selectorstart" %>
+      <% @question.question_options.each do |option| -%>
+        <li>
+          <%= radio_button "question[]", "default_answer", option.option,
+                        :onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);",
+                        :style => "vertical-align: middle;",
+                        :id => "question_#{@question.id}_option_#{option.id}" %>
+          <label for="question_<%= @question.id %>_option_<%= option.id %>"><%= option.option %></label>
+          <span class="radiospacer">&nbsp;</span>
+        </li>
+      <% end -%>
+    <%= render :partial => "questions/selectorend" %>
+  <% else -%>
+  	<% @question.question_options.each do |option| -%>
+      <li>
+        <%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option, 
+      	                     :id => "question_#{@question.id}_option_#{option.id}" %>
+  		  <label for="question_<%= @question.id %>_option_<%= option.id %>"><%= option.option %> </label>
+  		  <span class="radiospacer">&nbsp;</span>
+  		</li>
+  	<% end -%>
+  <% end -%>
+</ul>
 <%= end_question(@question, :is_radio_group => true) %>

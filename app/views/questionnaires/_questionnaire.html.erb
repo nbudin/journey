@@ -1,4 +1,4 @@
-<% authors = questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
+<% authors = questionnaire.authors.collect(&:name).join(", ") -%>
 <li class="questionnairesummary">  
   <div id="questionnairesummary_<%=questionnaire.id%>">
     <table style="width: 100%;">

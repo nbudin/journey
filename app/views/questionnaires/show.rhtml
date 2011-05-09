@@ -15,7 +15,7 @@
     <h2 style="display: inline; margin-top: 0;">
       <%= jipe_editor @questionnaire, :title, :editing => @editing %>
     </h2>
-    <% authors = @questionnaire.permitted_people("edit").collect {|p| p.name}.join(", ") -%>
+    <% authors = @questionnaire.authors.collect {|p| p.name}.join(", ") -%>
     <% if authors.length > 0 -%>
       <br/>
       <i>By <%=h authors %></i>

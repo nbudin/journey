@@ -155,17 +155,18 @@ select {
 }
 
 .bigbutton {
-    background-image: url(<%= image_path 'topbar-bg.png' %>); 
+    background-color: #bad032;
+    background-image: url(<%= image_path 'white-fade.png' %>); 
     background-repeat: repeat-x; border: 2px solid #bad032; 
     border-radius: 10px; 
     -moz-border-radius: 10px; 
     -webkit-border-radius: 10px; 
-    padding: 0.5em; 
+    padding: 7px; 
     display: inline-block;
     color: black; 
     text-decoration: none; 
     font-size: 120%;
-	margin: 0.5em;
+	margin: 5px;
 }
 
 .topbar {
@@ -182,7 +183,7 @@ select {
         vertical-align: middle;
 }
 
-.topbar ul.user_options {
+.topbar .user_options ul {
     list-style-type: none;
     padding-right: 0.5em;
 	margin: 0;
@@ -191,14 +192,13 @@ select {
     float: right;
 }
 
-.topbar ul.user_options li {
+.topbar .user_options li {
     display: -moz-inline-stack;
     display: inline-block;
 	margin: 0.5em;
 }
 
-.topbar ul.user_options li a {
-    background-color: #bad032;
+.topbar .user_options li a, .topbar .user_options li.current span {
     color: black;
     padding: 0.2em 0.5em;
     text-decoration: none;
@@ -209,8 +209,17 @@ select {
     position: relative;
 }
 
-.topbar ul.user_options li a:hover {
+.topbar .user_options li a {
+    background-color: #bad032;
+}
+
+.topbar .user_options li a:hover {
     background-color: white;
+}
+
+.topbar .user_options li.current span {
+    background-color: white;
+    cursor: default;
 }
 
 a {
@@ -351,4 +360,38 @@ li.question span.draghandle {
     padding: 10px;
     margin-bottom: 5px;
     text-align: center;
+}
+
+#toolboxspacer {
+    height: 150px;
+}
+
+ul.radio-field {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+
+ul.radio-field li {
+    display: inline;
+}
+
+ul.radio-field.layout-vertical li {
+    display: block;
+    clear: left;
+    margin-bottom: 5px;
+}
+
+ul.radio-field.layout-vertical li:last-child {
+    margin-bottom: 0;
+}
+
+ul.radio-field.layout-vertical li input {
+    float: left;
+}
+
+ul.radio-field.layout-vertical li label {
+    margin-left: 1em;
+    display: inline-block;
+    width: 85%;
 }

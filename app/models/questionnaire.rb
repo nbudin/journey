@@ -198,6 +198,7 @@ class Questionnaire < ActiveRecord::Base
             xml.question(:type => question.class.to_s, :required => question.required) do
               xml.caption(question.caption)
               xml.default_answer(question.default_answer)
+              xml.layout(question.layout)
               if question.kind_of? Questions::Field
                 if question.purpose
                   xml.purpose(question.purpose)
@@ -210,6 +211,9 @@ class Questionnaire < ActiveRecord::Base
                 question.question_options.each do |option|
                   xml.option(option.option, :output_value => option.output_value)
                 end
+              end
+              if question.kind_of? Questions::RadioField
+                xml.radio_layout question.radio_layout
               end
             end
           end
@@ -267,6 +271,10 @@ class Questionnaire < ActiveRecord::Base
             q.special_field_associations << sfa
           end
           
+          question.each_element('layout') do |layout|
+            ques.layout = layout.text
+          end
+          
           if ques.kind_of? Questions::RangeField
             question.each_element('range') do |range|
               ['min', 'max', 'step'].each do |attrib|
@@ -297,6 +305,12 @@ class Questionnaire < ActiveRecord::Base
             end
           end
           
+          if ques.kind_of? Questions::RadioField
+            question.each_element('radio_layout') do |layout|
+              ques.radio_layout = layout.text
+            end
+          end
+          
           ques.position = p.questions.length + 1
           p.questions << ques
         end
@@ -308,6 +322,10 @@ class Questionnaire < ActiveRecord::Base
       end
     end
     return q
+  end
+  
+  def authors
+    permitted_people("edit")
   end
   
   def self.load_extensions

@@ -63,7 +63,7 @@ function updateDefaultForRadioGroup(questionId, newDefault) {
       }
     }
   } else {
-    button = $("question_"+questionId+"_default_answer_"+newDefault.toLowerCase().gsub(/ /, '_').gsub(/[^a-z_]/, ''));
+    button = $$("input[type=radio][name=\"question["+questionId+"][default_answer]\"][value=\""+newDefault+"\"]")[0];
     button.checked = true;
   }
   button.newDefault = newDefault;
@@ -259,6 +259,19 @@ function setLayout(questionId, layout) {
   } else {
     Question.find(questionId, function(q) {
       q.layout = layout;
+      q.save(function() {
+        reloadQuestion(questionId);
+      });
+    });
+  }
+}
+
+function setRadioLayout(questionId, layout) {
+  if (layout == null) {
+    alert('Multiple layout selection not yet implemented.');
+  } else {
+    Question.find(questionId, function(q) {
+      q.radio_layout = layout;
       q.save(function() {
         reloadQuestion(questionId);
       });

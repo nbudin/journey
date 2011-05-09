@@ -8,3 +8,8 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+
+journey_paywall = Gem.searcher.find('journey_paywall')
+if journey_paywall
+  Dir["#{journey_paywall.full_gem_path}/tasks/*.rake"].each { |ext| load ext }
+end

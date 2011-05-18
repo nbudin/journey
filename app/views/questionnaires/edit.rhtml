@@ -27,10 +27,14 @@ function submitQuestionEdit() {
   jQuery.post(action, $this.serialize(), function() {
     var questionUrl = $this.parents('.question[data-question-url]').attr('data-question-url');
     var $question = $this.parents('.questionedit').find(".question");
-    $question.load(questionUrl);
+    $question.load(questionUrl + " .question");
     setupQuestionEdit($question);
   }, "text");
   return false;
+}
+
+function closeQuestionEdit($li) {
+  $li.load($li.attr('data-question-url') + ' .question');
 }
 
 function setupQuestionEdit(partial) {
@@ -42,8 +46,10 @@ function setupQuestionEdit(partial) {
     $this.attr('href', '#');
 
     $this.bind('click', function(evt) {
-      $li.load(href);
-      $li.find('form').submit(submitQuestionEdit);
+      $li.load(href, function() {
+        $li.find('form').submit(submitQuestionEdit);
+        $li.find('a.finishedediting').attr('href', '#').bind('click', function () { closeQuestionEdit($li) });
+      });
     });
   });
 }

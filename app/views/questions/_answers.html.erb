@@ -1,0 +1,40 @@
+<table style="border-collapse: collapse; width: 100%; display: table; margin: 0; vertical-align: middle;">
+  <tr style="text-align: center; font-weight: bold;">
+    <td></td>
+    <td>Option</td>
+    <td>Output Value</td>
+  </tr>
+  <% f.fields_for :question_options do |option_fields| -%>
+    <tr class="question_option <%= cycle(:odd, :even) %>">
+      <td class="draghandle" style="cursor: move; width: 10px;">
+         <%=image_tag("drag-handle.png")%>
+      </td>
+      <td>
+        <%= option_fields.text_field :option, :style => "width: auto;" %>
+      </td>
+      <td>
+        <%= option_fields.text_field :output_value, :style => "width: auto;" %>
+      </td>
+      <td style="width: 16px;">
+        <%= option_fields.check_box :_destroy %>
+      </td>
+    </tr>
+  <% end -%>
+  <tr>
+    <td></td>
+    <td><%= text_field_tag "question_#{@question.id}_add_option", "" %></td>
+    <td></td>
+    <td><%= image_tag "add.png", :class => "image_button",
+		:onClick => "addOption(#{@question.id}, $('question_#{@question.id}_add_option').value);" %></td>
+<script type="text/javascript">
+  Event.observe('question_<%=@question.id%>_add_option', 'keyup', function (evt) {
+		if (evt.keyCode == 13) {
+			addOption(<%=@question.id%>, $('question_<%=@question.id%>_add_option').value);
+		}
+	});
+</script>
+  </tr>
+</table>
+<%= sortable_element "options", :handle => "draghandle", :only => "question_option",
+              :url => question_options_path(@questionnaire, @page, @question) + '/sort',
+              :complete => "window.location.reload();" %>

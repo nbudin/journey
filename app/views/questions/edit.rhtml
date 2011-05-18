@@ -8,13 +8,18 @@
   <div class="editforms">
     <% form_for @question, :html => { :method => @question.new_record? ? :post : :put }, 
                 :url => question_path(@questionnaire, @page, @question) do |f| -%>
-      <h3>Options</h3>
+      <h3>Question Properties</h3>
 
       <%= f.label :required, "Required?" %>
       <%= f.check_box :required %>
     
       <%= f.label :layout %>
       <%= f.select :layout, [["Question beside answer", "left"], ["Question above answer", "top"]]%>
+      
+      <% if @question.kind_of? Questions::RadioField -%>
+        <%= f.label :radio_layout, "Answers layout" %>
+        <%= f.select :radio_layout, [["Vertical", "vertical"], ["In a row", "inline"]] %>
+      <% end -%>
 
       <%= f.label :default_answer %>
       <% if @question.kind_of? Questions::FreeformField -%>
@@ -27,6 +32,14 @@
         <%= f.select :default_answer, (@question.min..@question.max).to_a, :include_blank => true %>
       <% end -%>
       <%= submit_tag "Save changes" %>
+    <% end -%>
+    
+    <% if @question.kind_of? Questions::SelectorField -%>
+      <% form_for @question, :url => question_path(@questionnaire, @page, @question) do |f| -%>
+        <h3>Answers</h3>
+        
+        <%= render :partial => "answers", :locals => { :f => f } %>
+      <% end -%>
     <% end -%>
 
     <% form_for @question, :url => question_path(@questionnaire, @page, @question) do |f| -%>

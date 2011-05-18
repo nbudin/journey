@@ -8,6 +8,8 @@ class Question < ActiveRecord::Base
   has_one :special_field_association, :dependent => :destroy
   has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id'
   
+  accepts_nested_attributes_for :question_options, :allow_destroy => true
+  
   Layouts = {
     :left => "left",
     :top => "top"

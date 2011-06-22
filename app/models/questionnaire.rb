@@ -255,10 +255,8 @@ class Questionnaire < ActiveRecord::Base
           
           ques.caption = ""
           question.each_element('caption') do |caption|
+            next unless caption.text
             ques.caption = caption.text
-            if ques.caption.nil?
-              ques.caption = ""
-            end
           end
           da = nil
           question.each_element('default_answer') do |default_answer|

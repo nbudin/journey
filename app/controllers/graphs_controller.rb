@@ -30,7 +30,12 @@ class GraphsController < ApplicationController
   end
   
   def aggregate_question(question)
-    counts = Answer.count( :conditions => { :question_id => question.id }, :group => "value" )
+    counts = {}
+    question.answers.find_each do |answer|
+      value = answer.output_value
+      counts[value] ||= 0
+      counts[value] += 1
+    end
     no_answer = @questionnaire.responses.valid.no_answer_for(question).count()
     if no_answer > 0
       counts["No answer"] = no_answer

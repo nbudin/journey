@@ -60,9 +60,9 @@ GEM
       builder
     i18n (0.4.2)
     jipe (1.0.0)
-    journey_paywall (1.0.8)
+    journey_paywall (1.0.9)
       activerecord (~> 2.3.5)
-      google4r-checkout (= 1.1.0)
+      google4r-checkout (~> 1.1.0)
     journey_sugarpond_branding (1.0.0)
       activesupport (>= 2.3.5)
     json (1.6.3)
@@ -123,7 +123,7 @@ DEPENDENCIES
   hoptoad_notifier
   i18n (= 0.4.2)
   jipe (>= 1.0.0)
-  journey_paywall (= 1.0.8)
+  journey_paywall (= 1.0.9)
   journey_sugarpond_branding (= 1.0.0)
   launchy
   mysql

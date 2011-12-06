@@ -21,7 +21,7 @@ gem 'i18n', '0.4.2'
 
 source "http://gems.sugarpond.net"
 gem 'journey_sugarpond_branding', "1.0.0"
-gem 'journey_paywall', "1.0.7"
+gem 'journey_paywall', "1.0.8"
 
 group :test do
   gem "factory_girl"

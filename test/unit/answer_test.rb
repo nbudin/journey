@@ -13,7 +13,7 @@ class AnswerTest < ActiveSupport::TestCase
     
     should "return the output value" do
       assert @answer.question.kind_of? Questions::SelectorField
-      assert @answer.question.question_options.any? { |opt| opt.value == @answer.value }
+      assert @answer.question.question_options.any? { |opt| opt.option == @answer.value }
       assert_equal "M", @answer.output_value
     end
     

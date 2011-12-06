@@ -16,10 +16,8 @@ class Questionnaire < ActiveRecord::Base
   has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id
   has_many :special_fields, :through => :special_field_associations, :source => :question
   has_many :questions, :through => :pages, :order => "pages.position, questions.position"
-  has_many :fields, :through => :pages, :class_name => 'Question', :order => "pages.position, questions.position",
-    :conditions => "type in #{Question.types_for_sql(Question.field_types)}", :include => :page
-  has_many :decorators, :through => :pages, :class_name => 'Question', :order => "pages.position, questions.position",
-    :conditions => "type in #{Question.types_for_sql(Question.decorator_types)}", :include => :page
+  has_many :fields, :through => :pages, :order => "pages.position, questions.position"
+  has_many :decorators, :through => :pages, :order => "pages.position, questions.position"
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
   
@@ -49,6 +47,14 @@ class Questionnaire < ActiveRecord::Base
   def Questionnaire.add_creator_warning_hook(hook)
     @@creator_warning_hooks.push(hook)
   end
+
+  %w(questions fields decorators).each do |method|
+    class_eval <<-EOF
+      def #{method}
+        pages.collect(&:#{method}).flatten
+      end
+    EOF
+  end  
 
   def used_special_field_purposes
     special_field_associations.collect { |sfa| sfa.purpose }

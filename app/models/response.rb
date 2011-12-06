@@ -1,5 +1,5 @@
 class Response < ActiveRecord::Base
-  belongs_to :questionnaire, :include => [:special_field_associations, :fields]
+  belongs_to :questionnaire, :include => [:special_field_associations]
   validates_associated :questionnaire
   has_many :answers, :dependent => :destroy, :include => {:question => :question_options}
   belongs_to :person

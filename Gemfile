@@ -11,7 +11,7 @@ gem "xebec", "2.6.0"
 gem 'ae_users_legacy', '0.6.6', :require => 'ae_users'
 gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 1.0.0"
-gem 'hoptoad_notifier'
+gem 'airbrake'
 gem 'heroku'
 
 gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
@@ -21,7 +21,7 @@ gem 'i18n', '0.4.2'
 
 source "http://gems.sugarpond.net"
 gem 'journey_sugarpond_branding', "1.0.0"
-gem 'journey_paywall', "1.0.4"
+gem 'journey_paywall', "1.0.5"
 
 group :test do
   gem "factory_girl"

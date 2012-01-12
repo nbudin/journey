@@ -65,59 +65,89 @@ class ResponsesController < ApplicationController
         render :layout => false
       end
       format.csv do
-        @columns = @questionnaire.fields
-        
-        table = []
-        header = []
-        header << "id"
-        header << "Submitted"
-        header << "Notes"
-        header += @columns.collect { |c| c.caption }
-        table << header
         
         stream_csv(@questionnaire.title + ".csv") do |csv|
+          db = RailsSequel.connect
+          
+          ds = db[:answers]
+          ds = ds.inner_join(:responses, :id => :response_id).inner_join(:questionnaires, :id => :questionnaire_id)
+          ds = ds.inner_join(:questions, :id => :answers__question_id)
+          ds = ds.inner_join(:pages, :id => :questions__page_id)
+          ds = ds.left_join(:question_options, :question_id => :answers__question_id, :option => :answers__value)
+          ds = ds.where(:questionnaires__id => @questionnaire.id)
+
           case params[:rotate]
           when 'true'
+            valid_response_ids = db[:answers].select(:response_id).inner_join(:responses, :id => :response_id).where(:questionnaire_id => @questionnaire.id)
+            
+            response_metadata = db[:responses].order(:id.asc).where(:id => valid_response_ids).select(:id, :submitted_at, :notes).all
+            response_ids = response_metadata.map { |resp| resp[:id] }
+            csv << ["id"] + response_ids
+            csv << ["Submitted"] + response_metadata.map { |resp| resp[:submitted_at] }
+            csv << ["Notes"] + response_metadata.map { |resp| resp[:notes] }
+            
+            ds = ds.order(:pages__position.asc, :questions__position.asc, :responses__id.asc)
+            ds = ds.select(:answers__question_id, :questions__caption, :answers__response_id, :answers__value, :question_options__output_value)
+            
+            current_response_index = 0
+            current_question_id = 0
+            current_row = nil
+            ds.each do |db_row|
+              if db_row[:question_id] != current_question_id
+                csv << current_row if current_row
+                current_row = [db_row[:caption]]
+                current_response_index = 0
+                current_question_id = db_row[:question_id]
+              end
+              
+              current_response_id = response_ids[current_response_index]
+              if current_response_id != db_row[:response_id]
+                skip_to = response_ids.find_index(db_row[:response_id])
+                if skip_to
+                  (skip_to - current_response_index).times { current_row << "" }
+                else
+                  next
+                end
+              end
+              
+              current_row << (db_row[:output_value] || db_row[:value] || "")
+              current_response_index += 1
+            end
+            csv << current_row if current_row
           else
-            sql = <<-EOF
-            SELECT responses.id, responses.submitted_at, responses.notes, answers.question_id, answers.value, question_options.output_value 
-            FROM answers 
-            INNER JOIN responses ON responses.id = answers.response_id
-            INNER JOIN questionnaires ON questionnaires.id = responses.questionnaire_id
-            INNER JOIN questions ON questions.id = answers.question_id
-            INNER JOIN pages ON pages.id = questions.page_id
-            LEFT JOIN question_options 
-              ON (question_options.question_id = answers.question_id AND 
-                question_options.option = answers.value) 
-            WHERE questionnaires.id = #{@questionnaire.id}
-            ORDER BY responses.id DESC, pages.id ASC, questions.position ASC
-            EOF
+            @columns = @questionnaire.fields
+
+            header = ["id", "Submitted", "Notes"]
+            header += @columns.collect { |c| c.caption }
+            csv << header
+            
+            ds = ds.order(:responses__id.desc, :pages__position.asc, :questions__position.asc)
+            ds = ds.select(:responses__id, :responses__submitted_at, :responses__notes, :answers__question_id, :answers__value, :question_options__output_value)
             
             column_ids = @columns.map(&:id)
             current_column_index = 0
             current_response_id = 0
             current_row = nil
-            Answer.connection.select_rows(sql).each do |(response_id, submitted_at, notes, question_id, value, output_value)|
-              if response_id != current_response_id
+            ds.each do |db_row|
+              if db_row[:id] != current_response_id
                 csv << current_row if current_row                
-                current_row = [response_id, submitted_at, notes]
+                current_row = [db_row[:id], db_row[:submitted_at], db_row[:notes]]
                 current_column_index = 0
-                current_response_id = response_id
+                current_response_id = db_row[:id]
               end
               
               current_column_id = column_ids[current_column_index]
-              question_id = question_id.to_i
-              if current_column_id != question_id
-                skip_to = column_ids.find_index(question_id)
+              if current_column_id != db_row[:question_id]
+                skip_to = column_ids.find_index(db_row[:question_id])
                 if skip_to
-                  (skip_to - current_column_id).times { current_row << "" }
+                  (skip_to - current_column_index).times { current_row << "" }
                   current_column_index = skip_to
                 else
                   next
                 end
               end
               
-              current_row << (output_value || value || "")
+              current_row << (db_row[:output_value] || db_row[:value] || "")
               current_column_index += 1
             end
             csv << current_row if current_row

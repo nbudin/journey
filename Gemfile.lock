@@ -99,6 +99,7 @@ GEM
       ffi (~> 0.6.3)
       json_pure
       rubyzip
+    sequel (3.31.0)
     shoulda (2.11.3)
     term-ansicolor (1.0.7)
     will_paginate (2.3.16)
@@ -132,6 +133,7 @@ DEPENDENCIES
   rmagick
   rmagick4j
   ruby-openid
+  sequel
   shoulda
   will_paginate (~> 2.3.16)
   xebec (= 2.6.0)

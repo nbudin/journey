@@ -1,6 +1,6 @@
 begin
   require 'fastercsv'
-rescue
+rescue MissingSourceFile
   require 'csv'
   FasterCSV = CSV
 end
@@ -65,7 +65,6 @@ class ResponsesController < ApplicationController
         render :layout => false
       end
       format.csv do
-        @responses = @questionnaire.valid_responses
         @columns = @questionnaire.fields
         
         table = []
@@ -76,36 +75,69 @@ class ResponsesController < ApplicationController
         header += @columns.collect { |c| c.caption }
         table << header
         
-        @responses.each do |resp|
-          row = []
-          row << resp.id
-          row << resp.submitted_at
-          row << resp.notes
-          row += @columns.collect { |c| resp.answer_for_question(c).try(:output_value) || "" }
-          table << row
-        end
-        
-        if params[:rotate] == 'true'
-          rotated_table = []
-          rows = table.length
-          columns = table.collect { |row| row.length }.max
-          
-          columns.times do |y|
-            rotated_table[y] ||= []
-            rows.times do |x|
-              value = table[x].try(:[], y)
-              rotated_table[y][x] = value
-            end
-          end
-          table = rotated_table
-        end
-        
         stream_csv(@questionnaire.title + ".csv") do |csv|
-          table.each do |row|
-            csv << row
+          case params[:rotate]
+          when 'true'
+          else
+            sql = <<-EOF
+            SELECT responses.id, responses.submitted_at, responses.notes, answers.question_id, answers.value, question_options.output_value 
+            FROM answers 
+            INNER JOIN responses ON responses.id = answers.response_id
+            INNER JOIN questionnaires ON questionnaires.id = responses.questionnaire_id
+            INNER JOIN questions ON questions.id = answers.question_id
+            INNER JOIN pages ON pages.id = questions.page_id
+            LEFT JOIN question_options 
+              ON (question_options.question_id = answers.question_id AND 
+                question_options.option = answers.value) 
+            WHERE questionnaires.id = #{@questionnaire.id}
+            ORDER BY responses.id DESC, pages.id ASC, questions.position ASC
+            EOF
+            
+            column_ids = @columns.map(&:id)
+            current_column_index = 0
+            current_response_id = 0
+            current_row = nil
+            Answer.connection.select_rows(sql).each do |(response_id, submitted_at, notes, question_id, value, output_value)|
+              if response_id != current_response_id
+                csv << current_row if current_row                
+                current_row = [response_id, submitted_at, notes]
+                current_column_index = 0
+                current_response_id = response_id
+              end
+              
+              current_column_id = column_ids[current_column_index]
+              question_id = question_id.to_i
+              if current_column_id != question_id
+                skip_to = column_ids.find_index(question_id)
+                if skip_to
+                  (skip_to - current_column_id).times { current_row << "" }
+                  current_column_index = skip_to
+                else
+                  next
+                end
+              end
+              
+              current_row << (output_value || value || "")
+              current_column_index += 1
+            end
+            csv << current_row if current_row
           end
         end
-          
+        
+#        if params[:rotate] == 'true'
+#          rotated_table = []
+#          rows = table.length
+#          columns = table.collect { |row| row.length }.max
+#          
+#          columns.times do |y|
+#            rotated_table[y] ||= []
+#            rows.times do |x|
+#              value = table[x].try(:[], y)
+#              rotated_table[y][x] = value
+#            end
+#          end
+#          table = rotated_table
+#        end
       end
     end
   end
@@ -255,26 +287,32 @@ class ResponsesController < ApplicationController
   
   private
   def stream_csv(filename)
+    content_type = 'text/csv'
     if request.env['HTTP_USER_AGENT'] =~ /msie/i
       headers['Pragma'] = 'public'
-      headers['Content-type'] = 'text/plain'
+      content_type = 'text/plain'
       headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
       headers['Expires'] = "0"
-    else
-      headers['Content-Type'] ||= 'text/csv'
     end
-    headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
+
+    # Generate a valid tempfile name
+    tmpfile = Tempfile.new(filename)
+    pathname = tmpfile.path
+    tmpfile.close
     
-    output = StringIO.new
-    csv = FasterCSV.new(output, :row_sep => "\r\n")
-    yield csv
-    begin
-      c = Iconv.new('ISO-8859-15', 'UTF-8')
-      render :text => c.iconv(output.string)
-    rescue Iconv::IllegalSequence
-      # this won't work in excel but might work other places
-      render :text => output.string
+    output_path = pathname + '-nontemp'
+    FasterCSV.open(output_path, "w", :row_sep => "\r\n") do |csv|
+      yield csv
     end
+    send_file(output_path, :type => content_type, :disposition => "attachment", :filename => filename)
+    
+    #begin
+    #  c = Iconv.new('ISO-8859-15', 'UTF-8')
+    #  render :text => c.iconv(output.string)
+    #rescue Iconv::IllegalSequence
+      # this won't work in excel but might work other places
+    #  render :text => output.string
+    #end
   end
   
   def set_page_title
@@ -282,7 +320,7 @@ class ResponsesController < ApplicationController
   end
   
   def get_questionnaire
-    @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => [:valid_responses, :pages])
+    @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => [:pages])
   end
   
   def require_view_answers_except_rss

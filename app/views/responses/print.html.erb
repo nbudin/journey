@@ -1,4 +1,4 @@
-<% @questionnaire.valid_responses.each do |resp| -%>
+<% @questionnaire.valid_responses.find_each do |resp| -%>
   <div class="separate-page">
     <h1><%=h resp.title %></h1>
   

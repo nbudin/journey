@@ -13,6 +13,8 @@ class Questionnaire < ActiveRecord::Base
   has_many :responses, :dependent => :destroy, :order => "responses.id DESC", :include => [:answers, :questionnaire]
   has_many :valid_responses, :order => "responses.id DESC", :class_name => "Response",
     :conditions => "responses.id in (select response_id from answers)", :include => [:answers, :questionnaire]
+  has_many :valid_responses_for_export, :order => "responses.id DESC", :class_name => "Response",
+    :conditions => "responses.id in (select response_id from answers)"
   has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id
   has_many :special_fields, :through => :special_field_associations, :source => :question
   has_many :questions, :through => :pages, :order => "pages.position, questions.position"

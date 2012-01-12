@@ -6,8 +6,8 @@ def password_from_name(firstname, lastname)
   "MyNameIs#{firstname}#{lastname}"
 end
 
-Then /^I should be logged in$/ do
-  Then "I should see \"Profile\" within \".topbar .user_options\""
+Then /^I should be logged in as (.*)$/ do |name|
+  step "I should see \"#{name}\" within \".topbar .user_options\""
 end
 
 Given /^the user (.*) (.*) exists$/ do |firstname, lastname|
@@ -22,18 +22,18 @@ Given /^the user (.*) (.*) exists$/ do |firstname, lastname|
 end
 
 Given /^I log in as (.*) (.*)$/ do |firstname, lastname|
-  Given "I am on the home page"
+  step "I am on the home page"
   unless page.has_content?("Log out")
-    Given "I am on the login page"
-    And "I fill in \"Email address\" with \"#{email_address_from_name(firstname, lastname)}\""
-    And "I choose \"Yes, my password is:\""
-    And "I fill in \"login[password]\" with \"#{password_from_name(firstname, lastname)}\""
-    And "I press \"Log in\""
-    Then "I should be logged in"
+    step "I am on the login page"
+    step "I fill in \"Email address\" with \"#{email_address_from_name(firstname, lastname)}\""
+    step "I choose \"Yes, my password is:\""
+    step "I fill in \"login[password]\" with \"#{password_from_name(firstname, lastname)}\""
+    step "I press \"Log in\""
+    step "I should be logged in as #{firstname} #{lastname}"
   end
 end
 
 Given /^I am logged in as (.*) (.*)$/ do |firstname, lastname|
-  Given "the user #{firstname} #{lastname} exists"
-  And "I log in as #{firstname} #{lastname}"
+  step "the user #{firstname} #{lastname} exists"
+  step "I log in as #{firstname} #{lastname}"
 end

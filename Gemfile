@@ -5,7 +5,7 @@ gem "rails", "~> 2.3.11"
 gem 'fastercsv', :platforms => "ruby_18"
 gem 'paginator'
 gem 'will_paginate', '~> 2.3.16'
-gem "mysql"
+gem "mysql2", '~> 0.2.18'
 gem "ruby-openid", :require => "openid"
 gem "xebec", "2.6.0"
 gem 'ae_users_legacy', '0.6.7', :require => 'ae_users'

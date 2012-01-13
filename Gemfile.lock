@@ -74,7 +74,7 @@ GEM
     money (4.0.1)
       i18n (~> 0.4)
       json
-    mysql (2.8.1)
+    mysql2 (0.2.18)
     nokogiri (1.4.4)
     paginator (1.1.1)
       hoe (>= 1.6.0)
@@ -127,7 +127,7 @@ DEPENDENCIES
   journey_paywall (= 1.0.9)
   journey_sugarpond_branding (= 1.0.0)
   launchy
-  mysql
+  mysql2 (~> 0.2.18)
   paginator
   rails (~> 2.3.11)
   rmagick

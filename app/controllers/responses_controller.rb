@@ -70,11 +70,11 @@ class ResponsesController < ApplicationController
           db = RailsSequel.connect
           
           ds = db[:answers]
-          ds = ds.inner_join(:responses, :id => :response_id).inner_join(:questionnaires, :id => :questionnaire_id)
+          ds = ds.inner_join(:responses, :id => :response_id)
           ds = ds.inner_join(:questions, :id => :answers__question_id)
           ds = ds.inner_join(:pages, :id => :questions__page_id)
           ds = ds.left_join(:question_options, :question_id => :answers__question_id, :option => :answers__value)
-          ds = ds.where(:questionnaires__id => @questionnaire.id)
+          ds = ds.where(:responses__questionnaire_id => @questionnaire.id)
 
           case params[:rotate]
           when 'true'

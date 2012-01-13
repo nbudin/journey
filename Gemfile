@@ -20,6 +20,8 @@ gem 'rmagick', :require => 'RMagick', :platforms => ['ruby', 'mswin']
 gem 'gruff', '~> 0.3.6'
 gem 'i18n', '0.4.2'
 
+gem 'unicorn'
+
 source "http://gems.sugarpond.net"
 gem 'journey_sugarpond_branding', "1.0.0"
 gem 'journey_paywall', "1.0.9"

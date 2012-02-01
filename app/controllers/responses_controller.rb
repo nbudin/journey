@@ -105,6 +105,7 @@ class ResponsesController < ApplicationController
                 skip_to = response_ids.find_index(db_row[:response_id])
                 if skip_to
                   (skip_to - current_response_index).times { current_row << "" }
+                  current_response_index = skip_to
                 else
                   next
                 end

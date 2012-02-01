@@ -31,7 +31,7 @@ class GraphsController < ApplicationController
   
   def aggregate_question(question)
     counts = {}
-    question.answers.find_each do |answer|
+    question.answers.each do |answer|
       value = answer.output_value
       counts[value] ||= 0
       counts[value] += 1

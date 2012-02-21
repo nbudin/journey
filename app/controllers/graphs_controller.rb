@@ -40,7 +40,7 @@ class GraphsController < ApplicationController
     counts = {}
     ds.each do |db_row|
       question_id = db_row[:id]
-      value = (db_row[:output_value] || db_row[:value] || "")
+      value = (db_row[:output_value] || db_row[:value] || "No answer")
       counts[question_id] ||= {}
       counts[question_id][value] ||= 0
       counts[question_id][value] += 1

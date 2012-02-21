@@ -4,5 +4,5 @@
   @graph.data(answer, [count])
 end
 
-@graph.title = truncate(@question.caption)
+@graph.title = truncate(@question.caption || "Untitled question")
 set_journey_theme(@graph)

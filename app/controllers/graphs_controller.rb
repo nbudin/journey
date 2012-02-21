@@ -13,6 +13,7 @@ class GraphsController < ApplicationController
   
   def pie
     @answercounts = aggregate_questions(params[:question_id]).values.first
+    logger.info "Graphing #{@answercounts.inspect}"
     @question = Question.find(params[:question_id])
     render :layout => false
   end

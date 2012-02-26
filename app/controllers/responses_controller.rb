@@ -111,6 +111,7 @@ class ResponsesController < ApplicationController
                 end
               end
               
+              db_row[:output_value] = nil if db_row[:output_value].blank?
               current_row << (db_row[:output_value] || db_row[:value] || "")
               current_response_index += 1
             end
@@ -148,6 +149,7 @@ class ResponsesController < ApplicationController
                 end
               end
               
+              db_row[:output_value] = nil if db_row[:output_value].blank?
               current_row << (db_row[:output_value] || db_row[:value] || "")
               current_column_index += 1
             end

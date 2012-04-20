@@ -1,6 +1,6 @@
 begin
   require 'fastercsv'
-rescue MissingSourceFile
+rescue MissingSourceFile, LoadError
   require 'csv'
   FasterCSV = CSV
 end

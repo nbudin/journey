@@ -25,6 +25,7 @@ module RailsSequel
 
     # Use SQLite by default
     options[:adapter]   = config[:adapter] || "sqlite"
+    options[:adapter]   = "sqlite" if options[:adapter] == "sqlite3"
 
     # Use localhost as default host
     options[:host]      = config[:host] || config[:hostname] || "localhost"

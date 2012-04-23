@@ -9,3 +9,5 @@ db/schema.rb
 .project
 *.kpf
 .bundle/*
+db/*.sqlite3
+*.orig

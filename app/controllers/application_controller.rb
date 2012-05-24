@@ -16,12 +16,14 @@ class ApplicationController < ActionController::Base
     end
     
     if logged_in?
-      nb.nav_item logged_in_person.name, {:controller => "account", :action => "edit_profile" }
-      nb.nav_item "Log out", {:controller => "auth", :action => "logout" }
+      nb.nav_item logged_in_person.name, {:controller => "/account", :action => "edit_profile" }
+      nb.nav_item "Log out", {:controller => "/auth", :action => "logout" }
     else
-      nb.nav_item "Log in", {:controller => "auth", :action => "login" } unless logged_in?
+      nb.nav_item "Log in", {:controller => "/auth", :action => "login" } unless logged_in?
     end
   end
+  
+  protected
   
   def response_rss_url(questionnaire)
     responses_url(questionnaire, :format => "rss", :secret => questionnaire.rss_secret)

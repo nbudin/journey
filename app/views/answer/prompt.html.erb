@@ -77,15 +77,9 @@
         <p style="margin: 1em; margin-left: 0;">You've already taken this survey.</p>
         
         <table>
-          <tr>
-            <th>Response</th>
-            <th>Status</th>
-            <th>Date</th>
-            <th></th>
-          </tr>
           <% @responses.each do |resp| -%>
             <tr class="<%= cycle "odd", "even" %>">
-              <td>#<%= resp.id %></td>
+              <th>Response #<%= resp.id %></th>
               <td>
                 <% if resp.submitted -%>
                   finished
@@ -94,11 +88,7 @@
                 <% end -%>
               </td>
               <td>
-                <% if resp.submitted -%>
-                  <%= resp.submitted_at %>
-                <% else -%>
-                  <%= resp.created_at.strftime("%A, %B %d, %Y at %I:%M %p") %>
-                <% end -%>
+                <%= time_ago_in_words resp.submitted_or_created_at %> ago
               </td>
               <td>
                 <% if resp.submitted -%>

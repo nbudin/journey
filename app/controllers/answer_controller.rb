@@ -17,6 +17,7 @@ class AnswerController < ApplicationController
           raise "This questionnaire does not allow you to amend submitted responses."
         end
         @resp.submitted = false
+        @resp.submitted_at = nil
         @resp.save
       else
         if not @resp.questionnaire.allow_finish_later
@@ -205,6 +206,7 @@ class AnswerController < ApplicationController
       end
       if offset == 0
         @resp.submitted = true
+        @resp.submitted_at = Time.now
         @resp.save
         redirect_to :action => "save_session", :id => @resp.questionnaire.id, :current_page => 1
       else

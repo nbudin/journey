@@ -66,11 +66,7 @@ class Response < ActiveRecord::Base
     end
   end
   
-  def submitted_at
-    if submitted
-      answers.collect { |answer| answer.updated_at }.max.strftime("%Y-%m-%d %I:%M %p")
-    else
-      nil
-    end
+  def submitted_or_created_at
+    submitted ? submitted_at : created_at
   end
 end

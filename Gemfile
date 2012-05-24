@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 gem 'bundler'
-gem "rails", "~> 2.3.11"
+gem "rails", "2.3.14"
 gem 'fastercsv', :platforms => "ruby_18"
 gem 'paginator'
 gem 'will_paginate', '~> 2.3.16'
@@ -24,8 +24,7 @@ gem 'i18n', '0.4.2'
 gem 'thin'
 
 source "http://gems.sugarpond.net"
-gem 'journey_sugarpond_branding', "1.0.0"
-gem 'journey_paywall', "1.0.9"
+gem 'journey_paywall', "1.0.10"
 
 group :test do
   gem "factory_girl"

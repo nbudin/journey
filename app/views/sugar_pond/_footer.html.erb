@@ -1,0 +1,39 @@
+<div style="position: absolute; right: 0px; 
+            text-align: right; width: 270px;">
+    <div style="height: 40px;
+  			background-color: #e8e8e8; padding: 5px;
+  			border-top-left-radius: 5px; border-bottom-left-radius: 5px;
+  			-moz-border-radius-topleft: 5px; -moz-border-radius-bottomleft: 5px;
+  			-webkit-border-top-left-radius: 5px; -webkit-border-bottom-left-radius: 5px;
+  			margin-top: 0.5em; margin-bottom: 0.5em; margin-bottom: 5px;">
+    <% link_to "http://www.sugarpond.net", :target => "_blank" do -%>
+    <%= image_tag("http://www.sugarpond.net/images/sugarpond-inline.png", 
+            :alt => "Sugar Pond", 
+  		  :style => "position: absolute; right: 0.5em; border: none;") %>
+    <% end -%>
+    <p style="color: #666; font-style: italic;  
+    			display: inline-block; width: 130px; margin: 0;
+  			font-size: 12px; line-height: 14px; margin-top: 10px;
+  			margin-right: 130px;">
+      Journey is a production of Sugar Pond.
+    </p>
+  </div>
+
+  <p style="font-style: italic; font-size: 90%; margin-top: 5px;">
+    <%= link_to "Privacy Policy", :controller => "legal", :action => "privacy" %>
+    &nbsp;&nbsp;&nbsp;
+    <%= link_to "Terms of Service", :controller => "legal", :action => "tos" %>
+    &nbsp;&nbsp;&nbsp;
+  </p>
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-11095013-2");
+pageTracker._setDomainName(".journeysurveys.com");
+pageTracker._trackPageview();
+} catch(err) {}</script>

@@ -33,15 +33,16 @@ ActionController::Routing::Routes.draw do |map|
   map.answer '/answer/:id', :controller => 'answer', :action => 'index'
   map.dashboard '/dashboard', :controller => 'root', :action => 'dashboard'
 
+  if ENV['SUGAR_POND_BRANDING']
+    map.connect '/legal/:action', :controller => 'sugar_pond/legal'
+    map.connect '/support', :controller => 'sugar_pond/support', :action => 'index'
+  end
+  
   # Here's a sample route:
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
 
   map.root :controller => "root", :action => "index"
-
-  # Allow downloading Web Service WSDL as a file with an extension
-  # instead of a file named 'wsdl'
-  map.connect ':controller/service.wsdl', :action => 'wsdl'
 
   # Install the default route as the lowest priority.
   map.connect ':controller/:action.:format'

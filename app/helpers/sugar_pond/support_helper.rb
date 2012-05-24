@@ -1,0 +1,2 @@
+module SugarPond::SupportHelper
+end

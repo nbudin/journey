@@ -1,0 +1,78 @@
+<div style="max-width: 60em;">
+  
+  <h1>Terms of Service</h1>
+  
+  <h2>Definition</h2>
+  
+  <p>Journey is a web application for creating and administering online surveys.  The application, including all source
+    code, is made available by its authors, for free, under an open source license.</p>
+    
+  <p>"Journey" is also the name of a web site, located at http://www.journeysurveys.com, which is operated by Sugar Pond as
+    a pay service.  The Journey web site is powered by the Journey application mentioned above, as well as some additional
+    software not released to the general public.</p>
+    
+  <p>This document concerns the latter of these two: the Journey web site.  Thus, the word "Journey," as used throughout the
+    rest of this document, refers to the web site and the services and products it provides.</p>
+    
+  <h2>Your Account</h2>
+  
+  <p>When you sign up for an account on Journey, you are asked to provide several pieces of information, in accordance with the
+    <%= link_to "privacy policy", :action => "privacy" %>.  By providing this information, you agree that you have read
+    and understood the privacy policy.</p>
+    
+  <p>Journey is not available to users under the age of 13, in compliance with the Children's Online Privacy Protection 
+    Act.</p>
+
+  <p style="font-weight: bold;">
+    If you suspect that someone has accessed your account without authorization, you must report this breach to the site
+    administrator, at <%= mail_to "nat@sugarpond.net" %>.
+  </p>
+  
+  <h2>Content You Post</h2>
+  
+  <p>The operators of Journey do not review the content users post on the site (subject to exceptions discussed below), and therefore cannot be responsible for
+    such content.  This includes both answers to surveys as well as the surveys themselves, as well as any other content 
+    users choose to make available through other means.</p>
+    
+  <p>In particular, when you post content on the site, you agree that:</p>
+  
+  <ul>
+    <li>you have the legal right to distribute this content to others</li>
+    <li>you have the legal right to make this content available for distribution through Journey</li>
+    <li>the content does not contain or install any computer viruses, malware, browser hijacks or other harmful software</li>
+  </ul>
+  
+  <p>Unfortunate though it may be, the operators of Journey reserve the right to remove user-posted content from the site
+    should the need arise.  To report content you believe infringes on these Terms or violates the law, please 
+    contact Nat Budin, at <%= mail_to "nat@sugarpond.net" %>.  We follow 
+    <%= link_to "DMCA Safe Harbor", "http://www.chillingeffects.org/dmca512/faq.cgi" %> procedures for illegal content
+    notification and remediation.</p>
+  
+  <h2>Service Delivery, Data Protection, and Reliability</h2>
+  
+  <p>Journey is hosted via a third-party web hosting service.  Although we strive to make Journey available and reliable to
+    the greatest extent possible, there are factors beyond our control.  For example, in the event of a power outage at the
+    datacenter in which Journey is hosted, the site will not be available.</p>
+    
+  <p>As such, we cannot make any guarantees as to the availability of services.  We do take some additional precautions,
+    such as nightly off-site backups, to help ensure that data will be protected in the event of an unforeseen emergency,
+    but even these are not a total guarantee that data posted to the site is protected from disaster.</p>
+    
+  <p>The best way to protect data, in Journey or any other application, is to keep your own backup copy.  Journey provides
+    export functionality to help with this, and we're continually looking at ways to improve these.  If you have any
+    suggestions, we encourage you to click the "Support" link and send us your ideas.</p>
+    
+  <p>More generally, we believe that you, the user, should control your data.  We provide a service to you through the web,
+    but we don't believe that entitles us to dictate how your data can be used.  That includes providing <b>real deletion
+    functionality</b>.  When you click "delete" on a survey or response in Journey, that survey is actually deleted from
+    the database.  As mentioned above, we retain nightly backups of data, and may be able to restore deleted information
+    from those, but only if the latest version of that information was backed up.  Nightly backups are retained for at 
+    least 30 days.</p>
+  
+  <h2>Code, Security, and Related Matters</h2>
+  
+  <p>Journey allows its users, in some circumstances, to enter HTML, CSS, and related code that will be
+    embedded in the survey's pages.  To minimize the risk to users that the code entered into a survey will damage a viewer's
+    computer, Journey reserves the right to refuse to publish code that it considers too risky to execute on a
+    survey taker's system.</p>
+</div>

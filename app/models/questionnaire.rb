@@ -8,6 +8,7 @@ class Questionnaire < ActiveRecord::Base
   before_create :set_untitled
   after_create :create_initial_page
   before_save :set_published_at
+  before_save :set_closed_at
 
   has_many :pages, :dependent => :destroy, :order => :position
   has_many :responses, :dependent => :destroy, :order => "responses.id DESC", :include => [:answers, :questionnaire]
@@ -15,6 +16,8 @@ class Questionnaire < ActiveRecord::Base
     :conditions => "responses.id in (select response_id from answers)", :include => [:answers, :questionnaire]
   has_many :valid_responses_for_export, :order => "responses.id DESC", :class_name => "Response",
     :conditions => "responses.id in (select response_id from answers)"
+  has_many :submitted_responses, :order => "responses.id DESC", :class_name => "Response",
+    :conditions => "submitted_at is not null"
   has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id
   has_many :special_fields, :through => :special_field_associations, :source => :question
   has_many :questions, :through => :pages, :order => "pages.position, questions.position"
@@ -330,6 +333,10 @@ class Questionnaire < ActiveRecord::Base
     return q
   end
   
+  def is_open
+    read_attribute(:is_open) && (closes_at.nil? || closes_at > Time.now)
+  end
+  
   def authors
     permitted_people("edit")
   end
@@ -343,8 +350,14 @@ class Questionnaire < ActiveRecord::Base
   
   private
   def set_published_at
-    if is_open and is_open_changed?
-      self.published_at = Time.new
+    if is_open && is_open_changed?
+      self.published_at = Time.now
+    end
+  end
+  
+  def set_closed_at
+    if !is_open && is_open_changed?
+      self.closes_at = Time.now
     end
   end
   

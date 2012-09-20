@@ -1,3 +1,5 @@
+require 'rack/ssl'
+
 # Settings specified here will take precedence over those in config/environment.rb
 
 # The production environment is meant for finished, "live" apps.
@@ -5,7 +7,7 @@
 config.cache_classes = true
 
 # Enfore SSL in prod
-config.middleware.use "Rack::SSL", :host => "secure.journeysurveys.com"
+config.middleware.insert_after ActionController::Failsafe, ::Rack::SSL, :host => "secure.journeysurveys.com"
 
 # Use a different logger for distributed setups
 # config.logger        = SyslogLogger.new

@@ -16,7 +16,7 @@ gem 'airbrake'
 gem 'heroku'
 gem 'sequel'
 
-gem 'rack-ssl', :groups => [:production]
+gem 'rack-ssl'
 
 gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
 gem 'rmagick', :require => 'RMagick', :platforms => ['ruby', 'mswin']

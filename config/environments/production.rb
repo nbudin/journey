@@ -4,6 +4,9 @@
 # Code is not reloaded between requests
 config.cache_classes = true
 
+# Enfore SSL in prod
+config.middleware.use "Rack::SSL", :host => "secure.journeysurveys.com"
+
 # Use a different logger for distributed setups
 # config.logger        = SyslogLogger.new
 

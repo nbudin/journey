@@ -334,7 +334,7 @@ class Questionnaire < ActiveRecord::Base
   end
   
   def is_open
-    read_attribute(:is_open) && (closes_at.nil? || closes_at > Time.now)
+    read_attribute(:is_open) && (!respond_to?(:closes_at) || closes_at.nil? || closes_at > Time.now)
   end
   
   def authors

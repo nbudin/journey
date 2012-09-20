@@ -5,7 +5,7 @@ class MakeSubmittedAtARealDataColumn < ActiveRecord::Migration
       
       say "Updating response #{resp.id}"
       resp.submitted_at = resp.answers.maximum(:updated_at)
-      resp.save!
+      resp.save(false)
     end
   end
 

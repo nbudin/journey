@@ -36,3 +36,5 @@ group :test do
   gem "database_cleaner", ">= 0.5.0"
   gem "capybara", ">= 0.3.5"
 end
+
+gem 'pry-rails', :groups => [:development, :test]

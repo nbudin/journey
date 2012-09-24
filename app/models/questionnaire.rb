@@ -336,6 +336,12 @@ class Questionnaire < ActiveRecord::Base
   def is_open
     read_attribute(:is_open) && (!respond_to?(:closes_at) || closes_at.nil? || closes_at > Time.now)
   end
+
+  def is_open=(value)
+    was_open = is_open
+    write_attribute(:is_open, value)
+    self.closes_at = nil if value && !was_open
+  end
   
   def authors
     permitted_people("edit")

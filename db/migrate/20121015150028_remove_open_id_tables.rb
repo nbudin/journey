@@ -1,5 +1,10 @@
-class <%= class_name %> < ActiveRecord::Migration
+class RemoveOpenIdTables < ActiveRecord::Migration
   def self.up
+    drop_table :open_id_authentication_associations
+    drop_table :open_id_authentication_nonces
+  end
+
+  def self.down
     create_table :open_id_authentication_associations, :force => true do |t|
       t.integer :issued, :lifetime
       t.string :handle, :assoc_type
@@ -11,10 +16,5 @@ class <%= class_name %> < ActiveRecord::Migration
       t.string :server_url, :null => true
       t.string :salt, :null => false
     end
-  end
-
-  def self.down
-    drop_table :open_id_authentication_associations
-    drop_table :open_id_authentication_nonces
   end
 end

@@ -13,8 +13,7 @@ GEM
       activesupport (= 2.3.14)
     activesupport (2.3.14)
     addressable (2.2.7)
-    ae_users_legacy (0.6.7)
-      ruby-openid (>= 2.0.4)
+    ae_users_legacy (0.6.12)
     airbrake (3.0.5)
       activesupport
       builder
@@ -100,7 +99,6 @@ GEM
     rest-client (1.6.1)
       mime-types (>= 1.16)
     rmagick (2.13.1)
-    ruby-openid (2.1.8)
     rubyzip (0.9.7)
     selenium-webdriver (2.21.2)
       childprocess (>= 0.2.5)
@@ -126,7 +124,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ae_users_legacy (= 0.6.7)
+  ae_users_legacy (= 0.6.12)
   airbrake
   bundler
   capybara (>= 0.3.5)
@@ -148,7 +146,6 @@ DEPENDENCIES
   rails (= 2.3.14)
   rmagick
   rmagick4j
-  ruby-openid
   sequel
   shoulda
   sqlite3

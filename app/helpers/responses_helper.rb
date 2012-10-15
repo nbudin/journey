@@ -18,7 +18,7 @@ module ResponsesHelper
   end
   
   def column_selector_question_option(question, selected)
-    column_selector_option(truncate(question.caption), "question_#{question.id}", selected, 
+    column_selector_option(truncate(strip_tags(question.caption)), "question_#{question.id}", selected, 
                            :style => "padding-left: 1em;")
   end
   

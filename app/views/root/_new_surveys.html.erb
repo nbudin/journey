@@ -15,7 +15,11 @@
       <span style="font-size: 90%; float: right;">
         <%= time_ago_in_words questionnaire.published_at %> ago
       </span>
-      <%= link_to questionnaire.title, answer_path(questionnaire) %>
+      <% if logged_in? and Questionnaire.permission_names.any? { |p| logged_in_person.permitted?(questionnaire, p) } -%>
+        <%= link_to questionnaire.title, questionaire %>
+      <% else -%>
+        <%= link_to questionnaire.title, answer_path(questionnaire) %>
+      <% end -%>
     </li>
   <% end -%>
 </ul>

@@ -2,16 +2,16 @@ GEM
   remote: http://rubygems.org/
   remote: http://gems.sugarpond.net/
   specs:
-    actionmailer (2.3.16)
-      actionpack (= 2.3.16)
-    actionpack (2.3.16)
-      activesupport (= 2.3.16)
+    actionmailer (2.3.17)
+      actionpack (= 2.3.17)
+    actionpack (2.3.17)
+      activesupport (= 2.3.17)
       rack (~> 1.1.0)
-    activerecord (2.3.16)
-      activesupport (= 2.3.16)
-    activeresource (2.3.16)
-      activesupport (= 2.3.16)
-    activesupport (2.3.16)
+    activerecord (2.3.17)
+      activesupport (= 2.3.17)
+    activeresource (2.3.17)
+      activesupport (= 2.3.17)
+    activesupport (2.3.17)
     addressable (2.2.7)
     ae_users_legacy (0.6.12)
     airbrake (3.0.5)
@@ -61,7 +61,7 @@ GEM
     journey_paywall (1.0.10)
       activerecord (~> 2.3.5)
       google4r-checkout (~> 1.1.0)
-    json (1.6.3)
+    json (1.7.7)
     launchy (0.4.0)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
@@ -84,17 +84,17 @@ GEM
       slop (>= 2.4.4, < 3)
     pry-rails (0.1.6)
       pry
-    rack (1.1.5)
+    rack (1.1.6)
     rack-ssl (1.3.2)
       rack
     rack-test (0.6.1)
       rack (>= 1.0)
-    rails (2.3.16)
-      actionmailer (= 2.3.16)
-      actionpack (= 2.3.16)
-      activerecord (= 2.3.16)
-      activeresource (= 2.3.16)
-      activesupport (= 2.3.16)
+    rails (2.3.17)
+      actionmailer (= 2.3.17)
+      actionpack (= 2.3.17)
+      activerecord (= 2.3.17)
+      activeresource (= 2.3.17)
+      activesupport (= 2.3.17)
       rake (>= 0.8.3)
     rake (10.0.3)
     rest-client (1.6.1)
@@ -145,7 +145,7 @@ DEPENDENCIES
   paginator
   pry-rails
   rack-ssl
-  rails (= 2.3.16)
+  rails (= 2.3.17)
   rmagick
   rmagick4j
   sequel

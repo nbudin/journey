@@ -8,4 +8,6 @@ if ENV['SUGAR_POND_BRANDING']
     nb.nav_item "Support", {:controller => "support", :action => "index"} if controller.logged_in?
   end
   Journey::SiteOptions.footer_partial = "sugar_pond/footer"
+  
+  Journey::Dashboard.add_dashbox("sugar_pond/donation_dashbox", :right)
 end

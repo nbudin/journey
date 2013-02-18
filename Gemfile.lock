@@ -14,10 +14,11 @@ GEM
     activesupport (2.3.17)
     addressable (2.2.7)
     ae_users_legacy (0.6.12)
-    airbrake (3.0.5)
+    airbrake (3.1.8)
       activesupport
       builder
-    builder (3.0.0)
+      json
+    builder (3.1.4)
     capybara (1.1.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)

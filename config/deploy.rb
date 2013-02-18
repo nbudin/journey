@@ -14,12 +14,18 @@ set :use_sudo, false
 set :normalize_asset_timestamps, false
 
 namespace(:deploy) do
+  desc "Link in config files needed for environment"
   task :symlink_config, :roles => :app do
     %w(database.yml journey.yml).each do |config_file|
       run <<-CMD
         ln -nfs #{shared_path}/config/#{config_file} #{release_path}/config/#{config_file}
       CMD
     end
+  end
+  
+  desc "Restart Application"
+  task :restart, :roles => :app do
+    run "touch #{current_path}/tmp/restart.txt"
   end
 end
 

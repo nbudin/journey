@@ -5,9 +5,11 @@ class JourneyConfig
   
   def initialize
     @config = {}
-    
-    config_file = File.join(Rails.root, 'config', 'journey.yml')
-    @config.merge YAML.load(File.read(config_file)) if File.exists?(config_file)
+    @config.update YAML.load(File.read(config_file)) if File.exists?(config_file)
+  end
+  
+  def config_file
+    File.join(Rails.root, 'config', 'journey.yml')
   end
   
   def [](key)

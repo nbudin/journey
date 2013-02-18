@@ -15,7 +15,7 @@ set :normalize_asset_timestamps, false
 
 namespace(:deploy) do
   task :symlink_config, :roles => :app do
-    %w(database.yml secret_token.yml).each do |config_file|
+    %w(database.yml journey.yml).each do |config_file|
       run <<-CMD
         ln -nfs #{shared_path}/config/#{config_file} #{release_path}/config/#{config_file}
       CMD

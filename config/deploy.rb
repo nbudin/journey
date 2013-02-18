@@ -1,4 +1,5 @@
 require 'bundler/capistrano'
+require 'airbrake/capistrano'
 
 set :application, "journey"
 set :scm, :git

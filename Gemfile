@@ -12,7 +12,6 @@ gem 'ae_users_legacy', '0.6.12', :require => 'ae_users'
 gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 1.0.0"
 gem 'airbrake'
-gem 'heroku'
 gem 'sequel'
 
 gem 'rack-ssl'

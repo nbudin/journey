@@ -21,9 +21,6 @@ gem 'rmagick', :require => 'RMagick', :platforms => ['ruby', 'mswin']
 gem 'gruff', '~> 0.3.6'
 gem 'i18n', '0.4.2'
 
-gem 'thin'
-gem 'newrelic_rpm'
-
 source "http://gems.sugarpond.net"
 gem 'journey_paywall', "1.0.10"
 

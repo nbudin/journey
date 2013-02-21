@@ -1,18 +1,10 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'pages_controller'
-
-# Re-raise errors caught by the controller.
-class PagesController; def rescue_action(e) raise e end; end
+require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
-  fixtures :pages, :questionnaires
-
-  def setup
-    @controller = PagesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+  setup do
+    @questionnaire = Factory.create :comprehensive_questionnaire
   end
-
+  
   def test_should_get_index
     get :index
     assert_response :success
@@ -26,33 +18,39 @@ class PagesControllerTest < ActionController::TestCase
   
   def test_should_create_page
     old_count = Page.count
-    post :create, :page => { }, :questionnaire_id => questionnaires(:comprehensive)
+    post :create, :page => { }, :questionnaire_id => @questionnaire.id
     assert_equal old_count+1, Page.count
     
     assert_redirected_to page_path(assigns(:page))
   end
 
-  def test_should_show_page
-    get :show, :id => 1
-    assert_response :success
-  end
-
-  def test_should_get_edit
-    get :edit, :id => 1
-    assert_response :success
-  end
-  
-  def test_should_update_page
-    put :update, :id => 1, :page => { }
-    assert_redirected_to page_path(assigns(:page))
-  end
-  
-  def test_should_destroy_page
-    old_count = Page.count
-    page = pages(:comprehensive1)
-    delete :destroy, page_url(page.questionnaire, page)
-    assert_equal old_count-1, Page.count
+  context "with a page" do
+    setup do
+      @page = @questionnaire.pages.first
+    end
     
-    assert_redirected_to pages_path
+    def test_should_show_page
+      get :show, :id => @page.id, :questionnaire_id => @questionnaire.id
+      assert_response :success
+    end
+
+    def test_should_get_edit
+      get :edit, :id => @page.id, :questionnaire_id => @questionnaire.id
+      assert_response :success
+    end
+  
+    def test_should_update_page
+      put :update, :id => @page.id, :questionnaire_id => @questionnaire.id, :page => { }
+      assert_redirected_to page_path(assigns(:page))
+    end
+  
+    def test_should_destroy_page
+      old_count = Page.count
+      page = pages(:comprehensive1)
+      delete :destroy, :id => @page.id, :questionnaire_id => @questionnaire.id
+      assert_equal old_count-1, Page.count
+    
+      assert_redirected_to pages_path
+    end
   end
 end

@@ -30,9 +30,6 @@ gem 'i18n', '0.4.2'
 gem 'thin'
 gem 'newrelic_rpm'
 
-source "http://gems.sugarpond.net"
-gem 'journey_paywall', "1.0.10"
-
 group :test do
   gem "factory_girl"
   gem "shoulda"

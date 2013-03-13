@@ -8,12 +8,17 @@ gem 'will_paginate', '~> 2.3.16'
 gem "mysql2", '~> 0.2.18'
 gem "sqlite3", :groups => [:development, :test]
 gem "xebec", "2.6.0"
-gem 'ae_users_legacy', '0.6.12', :require => 'ae_users'
 gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 1.0.0"
 gem 'airbrake'
 gem 'heroku'
 gem 'sequel'
+
+gem 'devise', '~> 1.0.0'
+gem 'rubycas-client', '~> 2.2.0' # 2.3.x breaks in Rails 2 for some reason
+gem 'devise_cas_authenticatable'
+gem 'cancan'
+gem 'illyan_client'
 
 gem 'rack-ssl'
 

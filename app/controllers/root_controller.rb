@@ -2,15 +2,15 @@ class RootController < ApplicationController
   before_filter :get_new_questionnaires, :only => [:welcome, :dashboard]
   
   def index
-    redirect_to Journey::SiteOptions.site_root(logged_in?), :status => 307
+    redirect_to Journey::SiteOptions.site_root(person_signed_in?), :status => 307
   end
   
   def welcome
-    return index if logged_in?
+    return index if person_signed_in?
   end
   
   def dashboard
-    return index unless logged_in?
+    return index unless person_signed_in?
     
     @page_title = "Dashboard"
     

@@ -28,7 +28,7 @@ module ApplicationHelper
   def globalnav_items
     links = []
     
-    if logged_in?
+    if person_signed_in?
       links << ["Dashboard", dashboard_path]
     end
 

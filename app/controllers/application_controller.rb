@@ -15,11 +15,11 @@ class ApplicationController < ActionController::Base
       hook.call(nb, self)
     end
     
-    if logged_in?
+    if person_signed_in?
       nb.nav_item logged_in_person.name, {:controller => "/account", :action => "edit_profile" }
       nb.nav_item "Log out", {:controller => "/auth", :action => "logout" }
     else
-      nb.nav_item "Log in", {:controller => "/auth", :action => "login" } unless logged_in?
+      nb.nav_item "Log in", {:controller => "/auth", :action => "login" } unless person_signed_in?
     end
   end
   

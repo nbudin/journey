@@ -39,7 +39,7 @@ class AnswerController < ApplicationController
     
     @all_responses = []
     @responses = []
-    if logged_in?
+    if person_signed_in?
       @all_responses = @questionnaire.responses.find_all_by_person_id(logged_in_person.id)
       if @questionnaire.allow_finish_later
         @responses += @all_responses.select { |resp| not resp.submitted }
@@ -54,7 +54,7 @@ class AnswerController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
     
     @resp = Response.new :questionnaire => @questionnaire
-    if @questionnaire.advertise_login and logged_in?
+    if @questionnaire.advertise_login and person_signed_in?
       @resp.person = logged_in_person
     end
     @resp.save!
@@ -85,7 +85,7 @@ class AnswerController < ApplicationController
             @page = @resp.questionnaire.pages[0]
           end
 
-          if @questionnaire.advertise_login and logged_in?
+          if @questionnaire.advertise_login and person_signed_in?
             @page.questions.each do |question|
               if not question.respond_to? 'purpose'
                 next
@@ -224,7 +224,7 @@ class AnswerController < ApplicationController
   end
   
   def check_required_login
-    if @questionnaire.require_login and not logged_in?
+    if @questionnaire.require_login and not person_signed_in?
       redirect_to :action => "prompt", :id => params[:id]
     end
   end

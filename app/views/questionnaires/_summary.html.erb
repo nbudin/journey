@@ -1,5 +1,5 @@
 <%  links = []
-    p = logged_in? ? logged_in_person : nil
+    p = person_signed_in? ? logged_in_person : nil
     if @questionnaire.is_open
       links << link_to("Answer", :controller => "answer", :action => "index", :id => @questionnaire.id)
     end

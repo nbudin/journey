@@ -64,7 +64,7 @@
 </style>
 
 <div class="questionnaire_startbox">
-  <% if logged_in? -%>
+  <% if person_signed_in? -%>
     <% content_for :startbox_heading do -%>
       <h3>Welcome, <%=h logged_in_person.name %>!</h3>
       <span style="font-style: italic; font-size: 95%;">

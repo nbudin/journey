@@ -18,7 +18,7 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires
   # GET /questionnaires.xml
   def index
-    p = logged_in? ? logged_in_person : nil
+    p = person_signed_in? ? logged_in_person : nil
     per_page = 12
     conditions = []
     condition_vars = {}
@@ -72,7 +72,7 @@ class QuestionnairesController < ApplicationController
   end
   
   def responses
-    unless logged_in?
+    unless person_signed_in?
       return redirect_to(:action => 'index')
     end
     
@@ -92,7 +92,7 @@ class QuestionnairesController < ApplicationController
     respond_to do |format|
       format.html {}
       format.xml do
-        if logged_in? and logged_in_person.permitted?(@questionnaire, "edit")
+        if person_signed_in? and logged_in_person.permitted?(@questionnaire, "edit")
           headers["Content-Disposition"] = "attachment; filename=\"#{@questionnaire.title}.xml\""
           render :xml => @questionnaire.to_xml
         else
@@ -105,7 +105,7 @@ class QuestionnairesController < ApplicationController
         end
       end
       format.json do
-        if logged_in? and logged_in_person.permitted?(@questionnaire, "edit")
+        if person_signed_in? and logged_in_person.permitted?(@questionnaire, "edit")
           render :json => @questionnaire.to_json(:only => attributes)
         else
           render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden

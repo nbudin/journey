@@ -19,6 +19,7 @@ gem 'rubycas-client', '~> 2.2.0' # 2.3.x breaks in Rails 2 for some reason
 gem 'devise_cas_authenticatable'
 gem 'cancan'
 gem 'illyan_client'
+gem 'ae_users_migrator'
 
 gem 'rack-ssl'
 

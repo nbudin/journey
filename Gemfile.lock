@@ -12,6 +12,8 @@ GEM
       activesupport (= 2.3.17)
     activesupport (2.3.17)
     addressable (2.2.7)
+    ae_users_migrator (1.0.5)
+      activerecord (>= 2.3)
     airbrake (3.0.5)
       activesupport
       builder
@@ -127,6 +129,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ae_users_migrator
   airbrake
   bundler
   cancan

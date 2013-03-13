@@ -2,6 +2,7 @@ require 'ae_users_migrator/import'
 
 class CreatePeople < ActiveRecord::Migration
   class Permission < ActiveRecord::Base
+    belongs_to :permissioned, :class_name => "Questionnaire"
   end
   
   def self.up
@@ -18,8 +19,22 @@ class CreatePeople < ActiveRecord::Migration
       t.trackable
       t.timestamps
     end
-    
     add_index :people, :username, :unique => true
+    
+    create_table :questionnaire_permissions, :force => true do |t|
+      t.references :questionnaire
+      t.references :person
+      
+      t.boolean :can_edit
+      t.boolean :can_view_answers
+      t.boolean :can_edit_answers
+      t.boolean :can_destroy
+      t.boolean :can_change_permissions
+      
+      t.timestamps
+    end
+    add_index :questionnaire_permissions, [:questionnaire_id, :person_id], :unique => true
+    add_index :questionnaire_permissions, :person_id
     
     person_ids = Response.all(:group => :person_id, :select => :person_id).map(&:person_id)
     begin
@@ -102,6 +117,40 @@ class CreatePeople < ActiveRecord::Migration
           say "Granting admin rights to #{person.name}"
           person.admin = true
           person.save!
+        end
+        
+        perm.delete
+      end
+      
+      say "Migrating permissions"
+      Permission.find_each(:conditions => { :permissioned_type => "Questionnaire" }, :include => :permissioned) do |perm|
+        people = []
+        if perm.person_id
+          if merged_person_ids[perm.person_id]
+            people << Person.find(merged_person_ids[perm.person_id])
+          else
+            begin
+              people << Person.find(perm.person_id)
+            rescue
+              say "WARNING: Couldn't find person with ID #{perm.person_id}"
+              next
+            end
+          end
+        elsif perm.role_id
+          people += Person.all(:conditions => {:id => dumpfile.roles[perm.role_id].people.map(&:id)})
+        end
+        
+        people.each do |person|
+          qperm = QuestionnairePermission.find_by_questionnaire_id_and_person_id(perm.permissioned_id, person.id)
+          qperm ||= QuestionnairePermission.new(:questionnaire_id => perm.permissioned_id, :person_id => person.id)
+          
+          if perm.permission
+            qperm.send("can_#{perm.permission}=", true)
+          else
+            qperm.attributes = { :can_edit => true, :can_view_answers => true, :can_edit_answers => true, :can_destroy => true, :can_change_permissions => true }
+          end
+          
+          qperm.save!
         end
       end
       

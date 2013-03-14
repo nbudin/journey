@@ -14,16 +14,10 @@ class RootController < ApplicationController
     
     @page_title = "Dashboard"
     
-    @roles = logged_in_person.roles
-    perm_conds = "person_id = #{logged_in_person.id}"
-    if @roles.length > 0
-      perm_conds << " OR role_id IN (#{@roles.collect {|r| r.id}.join(",")})"
-    end
+    @my_questionnaires = QuestionnairePermission.for_person(current_person).allows_anything.all(
+      :order => "questionnaire_id DESC", :include => :questionnaire).map(&:questionnaire)
     
-    @my_questionnaires = Questionnaire.all(:order => "id DESC",
-                                        :conditions => perm_conds, :joins => :permissions).uniq
-    
-    @responses = Response.all(:conditions => { :person_id => logged_in_person.id }, 
+    @responses = Response.all(:conditions => { :person_id => current_person.id }, 
                           :include => { :questionnaire => nil }, :order => "created_at DESC", :limit => 8)
   end
   

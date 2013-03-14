@@ -18,7 +18,7 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires
   # GET /questionnaires.xml
   def index
-    p = person_signed_in? ? logged_in_person : nil
+    p = person_signed_in? ? current_person : nil
     per_page = 12
     conditions = []
     condition_vars = {}
@@ -76,7 +76,7 @@ class QuestionnairesController < ApplicationController
       return redirect_to(:action => 'index')
     end
     
-    @responses = Response.all(:conditions => { :person_id => logged_in_person.id }, 
+    @responses = Response.all(:conditions => { :person_id => current_person.id }, 
                               :include => { :questionnaire => [:permissions, :tags] },
                               :order => "created_at DESC")
     @questionnaires = @responses.collect { |r| r.questionnaire }.uniq
@@ -92,7 +92,7 @@ class QuestionnairesController < ApplicationController
     respond_to do |format|
       format.html {}
       format.xml do
-        if person_signed_in? and logged_in_person.permitted?(@questionnaire, "edit")
+        if person_signed_in? and current_person.can?(:edit, @questionnaire)
           headers["Content-Disposition"] = "attachment; filename=\"#{@questionnaire.title}.xml\""
           render :xml => @questionnaire.to_xml
         else
@@ -105,7 +105,7 @@ class QuestionnairesController < ApplicationController
         end
       end
       format.json do
-        if person_signed_in? and logged_in_person.permitted?(@questionnaire, "edit")
+        if person_signed_in? and current_person.can?(:edit, @questionnaire)
           render :json => @questionnaire.to_json(:only => attributes)
         else
           render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden
@@ -126,8 +126,8 @@ class QuestionnairesController < ApplicationController
   def new
     @questionnaire = Questionnaire.new
     
-    @roles = logged_in_person.roles
-    perm_conds = "permission = 'edit' and (person_id = #{logged_in_person.id}"
+    @roles = current_person.roles
+    perm_conds = "permission = 'edit' and (person_id = #{current_person.id}"
     if @roles.length > 0
       perm_conds << " OR role_id IN (#{@roles.collect {|r| r.id}.join(",")})"
     end
@@ -192,7 +192,7 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       if @questionnaire.save
-        @questionnaire.grant(logged_in_person)
+        @questionnaire.grant(current_person)
         format.html { redirect_to questionnaire_url(@questionnaire) }
         format.xml  { head :created, :location => questionnaire_url(@questionnaire) }
       else

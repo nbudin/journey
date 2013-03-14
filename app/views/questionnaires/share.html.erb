@@ -3,7 +3,7 @@
 <div class="propertypage">
   <h2>Share</h2>
   
-  <% if person_signed_in? and logged_in_person.permitted?(@questionnaire, "change_permissions") -%>
+  <% if person_signed_in? and current_person.can?(:change_permissions, @questionnaire) -%>
     <p>You can allow other people to make changes to this survey and its responses.  Use the controls below to make changes
 	   to these settings.</p>
   <% else -%>

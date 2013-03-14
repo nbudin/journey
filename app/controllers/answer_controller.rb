@@ -8,7 +8,7 @@ class AnswerController < ApplicationController
   
   def resume
     @resp = Response.find(params[:id])
-    if @resp.person != logged_in_person
+    if @resp.person != current_person
       raise "That response does not belong to you.  Either log in as a different person, or start a new response."
     else
       # If this is an amended response, we want to retract the submitted response set.
@@ -40,7 +40,7 @@ class AnswerController < ApplicationController
     @all_responses = []
     @responses = []
     if person_signed_in?
-      @all_responses = @questionnaire.responses.find_all_by_person_id(logged_in_person.id)
+      @all_responses = @questionnaire.responses.find_all_by_person_id(current_person.id)
       if @questionnaire.allow_finish_later
         @responses += @all_responses.select { |resp| not resp.submitted }
       end
@@ -55,7 +55,7 @@ class AnswerController < ApplicationController
     
     @resp = Response.new :questionnaire => @questionnaire
     if @questionnaire.advertise_login and person_signed_in?
-      @resp.person = logged_in_person
+      @resp.person = current_person
     end
     @resp.save!
     session["response_#{@questionnaire.id}"] = @resp.id
@@ -96,11 +96,11 @@ class AnswerController < ApplicationController
                 if not answer
                   value = nil
                   if purpose == 'name'
-                    value = logged_in_person.name
+                    value = current_person.name
                   elsif purpose == 'email'
-                    value = logged_in_person.primary_email_address
+                    value = current_person.email
                   elsif purpose == 'gender'
-                    value = logged_in_person.gender
+                    value = current_person.gender
                   end
                   if not (value.nil? or value == '')
                     @resp.answers.create :question => question, :value => value

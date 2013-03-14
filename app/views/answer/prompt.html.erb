@@ -66,9 +66,9 @@
 <div class="questionnaire_startbox">
   <% if person_signed_in? -%>
     <% content_for :startbox_heading do -%>
-      <h3>Welcome, <%=h logged_in_person.name %>!</h3>
+      <h3>Welcome, <%=h current_person.name %>!</h3>
       <span style="font-style: italic; font-size: 95%;">
-        Not <%=h logged_in_person.name %>?  <%= link_to "Click here to log out.", :controller => "auth", :action => "logout" %>
+        Not <%=h current_person.name %>?  <%= link_to "Click here to log out.", :controller => "auth", :action => "logout" %>
       </span>
     <% end -%>
     

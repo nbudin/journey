@@ -364,7 +364,7 @@ class ResponsesController < ApplicationController
   
   def require_edit_answers_or_own_response
     @resp = Response.find(params[:id])
-    unless @questionnaire.allow_delete_responses and person_signed_in? and logged_in_person == @resp.person
+    unless @questionnaire.allow_delete_responses and person_signed_in? and current_person == @resp.person
       do_permission_check(@questionnaire, "edit_answers", "Sorry, but you are not permitted to edit answers to this survey.")
     end
   end

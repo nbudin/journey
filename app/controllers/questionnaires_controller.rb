@@ -1,7 +1,6 @@
 require 'paginator'
 
 class QuestionnairesController < ApplicationController
-  rest_edit_permissions
   uses_tiny_mce :options => {
     :theme => 'advanced',
     :theme_advanced_buttons1 => 'formatselect, bold, italic, underline, strikethrough, |, bullist, numlist, outdent, indent, |, undo, redo, |, link,unlink,image',
@@ -14,6 +13,8 @@ class QuestionnairesController < ApplicationController
     :theme_advanced_statusbar_location => 'bottom',
     :content_css => '/stylesheets/questionnaire.css'
   }
+  
+  load_resource
 
   # GET /questionnaires
   # GET /questionnaires.xml
@@ -22,23 +23,10 @@ class QuestionnairesController < ApplicationController
     per_page = 12
     conditions = []
     condition_vars = {}
-    joins = [:permissions]
     if params[:title] and params[:title] != ''
       conditions.push("lower(title) like :title")
       condition_vars[:title] ="%#{params[:title].downcase}%"
     end
-    
-    perm_condition = "(is_open = :is_open and publicly_visible = :publicly_visible)"
-    condition_vars.update(:is_open => true, :publicly_visible => true)
-    if p
-      perm_condition << " or (permissions.person_id = :person_id)"
-      condition_vars[:person_id] = p.id
-      if p.roles.size > 0
-        perm_condition << " or (permissions.role_id in (:role_ids))"
-        condition_vars[:role_ids] = p.roles.map(&:id)
-      end
-    end
-    conditions << "(#{perm_condition})"
     
     if !params[:tag].blank?
       joins << :tags
@@ -50,13 +38,12 @@ class QuestionnairesController < ApplicationController
     find_options = {
       :conditions => [conditions.join(" and "), condition_vars],
       :order => 'questionnaires.id DESC',
-      :joins => joins,
       :group => "questionnaires.id",
-      :include => {:tags => [], :permissions => [:person]},
+      :include => {:tags => [], :questionnaire_permissions => [:person]},
       :page => params[:page] || 1,
       :per_page => per_page,
     }
-    @questionnaires = Questionnaire.paginate(find_options)
+    @questionnaires = Questionnaire.accessible_by(current_ability).paginate(find_options)
     
     @rss_url = questionnaires_url(:format => "rss")
 
@@ -77,7 +64,7 @@ class QuestionnairesController < ApplicationController
     end
     
     @responses = Response.all(:conditions => { :person_id => current_person.id }, 
-                              :include => { :questionnaire => [:permissions, :tags] },
+                              :include => { :questionnaire => [:questionnaire_permissions, :tags] },
                               :order => "created_at DESC")
     @questionnaires = @responses.collect { |r| r.questionnaire }.uniq
   end
@@ -124,44 +111,31 @@ class QuestionnairesController < ApplicationController
 
   # GET /questionnaires/new
   def new
-    @questionnaire = Questionnaire.new
-    
-    @roles = current_person.roles
-    perm_conds = "permission = 'edit' and (person_id = #{current_person.id}"
-    if @roles.length > 0
-      perm_conds << " OR role_id IN (#{@roles.collect {|r| r.id}.join(",")})"
-    end
-    perm_conds << ")"
-    
-    @cloneable_questionnaires = Questionnaire.all(:order => "id DESC",
-                                        :conditions => perm_conds, :joins => :permissions).uniq
+    @questionnaire = Questionnaire.new    
+    @cloneable_questionnaires = Questionnaire.accessible_by(current_ability, :edit).all(:order => "id DESC").uniq
   end
 
   # GET /questionnaires/1;edit
   def edit
-    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions, :pages])
   end
-  
-  require_permission "edit", :only => [:customize, :publish, :export]
   
   # GET /questionnaires/1;customize
   def customize
-    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
+    authorize! :edit, @questionnaire
   end
   
   # GET /questionnaires/1;export
   def export
-    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
+    authorize! :edit, @questionnaire
   end
   
   # GET /questionnaires/1;share
   def share
-    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions])
+    authorize! :edit, @questionnaire
   end
   
   # POST /questionnaires
   # POST /questionnaires.xml
-  require_login :only => [:create]
   def create
     if params[:file]
       begin

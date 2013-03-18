@@ -115,7 +115,7 @@ class AnswerController < ApplicationController
   end
   
   def preview
-    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions, :pages])
+    @questionnaire = Questionnaire.find(params[:id], :include => [:questionnaire_permissions, :pages])
     
     if @questionnaire.pages.size > 0
       @page = @questionnaire.pages[(params[:page] || 1).to_i - 1]

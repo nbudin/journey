@@ -1,7 +1,7 @@
 # Filters added to this controller will be run for all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::Base  
   helper :user_options
   helper :question_answer
   helper :tabstrip
@@ -23,7 +23,15 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+  
   protected
+  
+  def current_ability
+    Ability.new(current_person)
+  end
   
   def response_rss_url(questionnaire)
     responses_url(questionnaire, :format => "rss", :secret => questionnaire.rss_secret)

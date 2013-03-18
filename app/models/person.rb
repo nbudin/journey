@@ -29,6 +29,8 @@ class Person < ActiveRecord::Base
   end
   
   def can?(action, questionnaire)
+    return true if admin?
+    
     permission = permission_for(questionnaire)
     permission && permission.send("can_#{action}?")
   end

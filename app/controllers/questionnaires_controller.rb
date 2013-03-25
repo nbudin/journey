@@ -131,7 +131,8 @@ class QuestionnairesController < ApplicationController
   
   # GET /questionnaires/1;share
   def share
-    authorize! :edit, @questionnaire
+    authorize! :change_permissions, @questionnaire
+    @questionnaire.questionnaire_permissions.build
   end
   
   # POST /questionnaires
@@ -166,7 +167,7 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       if @questionnaire.save
-        @questionnaire.grant(current_person)
+        @questionnaire.questionnaire_permissions.create(:person => current_person, :all_permissions => true)
         format.html { redirect_to questionnaire_url(@questionnaire) }
         format.xml  { head :created, :location => questionnaire_url(@questionnaire) }
       else
@@ -180,6 +181,7 @@ class QuestionnairesController < ApplicationController
   # PUT /questionnaires/1.xml
   def update
     @questionnaire = Questionnaire.find(params[:id])
+    params[:questionnaire].delete(:questionnaire_permission_attributes) unless current_person.can?(:change_permissions, @questionnaire)
 
     respond_to do |format|
       if @questionnaire.update_attributes(params[:questionnaire])

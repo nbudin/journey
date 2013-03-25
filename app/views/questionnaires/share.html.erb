@@ -9,6 +9,46 @@
   <% else -%>
     <p>These are the people who are allowed to make changes to this survey and its responses:</p>
   <% end -%>
+  
+  <% form_for @questionnaire do |f| %>
+    <table class="sharing">
+      <tr>
+        <th></th>
+        <th>Email address</th>
+        <% QuestionnairePermission::ACTIONS.each do |action| -%>
+          <th>Can <%= action.to_s.humanize.downcase %></th>
+        <% end -%>
+        <th></th>
+      </tr>
+      <% f.fields_for :questionnaire_permissions do |permission_fields| -%>
+        <tr class="<%= cycle "odd", "even" %>">
+          <% if permission_fields.object.new_record? -%>
+            <td style="text-align: right;"><%= permission_fields.label :email, "Add:" %></td>
+            <td><%= permission_fields.text_field :email %></td>
+          <% else -%>
+            <td></td>
+            <td><%= permission_fields.object.person.try(:email) || "Error: please delete" %></td>
+          <% end -%>
     
-  <%= render :partial => "permission/show", :locals => { :item => @questionnaire }%>
+          <% QuestionnairePermission::ACTIONS.each do |action| -%>
+            <td class="permission"><%= permission_fields.check_box :"can_#{action}", :disabled => (permission_fields.object.person == current_person) %>
+          <% end -%>
+
+          <% if permission_fields.object.person == current_person -%>
+            <td></td>
+          <% else -%>
+            <td style="text-align: right;">
+              <% unless permission_fields.object.new_record? -%>
+                <%= permission_fields.label :_destroy, "Remove?" %> <%= permission_fields.check_box :_destroy %>
+              <% end -%>
+            </td>
+          <% end -%>
+        </tr>
+      <% end -%>
+    </table>
+    
+    <p>
+      <%= f.submit %>
+    </p>
+  <% end -%>
 </div>

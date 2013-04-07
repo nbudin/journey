@@ -15,7 +15,7 @@ class RootController < ApplicationController
     @page_title = "Dashboard"
     
     @my_questionnaires = QuestionnairePermission.for_person(current_person).allows_anything.all(
-      :order => "questionnaire_id DESC", :include => :questionnaire).map(&:questionnaire)
+      :order => "questionnaire_id DESC", :include => :questionnaire).map(&:questionnaire).compact
     
     @responses = Response.all(:conditions => { :person_id => current_person.id }, 
                           :include => { :questionnaire => nil }, :order => "created_at DESC", :limit => 8)

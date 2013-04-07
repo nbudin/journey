@@ -96,7 +96,7 @@ GEM
       activeresource (= 2.3.17)
       activesupport (= 2.3.17)
       rake (>= 0.8.3)
-    rake (10.0.3)
+    rake (10.0.4)
     rest-client (1.6.1)
       mime-types (>= 1.16)
     rmagick (2.13.1)

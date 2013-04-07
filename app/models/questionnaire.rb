@@ -36,8 +36,6 @@ class Questionnaire < ActiveRecord::Base
   def Questionnaire.special_field_type(purpose)
     if %w( address ).include?(purpose)
       Questions::BigTextField
-    elsif %( gender ).include?(purpose)
-      Questions::RadioField
     else
       Questions::TextField
     end

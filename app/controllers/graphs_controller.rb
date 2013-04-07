@@ -1,9 +1,10 @@
 class GraphsController < ApplicationController
-  require_permission "view_answers", :class_name => "Questionnaire", :id_param => "questionnaire_id"
-  before_filter :get_questionnaire
+  load_resource :questionnaire
   before_filter :set_geom
   
   def line
+    authorize! :view_answers, @questionnaire
+    
     @questions = Question.all(:conditions => { :id => params[:question_ids] })
     @counts = aggregate_questions(params[:question_ids])
     @min = @questions.collect { |q| q.min }.min
@@ -12,6 +13,8 @@ class GraphsController < ApplicationController
   end
   
   def pie
+    authorize! :view_answers, @questionnaire
+    
     @answercounts = aggregate_questions(params[:question_id]).values.first
     @question = Question.find(params[:question_id])
     render :layout => false

@@ -37,7 +37,7 @@
   			<% end -%>
   			<% if @page.number < @resp.questionnaire.pages.size -%>
   				<%= submit_tag "Next page >>" %>
-  				<% if logged_in? and @questionnaire.allow_finish_later -%>
+  				<% if person_signed_in? and @questionnaire.allow_finish_later -%>
   				  <% 5.times { %>&nbsp;<% } %>
   				  <%= submit_tag "Finish later" %>
   				<% end -%>

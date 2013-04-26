@@ -3,8 +3,6 @@ require 'rexml/document'
 require 'journey_questionnaire'
 
 class Questionnaire < ActiveRecord::Base
-  acts_as_permissioned :permission_names => [:edit, :view_answers, :edit_answers, :destroy]
-  
   before_create :set_untitled
   after_create :create_initial_page
   before_save :set_published_at
@@ -26,6 +24,9 @@ class Questionnaire < ActiveRecord::Base
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
   
+  has_many :questionnaire_permissions
+  accepts_nested_attributes_for :questionnaire_permissions, :allow_destroy => true, :reject_if => lambda { |attrs| attrs['email'].blank? }
+  
   named_scope :publicly_visible, :conditions => { :publicly_visible => true }
   
   def Questionnaire.special_field_purposes
@@ -35,8 +36,6 @@ class Questionnaire < ActiveRecord::Base
   def Questionnaire.special_field_type(purpose)
     if %w( address ).include?(purpose)
       Questions::BigTextField
-    elsif %( gender ).include?(purpose)
-      Questions::RadioField
     else
       Questions::TextField
     end
@@ -344,7 +343,7 @@ class Questionnaire < ActiveRecord::Base
   end
   
   def authors
-    permitted_people("edit")
+    questionnaire_permissions.all(:include => :person, :conditions => { :can_edit => true }).map(&:person)
   end
   
   def self.load_extensions

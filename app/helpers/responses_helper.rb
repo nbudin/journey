@@ -72,6 +72,12 @@ module ResponsesHelper
                                           press the \"graph\" button.")
       end
       
+      selector_html << content_tag(:p) do
+        content_tag(:label) do
+          tag(:input, :type => "checkbox", :value => "true", :id => "skip_no_answer") + " Omit responses with no answer"
+        end
+      end
+      
       selector_html << submit_button
       
       selector_html << fields.collect do |field|

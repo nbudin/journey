@@ -12,7 +12,7 @@
                         <%= button_to_function "No", 'cancelDelete();' %>
                       </span>
                       <span id="response_show_toolbar">
-                        <% if logged_in_person.permitted?(@questionnaire, "edit_answers") %>
+                        <% if current_person.can?(:edit_answers, @questionnaire) %>
                           <%= button_to_function "Edit", 'editResponse();' %>
                           <%= button_to_function "Delete", 'deleteResponse();' %>
                         <% end -%>

@@ -1,6 +1,6 @@
 module UserOptionsHelper
   def user_options
-    if logged_in?
+    if person_signed_in?
       render_logged_in_options
     else
       render_logged_out_options

@@ -1,7 +1,7 @@
-<% if @editing and logged_in? and logged_in_person.permitted?(@question.questionnaire, "edit_answers") -%>
+<% if @editing and person_signed_in? and current_person.can?(:edit_answers, @question.questionnaire) -%>
   <%= text_area_tag "answer[#{@question.id}]", value, :rows => 4 %>
 <% else -%>
-  <% if logged_in? and logged_in_person.permitted?(@question.questionnaire, "view_answers") -%>
+  <% if person_signed_in? and current_person.can?(:view_answers, @question.questionnaire) -%>
     <%= simple_format value %>
   <% end -%>
 <% end -%>

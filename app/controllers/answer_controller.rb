@@ -8,7 +8,7 @@ class AnswerController < ApplicationController
   
   def resume
     @resp = Response.find(params[:id])
-    if @resp.person != logged_in_person
+    if @resp.person != current_person
       raise "That response does not belong to you.  Either log in as a different person, or start a new response."
     else
       # If this is an amended response, we want to retract the submitted response set.
@@ -39,8 +39,8 @@ class AnswerController < ApplicationController
     
     @all_responses = []
     @responses = []
-    if logged_in?
-      @all_responses = @questionnaire.responses.find_all_by_person_id(logged_in_person.id)
+    if person_signed_in?
+      @all_responses = @questionnaire.responses.find_all_by_person_id(current_person.id)
       if @questionnaire.allow_finish_later
         @responses += @all_responses.select { |resp| not resp.submitted }
       end
@@ -54,8 +54,8 @@ class AnswerController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
     
     @resp = Response.new :questionnaire => @questionnaire
-    if @questionnaire.advertise_login and logged_in?
-      @resp.person = logged_in_person
+    if @questionnaire.advertise_login and person_signed_in?
+      @resp.person = current_person
     end
     @resp.save!
     session["response_#{@questionnaire.id}"] = @resp.id
@@ -85,7 +85,7 @@ class AnswerController < ApplicationController
             @page = @resp.questionnaire.pages[0]
           end
 
-          if @questionnaire.advertise_login and logged_in?
+          if @questionnaire.advertise_login and person_signed_in?
             @page.questions.each do |question|
               if not question.respond_to? 'purpose'
                 next
@@ -96,11 +96,11 @@ class AnswerController < ApplicationController
                 if not answer
                   value = nil
                   if purpose == 'name'
-                    value = logged_in_person.name
+                    value = current_person.name
                   elsif purpose == 'email'
-                    value = logged_in_person.primary_email_address
+                    value = current_person.email
                   elsif purpose == 'gender'
-                    value = logged_in_person.gender
+                    value = current_person.gender
                   end
                   if not (value.nil? or value == '')
                     @resp.answers.create :question => question, :value => value
@@ -115,7 +115,7 @@ class AnswerController < ApplicationController
   end
   
   def preview
-    @questionnaire = Questionnaire.find(params[:id], :include => [:permissions, :pages])
+    @questionnaire = Questionnaire.find(params[:id], :include => [:questionnaire_permissions, :pages])
     
     if @questionnaire.pages.size > 0
       @page = @questionnaire.pages[(params[:page] || 1).to_i - 1]
@@ -224,7 +224,7 @@ class AnswerController < ApplicationController
   end
   
   def check_required_login
-    if @questionnaire.require_login and not logged_in?
+    if @questionnaire.require_login and not person_signed_in?
       redirect_to :action => "prompt", :id => params[:id]
     end
   end

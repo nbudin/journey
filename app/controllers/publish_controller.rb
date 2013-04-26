@@ -1,8 +1,9 @@
 class PublishController < ApplicationController
-  require_permission "edit", :class_name => "Questionnaire", :id_param => "questionnaire_id"
-  before_filter :get_questionnaire
+  load_resource :questionnaire
   
   def index
+    authorize! :edit, @questionnaire
+    
     if @questionnaire.is_open
       render :action => "widgets"
     elsif Journey::SiteOptions.prepublish?
@@ -11,10 +12,6 @@ class PublishController < ApplicationController
   end
   
   def settings
-  end
-
-  private
-  def get_questionnaire
-    @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => [:permissions])
+    authorize! :edit, @questionnaire
   end
 end

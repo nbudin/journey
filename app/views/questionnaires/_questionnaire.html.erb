@@ -3,7 +3,7 @@
   <div id="questionnairesummary_<%=questionnaire.id%>">
     <table style="width: 100%;">
       <td style="width: 50%; overflow: hidden;">
-<% if logged_in? and Questionnaire.permission_names.any? { |p| logged_in_person.permitted?(questionnaire, p) } -%>
+<% if person_signed_in? and QuestionnairePermission::ACTIONS.any? { |p| current_person.can?(p, questionnaire) } -%>
         	<b><%= link_to questionnaire.title, questionnaire %></b>
 <% else -%>
   <b><%=h questionnaire.title%></b>

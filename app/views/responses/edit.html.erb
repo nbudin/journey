@@ -1,5 +1,5 @@
-<% form_for(@resp, :url => response_path(@questionnaire, @resp)) do %>
-  <%= render :partial => 'response', :locals => { :resp => @resp } %>
+<% form_for(@response, :url => response_path(@questionnaire, @response)) do %>
+  <%= render :partial => 'response', :locals => { :resp => @response } %>
   
   <%= submit_tag "Save changes" %>
 <% end %>

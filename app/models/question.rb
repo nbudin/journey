@@ -5,7 +5,7 @@ class Question < ActiveRecord::Base
   has_one :questionnaire, :through => :page
   acts_as_list :scope => :page_id
   has_many :answers, :dependent => :destroy
-  has_one :special_field_association, :dependent => :destroy
+  has_one :special_field_association, :dependent => :destroy, :autosave => true
   has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id'
   
   Layouts = {
@@ -49,6 +49,17 @@ class Question < ActiveRecord::Base
   
   def is_numeric?
     false
+  end
+  
+  def purpose
+    special_field_association.try(:purpose)
+  end
+  
+  def purpose=(new_purpose)
+    return new_purpose if purpose == new_purpose
+    
+    self.build_special_field_association unless self.special_field_association
+    self.special_field_association.purpose = new_purpose
   end
   
   def deepclone

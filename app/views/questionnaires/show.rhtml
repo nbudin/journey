@@ -7,7 +7,7 @@
   Resource.model("Questionnaire", {prefix: '<%= ActionController::Base.relative_url_root %>', format: 'json'});
 </script>
 
-<% @editing = (logged_in? && logged_in_person.permitted?(@questionnaire, "edit")) -%>
+<% @editing = (person_signed_in? && current_person.can?(:edit, @questionnaire)) -%>
 
 <div class="propertypage">
 <% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
@@ -71,7 +71,7 @@
     <% end -%>
 <% end %>
 
-<% if @editing and logged_in? and logged_in_person.permitted?(@questionnaire, "destroy") -%>
+<% if @editing and person_signed_in? and current_person.can?(:destroy, @questionnaire) -%>
   <h3>Delete this survey</h3>
 
   <p>This will <i>permanently</i> delete this survey, along with all the responses to it.

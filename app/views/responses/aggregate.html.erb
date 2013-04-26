@@ -4,6 +4,7 @@
 function seriesSelected(id) {
 	graph = $('graph');
 	series = $(id).serialize(true)[id];
+  skipNoAnswer = $('skip_no_answer').checked;
 
 	url = "<%= response_graphs_url(@questionnaire) %>/";
 	if (series.each) {
@@ -16,6 +17,9 @@ function seriesSelected(id) {
 		url += "pie.png?question_id=" + series;
 	}
 	url += "&geom=" + graph.offsetWidth + "x" + graph.offsetHeight;
+  if (skipNoAnswer) {
+    url += "&skip_no_answer=true"
+  }
 	graph.src = url;
 }
 	

@@ -87,11 +87,6 @@ function makeReloadFunction(questionId) {
 }
 
 function questionAdded(q) {
-    if (q.purpose == "gender") {
-		QuestionOption.create({question_id: q.id, 'option': 'male'});
-		QuestionOption.create({question_id: q.id, 'option': 'female'});
-    }
-
     newli = document.createElement('li');
     newli.setAttribute('id', 'question_'+q.id);
     newli.setAttribute('class', 'question');

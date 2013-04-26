@@ -1,8 +1,7 @@
 class PagesController < ApplicationController
-  perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
-  require_permission "edit", {:only => [:destroy, :new, :edit, :create, :update, :sort]}.update(perm_options)
+  load_resource :questionnaire
+  load_and_authorize_resource :through => :questionnaire
 
-  before_filter :get_questionnaire
   layout "answer"
 
   # GET /pages

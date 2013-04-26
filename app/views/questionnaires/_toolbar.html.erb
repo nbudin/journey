@@ -2,7 +2,7 @@
 
 <ul class="tabstrip2">
 	<%= tabstrip_li "Main", @questionnaire, :level => 2, :action => 'show' %>
-	<% if logged_in? and logged_in_person.permitted?(@questionnaire, "edit") -%>
+	<% if person_signed_in? and current_person.can?(:edit, @questionnaire) -%>
        <%= tabstrip_li "Edit", edit_questionnaire_path(@questionnaire), 
                         :level => 2, :action => 'edit', :disabled => @questionnaire.is_open %>
        <%= tabstrip_li "Customize", customize_questionnaire_path(@questionnaire), 

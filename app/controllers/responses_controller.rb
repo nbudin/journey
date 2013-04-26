@@ -7,14 +7,11 @@ end
 require 'iconv'
 
 class ResponsesController < ApplicationController
-  perm_options = {:class_name => "Questionnaire", :id_param => "questionnaire_id"}
-  require_permission "view_answers", { :except => [:index] }.update(perm_options)
-  require_permission "edit_answers", {:only => [:new, :edit, :create, :update, :sort]}.update(perm_options)
+  load_resource :questionnaire
+  load_and_authorize_resource :through => :questionnaire
   
-  before_filter :get_questionnaire
   before_filter :set_page_title
   before_filter :require_view_answers_except_rss, :only => [:index]
-  before_filter :require_edit_answers_or_own_response, :only => [:destroy]
     
   # GET /responses
   # GET /responses.xml
@@ -206,20 +203,8 @@ class ResponsesController < ApplicationController
     end
   end
 
-  # GET /responses/new
-  # GET /responses/new.xml
-  def new
-    @resp = Response.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @resp }
-    end
-  end
-
   # GET /responses/1/edit
   def edit
-    @resp = Response.find(params[:id])
     @editing = true
     
     respond_to do |format|
@@ -228,8 +213,8 @@ class ResponsesController < ApplicationController
         content = render_to_string(:layout => false)
         render :update do |page|
           page.replace_html 'responsebody', content
-          page.replace_html 'responsetitle', "Editing #{@resp.title}"
-          page.call 'showResponseEditor', @resp.id
+          page.replace_html 'responsetitle', "Editing #{@response.title}"
+          page.call 'showResponseEditor', @response.id
         end
       end
     end
@@ -241,13 +226,13 @@ class ResponsesController < ApplicationController
     @response = Response.new(params[:response])
 
     respond_to do |format|
-      if @resp.save
+      if @response.save
         flash[:notice] = 'Response was successfully created.'
-        format.html { redirect_to(response_url(@questionnaire, @resp)) }
-        format.xml  { render :xml => @resp, :status => :created, :location => @resp }
+        format.html { redirect_to(response_url(@questionnaire, @response)) }
+        format.xml  { render :xml => @response, :status => :created, :location => @response }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @resp.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @response.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -260,14 +245,12 @@ class ResponsesController < ApplicationController
          params[:answer][question_id.to_s].length > 0)
     end
     
-    @resp = Response.find(params[:id])
-
     @questionnaire.questions.each do |question|
       if question.kind_of? Questions::Field
-        ans = Answer.find_answer(@resp, question)
+        ans = Answer.find_answer(@response, question)
         if answer_given(question.id)
           if ans.nil?
-            ans = Answer.new :question_id => question.id, :response_id => @resp.id
+            ans = Answer.new :question_id => question.id, :response_id => @response.id
           end
           ans.value = params[:answer][question.id.to_s]
           ans.save
@@ -281,14 +264,14 @@ class ResponsesController < ApplicationController
     end
 
     respond_to do |format|
-      if @resp.update_attributes(params[:response])
-        format.html { redirect_to(response_url(@questionnaire, @resp)) }
-        format.js { redirect_to(response_url(@questionnaire, @resp, :format => "js")) }
+      if @response.update_attributes(params[:response])
+        format.html { redirect_to(response_url(@questionnaire, @response)) }
+        format.js { redirect_to(response_url(@questionnaire, @response, :format => "js")) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
         format.js { render :action => "edit" }
-        format.xml  { render :xml => @resp.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @response.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -296,7 +279,7 @@ class ResponsesController < ApplicationController
   # DELETE /responses/1
   # DELETE /responses/1.xml
   def destroy
-    @resp.destroy
+    @response.destroy
 
     respond_to do |format|
       format.html { redirect_to :back }
@@ -358,14 +341,7 @@ class ResponsesController < ApplicationController
   
   def require_view_answers_except_rss
     unless params[:format].to_s == 'rss'
-      do_permission_check(@questionnaire, "view_answers", "Sorry, but you are not permitted to view answers to this survey.")
-    end
-  end
-  
-  def require_edit_answers_or_own_response
-    @resp = Response.find(params[:id])
-    unless @questionnaire.allow_delete_responses and logged_in? and logged_in_person == @resp.person
-      do_permission_check(@questionnaire, "edit_answers", "Sorry, but you are not permitted to edit answers to this survey.")
+      authorize! :show, Response.new(:questionnaire => @questionnaire)
     end
   end
 end

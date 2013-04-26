@@ -1,4 +1,4 @@
-<% p = logged_in? ? logged_in_person : nil-%>
+<% p = person_signed_in? ? current_person : nil-%>
 
 <ul id="questionnaire_list" style="list-style-type: none; padding-left: 0; margin-left: 0;">
 	<%= render :partial => "questionnaire", :collection => @questionnaires %>

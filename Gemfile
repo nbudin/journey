@@ -2,12 +2,11 @@ source "http://rubygems.org"
 
 gem 'bundler'
 gem "rails", "3.2.12"
-gem 'fastercsv', :platforms => "ruby_18"
 gem 'paginator'
 gem 'will_paginate'
 gem "mysql2"
 gem "sqlite3", :groups => [:development, :test]
-gem "xebec", "2.6.0"
+gem "xebec"
 gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 1.0.0"
 gem 'airbrake'
@@ -26,7 +25,6 @@ gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
 gem 'rmagick', :require => 'RMagick', :platforms => ['ruby', 'mswin']
 gem 'gruff', '~> 0.3.6'
 
-gem 'thin'
 gem 'newrelic_rpm'
 
 group :test do

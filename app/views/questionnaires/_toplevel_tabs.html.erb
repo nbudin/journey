@@ -6,7 +6,7 @@
 	<% end -%>
 	<% if person_signed_in? and current_person.can?(:view_answers, @questionnaire) -%>
 	   <%= tabstrip_li "Responses (#{@questionnaire.valid_responses.size})", 
-		   responses_path(@questionnaire), :controller => 'responses' %>
+		   [@questionnaire, :responses], :controller => 'responses' %>
 	<% end -%>
 	<%= tabstrip_li "Answer", { :controller => "answer", :action => "index", :id => @questionnaire.id },
                     :class => "external", :disabled => (not @questionnaire.is_open) %>

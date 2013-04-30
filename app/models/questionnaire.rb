@@ -27,7 +27,7 @@ class Questionnaire < ActiveRecord::Base
   has_many :questionnaire_permissions
   accepts_nested_attributes_for :questionnaire_permissions, :allow_destroy => true, :reject_if => lambda { |attrs| attrs['email'].blank? }
   
-  named_scope :publicly_visible, :conditions => { :publicly_visible => true }
+  scope :publicly_visible, lambda { where(:publicly_visible => true) }
   
   def Questionnaire.special_field_purposes
     %w( name address phone email gender )

@@ -5,7 +5,7 @@
     end
     if p
       if p.permitted?(@questionnaire, "view_answers")
-        links << link_to(pluralize(@questionnaire.valid_responses.size, "Response"), responses_path(@questionnaire))
+        links << link_to(pluralize(@questionnaire.valid_responses.size, "Response"), [@questionnaire, :responses])
       end
       if p.permitted?(@questionnaire, "destroy")
         links << link_to('Delete', questionnaire_path(@questionnaire), :confirm => 'Are you sure?', :method => :delete)

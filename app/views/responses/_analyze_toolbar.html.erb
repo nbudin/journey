@@ -1,9 +1,9 @@
 <%= render :partial => "questionnaires/toplevel_tabs" %>
 
 <ul class="tabstrip2">
-	<%= tabstrip_li "Responses", responses_path(@questionnaire), :level => 2, :action => 'index' %>
-	<%= tabstrip_li "Graphs", responses_path(@questionnaire) + '/aggregate', :level => 2, :action => 'aggregate' %>
-	<%= tabstrip_li "Export/Print", responses_path(@questionnaire) + '/export', :level => 2, :action => 'export' %>
-	<%= tabstrip_li "Subscribe", responses_path(@questionnaire) + '/subscribe', :level => 2, :action => 'subscribe' %>
+	<%= tabstrip_li "Responses", [@questionnaire, :responses], :level => 2, :action => 'index' %>
+	<%= tabstrip_li "Graphs", [@questionnaire, :responses] + '/aggregate', :level => 2, :action => 'aggregate' %>
+	<%= tabstrip_li "Export/Print", [@questionnaire, :responses] + '/export', :level => 2, :action => 'export' %>
+	<%= tabstrip_li "Subscribe", [@questionnaire, :responses] + '/subscribe', :level => 2, :action => 'subscribe' %>
 </ul>
 

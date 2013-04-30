@@ -5,7 +5,7 @@ class GraphsController < ApplicationController
   def line
     authorize! :view_answers, @questionnaire
     
-    @questions = Question.all(:conditions => { :id => params[:question_ids] })
+    @questions = Question.where(id: params[:question_ids]).all
     @counts = aggregate_questions(params[:question_ids])
     @min = @questions.collect { |q| q.min }.min
     @max = @questions.collect { |q| q.max }.max
@@ -56,7 +56,7 @@ class GraphsController < ApplicationController
     end
     
     unless skip_no_answer
-      Question.find_each(:conditions => { :id => question_ids }) do |question|
+      Question.where(id: question_ids).find_each do |question|
         no_answer = @questionnaire.responses.valid.no_answer_for(question).count()
         if no_answer > 0
           counts[question.id]["No answer"] = no_answer

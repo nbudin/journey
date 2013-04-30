@@ -1,9 +1,4 @@
-begin
-  require 'fastercsv'
-rescue MissingSourceFile, LoadError
-  require 'csv'
-  FasterCSV = CSV
-end
+require 'csv'
 require 'iconv'
 
 class ResponsesController < ApplicationController

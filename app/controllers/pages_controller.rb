@@ -7,8 +7,6 @@ class PagesController < ApplicationController
   # GET /pages
   # GET /pages.xml
   def index
-    @pages = Page.find(:all)
-
     respond_to do |format|
       format.html # index.rhtml
       format.json { render :text => @pages.to_json }

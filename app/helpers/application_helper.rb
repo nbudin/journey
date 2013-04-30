@@ -47,6 +47,6 @@ module ApplicationHelper
   end
   
   def globalnav_links
-    globalnav_items.collect { |name, url| "<li>#{link_to name, url}</li>" }.join("<li>&raquo;</li>")
+    safe_join(globalnav_items.map { |name, url| content_tag(:li, link_to(name, url)) }, "<li>&raquo;</li>".html_safe)
   end
 end

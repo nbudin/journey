@@ -5,7 +5,7 @@ class Answer < ActiveRecord::Base
   validates_associated :question
   
   def self.find_answer(resp, question)
-    Answer.find(:first, :conditions => ["response_id = #{resp.id} AND question_id = #{question.id}"])
+    where(response_id: resp.id, question_id: question.id).first
   end
   
   def self.value(args)

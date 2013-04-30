@@ -4,10 +4,10 @@ class QuestionnairePermission < ActiveRecord::Base
   
   ACTIONS = %w(edit view_answers edit_answers destroy change_permissions).map(&:to_sym)
   
-  named_scope :for_person, lambda { |person| { :conditions => { :person_id => person.id } } }
-  named_scope :allows_anything, { :conditions => [ACTIONS.map { |a| "can_#{a} = ?" }.join(" OR "), *([true] * ACTIONS.size)] }
+  scope :for_person, lambda { |person| where(:person_id => person.id) }
+  scope :allows_anything, lambda { where(ACTIONS.map { |a| "can_#{a} = ?" }.join(" OR "), *([true] * ACTIONS.size)) }
   ACTIONS.each do |action|
-    named_scope "allows_#{action}", { :conditions => { "can_#{action}" => true } }
+    scope "allows_#{action}", lambda { where("can_#{action}" => true) }
   end
   
   validates_uniqueness_of :questionnaire_id, :scope => :person_id

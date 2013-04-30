@@ -1,5 +1,4 @@
 before_script:
-  - "mysql -e 'create database journey_test;"
   - "echo 'test:\n  adapter: mysql2\n  database: journey_test\n  user: root\n  encoding: utf8' >config/database.yml"
   - "bundle exec rake db:migrate RAILS_ENV=test"
 

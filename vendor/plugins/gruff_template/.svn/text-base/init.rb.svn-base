@@ -1,3 +1,0 @@
-# Include hook code here
-require 'gruff_template'
-ActionView::Base.register_template_handler 'gruff', GruffTempPlugin::Template

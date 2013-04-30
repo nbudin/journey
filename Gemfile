@@ -1,11 +1,11 @@
 source "http://rubygems.org"
 
 gem 'bundler'
-gem "rails", "2.3.17"
+gem "rails", "3.2.12"
 gem 'fastercsv', :platforms => "ruby_18"
 gem 'paginator'
-gem 'will_paginate', '~> 2.3.16'
-gem "mysql2", '~> 0.2.18'
+gem 'will_paginate'
+gem "mysql2"
 gem "sqlite3", :groups => [:development, :test]
 gem "xebec", "2.6.0"
 gem "heroku_external_db", ">= 1.0.0"
@@ -13,8 +13,8 @@ gem "jipe", ">= 1.0.0"
 gem 'airbrake'
 gem 'sequel'
 
-gem 'devise', '~> 1.0.0'
-gem 'rubycas-client', '~> 2.2.0' # 2.3.x breaks in Rails 2 for some reason
+gem 'devise'
+gem 'rubycas-client'
 gem 'devise_cas_authenticatable'
 gem 'cancan'
 gem 'illyan_client'
@@ -25,7 +25,6 @@ gem 'rack-ssl'
 gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
 gem 'rmagick', :require => 'RMagick', :platforms => ['ruby', 'mswin']
 gem 'gruff', '~> 0.3.6'
-gem 'i18n', '0.4.2'
 
 gem 'thin'
 gem 'newrelic_rpm'

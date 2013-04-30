@@ -10,7 +10,7 @@
     <p>These are the people who are allowed to make changes to this survey and its responses:</p>
   <% end -%>
   
-  <% form_for @questionnaire do |f| %>
+  <%= form_for @questionnaire do |f| %>
     <table class="sharing">
       <tr>
         <th></th>
@@ -20,7 +20,7 @@
         <% end -%>
         <th></th>
       </tr>
-      <% f.fields_for :questionnaire_permissions do |permission_fields| -%>
+      <%= f.fields_for :questionnaire_permissions do |permission_fields| -%>
         <tr class="<%= cycle "odd", "even" %>">
           <% if permission_fields.object.new_record? -%>
             <td style="text-align: right;"><%= permission_fields.label :email, "Add:" %></td>

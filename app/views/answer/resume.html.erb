@@ -6,6 +6,6 @@
 <p><b>Note: if you are amending a submitted response, this will "unsubmit" your response.  You will
 	need to press the "Finish" button at the end of the questionnaire again to resubmit.</b></p>
 
-<% form_tag do %>
+<%= form_tag do %>
 	Session code: <%= text_field_tag "session_code" %> <%= submit_tag "Go" %>
 <% end %>

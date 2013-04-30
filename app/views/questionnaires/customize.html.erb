@@ -5,7 +5,7 @@
 </script>
 
 <div class="propertypage">
-  <% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
+  <%= form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
     <h2>Preview</h2>
     
     <p>This is a preview of how your survey will look.</p>

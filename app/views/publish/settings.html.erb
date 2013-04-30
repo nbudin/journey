@@ -40,7 +40,7 @@
 </script>
 
 <div class="propertypage">  
-<% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
+<%= form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
   <%= hidden_field_tag "return_to", url_for(:questionnaire_id => @questionnaire.id, :action => "index") %>
 
   <h3>Publish this survey?</h3>

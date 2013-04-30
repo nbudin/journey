@@ -10,7 +10,7 @@
 <% @editing = (person_signed_in? && current_person.can?(:edit, @questionnaire)) -%>
 
 <div class="propertypage">
-<% form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
+<%= form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
                 
     <h2 style="display: inline; margin-top: 0;">
       <%= jipe_editor @questionnaire, :title, :editing => @editing %>

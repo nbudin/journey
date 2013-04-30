@@ -6,7 +6,7 @@
   <p>You can export all the responses to this survey to a spreadsheet (in CSV format, which can be opened by Excel, Numbers,
     Google Spreadsheets, OpenOffice.org, and other spreadsheet software).</p>
     
-  <% form_tag([@questionnaire, :format => "csv", :responses], :method => "get", :style => "margin-left: 1em;") do -%>
+  <%= form_tag([@questionnaire, :format => "csv", :responses], :method => "get", :style => "margin-left: 1em;") do -%>
     <p>
       <%= radio_button_tag "rotate", "false" %> each response in a row
       &nbsp;&nbsp;&nbsp;

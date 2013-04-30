@@ -1,10 +1,12 @@
 require 'bundler/capistrano'
 require 'airbrake/capistrano'
+require 'capistrano-rbenv'
 
 set :application, "journey"
 set :scm, :git
 set :repository, "https://github.com/nbudin/journey.git"
 set :deploy_to, "/var/www/#{application}"
+set :rbenv_ruby_version, "1.8.7-p371"
 
 server "popper.sugarpond.net", :app, :web, :db, :primary => true
 set :user, "www-data"

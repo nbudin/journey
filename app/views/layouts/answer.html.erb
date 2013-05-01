@@ -5,8 +5,7 @@
 <head>
   <title><%=h @questionnaire.title%><% if @page %> - Page <%= @page.number %> of <%= @questionnaire.pages.size %><% end %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <%= stylesheet_link_tag 'questionnaire' %>
-  <%= stylesheet_link_tag 'journey' %>
+  <%= stylesheet_link_tag 'application' %>
   <!--[if IE 7]>
     <%= stylesheet_link_tag 'ie7hacks' %>
   <![endif]-->
@@ -24,13 +23,12 @@
                         <%= strip_tags @questionnaire.custom_css %>
                 <% end -%>
   </style>
-  <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag '/jipe/jester' %>
-  <%= javascript_include_tag '/jipe/jipe' %>
+  <%= airbrake_javascript_notifier %>  
+  <%= javascript_include_tag :application %>
 </head>
 <body>
 <% if @questionnaire and not @suppress_custom_html -%>
-        <%= @questionnaire.custom_html %>
+        <%=raw @questionnaire.custom_html %>
 <% end -%>
 
 <% if flash[:error_messages] -%>
@@ -42,7 +40,7 @@
         </ul>
 <% end %>
 
-<%= @content_for_layout %>
+<%= yield %>
 
 </body>
 </html>

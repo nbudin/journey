@@ -1,0 +1,617 @@
+body {
+        border: none;
+        background-color: white;
+        margin-top: 60px;
+}
+
+.larp {
+        border: 1px black solid;
+        background-color: #ddd;
+        padding: 2px;
+        margin: 2px;
+}
+
+.show {
+        font-weight: bold;
+}
+
+img.icon {
+        vertical-align: middle;
+}
+
+img {
+    border: 0;
+}
+
+.new {
+        border: 1px black solid;
+        background-color: #ffc;
+        padding: 2px;
+}
+
+table.itemheader {
+        width: 100%;
+        font-weight: bold;
+        border: none;
+        text-align: right;
+}
+
+table.itemheader tr > td:first-child {
+        text-align: left;
+}
+
+.errors {
+        background-color: #fcc;
+        border: 1px #f00 solid;
+        padding-left: 1em;
+        padding-right: 1em;
+}
+
+#questionnaireedit {
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 0;
+    border-collapse: collapse;
+	margin-top: 1px;
+}
+
+#questionnaireedit #container {
+    margin-left: 210px;
+}
+
+#questionnaireedit #pagesheading, #questionnaireedit #pages {
+    width: 210px;
+}
+
+#questionnaireedit td {
+    margin: 0;
+    padding: 0;
+}
+
+#questionnaireedit #pagesheading, #questionnaireedit #pageheading {
+    border-top: 1px black solid;
+    background-color: #aaa;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    height: 12pt;
+    font-size: 12pt;
+    font-weight: bold;
+    text-align: center;
+}
+
+#questionnaireedit #pagesheading {
+    width: 210px;
+}
+
+#questionnaireedit #pageheading {
+    padding-right: 2px; /* to compensate for the border on editpage */
+}
+
+#questionnaireedit #pageheading, #questionnaireedit #editpage {
+    vertical-align: top;
+}
+
+#questionnaireedit #pages {
+    padding-bottom: 0.5em;
+    vertical-align: top;
+    clear: left;
+    border-top: 1px black solid;
+    overflow: auto;
+}
+
+#questionnaireedit #editpage {
+    height: 480px;
+}
+
+#questionnaireedit #pages li.page {
+    border: 0;
+    border-bottom: 1px #666 solid;
+    border-left: 1px #666 solid;
+    margin: 0;
+    background-color: #ddd;
+    padding: 2px;
+    height: 16px;
+    display: block;
+    cursor: pointer;
+    width: 205px;
+    overflow: hidden;
+    position: relative;
+    background-image: url(<%= image_path "page-tab-gradient.png" %>);
+}
+
+#questionnaireedit #pages div.draghandle {
+    float: left; 
+    width: 5px; 
+    overflow: hidden; 
+    background-color: #00f; 
+    left: -2px; 
+    top: -2px; 
+    position: relative; 
+    height: 19px; 
+    cursor: move;   
+}
+
+#questionnaireedit #pages li.page.activepage {
+    border-right: 0;
+    background-color: #fff;
+    background-image: none;
+}
+
+#questionnaireedit #pages li.page div.caption {
+    width: 182px; /* +5px if we get rid of drag handles */
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 16px;
+    text-align: right;
+    position: absolute;
+    right: 20px;
+}
+
+#questionnaireedit #pages li.page a {
+    float: right;
+    clear: none;
+}
+
+#questionnaireedit #pages ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    margin-bottom: 0.5em;
+}
+
+#questionnaireedit iframe#pageview {
+    border: 1px black solid;
+    width: 100%;
+    height: 100%;
+	margin-top: -1px;
+}
+
+div.vertical-fill {
+    min-height: 100%;
+}
+
+.vertical-fill-header {
+}
+
+.vertical-fill-body {
+    padding: 1em 1em 5em;
+    min-height: 100%;
+}
+
+.vertical-fill-footer {
+    position: absolute;
+    bottom: 0pt;
+}
+
+form.inplaceeditor-form {
+    display: inline;
+}
+
+img.image_button {
+    cursor: pointer;
+    vertical-align: middle;
+    border: 0;
+}
+
+ul.tabstrip {
+    list-style: none;
+    margin-bottom: 6px;
+    padding-left: 12px;
+    margin-left: 0;
+}
+
+ul.tabstrip li {
+    display: inline;
+}
+
+ul.tabstrip li a {
+    border: 1px black solid;
+    border-bottom: none;
+    padding: 6px;
+    margin-right: 12px;
+    background-color: #ddd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+}
+
+ul.tabstrip.tinytabs {
+    margin-bottom: 2px;
+}
+
+ul.tabstrip.tinytabs li a {
+    padding: 2px;
+    background-image: none;
+    margin-right: 6px;
+}
+
+ul.tabstrip li a, ul.tabstrip2 li a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+}
+
+ul.tabstrip li a {
+    background-color: #ffc;
+}
+
+ul.tabstrip li.disabled a, ul.tabstrip li.selected a {
+    cursor: default;
+}
+
+ul.tabstrip li.selected a {
+    background-color: #fff;
+}
+
+ul.tabstrip li.disabled a {
+    background-color: #ccc;
+	color: #555;
+}
+
+ul.tabstrip li.external a, ul.tabstrip li.dropdown a {
+    background-position: 3px;
+    background-repeat: no-repeat;
+    padding-left: 22px;
+}
+
+ul.tabstrip li.dropdown a {
+    background-image: url(<%= image_path "drop-down.png" %>);
+}
+
+ul.tabstrip li.external a {
+    background-image: url(<%= image_path "external-link.png" %>);
+}
+
+
+ul.tabstrip2 {
+	list-style: none;
+	margin-bottom: 0px;
+	margin-top: 1px;
+	padding-left: 12px;
+	margin-left: 0;
+	border-top: 1px black solid;
+	background-color: #d2de8c;
+}
+
+ul.tabstrip2 li a {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+ul.tabstrip2 li a:hover {
+	background-color: #dbe3a8;
+}
+
+ul.tabstrip2 li {
+	display: inline;
+	margin-right: 6px;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+ul.tabstrip2 li.selected {
+	background-color: #fff;
+}
+
+ul.tabstrip2 li.selected a:hover {
+	background-color: #fff;
+}
+
+ul.tabstrip2 li.disabled a {
+    cursor: default;
+	color: #666;
+}
+
+ul.tabstrip2 li.disabled a:hover {
+    background-color: #d2de8c;
+}
+
+div.tabpage {
+    background-color: #ccd87f;
+    padding: 6px;
+}
+
+div#toolbox {
+    background-color: #ffc675;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    color: #754500;
+}
+
+div#toolbox ul {
+    padding-left: 0.5em;
+}
+
+div#toolbox ul li {
+    display: inline;
+}
+
+div#toolbox ul.tabstrip {
+    border-bottom: 1px black solid;
+    margin-bottom: 0;
+}
+
+div#toolbox ul.tabstrip li a {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    margin-bottom: 2px;
+    background-image: none;
+    background-color: #754500;
+    border: 1px #512f00 solid;
+    color: #ffd99c;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+div#toolbox ul.tabstrip li.selected a {
+    background-color: #ffd99c;
+    color: #754500;
+    border-bottom-color: #ffd99c;
+}
+
+div#toolbox ul.tabstrip li.selected a {
+    color: #754500;
+}
+
+div#toolbox .tabpage {
+    background-color: #ffd99c;
+    margin-top: 0;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+div#toolbox input[type='button'], div#toolbox .button {
+    border: #754500 1px solid;
+    color: #512f00;
+    background-color: #ffa92e;
+    padding: 3px;
+    display: inline-block;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+div#toolbox .button {
+  border: none;
+  background-color: #ffd99c;
+  height: 16px;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+div#toolbox .button.selected {
+  border: #754500 1px solid;
+  background-color: #ffa92e;
+  padding: 2px;
+}
+
+div#toolbox .button:hover {
+  background-color: #ffa92e;
+}
+
+
+
+ul.dropdown {
+    position: relative;
+    top: -3px;
+    right: -3px;
+    border: #666 1px solid;
+    background-color: #fff;
+    padding: 2px;
+    z-index: 200;
+    width: 20em;
+}
+
+ul.dropdown li {
+    list-style-type: none;
+}
+
+ul.dropdown li a {
+    text-decoration: none;
+    color: #000;
+	display: block;
+	width: 100%;
+}
+
+ul.dropdown li a:hover {
+    background-color: #ffc;
+}
+
+.dropdown_icon {
+    display: block;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+    background-image: url(<%=image_path "more-options.png" %>);
+}
+
+.selected_dropdown_icon {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    z-index: 201;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+    background-image: url(<%=image_path "less-options.png" %>);
+}
+
+.special_purpose {
+    background-color: #abc4d0;
+    border: 1px #329cd0 solid;
+    right: 2px;
+	top: 2px;
+    position: absolute !important;
+	z-index: 100;
+}
+
+div.special_purpose img {
+    vertical-align: top;
+}
+
+form.filterbar input {
+    width: 80%;
+}
+
+form.filterbar td {
+    position: relative;
+}
+
+form.filterbar input[type='submit'] {
+    width: auto;
+}
+
+  .pagination {
+    padding: 3px;
+    margin: 3px;
+    text-align: center;
+  }
+  .pagination a {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #ccd87f;
+    text-decoration: none;
+    color: #647400;
+  }
+  .pagination a:hover, .pagination a:active {
+    border: 1px solid #ccd87f;
+    color: #000;
+  }
+  .pagination span.current {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #647400;
+    font-weight: bold;
+    background-color: #647400;
+    color: #FFF;
+  }
+  .pagination span.disabled {
+    padding: 2px 5px 2px 5px;
+    margin: 2px;
+    border: 1px solid #eee;
+    color: #ddd;
+  }
+
+label.overlabel-apply {
+  position:absolute;
+  top:3px;
+  left:5px;
+  z-index:1;
+  color:#999;
+}
+  
+label.overlabel {
+  color:#999;
+}
+
+.propertypage {
+  border-top: 1px black solid; 
+  background-color: #f5ffb8; 
+  padding: 1em;
+}
+
+.propertypage textarea {
+    height: 8em;
+    width: 100%;
+    max-width: 60em;
+}
+
+.propertypage p {
+	max-width: 60em;
+}
+
+.questionnaire_startbox {
+    width: 410px;
+    background-color: #fff;
+    border: 1px black solid;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 5px;
+}
+
+.questionnaire_startbox h3 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-size: 130%;
+}
+
+.questionnaire_startbox p {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+}
+
+.questionnaire_startbox a.bigbutton {
+    margin-left: 0;
+}
+
+.globalnav {
+    border: 2px #bad032 solid;
+    border-top: none;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    margin-top: -2px;
+    display: inline-block;
+    list-style-type: none;
+    padding: 2px 0px;
+    padding-left: 0;
+    margin-left: 0;
+    background-color: #666;
+    background-image: url(<%= image_path("white-fade.png") %>);
+    background-repeat: repeat-x;
+    background-position: bottom;
+    cursor: default;
+}
+
+.globalnav li {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.globalnav li a {
+    margin: 0;
+    padding: 0.5em;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.globalnav li a:hover {
+    background-image: url(<%= image_path("white-fade.png") %>);
+    background-repeat: repeat-x;
+    background-position: 0% 75%;
+}
+
+table.sharing {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.sharing td.permission {
+    text-align: center;
+}
+
+table.sharing tr.odd {
+    background-color: rgba(0, 0, 0, 0.1);
+}

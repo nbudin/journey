@@ -68,6 +68,7 @@ GEM
       devise (>= 1.0.6)
       rubycas-client (>= 2.2.1)
     diff-lcs (1.2.4)
+    dynamic_form (1.1.4)
     erubis (2.7.0)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -103,6 +104,8 @@ GEM
     paginator (1.1.1)
       hoe (>= 1.6.0)
     polyglot (0.3.3)
+    prototype-rails (3.2.1)
+      rails (~> 3.2)
     pry (0.9.12.1)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -178,6 +181,7 @@ DEPENDENCIES
   database_cleaner (>= 0.5.0)
   devise
   devise_cas_authenticatable
+  dynamic_form
   factory_girl
   gruff (~> 0.3.6)
   heroku_external_db (>= 1.0.0)
@@ -187,6 +191,7 @@ DEPENDENCIES
   mysql2
   newrelic_rpm
   paginator
+  prototype-rails
   pry-rails
   rack-ssl
   rails (= 3.2.12)

@@ -11,6 +11,9 @@ gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 1.0.0"
 gem 'airbrake'
 gem 'sequel'
+gem 'dynamic_form'
+
+gem 'prototype-rails'
 
 gem 'devise'
 gem 'rubycas-client'

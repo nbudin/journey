@@ -1,0 +1,62 @@
+.topbar {
+  background-color: #555; 
+  border-bottom: 2px black solid;
+  overflow: auto; 
+  text-align: center; 
+  vertical-align: middle;
+}
+
+.topbar ul li a {
+  background-color: #bad032;
+  color: black;
+  text-decoration: none;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.topbar ul li a:hover {
+  background-color: white;
+}
+
+.topbar ul {
+  margin-top: 25px;
+  list-style-type: none;
+}
+
+.topbar ul li {
+  display: inline;
+  margin-right: 0.5em;
+}
+
+.bigbutton {
+    background-image: url(<%= image_path "topbar-bg.png" %>); 
+    background-repeat: repeat-x; border: 2px solid #bad032; 
+    border-radius: 10px; 
+    -moz-border-radius: 10px; 
+    -webkit-border-radius: 10px; 
+    padding: 0.5em; 
+    height: 150px; 
+    color: black; 
+    text-decoration: none; 
+    font-size: 120%;
+}
+
+.leftcolumn, .rightcolumn {
+    position: absolute;
+    width: 500px;
+}
+
+.leftcolumn {
+    right: 52%;
+    text-align: right;
+}
+
+.rightcolumn {
+    left: 52%;
+    text-align: left;
+}

@@ -16,6 +16,9 @@ module Journey
     config.active_record.schema_format = :ruby
     
     config.action_view.sanitized_allowed_attributes = ['id', 'class', 'style']
+    
+    # Enable the asset pipeline
+    config.assets.enabled = true
   
   #  config.middleware.use(Rack::Cache) do
   #    import 'config/rack_cache_config'

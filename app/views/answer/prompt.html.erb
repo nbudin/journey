@@ -1,7 +1,7 @@
 <div class="answerpage" id="answerpage">
-<div class="pagetitle"><%=h @questionnaire.title %></div>
+<div class="pagetitle"><%= @questionnaire.title %></div>
 
-<p><%= @questionnaire.welcome_text %></p>
+<p><%=raw @questionnaire.welcome_text %></p>
 
 <style type="text/css">
 .questionnaire_startbox table th {

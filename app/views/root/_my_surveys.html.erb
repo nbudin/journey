@@ -4,7 +4,7 @@
   <% @my_questionnaires.each do |questionnaire| -%>
     <li>
       <span style="font-size: 90%; float: right;">
-        <% link_to [questionnaire, :responses] do -%>
+        <%= link_to [questionnaire, :responses] do -%>
          <%= pluralize questionnaire.valid_responses.count, "response" %>
         <% end -%>
       </span>
@@ -14,7 +14,7 @@
 </ul>
 
 <div class="footer">
-  <% link_to new_questionnaire_path, :class => "bigbutton" do -%>
+  <%= link_to new_questionnaire_path, :class => "bigbutton" do -%>
     Create, import, or copy a survey &raquo;
     <%= render :partial => "questionnaires/creator_warnings" %>
   <% end -%>

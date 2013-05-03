@@ -12,6 +12,7 @@ gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 1.0.0"
 gem 'airbrake'
 gem 'sequel'
+gem 'json'
 
 gem 'devise', '~> 1.0.0'
 gem 'rubycas-client', '~> 2.2.0' # 2.3.x breaks in Rails 2 for some reason

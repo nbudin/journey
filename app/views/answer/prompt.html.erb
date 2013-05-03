@@ -68,7 +68,7 @@
     <% content_for :startbox_heading do -%>
       <h3>Welcome, <%=h current_person.name %>!</h3>
       <span style="font-style: italic; font-size: 95%;">
-        Not <%=h current_person.name %>?  <%= link_to "Click here to log out.", :controller => "auth", :action => "logout" %>
+        Not <%=h current_person.name %>?  <%= link_to "Click here to log out.", destroy_user_session_path, :method => :delete %>
       </span>
     <% end -%>
     

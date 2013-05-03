@@ -24,6 +24,7 @@ class Ability
       
       can :manage, Page, { :questionnaire => { :questionnaire_permissions => { :person_id => person.id, :can_edit => true } } }
       can :manage, Question, { :page => { :questionnaire => { :questionnaire_permissions => { :person_id => person.id, :can_edit => true } } } }
+      can :manage, QuestionOption, {:question => { :page => { :questionnaire => { :questionnaire_permissions => { :person_id => person.id, :can_edit => true } } } } }
     end
   end
 end

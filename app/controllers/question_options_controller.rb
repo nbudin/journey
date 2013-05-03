@@ -1,8 +1,10 @@
 class QuestionOptionsController < ApplicationController
-  rest_edit_permissions :class_name => "Questionnaire", :id_param => "questionnaire_id"
+  load_resource :questionnaire
+  load_resource :page, :through => :questionnaire
+  load_resource :question, :through => :page
+  load_and_authorize_resource :through => :question
 
   layout "answer"
-  before_filter :get_question_questionnaire_and_page
   
   # GET /question_options
   # GET /question_options.xml

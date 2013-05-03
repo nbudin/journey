@@ -10,14 +10,17 @@ Journey::Application.routes.draw do
       get :pagelist
       get :available_special_field_purposes
       get :customize
-      get :publish
       get :export
       get :share
       get :preview
       get :print
     end
 
-    match '/publish/:action.:format' => 'publish#index', :as => :publish
+    resource :publish, :controller => 'publish', :only => :show do
+      member do
+        get :settings
+      end
+    end
 
     resources :pages do
       collection do
@@ -55,7 +58,5 @@ Journey::Application.routes.draw do
   match '/questionnaires/:questionnaire_id/responses/graphs/:action.:format' => 'graphs#index', :as => :response_graph
   match '/answer/:id' => 'answer#index', :as => :answer
   match '/dashboard' => 'root#dashboard', :as => :dashboard
-  match '/' => 'root#index'
-  match ':controller/:action.:format' => '#index'
-  match '/:controller(/:action(/:id))'
+  root to: 'root#index'
 end

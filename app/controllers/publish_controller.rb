@@ -1,7 +1,7 @@
 class PublishController < ApplicationController
   load_resource :questionnaire
   
-  def index
+  def show
     authorize! :edit, @questionnaire
     
     if @questionnaire.is_open

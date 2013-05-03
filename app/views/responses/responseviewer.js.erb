@@ -21,7 +21,7 @@ ResponseViewer.showingResponseId = null;
 function showResponse(id) {  
     showResponseViewer(id);
     new Ajax.Request(
-        '<%= responses_url(@questionnaire) %>/' + id,
+        '<%= url_for([@questionnaire, :responses]) %>/' + id,
         { method: 'get' });
 }
 
@@ -84,7 +84,7 @@ function cancelDelete() {
 function confirmDelete() {
   showResponseThrobber();
   new Ajax.Request(
-      '<%= responses_url @questionnaire %>/'+ResponseViewer.showingResponseId,
+      '<%= url_for([@questionnaire, :responses]) %>/'+ResponseViewer.showingResponseId,
       {
           method: 'delete',
           onSuccess: function (req, header) { window.location.reload(); },

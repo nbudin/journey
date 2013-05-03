@@ -148,26 +148,13 @@ class ResponsesController < ApplicationController
             csv << current_row if current_row
           end
         end
-        
-#        if params[:rotate] == 'true'
-#          rotated_table = []
-#          rows = table.length
-#          columns = table.collect { |row| row.length }.max
-#          
-#          columns.times do |y|
-#            rotated_table[y] ||= []
-#            rows.times do |x|
-#              value = table[x].try(:[], y)
-#              rotated_table[y][x] = value
-#            end
-#          end
-#          table = rotated_table
-#        end
       end
     end
   end
   
   def print
+    @responses = @questionnaire.valid_responses
+    
     respond_to do |format|
       format.html { render :layout => "print" }
     end
@@ -312,18 +299,10 @@ class ResponsesController < ApplicationController
     tmpfile.close
     
     output_path = pathname + '-nontemp'
-    FasterCSV.open(output_path, "w", :row_sep => "\r\n") do |csv|
+    CSV.open(output_path, "w", :row_sep => "\r\n") do |csv|
       yield csv
     end
     send_file(output_path, :type => content_type, :disposition => "attachment", :filename => filename)
-    
-    #begin
-    #  c = Iconv.new('ISO-8859-15', 'UTF-8')
-    #  render :text => c.iconv(output.string)
-    #rescue Iconv::IllegalSequence
-      # this won't work in excel but might work other places
-    #  render :text => output.string
-    #end
   end
   
   def set_page_title

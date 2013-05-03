@@ -5,8 +5,7 @@
 <head>
   <title><%=h @questionnaire.title %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <%= stylesheet_link_tag 'questionnaire', :media => "all" %>
-  <%= stylesheet_link_tag 'journey', :media => "all" %>
+  <%= stylesheet_link_tag 'application', :media => "all" %>
   <!--[if IE 7]>
     <%= stylesheet_link_tag 'ie7hacks' %>
   <![endif]-->
@@ -28,12 +27,10 @@
     }
   </style>
   <%= javascript_include_tag :defaults %>
-  <%= javascript_include_tag '/jipe/jester' %>
-  <%= javascript_include_tag '/jipe/jipe' %>
 </head>
 <body>
 
-<%= @content_for_layout %>
+<%= yield %>
 
 </body>
 </html>

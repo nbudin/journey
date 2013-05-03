@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
     
     if person_signed_in?
-      nb.nav_item current_person.name, {:controller => "/account", :action => "edit_profile" }
+      nb.nav_item current_person.name, IllyanClient.base_url
       nb.nav_item "Log out", destroy_person_session_path(:method => :delete)
     else
       nb.nav_item "Log in", new_person_session_path unless person_signed_in?
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
   
   def response_rss_url(questionnaire)
-    responses_url(questionnaire, :format => "rss", :secret => questionnaire.rss_secret)
+    polymorphic_url([questionnaire, :responses], format: "rss", secret: questionnaire.rss_secret)
   end
   helper_method :response_rss_url
 end

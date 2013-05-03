@@ -31,9 +31,9 @@
       <tr class="<%= cycle("odd", "even") %>">
         <td class="caption" style="width: 20%;">
           <% if @editing -%>
-            <label for="answer_<%= question.id %>"><%= question.caption %></label>
+            <label for="answer_<%= question.id %>"><%=raw question.caption %></label>
           <% else -%>
-            <%= question.caption%>
+            <%=raw question.caption%>
           <% end -%>
         </td>
         <td class="questionbody"><%= render_answer(question, answer)  %></td>

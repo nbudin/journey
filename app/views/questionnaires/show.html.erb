@@ -76,7 +76,7 @@
 
   <p>This will <i>permanently</i> delete this survey, along with all the responses to it.
 	We highly recommend exporting <%= link_to "the survey", :action => "export" %> and
-	<%= link_to "its responses", [@questionnaire, :responses, :export] %> before proceeding.</p>
+	<%= link_to "its responses", [:export, @questionnaire, :responses] %> before proceeding.</p>
   
   <%= link_to "Delete this survey", questionnaire_path(@questionnaire), :method => "delete",
 	  :confirm => "Are you sure you wish to delete the survey \"#{@questionnaire.title}\" and all " +

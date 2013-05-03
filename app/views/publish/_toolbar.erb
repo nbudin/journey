@@ -1,6 +1,6 @@
 <%= render :partial => "questionnaires/toplevel_tabs" %>
 
 <ul class="tabstrip2">
-	<%= tabstrip_li "Publish", publish_questionnaire_url(@questionnaire), :level => 2, :action => 'index' %>
-	<%= tabstrip_li "Settings", { :controller => "publish", :action => 'settings' }, :level => 2, :action => 'settings' %>
+	<%= tabstrip_li "Publish", [@questionnaire, :publish], :level => 2, :action => 'index' %>
+	<%= tabstrip_li "Settings", [:settings, @questionnaire, :publish], :level => 2, :action => 'settings' %>
 </ul>

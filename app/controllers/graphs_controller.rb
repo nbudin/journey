@@ -1,6 +1,9 @@
 class GraphsController < ApplicationController
+  include ActionView::Helpers::TextHelper
+  
   load_resource :questionnaire
   before_filter :set_geom
+  respond_to :png
   
   def line
     authorize! :view_answers, @questionnaire
@@ -9,7 +12,30 @@ class GraphsController < ApplicationController
     @counts = aggregate_questions(params[:question_ids])
     @min = @questions.collect { |q| q.min }.min
     @max = @questions.collect { |q| q.max }.max
-    render :layout => false
+    
+    @graph = Gruff::Line.new(@geom)
+  
+    i = 0
+    @labels = {}
+    @series = {}
+    @min.upto(@max) do |answer|
+      @labels[i] = answer.to_s
+      @questions.each do |question|
+        @series[question] ||= []
+        @series[question] << (@counts[question.id][answer.to_s] || 0)
+      end
+      i += 1
+    end
+
+    @graph.labels = @labels
+    @series.each do |question, values|
+      @graph.data(question.caption, values)
+    end
+
+    @graph.title = "Answer frequency"
+    set_journey_theme(@graph)
+    
+    render text: @graph.to_blob
   end
   
   def pie
@@ -17,7 +43,17 @@ class GraphsController < ApplicationController
     
     @answercounts = aggregate_questions(params[:question_id]).values.first
     @question = Question.find(params[:question_id])
-    render :layout => false
+    
+    @graph = Gruff::Pie.new(@geom)
+  
+    @answercounts.each do |answer, count|
+      @graph.data(answer, [count])
+    end
+
+    @graph.title = truncate(@question.caption || "Untitled question")
+    set_journey_theme(@graph)
+    
+    render text: @graph.to_blob
   end
   
   private
@@ -65,5 +101,14 @@ class GraphsController < ApplicationController
     end
     
     return counts
+  end
+  
+  private
+  def set_journey_theme(graph)
+    graph.theme = {
+      :colors => %w{#bad032 #5ba5ff #ff7474 #00d686 #8d0081 #ff9500 #512f00},
+      :marker_color => 'black',
+      :background_colors => ['white', 'white']
+      }
   end
 end

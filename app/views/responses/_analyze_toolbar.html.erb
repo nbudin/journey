@@ -2,8 +2,8 @@
 
 <ul class="tabstrip2">
 	<%= tabstrip_li "Responses", [@questionnaire, :responses], :level => 2, :action => 'index' %>
-	<%= tabstrip_li "Graphs", [@questionnaire, :responses] + '/aggregate', :level => 2, :action => 'aggregate' %>
-	<%= tabstrip_li "Export/Print", [@questionnaire, :responses] + '/export', :level => 2, :action => 'export' %>
-	<%= tabstrip_li "Subscribe", [@questionnaire, :responses] + '/subscribe', :level => 2, :action => 'subscribe' %>
+	<%= tabstrip_li "Graphs", [:aggregate, @questionnaire, :responses], :level => 2, :action => 'aggregate' %>
+	<%= tabstrip_li "Export/Print", [:export, @questionnaire, :responses], :level => 2, :action => 'export' %>
+	<%= tabstrip_li "Subscribe", [:subscribe, @questionnaire, :responses], :level => 2, :action => 'subscribe' %>
 </ul>
 

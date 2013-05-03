@@ -42,7 +42,7 @@ module ResponsesHelper
         end
       end
     end
-    return options.join("\n")
+    return safe_join options, "\n"
   end
   
   def column_selector(column, n)
@@ -60,7 +60,7 @@ module ResponsesHelper
   
   def field_selector(id, fields, multiple=false)
     cur_page = nil
-    submit_button = content_tag(:p, button_to_function("Graph &gt;&gt;", "seriesSelected('#{escape_javascript id}')"))
+    submit_button = content_tag(:p, button_to_function("Graph >>", "seriesSelected('#{escape_javascript id}')"))
     content_tag(:form, :class => "field_selector", :id => id) do
       selector_html = content_tag(:h3, "Choose questions")
       
@@ -80,8 +80,8 @@ module ResponsesHelper
       
       selector_html << submit_button
       
-      selector_html << fields.collect do |field|
-        html = ""
+      field_htmls = fields.collect do |field|
+        html = "".html_safe
                   
         if field.page != cur_page
           html << content_tag(:h4, sanitize(field.page.title))
@@ -89,7 +89,7 @@ module ResponsesHelper
         end
         
         html << content_tag(:p, :style => "margin: 0;") do
-          field_html = ""
+          field_html = "".html_safe
           field_id = "#{id}_#{field.id}"
           
           if multiple
@@ -102,7 +102,8 @@ module ResponsesHelper
             sanitize(field.caption)
           end
         end
-      end.join("\n")
+      end
+      selector_html << safe_join(field_htmls, "\n")
       
       selector_html << submit_button
     end

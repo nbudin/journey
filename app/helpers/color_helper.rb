@@ -19,16 +19,10 @@ module ColorHelper
   end
   
   def journey_color_select_options
-    journey_colors.collect do |name, color|
+    color_options = journey_colors.collect do |name, color|
       css = "color: ##{color}; font-weight: bold; "
-      #(r, g, b) = [color[0..1], color[2..3], color[4..5]].collect {|i| i.hex}
-      #value = [r, g, b].max
-      #if value > 128
-      #  css << "background-color: white;"
-      #else
-      #  css << "background-color: black;"
-      #end
       content_tag(:option, name, :value => "##{color}", :style => css)
-    end.join("\n")
+    end
+    safe_join color_options, "\n"
   end
 end

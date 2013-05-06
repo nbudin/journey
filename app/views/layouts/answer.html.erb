@@ -6,6 +6,7 @@
   <title><%=h @questionnaire.title%><% if @page %> - Page <%= @page.number %> of <%= @questionnaire.pages.size %><% end %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
   <%= stylesheet_link_tag 'application' %>
+  <%= csrf_meta_tags %>
   <!--[if IE 7]>
     <%= stylesheet_link_tag 'ie7hacks' %>
   <![endif]-->

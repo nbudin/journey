@@ -14,6 +14,7 @@
 
   <% unless @previewing -%>
 	  <form action="<%= url_for :action => 'save_answers', :id => @resp.questionnaire.id, :current_page => @page.number %>" method="post">
+      <%= hidden_field_tag "authenticity_token", form_authenticity_token %>
 	<% end -%>
 		<% @page.questions.each do |question| -%>
 			<div class="question <%= question_cycle(question) %>" id="question<%=question.id%>">

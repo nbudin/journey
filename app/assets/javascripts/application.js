@@ -15,6 +15,7 @@
 //= require effects
 //= require dragdrop
 //= require controls
+//= require tinymce
 //= require jipe/jester
 //= require jipe/jipe
 //= require overlabel

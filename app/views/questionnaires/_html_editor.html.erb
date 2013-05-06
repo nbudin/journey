@@ -3,5 +3,6 @@
   <li class="selected" id="<%=obj_id %>_visual"><%= link_to_function "Visual", "toggleEditor('#{obj_id}', true);" %></li>
   <li id="<%=obj_id %>_html"><%= link_to_function "HTML", "toggleEditor('#{obj_id}', false);" %></li>
 </ul>
-<%= text_area_tag("#{obj.class.name.tableize.singularize}[#{field}]", obj.send(field), :rows => 4, :class => "mceEditor",
+<%= text_area_tag("#{obj.class.name.tableize.singularize}[#{field}]", obj.send(field), :rows => 4, :class => "tinymce",
                   :style => "width: 60em;", :id => obj_id) %>
+<%= tinymce %>

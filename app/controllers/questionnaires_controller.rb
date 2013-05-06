@@ -29,7 +29,6 @@ class QuestionnairesController < ApplicationController
     end
     
     if !params[:tag].blank?
-      joins << :tags
       conditions << "tags.name = :tag_name"
       condition_vars[:tag_name] = params[:tag]
     end

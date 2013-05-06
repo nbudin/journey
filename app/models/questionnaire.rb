@@ -16,7 +16,7 @@ class Questionnaire < ActiveRecord::Base
     :conditions => "responses.id in (select response_id from answers)"
   has_many :submitted_responses, :order => "responses.id DESC", :class_name => "Response",
     :conditions => "submitted_at is not null"
-  has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id
+  has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id, :inverse_of => :questionnaire
   has_many :special_fields, :through => :special_field_associations, :source => :question
   has_many :questions, :through => :pages, :order => "pages.position, questions.position"
   has_many :fields, :through => :pages, :order => "pages.position, questions.position"

@@ -193,6 +193,7 @@ DEPENDENCIES
   heroku_external_db (>= 1.0.0)
   illyan_client
   jipe (>= 2.0.0)!
+  json
   launchy
   mysql2
   newrelic_rpm

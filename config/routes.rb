@@ -53,10 +53,20 @@ Journey::Application.routes.draw do
       end
     end
   end
+  
+  match '/answer/:id' => 'answer#index', :as => :questionnaire_answer
+  scope '/answer/:id', as: 'questionnaire_answer', controller: 'answer' do
+    get :resume
+    match :preview, via: [:get, :post]
+    get 'closed' => :questionnaire_closed
+    get :prompt
+    get :start
+    post :save_answers
+    get :save_session
+  end
 
   match '/questionnaires/:questionnaire_id/responses/graphs/' => 'graphs#index', :as => :response_graphs
   match '/questionnaires/:questionnaire_id/responses/graphs/:action.:format' => 'graphs#index', :as => :response_graph
-  match '/answer/:id' => 'answer#index', :as => :answer
   match '/dashboard' => 'root#dashboard', :as => :dashboard
   root to: 'root#index'
 end

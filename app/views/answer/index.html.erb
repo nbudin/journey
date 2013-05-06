@@ -7,7 +7,7 @@
 	
 	<% if @previewing -%>
 	  <div class="preview_notice">
-	    <b>Note:</b> This is a preview of <%= link_to @questionnaire.title, answer_path(@questionnaire) %>.  Your answers will
+	    <b>Note:</b> This is a preview of <%= link_to @questionnaire.title, [@questionnaire, :answer] %>.  Your answers will
 	    not be saved.
 	  </div>
 	<% end -%>

@@ -5,12 +5,12 @@
 </script>
 
 <div class="propertypage">
-  <%= form_for(:questionnaire, @questionnaire, :url => questionnaire_path(@questionnaire), :html => { :method => :put }) do |f| %>
+  <%= form_for @questionnaire do |f| %>
     <h2>Preview</h2>
     
     <p>This is a preview of how your survey will look.</p>
     
-    <iframe src="<%= url_for :controller => "answer", :action => "preview", :id => @questionnaire.id %>" style="height: 10em; width: 100%; max-width: 60em; border: 1px black solid;"></iframe>
+    <iframe src="<%= url_for [:preview, @questionnaire, :answer] %>" style="height: 10em; width: 100%; max-width: 60em; border: 1px black solid;"></iframe>
 
     <h3>Custom content</h3>
 

@@ -18,7 +18,7 @@
       <% if person_signed_in? and QuestionnairePermission::ACTIONS.any? { |p| current_person.can?(p, questionnaire) } -%>
         <%= link_to questionnaire.title, questionnaire %>
       <% else -%>
-        <%= link_to questionnaire.title, answer_path(questionnaire) %>
+        <%= link_to questionnaire.title, [questionnaire, :answer] %>
       <% end -%>
     </li>
   <% end -%>

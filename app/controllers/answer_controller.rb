@@ -132,23 +132,6 @@ class AnswerController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
   end
 
-  def validate_answers(resp, page)
-    errors = []
-    page.questions.each do |question|
-      if question.kind_of? Questions::Field and question.required
-        if not answer_given(question.id)
-            errors << "You didn't answer the question \"#{question.caption}\", which is required."
-        end
-      end
-    end
-    return errors
-  end
-
-  def answer_given(question_id)
-    return (params[:question] and not params[:question][question_id.to_s].blank? and
-      params[:question][question_id.to_s].length > 0)
-  end
-
   def save_session
     @resp = Response.find(session["response_#{params[:id]}"])
     if not @resp.questionnaire.allow_finish_later and not @resp.submitted
@@ -219,6 +202,11 @@ class AnswerController < ApplicationController
   end
   
   private
+  def answer_given(question_id)
+    return (params[:question] and not params[:question][question_id.to_s].blank? and
+      params[:question][question_id.to_s].length > 0)
+  end
+  
   def get_questionnaire
     @questionnaire = Questionnaire.find params[:id]
   end
@@ -227,5 +215,17 @@ class AnswerController < ApplicationController
     if @questionnaire.require_login and not person_signed_in?
       redirect_to :action => "prompt", :id => params[:id]
     end
+  end
+
+  def validate_answers(resp, page)
+    errors = []
+    page.questions.each do |question|
+      if question.kind_of? Questions::Field and question.required
+        if not answer_given(question.id)
+            errors << "You didn't answer the question \"#{question.caption}\", which is required."
+        end
+      end
+    end
+    return errors
   end
 end

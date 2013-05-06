@@ -109,7 +109,7 @@
           <% end -%>
           <tr class="<%= cycle "odd", "even" %>">
             <td colspan="4">
-              <%= link_to "Start new response &raquo;", :action => 'start', :id => @questionnaire.id %>
+              <%= link_to "Start new response &raquo;".html_safe, :action => 'start', :id => @questionnaire.id %>
             </td>
           </tr>
         </table>
@@ -117,7 +117,7 @@
     <% else -%>
       <% content_for :startbox_main_option do -%>
         <p>
-          <%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton full" %>
+          <%= link_to "Start survey &raquo;".html_safe, { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton full" %>
         </p>
       <% end -%>
     <% end -%>
@@ -163,14 +163,14 @@
       <% end -%>
     <% else -%>
       <% content_for :startbox_main_option do -%>
-        <p><%= link_to "Start survey &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton full" %></p>
+        <p><%= link_to "Start survey &raquo;".html_safe, { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton full" %></p>
       <% end -%>
     <% end -%>
   <% end -%>
   
   <% if @questionnaire.allow_preview -%>
     <% content_for :startbox_main_option do -%>
-      <%= link_to "View a preview of this survey &raquo;", { :action => "preview", :id => @questionnaire.id }, :class => "bigbutton blue small" %>
+      <%= link_to "View a preview of this survey &raquo;".html_safe, { :action => "preview", :id => @questionnaire.id }, :class => "bigbutton blue small" %>
     <% end -%>
   <% end -%>
   

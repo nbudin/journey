@@ -2,6 +2,8 @@ class QuestionsController < ApplicationController
   load_resource :questionnaire
   load_resource :page, :through => :questionnaire
   load_and_authorize_resource :through => :page
+  
+  layout "answer", :except => [:edit]
 
   # GET /questions
   # GET /questions.xml

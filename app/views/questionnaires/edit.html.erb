@@ -6,7 +6,7 @@ currentPage = null;
 
 function switchPage(id, title) {
   if (id != null) {
-    $('pageview').src = '<%= edit_page_url(@questionnaire, 9999) %>'.replace(/9999/, id+'');
+    $('pageview').src = '<%= edit_questionnaire_page_url(@questionnaire, 9999) %>'.replace(/9999/, id+'');
   } else {
     $('pageview').src = 'about:blank';
   }
@@ -21,7 +21,7 @@ function switchPage(id, title) {
 }
 
 function deletePage(id) {
-  new Ajax.Request('<%= pages_url(@questionnaire) %>/'+id+'.json',
+  new Ajax.Request('<%= url_for [@questionnaire, :pages] %>/'+id+'.json',
     {
       method: 'delete',
       onSuccess: function() {
@@ -57,7 +57,7 @@ function reloadPagelist() {
 
 function createPage() {
   Sortable.destroy("pagelist");
-  new Ajax.Request('<%= pages_url(@questionnaire) %>',
+  new Ajax.Request('<%= url_for [@questionnaire, :pages] %>',
     {
       method: 'post',
       onSuccess: reloadPagelist

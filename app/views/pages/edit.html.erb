@@ -38,7 +38,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           <% end -%>
           </ul>
           <%= sortable_element "questions", :handle => "draghandle",
-              :url => questions_path(@questionnaire, @page) + '/sort',
+              :url => url_for([:sort, @questionnaire, @page, :questions]),
               :complete => "zebrifyQuestions();" %>
           <div class="navbuttons">
             <% if @page.number > 1 -%>

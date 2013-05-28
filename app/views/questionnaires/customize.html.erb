@@ -10,7 +10,7 @@
     
     <p>This is a preview of how your survey will look.</p>
     
-    <iframe src="<%= url_for [:preview, @questionnaire, :answer] %>" style="height: 10em; width: 100%; max-width: 60em; border: 1px black solid;"></iframe>
+    <iframe src="<%= url_for [@questionnaire, :answer, :preview] %>" style="height: 10em; width: 100%; max-width: 60em; border: 1px black solid;"></iframe>
 
     <h3>Custom content</h3>
 

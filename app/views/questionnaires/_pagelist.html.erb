@@ -30,4 +30,4 @@
           </script>
   <% end -%>
 </ul>
-<%= sortable_element "pagelist", :handle => "draghandle", :url => pages_path(@questionnaire) + '/sort' %>
+<%= sortable_element "pagelist", :handle => "draghandle", :url => url_for([:sort, @questionnaire, :pages]) %>

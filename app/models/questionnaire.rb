@@ -182,7 +182,7 @@ class Questionnaire < ActiveRecord::Base
 
   def to_xml(options = {})
     options[:indent] ||= 2
-    xml = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
+    xml = options[:builder] ||= ::Builder::XmlMarkup.new(:indent => options[:indent])
     xml.instruct! unless options[:skip_instruct]
 
     xml.questionnaire(:title => title) do

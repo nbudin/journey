@@ -17,6 +17,7 @@ divider:
   page: comprehensive1
   position: 4
   type: Questions::Divider
+  caption: ""
   
 drop_down_field:
   page: comprehensive1

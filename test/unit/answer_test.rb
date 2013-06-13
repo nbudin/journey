@@ -6,10 +6,10 @@ class AnswerTest < ActiveSupport::TestCase
   
   context "An answer to a selector field with output values" do
     setup do
-      @question = Factory.create(:radio_field)
+      @question = FactoryGirl.create(:radio_field)
       @question.question_options.create :option => "male", :output_value => "M"
       @question.question_options.create :option => "female", :output_value => "F"
-      @answer = Factory.create(:answer, :question => @question, :value => "male")
+      @answer = FactoryGirl.create(:answer, :question => @question, :value => "male")
     end
     
     should "return the output value" do
@@ -25,9 +25,9 @@ class AnswerTest < ActiveSupport::TestCase
   
   context "An answer to a selector field without output values" do
     setup do
-      @question = Factory.create(:drop_down_field)
+      @question = FactoryGirl.create(:drop_down_field)
       %w{Burger Fries Coke}.each { |o| @question.question_options.create :option => o }
-      @answer = Factory.create(:answer, :question => @question, :value => 'Burger')
+      @answer = FactoryGirl.create(:answer, :question => @question, :value => 'Burger')
     end
     
     should "have the same output value as its actual value" do

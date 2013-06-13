@@ -1,3 +1,5 @@
-Factory.define :response do |r|
-  r.association :questionnaire
+FactoryGirl.define do
+  factory :response do
+    questionnaire
+  end
 end

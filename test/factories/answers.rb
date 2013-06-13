@@ -1,4 +1,6 @@
-Factory.define :answer do |a|
-  a.association :question
-  a.association :response
+FactoryGirl.define do
+  factory :answer do
+    question
+    response
+  end
 end

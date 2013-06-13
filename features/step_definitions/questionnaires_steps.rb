@@ -1,5 +1,5 @@
 Given /^the basic questionnaire$/ do
-  Factory.create(:basic_questionnaire)
+  FactoryGirl.create(:basic_questionnaire)
 end
 
 Given /^(.*) (.*) owns the questionnaire "([^\"]*)"$/ do |firstname, lastname, title|

@@ -33,7 +33,7 @@ gem 'gruff', '~> 0.3.6'
 gem 'newrelic_rpm'
 
 group :test do
-  gem "factory_girl"
+  gem "factory_girl_rails"
   gem "shoulda"
   gem "cucumber-rails"
   gem "launchy"

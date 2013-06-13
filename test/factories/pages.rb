@@ -1,8 +1,10 @@
-Factory.sequence :page_title do |n|
-  "Page #{n}"
-end
+FactoryGirl.define do
+  sequence :page_title do |n|
+    "Page #{n}"
+  end
 
-Factory.define :page do |p|
-  p.title { Factory.next :page_title }
-  p.association :questionnaire
+  factory :page do
+    title { FactoryGirl.generate :page_title }
+    questionnaire
+  end
 end

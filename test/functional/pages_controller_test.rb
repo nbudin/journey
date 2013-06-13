@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PagesControllerTest < ActionController::TestCase
   setup do
-    @questionnaire = Factory.create :comprehensive_questionnaire
+    @questionnaire = FactoryGirl.create :comprehensive_questionnaire
   end
   
   def test_should_get_index

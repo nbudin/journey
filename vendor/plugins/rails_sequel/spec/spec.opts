@@ -1,8 +1,0 @@
---colour
---format specdoc
---format failing_examples:previous_failures.txt
---example previous_failures.txt
---loadby mtime
---reverse
---timeout 20
---diff

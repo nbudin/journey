@@ -15,8 +15,16 @@ class CreatePeople < ActiveRecord::Migration
       
       t.boolean :admin
 
-      t.cas_authenticatable
-      t.trackable
+      # cas authenticatable
+      t.string :username, :null => false
+
+      # trackable
+      t.integer  :sign_in_count, :default => 0
+      t.datetime :current_sign_in_at
+      t.datetime :last_sign_in_at
+      t.string   :current_sign_in_ip
+      t.string   :last_sign_in_ip
+      
       t.timestamps
     end
     add_index :people, :username, :unique => true

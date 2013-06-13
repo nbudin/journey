@@ -209,7 +209,7 @@ class ResponsesController < ApplicationController
     respond_to do |format|
       if @response.save
         flash[:notice] = 'Response was successfully created.'
-        format.html { redirect_to(response_url(@questionnaire, @response)) }
+        format.html { redirect_to(url_for([@questionnaire, @response])) }
         format.xml  { render :xml => @response, :status => :created, :location => @response }
       else
         format.html { render :action => "new" }
@@ -246,8 +246,8 @@ class ResponsesController < ApplicationController
 
     respond_to do |format|
       if @response.update_attributes(params[:response])
-        format.html { redirect_to(response_url(@questionnaire, @response)) }
-        format.js { redirect_to(response_url(@questionnaire, @response, :format => "js")) }
+        format.html { redirect_to([@questionnaire, @response]) }
+        format.js { redirect_to(polymorphic_url([@questionnaire, @response], :format => "js")) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

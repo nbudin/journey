@@ -41,7 +41,7 @@ class CreatePeople < ActiveRecord::Migration
       
       t.timestamps
     end
-    add_index :questionnaire_permissions, [:questionnaire_id, :person_id], :unique => true
+    add_index :questionnaire_permissions, [:questionnaire_id, :person_id], :unique => true, :name => 'permission_by_questionnaire_and_person'
     add_index :questionnaire_permissions, :person_id
     
     person_ids = Response.all(:group => :person_id, :select => :person_id).map(&:person_id)

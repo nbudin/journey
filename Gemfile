@@ -9,7 +9,7 @@ gem "mysql2"
 gem "sqlite3", :groups => [:development, :test]
 gem "xebec"
 gem "heroku_external_db", ">= 1.0.0"
-gem "jipe", ">= 2.0.0", path: '/Users/nbudin/src/jipe'
+gem "jipe", ">= 2.0.0", :path => '/Users/nbudin/src/jipe'
 gem 'airbrake'
 gem 'sequel'
 gem 'dynamic_form'

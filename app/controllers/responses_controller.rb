@@ -1,5 +1,4 @@
 require 'csv'
-require 'iconv'
 
 class ResponsesController < ApplicationController
   load_resource :questionnaire

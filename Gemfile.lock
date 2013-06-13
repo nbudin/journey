@@ -33,6 +33,8 @@ GEM
     activesupport (3.2.12)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    acts_as_list (0.2.0)
+      activerecord (>= 3.0)
     addressable (2.3.4)
     ae_users_migrator (1.0.5)
       activerecord (>= 2.3)
@@ -148,6 +150,9 @@ GEM
     rubycas-client (2.3.9)
       activesupport
     sequel (3.46.0)
+    sequel-rails (0.4.4)
+      railties (>= 3.2.0)
+      sequel (~> 3.28)
     shoulda (3.4.0)
       shoulda-context (~> 1.0, >= 1.0.1)
       shoulda-matchers (~> 1.0, >= 1.4.1)
@@ -181,6 +186,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_list
   ae_users_migrator
   airbrake
   bundler
@@ -208,6 +214,7 @@ DEPENDENCIES
   rmagick4j
   rubycas-client
   sequel
+  sequel-rails
   shoulda
   sqlite3
   tinymce-rails

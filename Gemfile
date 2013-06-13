@@ -13,6 +13,8 @@ gem "jipe", ">= 2.0.0", :path => '/Users/nbudin/src/jipe'
 gem 'airbrake'
 gem 'sequel'
 gem 'dynamic_form'
+gem 'acts_as_list'
+gem 'sequel-rails'
 
 gem 'prototype-rails'
 gem 'tinymce-rails'

@@ -1,6 +1,2 @@
-before_script:
-  - "echo 'test:\n  adapter: mysql2\n  database: journey_test\n  user: root\n  encoding: utf8' >config/database.yml"
-  - "bundle exec rake db:migrate RAILS_ENV=test"
-
 rvm:
-  - "1.9.3"
+  - "2.0.0-p195"

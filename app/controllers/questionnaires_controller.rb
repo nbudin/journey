@@ -97,7 +97,7 @@ class QuestionnairesController < ApplicationController
 
   # GET /questionnaires/new
   def new
-    @questionnaire = Questionnaire.new    
+    @questionnaire = Questionnaire.new(params[:questionnaire])
     @cloneable_questionnaires = Questionnaire.accessible_by(current_ability, :edit).all(:order => "id DESC").uniq
   end
 

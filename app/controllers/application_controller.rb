@@ -18,7 +18,8 @@ class ApplicationController < ActionController::Base
     end
     
     if person_signed_in?
-      nb.nav_item current_person.name, IllyanClient.base_url
+      profile_name = current_person.name.present? ? current_person.name : "My profile"
+      nb.nav_item profile_name, IllyanClient.base_url
       nb.nav_item "Log out", destroy_person_session_path(:method => :delete)
     else
       nb.nav_item "Log in", new_person_session_path unless person_signed_in?

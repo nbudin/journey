@@ -27,7 +27,7 @@ class Pages < ActiveRecord::Migration
       t.column "position", :integer, :null => false
     end
 
-    add_column :questions, :page_id, :integer, :null => false
+    add_column :questions, :page_id, :integer
     remove_column :questions, :questionnaire_id
   end
 

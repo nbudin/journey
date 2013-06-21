@@ -1,10 +1,18 @@
 class ScopeQuestionClasses < ActiveRecord::Migration
+  class Question < ActiveRecord::Base
+    self.inheritance_column = nil
+  end
+  
   # have to do this in SQL, because we're breaking STI here
   def self.up
-    execute "update questions set type = concat('Questions::', type) where type is not null and type != 'Question';"
+    Question.where("type is not null and type != ?", "Question").find_each do |q|
+      q.update_attributes(type: "Questions::#{q.type}")
+    end
   end
 
   def self.down
-    execute "update questions set type = replace(type, 'Questions::', '') where type is not null;"
+    Question.where("type is not null and type != ?", "Question").find_each do |q|
+      q.update_attributes(type: q.type.sub(/\AQuestions::/, ''))
+    end
   end
 end

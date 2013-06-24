@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   load_resource :questionnaire
   load_resource :page, :through => :questionnaire
-  load_and_authorize_resource :through => :page
+  load_and_authorize_resource :through => :page, :except => [:create]
   
   layout "answer", :except => [:edit]
 
@@ -38,23 +38,23 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.xml
   def create
-    @question.caption ||= ""
+    question_class = params[:question][:type].constantize
+    raise "#{params[:question][:type]} is not a valid question type" unless question_class <= Question
+    
+    @question = question_class.new(params[:question].except(:type))
     @question.page = @page
+    @question.caption ||= case @question
+    when Questions::Field then "Click here to type a question."
+    else ""
+    end
+    
+    authorize! :create, @question
 
     respond_to do |format|
-      if @question.save and @question.update_attribute(:type, params[:question][:type])
-        @question = Question.find(@question.id)
-        if @question.kind_of? Questions::Field and @question.caption.blank?
-          # get the default field caption in
-          @question.caption = "Click here to type a question."
-          @question.save
-        end
-        
-        format.html { redirect_to question_url(@question) }
-        format.xml  { head(:created, :location => question_url(@questionnaire, @page, @question, :format => 'xml')) }
-        format.json { head(:created, :location => question_url(@questionnaire, @page, @question, :format => 'json')) }
+      if @question.save
+        format.xml  { head(:created, :location => polymorphic_url([@questionnaire, @page, @question.becomes(Question)], :format => 'xml')) }
+        format.json { head(:created, :location => polymorphic_url([@questionnaire, @page, @question.becomes(Question)], :format => 'json')) }
       else
-        format.html { render :action => "new" }
         format.xml  { render :xml => @question.errors.to_xml, :status => 500 }
         format.json { render :json => @question.errors.to_json, :status => 500 }
       end

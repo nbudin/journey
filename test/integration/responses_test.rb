@@ -44,7 +44,7 @@ class ResponsesTest < ActionDispatch::IntegrationTest
       click_button "Edit"
       
       fill_in "Notes", with: "This person is a goofball.  Ignore their response."
-      click_button "Save changes"
+      click_button "Save"
     end
     
     assert has_content?("This person is a goofball.  Ignore their response.")

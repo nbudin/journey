@@ -27,7 +27,7 @@ Journey::Application.routes.draw do
         post :sort
       end
     
-      resources :questions do
+      resources :questions, :except => [:new] do
         collection do
           post :sort
         end
@@ -35,7 +35,7 @@ Journey::Application.routes.draw do
           post :duplicate
           get :edit_options
         end
-        resources :question_options do
+        resources :question_options, :except => [:new, :edit] do
           collection do
             post :sort
           end

@@ -9,7 +9,6 @@ class QuestionsController < ApplicationController
   # GET /questions.xml
   def index
     respond_to do |format|
-      format.html # index.rhtml
       format.json { render :text => @questions.to_json }
       format.xml  { render :xml => @questions.to_xml }
     end
@@ -18,25 +17,14 @@ class QuestionsController < ApplicationController
   # GET /questions/1
   # GET /questions/1.xml
   def show
-    @question = Question.find(params[:id])
-    check_forged_path
-
     respond_to do |format|
-      format.html # show.rhtml
       format.json { render :json => @question.to_json }
       format.xml  { render :xml => @question.to_xml(:methods => [:purpose]) }
     end
   end
 
-  # GET /questions/new
-  def new
-    @question = Question.new
-  end
-
   # GET /questions/1;edit
   def edit
-    @question = Question.find(params[:id])
-    check_forged_path
   end
   
   # GET /questions/1;edit_options
@@ -76,15 +64,12 @@ class QuestionsController < ApplicationController
   # PUT /questions/1
   # PUT /questions/1.xml
   def update
-    @question = Question.find(params[:id])
-    check_forged_path
-
     respond_to do |format|
       if @question.update_attributes(params[:question])
         if params[:question].has_key?(:purpose)
           @question.purpose = params[:question][:purpose]
         end
-        format.html { redirect_to question_url(@question) }
+        format.html { redirect_to [@questionnaire, @page, @question] }
         format.xml  { head :ok }
         format.json { head :ok }
       else
@@ -103,7 +88,7 @@ class QuestionsController < ApplicationController
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to questions_url(@questionnaire, @page) }
+      format.html { redirect_to [@questionnaire, @page] }
       format.xml  { head :ok }
       format.json { head :ok }
     end

@@ -146,9 +146,6 @@ GEM
     rubycas-client (2.3.9)
       activesupport
     sequel (3.46.0)
-    sequel-rails (0.4.4)
-      railties (>= 3.2.0)
-      sequel (~> 3.28)
     shoulda (3.4.0)
       shoulda-context (~> 1.0, >= 1.0.1)
       shoulda-matchers (~> 1.0, >= 1.4.1)
@@ -210,7 +207,6 @@ DEPENDENCIES
   rmagick4j
   rubycas-client
   sequel
-  sequel-rails
   shoulda
   sqlite3
   tinymce-rails

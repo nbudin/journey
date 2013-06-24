@@ -29,7 +29,7 @@ module NavigationHelpers
       r = find_response($2, $1)
       edit_response_path(r.questionnaire, r)
     when /the login page/
-      url_for(:controller => "auth", :action => "login")
+      new_person_session_path
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

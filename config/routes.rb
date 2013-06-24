@@ -68,5 +68,6 @@ Journey::Application.routes.draw do
   match '/questionnaires/:questionnaire_id/responses/graphs/' => 'graphs#index', :as => :response_graphs
   match '/questionnaires/:questionnaire_id/responses/graphs/:action.:format' => 'graphs#index', :as => :response_graph
   match '/dashboard' => 'root#dashboard', :as => :dashboard
+  match '/welcome' => 'root#welcome', :as => :welcome
   root to: 'root#index'
 end

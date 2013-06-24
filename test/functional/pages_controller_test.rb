@@ -45,7 +45,6 @@ class PagesControllerTest < ActionController::TestCase
   
     should 'destroy page' do
       old_count = Page.count
-      page = pages(:comprehensive1)
       delete :destroy, :id => @page.id, :questionnaire_id => @questionnaire.id
       assert_equal old_count-1, Page.count
     

@@ -10,7 +10,7 @@
       <p>With a free Journey account, you can keep track of the surveys you've taken, and find new surveys
         using your Journey dashboard.  Signing up is quick and easy!</p>
     
-      <% link_to({:controller => "auth", :action => "login"}, { :class => "bigbutton" }) do -%>
+      <% link_to(new_person_session_path, { :class => "bigbutton" }) do -%>
         Log in, or sign up free &raquo;
       <% end -%>
     </div>
@@ -23,7 +23,7 @@
       
       <p>To create surveys, you'll need a Journey account.</p>
       
-      <% link_to({:controller => "auth", :action => "login"}, { :class => "bigbutton" }) do -%>
+      <% link_to(new_person_session_path, { :class => "bigbutton" }) do -%>
         Get started &raquo;
       <% end -%>
     </div>

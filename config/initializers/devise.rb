@@ -8,6 +8,9 @@ Devise.setup do |config|
   config.mailer_sender = "nat@sugarpond.net"
   
   config.cas_base_url = "#{IllyanClient.base_url}/cas"
+  
+  # The default HTTP method used to sign out a resource. Default is :delete.
+  config.sign_out_via = Rails.env.test? ? :get : :delete
 
   # Configure the class responsible to send e-mails.
   # config.mailer = "Devise::Mailer"

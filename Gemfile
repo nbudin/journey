@@ -38,8 +38,9 @@ group :test do
   gem "shoulda"
   gem "cucumber-rails"
   gem "launchy"
-  gem "database_cleaner", ">= 0.5.0"
-  gem "capybara", ">= 0.3.5"
+  gem "database_cleaner"
+  gem "capybara", ">= 2.0.0"
+  gem "capybara-webkit"
 end
 
 gem 'pry-rails', :groups => [:development, :test]

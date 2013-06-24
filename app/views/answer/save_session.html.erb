@@ -11,10 +11,14 @@
 
 <ul>
   <li>
-    <%= link_to "Go back to the front page of this survey &raquo;", :action => 'prompt', :id => @resp.questionnaire.id %>
+    <%= link_to :action => 'prompt', :id => @resp.questionnaire.id do %>
+	  Go back to the front page of this survey &raquo;
+    <% end -%>
   </li>
   <li>
-    <%= link_to "Go to the main page of Journey &raquo;", url_for("/") %>
+    <%= link_to root_url do %>
+	   Go to the main page of Journey &raquo;
+    <% end -%>
   </li>
 </ul>
 

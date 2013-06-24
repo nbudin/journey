@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
 class QuestionnaireTest < ActiveSupport::TestCase
-  fixtures :questionnaires
-  
   should have_many(:pages)
   should have_many(:questions).through(:pages)
   should have_many(:fields).through(:pages)

@@ -11,3 +11,4 @@ db/schema.rb
 .bundle/*
 db/*.sqlite3
 *.orig
+tmp

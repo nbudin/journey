@@ -41,13 +41,13 @@ class QuestionsController < ApplicationController
     question_class = params[:question][:type].constantize
     raise "#{params[:question][:type]} is not a valid question type" unless question_class <= Question
     
-    @question = question_class.new(params[:question].except(:type))
-    @question.page = @page
-    @question.caption ||= case @question
-    when Questions::Field then "Click here to type a question."
-    else ""
+    params[:question][:caption] ||= if question_class <= Questions::Field
+      "Click here to type a question."
+    else
+      ""
     end
     
+    @question = question_class.new(params[:question].except(:type).merge(:page => @page))    
     authorize! :create, @question
 
     respond_to do |format|

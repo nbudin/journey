@@ -3,17 +3,16 @@ require 'test_helper'
 class PagesControllerTest < ActionController::TestCase
   setup do
     @questionnaire = FactoryGirl.create :comprehensive_questionnaire
+    @person = FactoryGirl.create :person
+    @person.questionnaire_permissions.create(:questionnaire => @questionnaire, :all_permissions => true)
+    
+    sign_in @person
   end
   
   def test_should_get_index
-    get :index
+    get :index, :questionnaire_id => @questionnaire.id, :format => :json
     assert_response :success
     assert assigns(:pages)
-  end
-
-  def test_should_get_new
-    get :new
-    assert_response :success
   end
   
   def test_should_create_page
@@ -21,7 +20,7 @@ class PagesControllerTest < ActionController::TestCase
     post :create, :page => { }, :questionnaire_id => @questionnaire.id
     assert_equal old_count+1, Page.count
     
-    assert_redirected_to page_path(assigns(:page))
+    assert_redirected_to [@questionnaire, assigns(:page)]
   end
 
   context "with a page" do
@@ -29,28 +28,28 @@ class PagesControllerTest < ActionController::TestCase
       @page = @questionnaire.pages.first
     end
     
-    def test_should_show_page
-      get :show, :id => @page.id, :questionnaire_id => @questionnaire.id
+    should 'show page' do
+      get :show, :id => @page.id, :questionnaire_id => @questionnaire.id, :format => :json
       assert_response :success
     end
 
-    def test_should_get_edit
+    should 'edit page' do
       get :edit, :id => @page.id, :questionnaire_id => @questionnaire.id
       assert_response :success
     end
   
-    def test_should_update_page
+    should 'update page' do
       put :update, :id => @page.id, :questionnaire_id => @questionnaire.id, :page => { }
-      assert_redirected_to page_path(assigns(:page))
+      assert_redirected_to [@questionnaire, assigns(:page)]
     end
   
-    def test_should_destroy_page
+    should 'destroy page' do
       old_count = Page.count
       page = pages(:comprehensive1)
       delete :destroy, :id => @page.id, :questionnaire_id => @questionnaire.id
       assert_equal old_count-1, Page.count
     
-      assert_redirected_to pages_path
+      assert_redirected_to [@questionnaire, :pages]
     end
   end
 end

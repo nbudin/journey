@@ -1,57 +1,50 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'question_options_controller'
-
-# Re-raise errors caught by the controller.
-class QuestionOptionsController; def rescue_action(e) raise e end; end
+require 'test_helper'
 
 class QuestionOptionsControllerTest < ActionController::TestCase
-  fixtures :question_options
-
-  def setup
-    @controller = QuestionOptionsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+  setup do
+    @person = FactoryGirl.create(:person)
+    sign_in @person
+    
+    @question = FactoryGirl.create(:question)
+    @page = @question.page
+    @questionnaire = @page.questionnaire
+    @questionnaire.questionnaire_permissions.create(:person => @person, :all_permissions => true)
   end
 
   def test_should_get_index
-    get :index
+    get :index, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :question_id => @question.id, :format => :json
     assert_response :success
     assert assigns(:question_options)
-  end
-
-  def test_should_get_new
-    get :new
-    assert_response :success
   end
   
   def test_should_create_question_option
     old_count = QuestionOption.count
-    post :create, :question_option => { }
+    post :create, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :question_id => @question.id, :question_option => { :option => "blue" }, :format => :json
     assert_equal old_count+1, QuestionOption.count
     
-    assert_redirected_to question_option_path(assigns(:question_option))
-  end
-
-  def test_should_show_question_option
-    get :show, :id => 1
-    assert_response :success
-  end
-
-  def test_should_get_edit
-    get :edit, :id => 1
     assert_response :success
   end
   
-  def test_should_update_question_option
-    put :update, :id => 1, :question_option => { }
-    assert_redirected_to question_option_path(assigns(:question_option))
-  end
+  context 'with a question option' do
+    setup { @question_option = FactoryGirl.create(:question_option, :question => @question) }
+
+    should 'show question option' do
+      get :show, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :question_id => @question.id, :id => @question_option.id, :format => :json
+      assert_response :success
+    end
+
+    should 'update question option' do
+      put :update, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :question_id => @question.id, :id => @question_option.id, :question_option => { :output_value => 3 }, :format => :json
+      assert_equal "3", @question_option.reload.output_value
+      assert_response :success
+    end
   
-  def test_should_destroy_question_option
-    old_count = QuestionOption.count
-    delete :destroy, :id => 1
-    assert_equal old_count-1, QuestionOption.count
+    should 'destroy question option' do
+      old_count = QuestionOption.count
+      delete :destroy, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :question_id => @question.id, :id => @question_option.id, :format => :json
+      assert_equal old_count-1, QuestionOption.count
     
-    assert_redirected_to question_options_path
+      assert_response :success
+    end
   end
 end

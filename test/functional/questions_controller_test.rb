@@ -1,57 +1,56 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'questions_controller'
-
-# Re-raise errors caught by the controller.
-class QuestionsController; def rescue_action(e) raise e end; end
+require 'test_helper'
 
 class QuestionsControllerTest < ActionController::TestCase
-  fixtures :questions
-
-  def setup
-    @controller = QuestionsController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+  setup do
+    @person = FactoryGirl.create(:person)
+    sign_in @person
+    
+    @page = FactoryGirl.create(:page)
+    @questionnaire = @page.questionnaire
+    @questionnaire.questionnaire_permissions.create(:person => @person, :all_permissions => true)
   end
 
   def test_should_get_index
-    get :index
+    get :index, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :format => :json
     assert_response :success
     assert assigns(:questions)
-  end
-
-  def test_should_get_new
-    get :new
-    assert_response :success
   end
   
   def test_should_create_question
     old_count = Question.count
-    post :create, :question => { }
+    post :create, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :question => { :type => "Questions::TextField" }, :format => :json
     assert_equal old_count+1, Question.count
     
-    assert_redirected_to question_path(assigns(:question))
-  end
-
-  def test_should_show_question
-    get :show, :id => 1
-    assert_response :success
-  end
-
-  def test_should_get_edit
-    get :edit, :id => 1
+    assert assigns(:question)
     assert_response :success
   end
   
-  def test_should_update_question
-    put :update, :id => 1, :question => { }
-    assert_redirected_to question_path(assigns(:question))
-  end
+  context 'with a question' do
+    setup do
+      @question = FactoryGirl.create(:question, :page => @page)
+    end
+
+    should 'show question' do
+      get :show, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id, :format => :json
+      assert_response :success
+    end
+
+    should 'edit question' do
+      get :edit, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id
+      assert_response :success
+    end
   
-  def test_should_destroy_question
-    old_count = Question.count
-    delete :destroy, :id => 1
-    assert_equal old_count-1, Question.count
+    should 'update question' do
+      put :update, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id, :question => { }
+      assert_redirected_to [@questionnaire, @page, assigns(:question)]
+    end
+  
+    should 'destroy question' do
+      old_count = Question.count
+      delete :destroy, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id
+      assert_equal old_count-1, Question.count
     
-    assert_redirected_to questions_path
+      assert_redirected_to [@questionnaire, @page]
+    end
   end
 end

@@ -1,18 +1,8 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'questionnaires_controller'
-
-# Re-raise errors caught by the controller.
-class QuestionnairesController; def rescue_action(e) raise e end; end
+require 'test_helper'
 
 class QuestionnairesControllerTest < ActionController::TestCase
-  fixtures :questionnaires
-
-  def setup
-    @controller = QuestionnairesController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
-    
-    @request[:person] = Person.find(:first).id
+  setup do
+    sign_in FactoryGirl.create(:person)
   end
 
   def test_should_get_index
@@ -33,27 +23,36 @@ class QuestionnairesControllerTest < ActionController::TestCase
     
     assert_redirected_to questionnaire_path(assigns(:questionnaire))
   end
-
-  def test_should_show_questionnaire
-    get :show, :id => 1
-    assert_response :success
-  end
-
-  def test_should_get_edit
-    get :edit, :id => 1
-    assert_response :success
-  end
   
-  def test_should_update_questionnaire
-    put :update, :id => 1, :questionnaire => { }
-    assert_redirected_to questionnaire_path(assigns(:questionnaire))
-  end
+  context 'with a questionnaire' do
+    setup { @questionnaire = FactoryGirl.create(:questionnaire) }
+
+    should 'show questionnaire' do
+      get :show, :id => @questionnaire.id
+      assert_response :success
+    end
+
+    should 'edit questionnaire' do
+      get :edit, :id => @questionnaire.id
+      assert_response :success
+    end
   
-  def test_should_destroy_questionnaire
-    old_count = Questionnaire.count
-    delete :destroy, :id => 1
-    assert_equal old_count-1, Questionnaire.count
+    should 'update questionnaire' do
+      # update redirects to referer
+      @request.env['HTTP_REFERER'] = 'http://example.com'
+      
+      put :update, :id => @questionnaire.id, :questionnaire => { :title => "blooblah" }
+      assert_equal "blooblah", @questionnaire.reload.title
+      
+      assert_redirected_to 'http://example.com'
+    end
+  
+    should 'destroy questionnaire' do
+      old_count = Questionnaire.count
+      delete :destroy, :id => @questionnaire.id
+      assert_equal old_count-1, Questionnaire.count
     
-    assert_redirected_to questionnaires_path
+      assert_redirected_to questionnaires_path
+    end
   end
 end

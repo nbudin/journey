@@ -22,7 +22,7 @@ Journey::Application.routes.draw do
       end
     end
 
-    resources :pages do
+    resources :pages, :except => [:new] do
       collection do
         post :sort
       end

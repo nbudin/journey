@@ -32,7 +32,7 @@ class Ability
       can :manage, Question, Question.joins(:page => { :questionnaire => :questionnaire_permissions}).where(:questionnaire_permissions => { :person_id => person.id, :can_edit => true }) do |question|
         person.questionnaire_permissions.any? { |perm| perm.can_edit? && perm.questionnaire == question.page.questionnaire }
       end
-      can :manage, QuestionOption, Question.joins(:question => { :page => { :questionnaire => :questionnaire_permissions} }).where(:questionnaire_permissions => { :person_id => person.id, :can_edit => true }) do |question_option|
+      can :manage, QuestionOption, QuestionOption.joins(:question => { :page => { :questionnaire => :questionnaire_permissions} }).where(:questionnaire_permissions => { :person_id => person.id, :can_edit => true }) do |question_option|
         person.questionnaire_permissions.any? { |perm| perm.can_edit? && perm.questionnaire == question_option.question.page.questionnaire }
       end
     end

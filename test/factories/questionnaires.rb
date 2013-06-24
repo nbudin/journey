@@ -8,17 +8,17 @@ FactoryGirl.define do
     end
 
     factory :comprehensive_questionnaire do
-      after_build do |questionnaire|
-        questionnaire.pages << FactoryGirl.build(:page)
-        questionnaire.pages << FactoryGirl.build(:page)
+      after(:build) do |questionnaire|
+        questionnaire.pages << FactoryGirl.build(:page, questionnaire: questionnaire)
+        questionnaire.pages << FactoryGirl.build(:page, questionnaire: questionnaire)
     
         page1 = questionnaire.pages.first
         %w(big_text_field divider heading label check_box_field text_field range_field).each do |question_type|
-          page1.questions << FactoryGirl.build(question_type)
+          page1.questions << FactoryGirl.build(question_type, page: page1)
         end
 
         %w(radio_field drop_down_field).each do |question_type|
-          question = FactoryGirl.build(question_type)
+          question = FactoryGirl.build(question_type, page: page1)
           3.times { question.question_options << FactoryGirl.build(:question_option) }
           page1.questions << question
         end

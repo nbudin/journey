@@ -1,5 +1,3 @@
 <%= form_for([@questionnaire, @response]) do %>
   <%= render :partial => 'response', :locals => { :resp => @response } %>
-  
-  <%= submit_tag "Save changes" %>
 <% end %>

@@ -49,7 +49,7 @@
     $('link_button_generator').observe('submit', function(event) {
       color = $F('link_button_base_color');
       
-      html = "<a href=\"" + '<%= answer_url(@questionnaire) %>' + "\" ";
+      html = "<a href=\"" + '<%= questionnaire_answer_url @questionnaire %>' + "\" ";
       if ($('link_button_new_window').checked) {
         html += "target=\"_blank\" ";
       }

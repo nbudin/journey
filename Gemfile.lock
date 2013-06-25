@@ -77,7 +77,7 @@ GEM
     i18n (0.6.4)
     illyan_client (1.0.2)
       activeresource
-    jipe (2.0.0)
+    jipe (2.0.1)
     journey (1.0.4)
     json (1.7.7)
     launchy (2.3.0)
@@ -184,7 +184,7 @@ DEPENDENCIES
   gruff (~> 0.3.6)
   heroku_external_db (>= 1.0.0)
   illyan_client
-  jipe (>= 2.0.0)
+  jipe (>= 2.0.1)
   launchy
   mysql2
   newrelic_rpm

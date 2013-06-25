@@ -35,7 +35,7 @@ gem 'newrelic_rpm'
 
 group :test do
   gem "factory_girl_rails"
-  gem "shoulda"
+  gem "minitest-spec-rails"
   gem "launchy"
   gem "database_cleaner"
   gem "capybara", ">= 2.0.0"

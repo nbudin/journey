@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class QuestionnairesControllerTest < ActionController::TestCase
-  setup do
+  before do
     sign_in FactoryGirl.create(:person)
   end
 
@@ -24,20 +24,20 @@ class QuestionnairesControllerTest < ActionController::TestCase
     assert_redirected_to questionnaire_path(assigns(:questionnaire))
   end
   
-  context 'with a questionnaire' do
-    setup { @questionnaire = FactoryGirl.create(:questionnaire) }
+  describe 'with a questionnaire' do
+    before { @questionnaire = FactoryGirl.create(:questionnaire) }
 
-    should 'show questionnaire' do
+    it 'should show questionnaire' do
       get :show, :id => @questionnaire.id
       assert_response :success
     end
 
-    should 'edit questionnaire' do
+    it 'should edit questionnaire' do
       get :edit, :id => @questionnaire.id
       assert_response :success
     end
   
-    should 'update questionnaire' do
+    it 'should update questionnaire' do
       # update redirects to referer
       @request.env['HTTP_REFERER'] = 'http://example.com'
       
@@ -47,7 +47,7 @@ class QuestionnairesControllerTest < ActionController::TestCase
       assert_redirected_to 'http://example.com'
     end
   
-    should 'destroy questionnaire' do
+    it 'should destroy questionnaire' do
       old_count = Questionnaire.count
       delete :destroy, :id => @questionnaire.id
       assert_equal old_count-1, Questionnaire.count

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ResponsesControllerTest < ActionController::TestCase
-  setup do
+  before do
     @questionnaire = FactoryGirl.create(:questionnaire)
     
     @person = FactoryGirl.create(:person)
@@ -24,27 +24,27 @@ class ResponsesControllerTest < ActionController::TestCase
     assert_redirected_to [@questionnaire, assigns(:response)]
   end
   
-  context "with response" do
-    setup do
+  describe "with response" do
+    before do
       @resp = FactoryGirl.create(:response, questionnaire: @questionnaire)
     end
   
-    should 'show response' do
+    it 'should show response' do
       get :show, questionnaire_id: @questionnaire.id, :id => @resp.id
       assert_response :success
     end
 
-    should 'get edit' do
+    it 'should get edit' do
       get :edit, questionnaire_id: @questionnaire.id, :id => @resp.id
       assert_response :success
     end
 
-    should 'update response' do
+    it 'should update response' do
       put :update, questionnaire_id: @questionnaire.id, :id => @resp.id, :response => { }
       assert_redirected_to [@questionnaire, assigns(:response)]
     end
 
-    should 'destroy response' do
+    it 'should destroy response' do
       # destroy redirects to referer
       @request.env['HTTP_REFERER'] = 'http://example.com'
       

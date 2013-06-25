@@ -1,31 +1,22 @@
-require File.dirname(__FILE__) + '/../test_helper'
+require 'test_helper'
 
 class QuestionnaireTest < ActiveSupport::TestCase
-  should have_many(:pages)
-  should have_many(:questions).through(:pages)
-  should have_many(:fields).through(:pages)
-  should have_many(:decorators).through(:pages)
-  
-  should have_many(:responses)
-  should have_many(:special_field_associations)
-  should have_many(:special_fields).through(:special_field_associations)
-  
-  context "A newly created Questionnaire" do
-    setup do
+  describe "A newly created Questionnaire" do
+    before do
       @questionnaire = Questionnaire.create
     end
     
-    should "have the title 'untitled'" do
+    it "should have the title 'untitled'" do
       assert_match /untitled/i, @questionnaire.title
     end
     
-    should "have a page to start with" do
+    it "should have a page to start with" do
       assert @questionnaire.pages.count == 1
     end
   end
   
-  context "A questionnaire with multiple pages" do
-    setup do
+  describe "A questionnaire with multiple pages" do
+    before do
       @questionnaire = Questionnaire.create
       
       page1 = @questionnaire.pages.create(:position => 1)
@@ -46,15 +37,15 @@ class QuestionnaireTest < ActiveSupport::TestCase
       @decorators = [q3, q5, q7]
     end
     
-    should "return all questions in the right order" do
+    it "should return all questions in the right order" do
       assert_equal @questions, @questionnaire.questions
     end
     
-    should "return all fields in the right order" do
+    it "should return all fields in the right order" do
       assert_equal @fields, @questionnaire.fields
     end
     
-    should "return all decorators in the right order" do
+    it "should return all decorators in the right order" do
       assert_equal @decorators, @questionnaire.decorators
     end
   end

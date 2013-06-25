@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class QuestionOptionsControllerTest < ActionController::TestCase
-  setup do
+  before do
     @person = FactoryGirl.create(:person)
     sign_in @person
     
@@ -25,21 +25,21 @@ class QuestionOptionsControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  context 'with a question option' do
-    setup { @question_option = FactoryGirl.create(:question_option, :question => @question) }
+  describe 'with a question option' do
+    before { @question_option = FactoryGirl.create(:question_option, :question => @question) }
 
-    should 'show question option' do
+    it 'should show question option' do
       get :show, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :question_id => @question.id, :id => @question_option.id, :format => :json
       assert_response :success
     end
 
-    should 'update question option' do
+    it 'should update question option' do
       put :update, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :question_id => @question.id, :id => @question_option.id, :question_option => { :output_value => 3 }, :format => :json
       assert_equal "3", @question_option.reload.output_value
       assert_response :success
     end
   
-    should 'destroy question option' do
+    it 'should destroy question option' do
       old_count = QuestionOption.count
       delete :destroy, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :question_id => @question.id, :id => @question_option.id, :format => :json
       assert_equal old_count-1, QuestionOption.count

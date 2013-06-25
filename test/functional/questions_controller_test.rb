@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class QuestionsControllerTest < ActionController::TestCase
-  setup do
+  before do
     @person = FactoryGirl.create(:person)
     sign_in @person
     
@@ -25,27 +25,27 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  context 'with a question' do
-    setup do
+  describe 'with a question' do
+    before do
       @question = FactoryGirl.create(:question, :page => @page)
     end
 
-    should 'show question' do
+    it 'should show question' do
       get :show, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id, :format => :json
       assert_response :success
     end
 
-    should 'edit question' do
+    it 'should edit question' do
       get :edit, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id
       assert_response :success
     end
   
-    should 'update question' do
+    it 'should update question' do
       put :update, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id, :question => { }
       assert_redirected_to [@questionnaire, @page, assigns(:question)]
     end
   
-    should 'destroy question' do
+    it 'should destroy question' do
       old_count = Question.count
       delete :destroy, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id
       assert_equal old_count-1, Question.count

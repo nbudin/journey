@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ResponsesTest < ActionDispatch::IntegrationTest
-  setup do
+  before do
     @person = FactoryGirl.create(:person)
     
     @questionnaire = FactoryGirl.create(:basic_questionnaire)

@@ -58,8 +58,12 @@ class Question < ActiveRecord::Base
   def purpose=(new_purpose)
     return new_purpose if purpose == new_purpose
     
-    self.build_special_field_association unless self.special_field_association
-    self.special_field_association.purpose = new_purpose
+    if new_purpose.blank?
+      self.special_field_association = nil
+      new_purpose
+    else
+      self.build_special_field_association(purpose: new_purpose) unless self.special_field_association
+    end
   end
   
   def deepclone

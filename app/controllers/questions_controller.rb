@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
   load_and_authorize_resource :through => :page, :except => [:create]
   
   layout "answer", :except => [:edit]
+  layout false, :only => [:edit]
 
   # GET /questions
   # GET /questions.xml

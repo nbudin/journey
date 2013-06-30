@@ -30,10 +30,6 @@ class Question < ActiveRecord::Base
       Questions::RadioField ]
   end
   
-  def self.types_for_sql(types)
-    '(' + types.collect { |klass| "'#{klass.name}'" }.join(', ') + ')'
-  end
-  
   def self.question_types
     return self.decorator_types + self.field_types
   end

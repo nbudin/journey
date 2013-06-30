@@ -19,10 +19,10 @@ class Ability
       can :view_answers, Questionnaire, :questionnaire_permissions => { :person_id => person.id, :can_edit_answers => true }
       can :change_permissions, Questionnaire, :questionnaire_permissions => { :person_id => person.id, :can_change_permissions => true }
       
-      can :read, Response, Response.joins(:questionnaire => :questionnaire_permissions).where(:questionnaire_permissions => { :person_id => person.id, :can_view_answers => true }) do |resp|
-        person.questionnaire_permissions.any? { |perm| perm.can_view_answers? && perm.questionnaire == resp.questionnaire }
+      can :read, Response, Response.joins(:questionnaire => :questionnaire_permissions).where(:questionnaire_permissions => { :person_id => person.id }).where("can_view_answers = ? OR can_edit_answers = ?", true, true) do |resp|
+        person.questionnaire_permissions.any? { |perm| (perm.can_view_answers? || perm.can_edit_answers?) && perm.questionnaire == resp.questionnaire }
       end
-      can [:read, :create, :update, :destroy], Response, Response.joins(:questionnaire => :questionnaire_permissions).where(:questionnaire_permissions => { :person_id => person.id, :can_edit_answers => true }) do |resp|
+      can [:create, :update, :destroy], Response, Response.joins(:questionnaire => :questionnaire_permissions).where(:questionnaire_permissions => { :person_id => person.id, :can_edit_answers => true }) do |resp|
         person.questionnaire_permissions.any? { |perm| perm.can_edit_answers? && perm.questionnaire == resp.questionnaire }
       end
       can :destroy, Response, :person_id => person.id

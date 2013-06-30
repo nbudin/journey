@@ -8,12 +8,12 @@ class Question < ActiveRecord::Base
   has_one :special_field_association, :dependent => :destroy, :autosave => true
   has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id'
   
-  Layouts = {
+  LAYOUTS = {
     :left => "left",
     :top => "top"
   }
   
-  validates_inclusion_of :layout, :in => Layouts.values
+  validates_inclusion_of :layout, :in => LAYOUTS.values
   
   def self.decorator_types
     [ Questions::Label, 

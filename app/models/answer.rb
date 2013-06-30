@@ -8,33 +8,6 @@ class Answer < ActiveRecord::Base
     where(response_id: resp.id, question_id: question.id).first
   end
   
-  def self.value(args)
-    if args[:answer]
-      answer = args[:answer]
-      question = answer.question
-    else
-      question = args[:question]
-      answer = args[:response].answer_for_question(args[:question])
-    end
-    
-    no_answer_msg = if question.kind_of?(CheckBoxField)
-      "false"
-    else
-      ""
-    end
-    
-    if answer.nil?
-      return no_answer_msg
-    else
-      v = answer.value
-      if v.nil? or v.length == 0
-        return no_answer_msg
-      else
-        return v
-      end
-    end
-  end
-  
   def value
     v = read_attribute(:value)
     if question.kind_of?(Questions::CheckBoxField)

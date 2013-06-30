@@ -6,7 +6,7 @@ class Question < ActiveRecord::Base
   acts_as_list :scope => :page_id
   has_many :answers, :dependent => :destroy
   has_one :special_field_association, :dependent => :destroy, :autosave => true
-  has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id'
+  has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id', :autosave => true
   
   LAYOUTS = {
     :left => "left",

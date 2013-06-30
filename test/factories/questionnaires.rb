@@ -19,7 +19,7 @@ FactoryGirl.define do
 
         %w(radio_field drop_down_field).each do |question_type|
           question = FactoryGirl.build(question_type, page: page1)
-          3.times { question.question_options << FactoryGirl.build(:question_option) }
+          3.times { question.question_options << FactoryGirl.build(:question_option, question: question) }
           page1.questions << question
         end
       end

@@ -1,5 +1,5 @@
 <%= start_question @question %>
-<ul class="radio-field <%= @question.radio_layout_class %>">
+<ul class="radio-field layout-<%= @question.radio_layout %>">
   <% if @editing -%>
     <%= render :partial => "questions/selectorstart" %>
       <% @question.question_options.each do |option| -%>

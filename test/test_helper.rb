@@ -35,4 +35,9 @@ class ActionDispatch::IntegrationTest
     Capybara.current_driver = Capybara.default_driver
     DatabaseCleaner.clean
   end
+  
+  def save_and_open_screenshot
+    page.driver.save_screenshot "tmp/screenshot.png"
+    Launchy.open "tmp/screenshot.png"
+  end
 end

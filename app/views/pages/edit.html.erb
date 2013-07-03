@@ -88,7 +88,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
 	  </ul>
         </td>
         <td style="text-align: right; vertical-align: top;">
-          <b><%= link_to_function "&darr;",
+          <b><%= link_to_function "&darr;".html_safe,
             "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle(); sizeToolboxSpacer();",
             :style => "text-decoration: none; color: #754500;" %></b>
           <br/>
@@ -108,7 +108,7 @@ new Jipe.InPlaceEditor("page_title", Page, <%= @page.id %>, 'title',
           <b>Add Fields</b>
         </td>
         <td style="text-align: right;">   
-          <b><%= link_to_function "&uarr;",
+          <b><%= link_to_function "&uarr;".html_safe,
             "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle(); sizeToolboxSpacer();",
             :style => "text-decoration: none; color: #754500;" %></b>
         </td>

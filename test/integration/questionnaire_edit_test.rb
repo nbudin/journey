@@ -74,4 +74,32 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
     [0, 1, 2, 3].each { |i| assert_equal "left", page1.questions[i].layout }
     assert_equal "top", page1.questions[4].layout
   end
+  
+  test 'creating, renaming and deleting pages' do
+    within '#pages' do
+      find('.page .caption').click
+    end
+    
+    within_frame 'pageview' do
+      find('span', text: "Untitled page").click
+      within(".inplaceeditor-form") do
+        fill_in "value", with: "Pagina Uno"
+        click_button "ok"
+      end
+    end
+    
+    within '#pages' do
+      assert has_content?("Pagina Uno")
+
+      click_button "Create New Page"
+      assert has_content?("Untitled page")
+      
+      within('.page', text: "Untitled page") do
+        page.driver.accept_js_confirms!
+        find("img[alt='Delete page']").click
+      end
+      
+      assert has_no_content?("Untitled page")
+    end
+  end
 end

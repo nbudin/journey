@@ -129,11 +129,17 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
             click_button "ok"
           end
           
+          assert has_content?("-3")
+          
           find("span", text: "0").click
           within(".inplaceeditor-form") do
-            fill_in "value", with: "3"
+            fill_in "value", with: "5"
             click_button "ok"
           end
+          
+          assert has_content?("5")
+          assert has_content?("[")
+          assert has_content?("]")
         end
       end
       
@@ -146,6 +152,6 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
     end
     
     assert_equal -3, page1.questions[2].min
-    assert_equal 3, page1.questions[2].max
+    assert_equal 5, page1.questions[2].max
   end
 end

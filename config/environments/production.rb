@@ -12,7 +12,7 @@ Journey::Application.configure do
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  # config.serve_static_assets = false
 
   # Compress both stylesheets and JavaScripts
   config.assets.js_compressor  = :uglifier
@@ -65,6 +65,5 @@ Journey::Application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.default_charset = 'utf-8'
 end
 

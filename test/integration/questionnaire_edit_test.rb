@@ -102,4 +102,56 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
       assert has_no_content?("Untitled page")
     end
   end
+  
+  test 'creating other types of questions' do
+    within '#pages' do
+      find('.page .caption').click
+    end
+    
+    within_frame 'pageview' do
+      within('#toolbox') { click_link "Questions" }
+      
+      ["Freeform", "Big freeform", "Numeric range", "Check box", "Drop-down menu", "Radio buttons"].each do |field_type|
+        click_button field_type
+        find("label span", text: "Click here to type a question.").click
+        within(".inplaceeditor-form") do
+          fill_in "value", with: field_type
+          click_button "ok"
+        end
+        within("#questions") { assert has_content?(field_type) }
+      end
+      
+      within("#questions li", text: "Numeric range") do
+        within ".questionbody" do
+          all("span", text: "0").first.click
+          within(".inplaceeditor-form") do
+            fill_in "value", with: "-3"
+            click_button "ok"
+          end
+          
+          find("span", text: "0").click
+          within(".inplaceeditor-form") do
+            fill_in "value", with: "3"
+            click_button "ok"
+          end
+        end
+      end
+      
+      within("#questions li", text: "Drop-down menu") do
+        click_button "Edit options"
+        
+        iframe = find("iframe")
+        within_frame iframe["id"] do
+          %w(No Maybe Yes).each do |option|
+            fill_in find("input"), with: option
+            find("img[alt=Add]").click
+            assert has_content?(option)
+            save_and_open_screenshot
+          end
+        end
+      end
+    end
+    
+    save_and_open_screenshot
+  end
 end

@@ -37,7 +37,10 @@ class ActionDispatch::IntegrationTest
   end
   
   def save_and_open_screenshot
-    page.driver.save_screenshot "tmp/screenshot.png"
-    Launchy.open "tmp/screenshot.png"
+    @@screenshot_num ||= 0
+    @@screenshot_num += 1
+    
+    page.driver.save_screenshot "tmp/screenshot-#{@@screenshot_num}.png"
+    Launchy.open "tmp/screenshot-#{@@screenshot_num}.png"
   end
 end

@@ -137,21 +137,15 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
         end
       end
       
-      within("#questions li", text: "Drop-down menu") do
-        click_button "Edit options"
-        
-        iframe = find("iframe")
-        within_frame iframe["id"] do
-          %w(No Maybe Yes).each do |option|
-            fill_in find("input"), with: option
-            find("img[alt=Add]").click
-            assert has_content?(option)
-            save_and_open_screenshot
-          end
-        end
-      end
+      # TODO: seems like Capybara-webkit can't handle iframes in iframes, which we'd need to edit options.
     end
     
-    save_and_open_screenshot
+    page1 = @questionnaire.reload.pages.first
+    [Questions::TextField, Questions::BigTextField, Questions::RangeField, Questions::CheckBoxField, Questions::DropDownField, Questions::RadioField].each_with_index do |klass, i|
+      assert page1.questions[i].is_a? klass
+    end
+    
+    assert_equal -3, page1.questions[2].min
+    assert_equal 3, page1.questions[2].max
   end
 end

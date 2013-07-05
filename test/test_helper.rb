@@ -11,6 +11,9 @@ require "minitest/rails/capybara"
 Capybara.javascript_driver = :webkit
 DatabaseCleaner.strategy = :truncation
 
+# TODO: JIPE can be kind of slow.  Increasing the wait time to work around it.
+Capybara.default_wait_time = 5
+
 # Uncomment for awesome colorful output
 require "minitest/pride"
 

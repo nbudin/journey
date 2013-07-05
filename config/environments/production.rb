@@ -2,7 +2,7 @@ Journey::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
   
   # Enfore SSL in prod
-  config.middleware.insert_after ActionController::Failsafe, ::Rack::SSL, :host => "secure.journeysurveys.com"
+  config.middleware.insert_before ActionDispatch::Static, ::Rack::SSL, :host => "secure.journeysurveys.com"
 
   # Code is not reloaded between requests
   config.cache_classes = true

@@ -2,7 +2,7 @@
       page["selectorbody_#{@question.id}"].hide
       page["selectoredit_#{@question.id}"].show
       page["selectoredit_iframe_#{@question.id}"].hide
-      page["selectoredit_iframe_#{@question.id}"].src = url_for([:edit_options, @questionnaire, @page, @question])
+      page["selectoredit_iframe_#{@question.id}"].src = url_for([:edit_options, @questionnaire, @page, @question.becomes(Question)])
     end%>
   </span>
   <span id="selectoredit_<%= @question.id %>" style="display: none;">

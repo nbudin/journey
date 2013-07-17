@@ -52,14 +52,6 @@ class Questionnaire < ActiveRecord::Base
     @@creator_warning_hooks.push(hook)
   end
 
-  %w(questions fields decorators).each do |method|
-    class_eval <<-EOF
-      def #{method}
-        pages.collect(&:#{method}).flatten
-      end
-    EOF
-  end  
-
   def used_special_field_purposes
     special_field_associations.collect { |sfa| sfa.purpose }
   end

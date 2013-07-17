@@ -129,12 +129,12 @@
       <% content_for :startbox_main_option do -%>
         <p>This survey requires you to log into Journey in order to answer it.</p>
       
-        <%= link_to "Log into Journey, or sign up for a free account &raquo;", new_person_session_path, :class => "bigbutton full" %> 
+        <%= link_to "Log into Journey, or sign up for a free account &raquo;".html_safe, new_person_session_path, :class => "bigbutton full" %> 
       <% end -%>
     <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
       <% content_for :startbox_main_option do -%>
-        <%= link_to "Log into Journey, or sign up for a free account &raquo;", new_person_session_path, :class => "bigbutton green half" %> 
-        <%= link_to "Answer this survey without logging in &raquo;", { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton half" %>
+        <%= link_to "Log into Journey, or sign up for a free account &raquo;".html_safe, new_person_session_path, :class => "bigbutton green half" %> 
+        <%= link_to "Answer this survey without logging in &raquo;".html_safe, { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton half" %>
       <% end -%>
       <% content_for :startbox_additional_options do -%>
         <li>

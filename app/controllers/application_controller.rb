@@ -32,6 +32,22 @@ class ApplicationController < ActionController::Base
   
   protected
   
+  def last_answer_prompt_or_root_path
+    if (qid = (session.delete("prompting_questionnaire_id") || params[:prompting_questionnaire_id]))
+      questionnaire_answer_path(qid)
+    else
+      root_path
+    end
+  end
+  
+  def after_sign_in_path_for(resource)
+    last_answer_prompt_or_root_path
+  end
+  
+  def after_sign_out_path_for(resource)
+    last_answer_prompt_or_root_path
+  end  
+  
   def current_ability
     Ability.new(current_person)
   end

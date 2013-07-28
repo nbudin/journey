@@ -1,5 +1,5 @@
 Journey::Application.routes.draw do
-  devise_for :people
+  devise_for :people, controllers: { cas_sessions: :journey_cas_sessions }
   
   resources :questionnaires do
     collection do

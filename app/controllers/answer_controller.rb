@@ -35,8 +35,6 @@ class AnswerController < ApplicationController
   end
   
   def prompt
-    @questionnaire = Questionnaire.find(params[:id])
-    
     @all_responses = []
     @responses = []
     if person_signed_in?
@@ -51,8 +49,6 @@ class AnswerController < ApplicationController
   end
   
   def start
-    @questionnaire = Questionnaire.find(params[:id])
-    
     @resp = Response.new :questionnaire => @questionnaire
     if @questionnaire.advertise_login and person_signed_in?
       @resp.person = current_person

@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
   
   belongs_to :page
   has_one :questionnaire, :through => :page
-  acts_as_list :scope => :page_id
+  #acts_as_list :scope => :page_id
   has_many :answers, :dependent => :destroy
   has_one :special_field_association, :dependent => :destroy, :autosave => true
   has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id', :autosave => true
@@ -63,13 +63,11 @@ class Question < ActiveRecord::Base
   end
   
   def deepclone
-    c = self.class.new
-    c.page = self.page
-    c.caption = self.caption
-    c.required = self.required
-    c.layout = self.layout
-    
-    return c
+    dup.tap do |c|
+      question_options.each do |qo|
+        c.question_options << QuestionOption.new(option: qo.option, position: qo.position, output_value: qo.output_value)
+      end
+    end
   end
   
   def xmlcontent(xml)

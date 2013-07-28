@@ -103,15 +103,13 @@ class QuestionsController < ApplicationController
   end
   
   def duplicate
-    @question = Question.find(params[:id])
-    @times = params[:times] || 1
-    check_forged_path
+    times = params[:times] || 1
     
     i = @page.questions.index(@question) + 1
-    @times.to_i.times do
+    times.to_i.times do
       c = @question.deepclone
       @page.questions.insert(i, c)
-      c.save
+      c.save!
     end
     
     render :nothing => true

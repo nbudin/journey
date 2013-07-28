@@ -69,5 +69,12 @@ Journey::Application.routes.draw do
   match '/questionnaires/:questionnaire_id/responses/graphs/:action.:format' => 'graphs#index', :as => :response_graph
   match '/dashboard' => 'root#dashboard', :as => :dashboard
   match '/welcome' => 'root#welcome', :as => :welcome
+  
+  if JourneyConfig.config['SUGAR_POND_BRANDING']
+    match '/support' => 'sugar_pond/support#index', as: :support
+    match '/tos' => 'sugar_pond/legal#tos', as: :legal_tos
+    match '/privacy' => 'sugar_pond/legal#privacy', as: :legal_privacy
+  end  
+  
   root to: 'root#index'
 end

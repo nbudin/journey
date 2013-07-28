@@ -11,7 +11,7 @@ gem "xebec"
 gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 2.0.1"
 gem 'airbrake'
-gem 'sequel'
+gem 'sequel', require: 'sequel/no_core_ext'
 gem 'dynamic_form'
 gem 'acts_as_list'
 

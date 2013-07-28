@@ -10,11 +10,4 @@ class Questions::Field < Question
     xml.default_answer(self.default_answer)
     xml.purpose(self.purpose)
   end
-  
-  def deepclone
-    c = super
-    c.default_answer = self.default_answer
-    
-    return c
-  end
 end

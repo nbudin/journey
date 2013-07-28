@@ -2,7 +2,7 @@ require 'journey_questionnaire'
 
 class Page < ActiveRecord::Base
   belongs_to :questionnaire
-  acts_as_list :scope => :questionnaire_id
+  acts_as_list :scope => :questionnaire
   
   before_create :set_untitled
   
@@ -12,6 +12,14 @@ class Page < ActiveRecord::Base
     
   def number
     questionnaire.pages.index(self) + 1
+  end
+  
+  def deepclone
+    dup.tap do |c|
+      questions.each do |question|
+        c.questions << question.deepclone
+      end
+    end
   end
     
   private

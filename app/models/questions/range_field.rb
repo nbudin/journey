@@ -19,15 +19,6 @@ class Questions::RangeField < Questions::Field
     xml.step(self.step)
   end
   
-  def deepclone
-    c = super
-    c.min = self.min
-    c.max = self.max
-    c.step = self.step
-    
-    return c
-  end
-  
   private
   def ensure_range_boundaries
     if step > 0

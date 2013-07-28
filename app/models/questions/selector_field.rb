@@ -39,13 +39,4 @@ class Questions::SelectorField < Questions::Field
     xml.default_answer(self.default_answer)
     xml.purpose(self.purpose)
   end
-  
-  def deepclone
-    c = super
-    self.question_options.each do |o|
-      c.question_options.push(o.clone)
-    end
-    
-    return c
-  end
 end

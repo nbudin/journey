@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
   
   belongs_to :page
   has_one :questionnaire, :through => :page
-  #acts_as_list :scope => :page_id
+  acts_as_list :scope => :page
   has_many :answers, :dependent => :destroy
   has_one :special_field_association, :dependent => :destroy, :autosave => true
   has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id', :autosave => true

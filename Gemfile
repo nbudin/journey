@@ -17,7 +17,12 @@ gem 'acts_as_list'
 
 gem 'prototype-rails'
 gem 'tinymce-rails'
-gem 'uglifier'
+
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
 
 gem 'devise'
 gem 'rubycas-client'

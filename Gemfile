@@ -17,6 +17,7 @@ gem 'acts_as_list'
 
 gem 'prototype-rails'
 gem 'tinymce-rails'
+gem 'uglifier'
 
 gem 'devise'
 gem 'rubycas-client'

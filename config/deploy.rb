@@ -9,8 +9,7 @@ set :user, 'deploy'
 
 #chef_role [:web, :app], 'roles:app_server AND chef_environment:production'
 
-role :web, 'localhost'
-role :app, 'localhost'
+[:web, :app, :db].each { |r| role r, 'localhost', primary: true }
 set :ssh_options, {port: 2222, keys: ['~/.ssh/id_dsa']}
 
 set :rbenv_path, "/opt/rbenv"

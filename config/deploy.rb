@@ -1,28 +1,38 @@
 require 'bundler/capistrano'
+require "capistrano/chef"
 require 'airbrake/capistrano'
 require 'capistrano-rbenv'
+
+load "deploy/assets"
+
+set :user, 'deploy'
+
+#chef_role [:web, :app], 'roles:app_server AND chef_environment:production'
+
+role :web, 'localhost'
+role :app, 'localhost'
+set :ssh_options, {port: 2222, keys: ['~/.ssh/id_dsa']}
+
+set :rbenv_path, "/opt/rbenv"
+set :rbenv_setup_shell, false
+set :rbenv_setup_default_environment, false
+set :rbenv_setup_global_version, false
+set :rbenv_ruby_version, "2.0.0-p247"
 
 set :application, "journey"
 set :scm, :git
 set :repository, "https://github.com/nbudin/journey.git"
 set :deploy_to, "/var/www/#{application}"
-set :rbenv_ruby_version, "1.8.7-p371"
-
-server "popper.sugarpond.net", :app, :web, :db, :primary => true
-set :user, "www-data"
 set :use_sudo, false
+set :bundle_without, [:development, :test]
 
-# change this once upgraded to rails 3.1?
-set :normalize_asset_timestamps, false
+set :branch, "rails3"  #TODO Remove this once we merge
+
 
 namespace(:deploy) do
   desc "Link in config files needed for environment"
   task :symlink_config, :roles => :app do
-    %w(database.yml journey.yml).each do |config_file|
-      run <<-CMD
-        ln -nfs #{shared_path}/config/#{config_file} #{release_path}/config/#{config_file}
-      CMD
-    end
+    run "ln -nfs #{shared_path}/config/* #{release_path}/config/"
   end
   
   desc "Restart Application"
@@ -31,5 +41,5 @@ namespace(:deploy) do
   end
 end
 
-after "deploy:update_code", "deploy:symlink_config"
+before "deploy:finalize_update", "deploy:symlink_config"
 after "deploy", "deploy:cleanup"

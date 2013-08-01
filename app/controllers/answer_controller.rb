@@ -56,6 +56,10 @@ class AnswerController < ApplicationController
     @resp.save!
     session["response_#{@questionnaire.id}"] = @resp.id
     
+    @questionnaire.email_notifications.notify_on_response_start.includes(:person).each do |notification|
+      NotificationMailer.response_started(@resp, notification.person).deliver
+    end
+    
     redirect_to :action => 'index', :id => @questionnaire.id
   end
 
@@ -187,6 +191,11 @@ class AnswerController < ApplicationController
         @resp.submitted = true
         @resp.submitted_at = Time.now
         @resp.save
+        
+        @questionnaire.email_notifications.notify_on_response_submit.includes(:person).each do |notification|
+          NotificationMailer.response_submitted(@resp, notification.person).deliver
+        end
+        
         redirect_to :action => "save_session", :id => @resp.questionnaire.id, :current_page => 1
       else
         new_page = params[:current_page].to_i + offset

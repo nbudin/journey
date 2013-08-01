@@ -43,6 +43,11 @@ Journey::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
+  
+  config.action_mailer.default_url_options = {
+    host: "secure.journeysurveys.com",
+    protocol: "https"
+  }
 
   # Enable threaded mode
   # config.threadsafe!
@@ -63,5 +68,7 @@ Journey::Application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
+  
+  config.action_mailer.asset_host = "https://secure.journeysurveys.com"
 end
 

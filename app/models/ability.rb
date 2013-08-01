@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(person)
-    alias_action :responseviewer, :print, :export, :aggregate, :subscribe, :to => :read
+    alias_action :responseviewer, :print, :export, :aggregate, :subscribe, :update_subscription, :to => :read
     
     can :read, Questionnaire, :is_open => true, :publicly_visible => true
     

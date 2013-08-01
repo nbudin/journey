@@ -2,6 +2,7 @@ class Person < ActiveRecord::Base
   devise :cas_authenticatable, :trackable
   
   has_many :questionnaire_permissions
+  has_many :email_notifications
 
   def name
     "#{firstname} #{lastname}"

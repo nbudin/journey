@@ -6,6 +6,7 @@ class ResponsesController < ApplicationController
   
   before_filter :set_page_title
   before_filter :require_view_answers_except_rss, :only => [:index]
+  before_filter :get_email_notification, :only => [:subscribe, :update_subscription]
     
   # GET /responses
   # GET /responses.xml
@@ -282,6 +283,23 @@ class ResponsesController < ApplicationController
   def subscribe
   end
   
+  def update_subscription
+    unless @email_notification
+      @email_notification = @questionnaire.email_notifications.new.tap { |n| n.person = current_person }
+      @email_notification.save!
+    end
+    
+    if @email_notification.update_attributes(params[:email_notification])
+      respond_to do |format|
+        format.html { redirect_to action: 'subscribe' }
+      end
+    else
+      respond_to do |format|
+        format.html { render action: "subscribe" }
+      end
+    end
+  end
+  
   private
   def stream_csv(filename)
     content_type = 'text/csv'
@@ -308,13 +326,13 @@ class ResponsesController < ApplicationController
     @page_title = "Responses"
   end
   
-  def get_questionnaire
-    @questionnaire = Questionnaire.find(params[:questionnaire_id], :include => [:pages])
-  end
-  
   def require_view_answers_except_rss
     unless params[:format].to_s == 'rss'
       authorize! :show, Response.new(:questionnaire => @questionnaire)
     end
+  end
+  
+  def get_email_notification
+    @email_notification = @questionnaire.email_notifications.where(person_id: current_person.id).first
   end
 end

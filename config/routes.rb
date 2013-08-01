@@ -1,4 +1,8 @@
 Journey::Application.routes.draw do
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+    
   devise_for :people, controllers: { cas_sessions: :journey_cas_sessions }
   
   resources :questionnaires do
@@ -50,6 +54,7 @@ Journey::Application.routes.draw do
         get :print
         get :export
         get :subscribe
+        put :update_subscription
       end
     end
   end

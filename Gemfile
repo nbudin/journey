@@ -14,7 +14,10 @@ gem 'airbrake'
 gem 'sequel', require: 'sequel/no_core_ext'
 gem 'dynamic_form'
 gem 'acts_as_list'
+gem 'sendgrid'
 
+gem 'haml'
+gem 'haml-rails'
 gem 'prototype-rails'
 gem 'tinymce-rails'
 
@@ -49,4 +52,5 @@ group :test do
   gem "capybara-webkit"
 end
 
+gem 'letter_opener_web', '~> 1.0.3', :group => :development
 gem 'pry-rails', :groups => [:development, :test]

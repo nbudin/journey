@@ -10,6 +10,8 @@ class QuestionnairePermission < ActiveRecord::Base
     scope "allows_#{action}", lambda { where("can_#{action}" => true) }
   end
   
+  after_create :create_email_notification, if: -> (permission) { permission.can_view_answers? }
+  
   validates_uniqueness_of :questionnaire_id, :scope => :person_id
   
   def all_permissions=(granted)
@@ -43,5 +45,13 @@ class QuestionnairePermission < ActiveRecord::Base
         errors.add(:base, "Error inviting new user #{email}: $!")
       end
     end
+  end
+  
+  private
+  
+  def create_email_notification
+    n = person.email_notifications.new(notify_on_response_start: true, notify_on_response_submit: true)
+    n.questionnaire = questionnaire
+    n.save!
   end
 end

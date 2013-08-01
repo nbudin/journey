@@ -1,11 +1,37 @@
 <%= render :partial => 'analyze_toolbar' %>
 
 <div class="propertypage">
+  <h2>Subscribe via email</h2>
+  
+  <p>You can be notified by email when new responses come in.  Change your subscription preferences here:</p>
+  
+  <%= form_for :email_notification, url: [:update_subscription, @questionnaire, :responses], method: 'put' do |f| %>
+    <%= error_messages_for :email_notification %>
+    
+    <p>
+      <%= f.label :notify_on_response_start do %>
+        <%= f.check_box :notify_on_response_start %>
+        Email me when someone starts a new response
+      <% end -%>
+    
+      <br/>
+
+      <%= f.label :notify_on_response_submit do %>
+        <%= f.check_box :notify_on_response_submit %>
+        Email me when someone submits a new response
+      <% end -%>
+    </p>
+    
+    <p>
+      <%= f.submit "Update my email preferences" %>
+    </p>
+  <% end -%>
+  
   <h2>Subscribe via RSS</h2>
   
   <p>You can be notified by RSS when new responses come in.  Just copy the feed URL below into an RSS reader, such as
-    <%= link_to "Google Reader", "http://www.google.com/reader" %> or 
-    <%= link_to "Bloglines", "http://www.bloglines.com "%>.  Desktop RSS readers such as 
+    <%= link_to "Feedly", "http://www.feedly.com" %> or 
+    <%= link_to "Feedbin", "http://feedbin.me "%>.  Desktop RSS readers such as 
     <%= link_to "FeedDemon", "http://www.feeddemon.com" %> or 
     <%= link_to "NetNewsWire", "http://netnewswireapp.com/"%> will also work.</p>
     

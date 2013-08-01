@@ -23,6 +23,7 @@ class Questionnaire < ActiveRecord::Base
   has_many :decorators, :through => :pages, :order => "pages.position, questions.position"
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
+  has_many :email_notifications
   
   has_many :questionnaire_permissions
   accepts_nested_attributes_for :questionnaire_permissions, :allow_destroy => true, :reject_if => lambda { |attrs| attrs['email'].blank? }

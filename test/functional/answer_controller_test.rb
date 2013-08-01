@@ -1,18 +1,30 @@
-require File.dirname(__FILE__) + '/../test_helper'
-require 'answer_controller'
-
-# Re-raise errors caught by the controller.
-class AnswerController; def rescue_action(e) raise e end; end
+require 'test_helper'
 
 class AnswerControllerTest < ActionController::TestCase
-  def setup
-    @controller = AnswerController.new
-    @request    = ActionController::TestRequest.new
-    @response   = ActionController::TestResponse.new
+  setup do
+    ActionMailer::Base.deliveries = []
+    
+    @questionnaire = FactoryGirl.create :questionnaire, is_open: true
+    @owner = FactoryGirl.create :person
+    
+    @questionnaire.questionnaire_permissions.create(person: @owner, can_view_answers: true)
+    assert_equal 1, @questionnaire.email_notifications.count
   end
-
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  
+  test 'starting a questionnaire' do
+    get :start, id: @questionnaire.id
+    
+    assert_equal 1, ActionMailer::Base.deliveries.count
+    assert_match /\A\[#{@questionnaire.title}\]/, ActionMailer::Base.deliveries.first.subject
+  end
+  
+  test 'submitting a questionnaire' do
+    @resp = @questionnaire.responses.create
+    session["response_#{@questionnaire.id}"] = @resp.id
+    
+    post :save_answers, id: @questionnaire.id
+    
+    assert_equal 1, ActionMailer::Base.deliveries.count
+    assert_match /\A\[#{@questionnaire.title}\]/, ActionMailer::Base.deliveries.first.subject
   end
 end

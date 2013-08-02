@@ -21,16 +21,4 @@ module NotificationMailerHelper
   def response_submitted_table_data
     [["Response ID", @resp.id]] + @resp.special_answers.map { |answer| [answer.question.caption, answer.output_value]}
   end
-  
-  def response_started_table_data
-    table = [["Response ID", @resp.id]]
-
-    if @resp.person
-      table += [["User name", @resp.person.name], ["Email", @resp.person.email]]
-    else
-      table += [["User", "Anonymous"]]
-    end
-
-    table
-  end
 end

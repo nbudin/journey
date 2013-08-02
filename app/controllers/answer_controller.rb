@@ -56,10 +56,6 @@ class AnswerController < ApplicationController
     @resp.save!
     session["response_#{@questionnaire.id}"] = @resp.id
     
-    @questionnaire.email_notifications.notify_on_response_start.includes(:person).each do |notification|
-      NotificationMailer.response_started(@resp, notification.person).deliver
-    end
-    
     redirect_to :action => 'index', :id => @questionnaire.id
   end
 

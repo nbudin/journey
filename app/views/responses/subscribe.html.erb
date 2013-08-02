@@ -9,13 +9,6 @@
     <%= error_messages_for :email_notification %>
     
     <p>
-      <%= f.label :notify_on_response_start do %>
-        <%= f.check_box :notify_on_response_start %>
-        Email me when someone starts a new response
-      <% end -%>
-    
-      <br/>
-
       <%= f.label :notify_on_response_submit do %>
         <%= f.check_box :notify_on_response_submit %>
         Email me when someone submits a new response

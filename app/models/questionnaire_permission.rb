@@ -50,7 +50,7 @@ class QuestionnairePermission < ActiveRecord::Base
   private
   
   def create_email_notification
-    n = person.email_notifications.new(notify_on_response_start: true, notify_on_response_submit: true)
+    n = person.email_notifications.new(notify_on_response_submit: true)
     n.questionnaire = questionnaire
     n.save!
   end

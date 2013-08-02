@@ -2,4 +2,4 @@
 
 = html_table(response_submitted_table_data)
 
-= link_to("View this response", questionnaire_responses_url(@resp.questionnaire, view_response_id: @resp.id))
+= email_bigbutton_link_to("View this response &raquo;".html_safe, questionnaire_responses_url(@resp.questionnaire, view_response_id: @resp.id))

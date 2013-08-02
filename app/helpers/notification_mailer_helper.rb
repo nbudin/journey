@@ -21,4 +21,17 @@ module NotificationMailerHelper
   def response_submitted_table_data
     [["Response ID", @resp.id]] + @resp.special_answers.map { |answer| [answer.question.caption, answer.output_value]}
   end
+  
+  def email_bigbutton_style
+    %{ background-color: #bad032; background-image: url(#{image_path 'white-fade.png'}); 
+       background-repeat: repeat-x; border: 2px solid #bad032; 
+       border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; 
+       padding: 7px; display: inline-block; color: black; text-decoration: none; 
+       font-size: 120%;	margin: 5px; }
+  end
+  
+  def email_bigbutton_link_to(name=nil, options=nil, html_options=nil, &block)
+    html_options ||= {}
+    link_to(name, options, html_options.merge(style: email_bigbutton_style), &block)
+  end
 end

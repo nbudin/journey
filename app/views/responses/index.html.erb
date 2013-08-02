@@ -10,3 +10,11 @@
 <% if @responses.length == 0 -%>
 	<p><i>No responses found.</i><p>
 <% end -%>
+
+<% if params[:view_response_id].to_i != 0 -%>
+<script type="text/javascript">
+document.observe("dom:loaded", function() {
+  showResponse(<%= params[:view_response_id].to_i %>);
+});
+</script>
+<% end -%>

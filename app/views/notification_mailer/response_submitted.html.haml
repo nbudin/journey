@@ -1,3 +1,5 @@
 %h2 A new response was submitted on your survey "#{@resp.questionnaire.title}"
 
 = html_table(response_submitted_table_data)
+
+= link_to("View this response", questionnaire_responses_url(@resp.questionnaire, view_response_id: @resp.id))

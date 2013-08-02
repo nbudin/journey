@@ -1,3 +1,5 @@
 <%= text_header "A new response was submitted on your survey \"#{@resp.questionnaire.title}\"" %>
 
 <%= text_table(response_submitted_table_data) %>
+
+View this response: <%= questionnaire_responses_url(@resp.questionnaire, view_response_id: @resp.id) %>

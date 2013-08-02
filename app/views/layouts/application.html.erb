@@ -12,17 +12,12 @@
     <%= stylesheet_link_tag 'ie7hacks' %>
     <%= stylesheet_link_tag 'ie6hacks' %>
   <![endif]-->
-  <%= stylesheet_link_tag 'auth' %>
   <% Journey::SiteOptions.additional_stylesheets.each do |ss| -%>
     <%= stylesheet_link_tag ss %>
   <% end -%>
-  
-  <%= yield :stylesheets %>
 
   <%= airbrake_javascript_notifier %>  
   <%= javascript_include_tag :application %>
-  
-  <%= yield :javascripts %>
   
   <% if @rss_url %>
     <link rel="alternate" title="RSS Feed" href="<%=@rss_url%>" type="application/rss+xml"/>

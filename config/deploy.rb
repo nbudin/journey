@@ -33,6 +33,11 @@ namespace(:deploy) do
   task :symlink_config, :roles => :app do
     run "ln -nfs #{shared_path}/config/* #{release_path}/config/"
   end
+
+  desc "Link in log directory"
+  task :symlink_log, :roles => :app do
+    run "ln -nfs #{shared_path}/log #{release_path}/log"
+  end
   
   desc "Restart Application"
   task :restart, :roles => :app do
@@ -41,4 +46,5 @@ namespace(:deploy) do
 end
 
 before "deploy:finalize_update", "deploy:symlink_config"
+before "deploy:finalize_update", "deploy:symlink_log"
 after "deploy", "deploy:cleanup"

@@ -1,4 +1,4 @@
-if(Rails.env.production?)
+if(Rails.env.production? && ENV['SENDGRID_USERNAME'] && ENV['SENDGRID_PASSWORD'])
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
     :port           => '587',

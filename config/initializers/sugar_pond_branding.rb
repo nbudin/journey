@@ -1,7 +1,7 @@
 if JourneyConfig.config['SUGAR_POND_BRANDING']
   require 'journey_questionnaire'
 
-  if ENV['RAILS_ENV'] == "production"
+  if Rails.env == "production"
     Journey::SiteOptions.site_root_if_logged_out = "http://welcome.journeysurveys.com"
   end
   Journey::UserOptions.hook do |nb, controller|

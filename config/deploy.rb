@@ -26,9 +26,6 @@ set :deploy_to, "/var/www/#{application}"
 set :use_sudo, false
 set :bundle_without, [:development, :test]
 
-set :branch, "rails3"  #TODO Remove this once we merge
-
-
 namespace(:deploy) do
   desc "Link in config files needed for environment"
   task :symlink_config, :roles => :app do

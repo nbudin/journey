@@ -15,6 +15,7 @@ gem 'sequel', require: 'sequel/no_core_ext'
 gem 'dynamic_form'
 gem 'acts_as_list'
 gem 'sendgrid'
+gem 'thin'
 
 gem 'haml'
 gem 'haml-rails'

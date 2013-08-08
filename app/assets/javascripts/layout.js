@@ -21,15 +21,8 @@ function selectTab(name) {
 }
 
 function findPos(obj) {
-  // PPK's cross-browser find pos function from quirksmode.org
-  var curleft = curtop = 0;
-  if (obj.offsetParent) {
-    do {
-      curleft += obj.offsetLeft;
-      curtop += obj.offsetTop;
-    } while (obj = obj.offsetParent);
-    return [curleft, curtop];
-  }
+  offset = obj.cumulativeOffset();
+  return [offset.left, offset.top];
 }
 
 function getViewportSize() {

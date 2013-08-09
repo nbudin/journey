@@ -5,7 +5,7 @@ class QuestionOptionsControllerTest < ActionController::TestCase
     @person = FactoryGirl.create(:person)
     sign_in @person
     
-    @question = FactoryGirl.create(:question)
+    @question = FactoryGirl.create(:radio_field)
     @page = @question.page
     @questionnaire = @page.questionnaire
     @questionnaire.questionnaire_permissions.create(:person => @person, :all_permissions => true)

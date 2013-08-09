@@ -29,8 +29,8 @@ class QuestionOptionsController < ApplicationController
   def create
     respond_to do |format|
       if @question_option.save
-        format.json { head :created, :location => polymorphic_url([@questionnaire, @page, @question, @question_option], :format => 'json') }
-        format.xml  { head :created, :location => polymorphic_url([@questionnaire, @page, @question, @question_option], :format => 'xml') }
+        format.json { head :created, :location => polymorphic_url([@questionnaire, @page, @question.becomes(Question), @question_option], :format => 'json') }
+        format.xml  { head :created, :location => polymorphic_url([@questionnaire, @page, @question.becomes(Question), @question_option], :format => 'xml') }
       else
         format.json { render :json => @question_option.errors.to_json }
         format.xml  { render :xml => @question_option.errors.to_xml }

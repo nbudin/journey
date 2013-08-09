@@ -23,6 +23,7 @@ set :application, "journey"
 set :scm, :git
 set :repository, "https://github.com/nbudin/journey.git"
 set :deploy_to, "/var/www/#{application}"
+set :deploy_via, :remote_cache
 set :use_sudo, false
 set :bundle_without, [:development, :test]
 

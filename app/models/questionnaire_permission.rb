@@ -37,9 +37,9 @@ class QuestionnairePermission < ActiveRecord::Base
         invitee.save
         logger.info "Invite successful!  Got back #{invitee.inspect}"
         
-        invitee_attrs = invitee.attributes["person"]
-        self.person = Person.create(:email => email, :username => email, :firstname => invitee_attrs.firstname, 
-          :lastname => invitee_attrs.lastname, :gender => invitee_attrs.gender, :birthdate => invitee_attrs.birthdate)
+        invitee_attrs = invitee.attributes
+        self.person = Person.create(:email => email, :username => email, :firstname => invitee_attrs["firstname"], 
+          :lastname => invitee_attrs["lastname"], :gender => invitee_attrs["gender"], :birthdate => invitee_attrs["birthdate"])
       rescue
         logger.error "Error during invite: #{$!}"
         errors.add(:base, "Error inviting new user #{email}: $!")
@@ -50,6 +50,8 @@ class QuestionnairePermission < ActiveRecord::Base
   private
   
   def create_email_notification
+    return unless person
+    
     n = person.email_notifications.new(notify_on_response_submit: true)
     n.questionnaire = questionnaire
     n.save!

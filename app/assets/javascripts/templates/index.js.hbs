@@ -1,0 +1,17 @@
+<table id="questionnaireedit">
+  <tr style="height: 16px;">
+    <td id="pagesheading" style="top: -3px;">Pages</td>
+    <td id="pageheading"><span id="pagetitle"></span></td>
+  </tr>
+  <tr>
+    <td id="pages">
+      {{partial "pagelist"}}
+      <button onClick="createPage();">Create New Page</button>
+    </td>
+    <td id="editpage">
+      <div id="pageview" name="pageview" frameborder="0">
+        {{outlet}}
+      </div>
+    </td>
+  </tr>
+</table>

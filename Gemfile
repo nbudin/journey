@@ -16,6 +16,11 @@ gem 'dynamic_form'
 gem 'acts_as_list'
 gem 'sendgrid'
 gem 'thin'
+gem 'active_model_serializers'
+
+gem 'jquery-rails'
+gem 'ember-rails'
+gem 'ember-source', '1.0.0.rc6.4'
 
 gem 'haml'
 gem 'haml-rails'

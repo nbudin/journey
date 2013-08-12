@@ -5,6 +5,15 @@ Journey::Application.routes.draw do
     
   devise_for :people, controllers: { cas_sessions: :journey_cas_sessions }
   
+  namespace :api do
+    namespace :v1 do
+      resources :questionnaires
+      resources :pages
+      resources :questions
+      resources :question_options
+    end
+  end
+  
   resources :questionnaires do
     collection do
       get :responses

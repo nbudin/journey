@@ -1,4 +1,5 @@
 <%= error_messages_for :questionnaire %>
+<%= javascript_include_tag "questionnaire_edit/questionnaire_edit" %>
 <%= javascript_include_tag "layout.js" %>
 
 <script type="text/javascript">
@@ -68,22 +69,7 @@ function createPage() {
 
 <%= render :partial => "toolbar" %>
 
-<table id="questionnaireedit">
-  <tr style="height: 16px;">
-    <td id="pagesheading" style="top: -3px;">Pages</td>
-    <td id="pageheading"><span id="pagetitle"></span></td>
-  </tr>
-  <tr>
-    <td id="pages">
-      <%= render :partial => "pagelist", :locals => {:questionnaire => @questionnaire} %>
-      <button onClick="createPage();">Create New Page</button>
-    </td>
-    <td id="editpage">
-      <iframe id="pageview" name="pageview" frameborder="0">
-      </iframe>
-    </td>
-  </tr>
-</table>
+<div id="questionnaire_edit" data-questionnaire-id="<%= @questionnaire.id %>"></div>
 
 <!-- don't scroll this page -->
 <style type="text/css">

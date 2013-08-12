@@ -1,0 +1,27 @@
+<ul id="pagelist">
+  {{#each page in pages}}
+    <li class="page">
+      <div class="draghandle"></div>
+      <div class="caption">
+        {{page.title}}
+      </div>
+      <button class="delete-page"></button>
+    </li>
+    <script type="text/javascript">
+      pageclicked = function() {
+        switchPage(<%=page.id%>, '<%=escape_javascript page.title%>');
+      };
+      deletepageclicked = function(event) {
+        if (confirm('Do you really want to delete the page \"<%=escape_javascript page.title %>\"?')) {
+          deletePage(<%=page.id%>);
+        }
+        Event.stop(event);
+      }
+      Event.observe("page_<%=page.id%>", "click", pageclicked);
+      Event.observe("delete_page_<%=page.id%>", "click", deletepageclicked);
+      addEventToUnload("page_<%=page.id%>", "click", pageclicked);
+      addEventToUnload("delete_page_<%=page.id%>", "click", deletepageclicked);
+    </script>
+  {{/each}}
+</ul>
+<!-- TODO sortable_element "pagelist", :handle => "draghandle", :url => url_for([:sort, @questionnaire, :pages]) -->

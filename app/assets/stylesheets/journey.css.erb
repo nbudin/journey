@@ -122,15 +122,26 @@ table.itemheader tr > td:first-child {
 }
 
 #questionnaireedit #pages div.draghandle {
-    float: left; 
-    width: 5px; 
-    overflow: hidden; 
-    background-color: #00f; 
-    left: -2px; 
-    top: -2px; 
-    position: relative; 
-    height: 19px; 
-    cursor: move;   
+  background-image: url(<%= image_path "drag-handle.png" %>);
+  float: left; 
+  width: 5px; 
+  overflow: hidden; 
+  background-color: #00f; 
+  left: -2px; 
+  top: -2px; 
+  position: relative; 
+  height: 19px; 
+  cursor: move;   
+}
+
+#questionnaireedit #pages .delete-page {
+  background-image: url(<%= image_path "delete.png" %>);
+  width: 16px;
+  height: 16px;
+  border: none;
+  cursor: pointer;
+  position: absolute; 
+  right: 2px;
 }
 
 #questionnaireedit #pages li.page.activepage {
@@ -162,7 +173,7 @@ table.itemheader tr > td:first-child {
     margin-bottom: 0.5em;
 }
 
-#questionnaireedit iframe#pageview {
+#questionnaireedit #pageview {
     border: 1px black solid;
     width: 100%;
     height: 100%;

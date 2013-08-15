@@ -1,0 +1,1 @@
+QuestionnaireEdit.QuestionnaireController = Ember.ObjectController.extend()

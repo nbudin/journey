@@ -80,17 +80,17 @@ body {
 
 <!-- make questionnaireedit fill remaining vertical space -->
 <script type="text/javascript">
-function sizeQuestionnaireEdit() {
-  if (!viewportSizeChanged()) {
-    return;
-  }
-
-  newHeight = getViewportSize()[1] - findPos($('editpage'))[1] - 15;
-  $('editpage').style.height = newHeight + "px";
-  $('pages').style.height = newHeight + "px";
-}
-
-Event.observe(window, 'load', sizeQuestionnaireEdit);
-Event.observe(window, 'resize', sizeQuestionnaireEdit);
-observeTabSelected(sizeQuestionnaireEdit);
+// function sizeQuestionnaireEdit() {
+//   if (!viewportSizeChanged()) {
+//     return;
+//   }
+// 
+//   newHeight = getViewportSize()[1] - findPos($('editpage'))[1] - 15;
+//   $('editpage').style.height = newHeight + "px";
+//   $('pages').style.height = newHeight + "px";
+// }
+// 
+// Event.observe(window, 'load', sizeQuestionnaireEdit);
+// Event.observe(window, 'resize', sizeQuestionnaireEdit);
+// observeTabSelected(sizeQuestionnaireEdit);
 </script>

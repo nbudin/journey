@@ -43,6 +43,10 @@ class Question < ActiveRecord::Base
     self.name
   end
   
+  def active_model_serializer
+    QuestionSerializer
+  end
+  
   def is_numeric?
     false
   end

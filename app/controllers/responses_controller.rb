@@ -72,13 +72,13 @@ class ResponsesController < ApplicationController
           when 'true'
             valid_response_ids = db[:answers].select(:response_id).inner_join(:responses, :id => :response_id).where(:questionnaire_id => @questionnaire.id)
             
-            response_metadata = db[:responses].order(:id.asc).where(:id => valid_response_ids).select(:id, :submitted_at, :notes).all
+            response_metadata = db[:responses].order(:id).where(:id => valid_response_ids).select(:id, :submitted_at, :notes).all
             response_ids = response_metadata.map { |resp| resp[:id] }
             csv << ["id"] + response_ids
             csv << ["Submitted"] + response_metadata.map { |resp| resp[:submitted_at] }
             csv << ["Notes"] + response_metadata.map { |resp| resp[:notes] }
             
-            ds = ds.order(:pages__position.asc, :questions__position.asc, :responses__id.asc)
+            ds = ds.order(:pages__position, :questions__position, :responses__id)
             ds = ds.select(:answers__question_id, :questions__caption, :answers__response_id, :answers__value, :question_options__output_value)
             
             current_response_index = 0
@@ -115,7 +115,7 @@ class ResponsesController < ApplicationController
             header += @columns.collect { |c| c.caption }
             csv << header
             
-            ds = ds.order(:responses__id.desc, :pages__position.asc, :questions__position.asc)
+            ds = ds.order(Sequel.desc(:responses__id), :pages__position, :questions__position)
             ds = ds.select(:responses__id, :responses__submitted_at, :responses__notes, :answers__question_id, :answers__value, :question_options__output_value)
             
             column_ids = @columns.map(&:id)

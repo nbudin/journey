@@ -10,15 +10,5 @@
       {{/linkTo}}
     </li>
   {{/each}}
-  <!--<script type="text/javascript">
-    deletepageclicked = function(event) {
-      if (confirm('Do you really want to delete the page \"<%=escape_javascript page.title %>\"?')) {
-        deletePage(<%=page.id%>);
-      }
-      Event.stop(event);
-    }
-    Event.observe("delete_page_<%=page.id%>", "click", deletepageclicked);
-    addEventToUnload("delete_page_<%=page.id%>", "click", deletepageclicked);
-  </script>-->
 </ul>
 <!-- TODO sortable_element "pagelist", :handle => "draghandle", :url => url_for([:sort, @questionnaire, :pages]) -->

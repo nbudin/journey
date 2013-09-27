@@ -9,6 +9,16 @@ class Api::V1::PagesController < ApplicationController
   end
   
   def show
-    respond_with @page
+    respond_with @page.questionnaire, @page
+  end
+  
+  def create
+    @page = Page.create(params[:page])
+    respond_with @page.questionnaire, @page
+  end
+  
+  def destroy
+    @page.destroy
+    respond_with @page.questionnaire, @page
   end
 end

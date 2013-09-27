@@ -16,18 +16,18 @@
     <%= sortable_element "questions", :handle => "draghandle",
         :url => url_for([:sort, @questionnaire, @page, :questions]),
         :complete => "zebrifyQuestions();" %>
-    <div class="navbuttons">
-      <% if @page.number > 1 -%>
-        <%= submit_tag "<< Previous page" %>
-      <% end -%>
-      <% if @page.number < @questionnaire.pages.length -%>
-        <%= submit_tag "Next page >>" %>
-        <% 5.times { %>&nbsp;<% } %>
-        <%= submit_tag "Finish later" %>
-      <% else -%>
-        <%= submit_tag "Finish" %>
-      <% end -%>
-   </div>
+  <div class="navbuttons">
+    {{#unless isFirstPage}}
+      <input type="submit" value="<< Previous page"/>
+    {{/unless}}
+    {{#if isLastPage}}
+      <input type="submit" value="Finish"/>
+    {{else}}
+      <input type="submit" value="Next page >>"/>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="submit" value="Finish later"/>
+    {{/if}}
+ </div>
 </div>
 
 <div id="toolboxspacer">

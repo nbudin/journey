@@ -105,7 +105,7 @@ table.itemheader tr > td:first-child {
     height: 480px;
 }
 
-#questionnaireedit #pages li.page {
+#questionnaireedit #pages li a {
     border: 0;
     border-bottom: 1px #666 solid;
     border-left: 1px #666 solid;
@@ -144,13 +144,13 @@ table.itemheader tr > td:first-child {
   right: 2px;
 }
 
-#questionnaireedit #pages li.page.activepage {
+#questionnaireedit #pages li a.active {
     border-right: 0;
     background-color: #fff;
     background-image: none;
 }
 
-#questionnaireedit #pages li.page div.caption {
+#questionnaireedit #pages li div.caption {
     width: 182px; /* +5px if we get rid of drag handles */
     overflow: hidden;
     white-space: nowrap;
@@ -160,10 +160,10 @@ table.itemheader tr > td:first-child {
     right: 20px;
 }
 
-#questionnaireedit #pages li.page a {
-    float: right;
-    clear: none;
-}
+/* #questionnaireedit #pages li.page a {
+   float: right;
+   clear: none;
+} */
 
 #questionnaireedit #pages ul {
     list-style: none;

@@ -5,5 +5,14 @@ QuestionnaireEdit.Page = DS.Model.extend
   title: DS.attr 'string'
   
   number: ( ->
-    @get('questionnaire.pages').indexOf(@) + 1
+    pages = @get('questionnaire.pages')
+    pages && (pages.indexOf(@) + 1)
   ).property('questionnaire.pages')
+  
+  isFirstPage: ( ->
+    @get('number') == 1
+  ).property('number')
+  
+  isLastPage: ( ->
+    @get('number') < @get('questionnaire.pages.size')
+  ).property('questionnaire.pages.size', 'number')

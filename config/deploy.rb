@@ -17,7 +17,7 @@ set :rbenv_path, "/opt/rbenv"
 set :rbenv_setup_shell, false
 set :rbenv_setup_default_environment, false
 set :rbenv_setup_global_version, false
-set :rbenv_ruby_version, "2.0.0-p247"
+set :rbenv_ruby_version, "2.0.0-p353"
 
 set :application, "journey"
 set :scm, :git

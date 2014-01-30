@@ -26,7 +26,7 @@ class Questionnaire < ActiveRecord::Base
   has_many :email_notifications
   
   has_many :questionnaire_permissions
-  accepts_nested_attributes_for :questionnaire_permissions, :allow_destroy => true, :reject_if => lambda { |attrs| attrs['email'].blank? }
+  accepts_nested_attributes_for :questionnaire_permissions, :allow_destroy => true, :reject_if => lambda { |attrs| attrs['id'].blank? && attrs['email'].blank? }
   
   scope :publicly_visible, lambda { where(:publicly_visible => true) }
   

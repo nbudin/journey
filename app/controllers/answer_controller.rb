@@ -189,6 +189,7 @@ class AnswerController < ApplicationController
         @resp.save
         
         @questionnaire.email_notifications.notify_on_response_submit.includes(:person).each do |notification|
+          next unless notification.try(:person).try(:email).present?
           NotificationMailer.response_submitted(@resp, notification.person).deliver
         end
         

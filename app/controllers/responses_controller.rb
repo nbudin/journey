@@ -58,7 +58,7 @@ class ResponsesController < ApplicationController
       end
       format.csv do
         
-        stream_csv(@questionnaire.title + ".csv") do |csv|
+        stream_csv(@questionnaire.title.gsub(/[^A-Za-z0-9 \-\(\)\.]/, '-') + ".csv") do |csv|
           db = RailsSequel.connect
           
           ds = db[:answers]

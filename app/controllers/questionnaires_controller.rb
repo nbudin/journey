@@ -142,7 +142,7 @@ class QuestionnairesController < ApplicationController
       redirect_to :action => "new"
       return
     elsif params[:clone_questionnaire_id]
-      @questionnaire = Questionnaire.find(params[:clone_questionnaire_id]).deepclone
+      @questionnaire = Questionnaire.find(params[:clone_questionnaire_id]).deepclone(params[:clone_responses] == "true")
       @questionnaire.title = "Copy of #{@questionnaire.title}"
       @questionnaire.is_open = false
     else

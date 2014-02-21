@@ -1,5 +1,5 @@
 class Answer < ActiveRecord::Base
-  belongs_to :response
+  belongs_to :response, :inverse_of => :answers
   validates_associated :response
   belongs_to :question
   validates_associated :question

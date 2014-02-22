@@ -20,7 +20,7 @@ class QuestionnaireTest < ActiveSupport::TestCase
       @questionnaire = Questionnaire.create
       
       page1 = @questionnaire.pages.create(:position => 1)
-      q1 = Questions::TextField.create(:page => page1, :caption => "Why?", :position => 1)
+      q1 = Questions::TextField.create(:page => page1, :caption => "Who?", :position => 1, :purpose => "name")
       q2 = Questions::TextField.create(:page => page1, :caption => "Wherefore?", :position => 2)
       
       page2 = @questionnaire.pages.create(:position => 2)
@@ -71,8 +71,13 @@ class QuestionnaireTest < ActiveSupport::TestCase
         assert cloned_question.persisted?
         assert_equal question.caption, cloned_question.caption
         assert_equal question.type, cloned_question.type
+        assert_equal question.purpose, cloned_question.purpose
         assert_not_equal question.id, cloned_question.id
         assert cloned_question.id.present?
+
+        if question.special_field_association
+          assert_not_equal question.special_field_association.id, cloned_question.special_field_association.id
+        end
 
         question.question_options.each_with_index do |question_option, j|
           cloned_option = cloned_question.question_options[j]

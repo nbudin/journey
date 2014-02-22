@@ -19,11 +19,11 @@ gem 'active_model_serializers'
 
 gem 'jquery-rails'
 gem 'ember-rails'
-gem 'ember-source', '1.0.0.rc6.4'
+gem 'ember-source', '1.3.2'
+gem 'ember-data-source', '1.0.0.beta6'
 
 gem 'haml'
 gem 'haml-rails'
-gem 'prototype-rails'
 gem 'tinymce-rails'
 
 group :assets do

@@ -11,20 +11,10 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 
-//= require prototype
-//= require prototype_ujs
-//= require effects
-//= require dragdrop
-//= require controls
-
-//= require tinymce
-//= require jipe/jester
-//= require jipe/jipe
-//= require overlabel
-//= require layout
-
 //= require jquery
-//= require jquery-nc
 //= require handlebars
 //= require ember
 //= require ember-data
+
+//= require tinymce
+

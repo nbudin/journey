@@ -1,10 +1,7 @@
 class NotificationMailer < ActionMailer::Base
-  include SendGrid
   layout "email"
   
   default from: "Journey Surveys <journey@sugarpond.net>"
-  sendgrid_enable :subscriptiontrack
-  sendgrid_subscriptiontrack_text replace: "[sendgrid_unsubscribe_url]"
   
   def response_submitted(resp, recipient)
     @resp = resp

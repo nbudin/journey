@@ -1,19 +1,5 @@
 <%= render :partial => "toolbar" %>
 
 <div class="propertypage">
-  <h2>Export</h2>
-  
-  <p>You can export your survey to XML format for your archives.  Later on, if you wish, you can import this XML file back
-    into Journey.</p>
-    
-  <p><b>Note that this file only contains the questions, not the responses.</b>  If you want to export the responses to your
-    survey, click the "Responses" tab above.</p>
-    
-  <%= button_to "Export to XML file", questionnaire_path(@questionnaire, :format => "xml"), :method => "get" %>
-  
-  <h2>Print</h2>
-  
-  <p>Click the button below to view or print out a printer-friendly version of this survey.</p>
-  
-  <%= button_to "Printer-friendly version", { :action => "print", :id => @questionnaire.id }, :method => "get" %>
+  <%= render :partial => "questionnaires/export" %>
 </div>

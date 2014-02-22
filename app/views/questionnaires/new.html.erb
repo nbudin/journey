@@ -15,7 +15,9 @@
 	  <p>
 		<%= select_tag "clone_questionnaire_id", options_for_select(
 		@cloneable_questionnaires.collect {|q| [q.title, q.id]}
-	  ) %>
+	  ) %><br/>
+    <%= check_box_tag "clone_responses", "true" %>
+    <%= label_tag "clone_responses", "Copy answers in addition to questions" %>
 	  </p>
 	  <%= submit_tag "Copy" %>
 	<% end %>

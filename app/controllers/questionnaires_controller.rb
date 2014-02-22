@@ -142,7 +142,7 @@ class QuestionnairesController < ApplicationController
       redirect_to :action => "new"
       return
     elsif params[:clone_questionnaire_id]
-      @questionnaire = Questionnaire.find(params[:clone_questionnaire_id]).deepclone
+      @questionnaire = Questionnaire.find(params[:clone_questionnaire_id]).deepclone(params[:clone_responses] == "true")
       @questionnaire.title = "Copy of #{@questionnaire.title}"
       @questionnaire.is_open = false
     else
@@ -167,7 +167,7 @@ class QuestionnairesController < ApplicationController
   # PUT /questionnaires/1.xml
   def update
     @questionnaire = Questionnaire.find(params[:id])
-    params[:questionnaire].delete(:questionnaire_permission_attributes) unless current_person.can?(:change_permissions, @questionnaire)
+    params[:questionnaire].delete(:questionnaire_permissions_attributes) unless current_person.can?(:change_permissions, @questionnaire)
 
     respond_to do |format|
       if @questionnaire.update_attributes(params[:questionnaire])

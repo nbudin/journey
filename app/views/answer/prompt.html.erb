@@ -101,7 +101,7 @@
                   <% end -%>
                 <% end -%>
                 <% if @questionnaire.allow_delete_responses %>
-                  <%= link_to "Delete", response_url(@questionnaire, resp), :method => "delete", 
+                  <%= link_to "Delete", [@questionnaire, resp], :method => "delete", 
                         :confirm => "Are you sure you want to delete response \##{resp.id}?" %>
                 <% end -%>
               </td>

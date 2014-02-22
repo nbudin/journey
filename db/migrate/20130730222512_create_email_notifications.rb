@@ -9,6 +9,6 @@ class CreateEmailNotifications < ActiveRecord::Migration
     
     add_index :email_notifications, :questionnaire_id
     add_index :email_notifications, :person_id
-    add_index :email_notifications, [:person_id, :questionnaire_id], unique: true
+    add_index :email_notifications, [:person_id, :questionnaire_id], unique: true, name: 'email_notification_person_questionnaire'
   end
 end

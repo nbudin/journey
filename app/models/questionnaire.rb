@@ -26,7 +26,7 @@ class Questionnaire < ActiveRecord::Base
   has_many :email_notifications
   
   has_many :questionnaire_permissions
-  accepts_nested_attributes_for :questionnaire_permissions, :allow_destroy => true, :reject_if => lambda { |attrs| attrs['email'].blank? }
+  accepts_nested_attributes_for :questionnaire_permissions, :allow_destroy => true, :reject_if => lambda { |attrs| attrs['id'].blank? && attrs['email'].blank? }
   
   scope :publicly_visible, lambda { where(:publicly_visible => true) }
   
@@ -150,13 +150,35 @@ class Questionnaire < ActiveRecord::Base
     end
   end
   
-  def deepclone
+  def deepclone(with_responses=nil)
     dup.tap do |c|
+      question_clones_by_original_id = {}
+      
       pages.each do |page|
-        c.pages << page.deepclone
+        page_clone = page.dup.tap do |page_clone|
+          page.questions.each do |question|
+            question_clone = question.deepclone
+            question_clones_by_original_id[question.id] = question_clone
+            page_clone.questions << question_clone
+          end
+        end
+        c.pages << page_clone
       end
+      
       taggings.each do |tagging|
         c.taggings << Tagging.new(tag: tagging.tag)
+      end
+      
+      if with_responses
+        responses.each do |response|
+          c.responses << response.dup.tap do |response_clone|
+            response.answers.each do |answer|
+              answer_clone = answer.dup
+              answer_clone.question = question_clones_by_original_id[answer.question_id]
+              response_clone.answers << answer_clone
+            end
+          end
+        end
       end
     end
   end

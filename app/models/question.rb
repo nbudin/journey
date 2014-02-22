@@ -5,7 +5,7 @@ class Question < ActiveRecord::Base
   has_one :questionnaire, :through => :page
   acts_as_list :scope => :page
   has_many :answers, :dependent => :destroy
-  has_one :special_field_association, :dependent => :destroy, :autosave => true
+  has_one :special_field_association, :dependent => :destroy, :autosave => true, :inverse_of => :question
   has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id', :autosave => true
   
   LAYOUTS = {
@@ -58,11 +58,14 @@ class Question < ActiveRecord::Base
   def purpose=(new_purpose)
     return new_purpose if purpose == new_purpose
     
-    if new_purpose.blank?
-      self.special_field_association = nil
-      new_purpose
-    else
-      self.build_special_field_association(purpose: new_purpose) unless self.special_field_association
+    new_purpose.tap do
+      if new_purpose.blank?
+        self.special_field_association = nil
+      elsif self.special_field_association
+        self.special_field_association.purpose = new_purpose
+      else
+        self.build_special_field_association(purpose: new_purpose)
+      end
     end
   end
   
@@ -71,6 +74,8 @@ class Question < ActiveRecord::Base
       question_options.each do |qo|
         c.question_options << QuestionOption.new(option: qo.option, position: qo.position, output_value: qo.output_value)
       end
+      
+      c.purpose = purpose
     end
   end
   

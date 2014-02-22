@@ -14,14 +14,6 @@ class Page < ActiveRecord::Base
     questionnaire.pages.index(self) + 1
   end
   
-  def deepclone
-    dup.tap do |c|
-      questions.each do |question|
-        c.questions << question.deepclone
-      end
-    end
-  end
-    
   private
   def set_untitled
     if self.title.blank?

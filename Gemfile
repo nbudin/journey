@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby "2.0.0"
 
 gem 'bundler'
-gem "rails", "3.2.14"
+gem "rails", "3.2.17"
 gem 'paginator'
 gem 'will_paginate'
 gem "mysql2"
@@ -14,7 +14,6 @@ gem 'airbrake'
 gem 'sequel', require: 'sequel/no_core_ext'
 gem 'dynamic_form'
 gem 'acts_as_list'
-gem 'sendgrid'
 gem 'thin'
 gem 'active_model_serializers'
 

@@ -1,7 +1,7 @@
 class Response < ActiveRecord::Base
   belongs_to :questionnaire, :include => [:special_field_associations]
   validates_associated :questionnaire
-  has_many :answers, :dependent => :destroy, :include => {:question => :question_options}
+  has_many :answers, :dependent => :destroy, :include => {:question => :question_options}, :inverse_of => :response
   belongs_to :person
   scope :valid, where("responses.id in (select response_id from answers)")
   scope :no_answer_for, lambda { |question|

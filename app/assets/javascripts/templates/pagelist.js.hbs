@@ -1,13 +1,13 @@
 <ul id="pagelist">
   {{#each page in questionnaire.pages}}
     <li>
-      {{#linkTo "page" page}}
+      {{#link-to "page" page}}
         <div class="draghandle"></div>
         <div class="caption">
           {{page.title}}
         </div>
         <button class="delete-page" {{action "deletePage" page bubbles=false}}></button>
-      {{/linkTo}}
+      {{/link-to}}
     </li>
   {{/each}}
 </ul>

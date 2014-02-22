@@ -19,8 +19,8 @@ gem 'active_model_serializers'
 
 gem 'jquery-rails'
 gem 'ember-rails'
-gem 'ember-source', '1.3.2'
-gem 'ember-data-source', '1.0.0.beta6'
+gem 'ember-source', '1.4.0'
+gem 'ember-data-source', '1.0.0.beta7'
 
 gem 'haml'
 gem 'haml-rails'

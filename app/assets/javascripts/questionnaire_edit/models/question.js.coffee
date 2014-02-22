@@ -1,5 +1,5 @@
 QuestionnaireEdit.Question = DS.Model.extend
-  page: DS.belongsTo 'QuestionnaireEdit.Page'
+  page: DS.belongsTo 'page'
   #questionOptions: DS.hasMany 'QuestionnaireEdit.QuestionOption'
   
   caption: DS.attr 'string'

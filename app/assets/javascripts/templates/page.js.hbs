@@ -95,15 +95,15 @@
 
 <!-- don't let the toolbox cover stuff -->
 <script type="text/javascript">
-function sizeToolboxSpacer() {
-  if (!viewportSizeChanged()) {
-    return;
-  }
-  newHeight = findPos($('toolbox'))[1] + 5;
-  $('toolboxspacer').style.height = newHeight + "px";
-}
-
-Event.observe(window, 'load', sizeToolboxSpacer);
-Event.observe(window, 'resize', sizeToolboxSpacer);
-Event.observe(window, 'load', function() { selectTab('specials'); });
+// function sizeToolboxSpacer() {
+//   if (!viewportSizeChanged()) {
+//     return;
+//   }
+//   newHeight = findPos($('toolbox'))[1] + 5;
+//   $('toolboxspacer').style.height = newHeight + "px";
+// }
+// 
+// Event.observe(window, 'load', sizeToolboxSpacer);
+// Event.observe(window, 'resize', sizeToolboxSpacer);
+// Event.observe(window, 'load', function() { selectTab('specials'); });
 </script>

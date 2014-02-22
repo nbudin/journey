@@ -75,7 +75,7 @@ GEM
       devise (>= 1.2.0)
       rubycas-client (>= 2.2.1)
     dynamic_form (1.1.4)
-    ember-data-source (1.0.0.beta.6)
+    ember-data-source (1.0.0.beta.7)
       ember-source
     ember-rails (0.14.1)
       active_model_serializers
@@ -86,8 +86,8 @@ GEM
       handlebars-source
       jquery-rails (>= 1.0.17)
       railties (>= 3.1)
-    ember-source (1.3.2)
-      handlebars-source (~> 1.2.1)
+    ember-source (1.4.0)
+      handlebars-source (~> 1.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.0.2)
@@ -104,7 +104,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
-    handlebars-source (1.2.1)
+    handlebars-source (1.3.0)
     heroku_external_db (1.0.3)
     hike (1.2.3)
     hoe (3.6.0)
@@ -244,9 +244,9 @@ DEPENDENCIES
   devise
   devise_cas_authenticatable
   dynamic_form
-  ember-data-source (= 1.0.0.beta6)
+  ember-data-source (= 1.0.0.beta7)
   ember-rails
-  ember-source (= 1.3.2)
+  ember-source (= 1.4.0)
   factory_girl_rails
   gruff (~> 0.3.6)
   haml

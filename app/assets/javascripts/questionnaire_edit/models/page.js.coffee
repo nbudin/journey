@@ -1,6 +1,6 @@
 QuestionnaireEdit.Page = DS.Model.extend
-  questionnaire: DS.belongsTo 'QuestionnaireEdit.Questionnaire'
-  questions: DS.hasMany 'QuestionnaireEdit.Question'
+  questionnaire: DS.belongsTo 'questionnaire'
+  questions: DS.hasMany 'question', async: true
   
   title: DS.attr 'string'
   

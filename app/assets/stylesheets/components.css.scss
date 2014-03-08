@@ -1,0 +1,28 @@
+.in-place-editor {
+  .display {
+    display: inline-block;
+    cursor: pointer;
+    
+    padding-right: 20px;
+    background-image: image-url("jipe/edit-field.png");
+    background-position: right 3px center;
+    background-repeat: no-repeat;
+    
+    @include transition (background-color 0.3s ease-in-out);
+    border-radius: 2px;
+  
+    &:hover {
+      background-color: #ffc;
+    }
+  }
+  
+  .edit a {
+    font-size: 12px;
+    font-weight: normal;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

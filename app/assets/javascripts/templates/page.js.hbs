@@ -1,6 +1,6 @@
 <div class="answerpage" id="answerpage">
-  <div class="pagetitle"><span id="page_title">{{title}}</span>
-    <!-- <%= image_tag("jipe/edit-field.png", { :id => "edit_page_title", :alt => "Edit page title", :title => "Edit page title" }) %> -->
+  <div class="pagetitle">
+    {{view QuestionnaireEdit.InPlaceEditorView valueBinding="title" modelBinding="model"}}
   </div>
 
   {{#if questionnaire.hasMultiplePages}}

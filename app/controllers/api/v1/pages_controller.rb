@@ -19,6 +19,11 @@ class Api::V1::PagesController < ApplicationController
   
   def destroy
     @page.destroy
-    respond_with @page.questionnaire, @page
+    head :ok
+  end
+  
+  def update
+    @page.update_attributes(params[:page])
+    head :ok
   end
 end

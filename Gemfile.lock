@@ -45,6 +45,9 @@ GEM
       execjs
       handlebars-source
     bcrypt-ruby (3.1.1)
+    bourbon (3.1.8)
+      sass (>= 3.2.0)
+      thor
     builder (3.0.4)
     cancan (1.6.9)
     capybara (2.1.0)
@@ -192,7 +195,7 @@ GEM
     rmagick (2.13.2)
     rubycas-client (2.3.9)
       activesupport
-    sass (3.2.10)
+    sass (3.2.14)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
@@ -235,6 +238,7 @@ DEPENDENCIES
   acts_as_list
   ae_users_migrator
   airbrake
+  bourbon
   bundler
   cancan
   capybara (>= 2.0.0)

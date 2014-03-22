@@ -11,4 +11,19 @@ class Api::V1::QuestionsController < ApplicationController
   def show
     respond_with @question
   end
+  
+  def create
+    @question = Question.create(params[:question])
+    respond_with @question.page.questionnaire, @question.page, @question
+  end
+  
+  def destroy
+    @question.destroy
+    head :ok
+  end
+  
+  def update
+    @question.update_attributes(params[:question])
+    head :ok
+  end
 end

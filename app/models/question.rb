@@ -15,6 +15,11 @@ class Question < ActiveRecord::Base
   
   validates_inclusion_of :layout, :in => LAYOUTS.values
   
+  # Don't protect the type attribute, we want to mass-assign it
+  def self.attributes_protected_by_default
+    ["id"]
+  end
+  
   def self.decorator_types
     [ Questions::Label, 
       Questions::Divider, 

@@ -4,3 +4,4 @@ QuestionnaireEdit.Question = DS.Model.extend
   
   caption: DS.attr 'string'
   type: DS.attr 'string'
+  position: DS.attr 'number'

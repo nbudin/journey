@@ -7,11 +7,7 @@
     <div class="pagecount">Page {{number}} of {{ questionnaire.pages.length }}</div>
   {{/if}}
 
-  <ul id="questions">
-    {{#each question in questions}}
-      {{edit-question question=question}}
-    {{/each}}
-  </ul>
+  {{outlet}}
 
     <%= sortable_element "questions", :handle => "draghandle",
         :url => url_for([:sort, @questionnaire, @page, :questions]),

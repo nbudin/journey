@@ -18,6 +18,7 @@ gem 'thin'
 gem 'active_model_serializers'
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'ember-rails'
 gem 'ember-source', '1.4.0'
 gem 'ember-data-source', '1.0.0.beta7'

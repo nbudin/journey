@@ -9,9 +9,6 @@
 
   {{outlet}}
 
-    <%= sortable_element "questions", :handle => "draghandle",
-        :url => url_for([:sort, @questionnaire, @page, :questions]),
-        :complete => "zebrifyQuestions();" %>
   <div class="navbuttons">
     {{#unless isFirstPage}}
       <input type="submit" value="<< Previous page"/>

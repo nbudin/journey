@@ -8,8 +8,8 @@ class Questionnaire < ActiveRecord::Base
   before_save :set_published_at
   before_save :set_closed_at
 
-  has_many :pages, :dependent => :destroy, :order => :position
-  has_many :responses, :dependent => :destroy, :order => "responses.id DESC", :include => [:answers, :questionnaire]
+  has_many :pages, :dependent => :destroy, :order => :position, :inverse_of => :questionnaire
+  has_many :responses, :dependent => :destroy, :order => "responses.id DESC", :include => [:answers, :questionnaire], :inverse_of => :questionnaire
   has_many :valid_responses, :order => "responses.id DESC", :class_name => "Response",
     :conditions => "responses.id in (select response_id from answers)", :include => [:answers, :questionnaire]
   has_many :valid_responses_for_export, :order => "responses.id DESC", :class_name => "Response",

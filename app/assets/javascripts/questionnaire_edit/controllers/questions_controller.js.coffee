@@ -6,3 +6,5 @@ QuestionnaireEdit.QuestionsController = Ember.ArrayController.extend
   
   sortProperties: ['position']
   sortAscending: true
+  
+  itemController: 'question'

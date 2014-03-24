@@ -1,0 +1,7 @@
+$icon_sprite_dimensions: true;
+
+@import "compass/utilities/sprites";
+@import "icon/*.png";
+@include all-icon-sprites;
+
+.icon { display: inline-block; }

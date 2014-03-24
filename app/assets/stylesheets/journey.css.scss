@@ -118,24 +118,28 @@ table.itemheader tr > td:first-child {
     width: 205px;
     overflow: hidden;
     position: relative;
-    background-image: url(<%= image_path "page-tab-gradient.png" %>);
+    background-image: image-url("page-tab-gradient.png");
 }
 
-#questionnaireedit #pages div.draghandle {
-  background-image: url(<%= image_path "drag-handle.png" %>);
-  float: left; 
-  width: 5px; 
-  overflow: hidden; 
-  background-color: #00f; 
-  left: -2px; 
-  top: -2px; 
-  position: relative; 
-  height: 19px; 
+.draghandle {
   cursor: move;   
+  display: inline-block;
+  vertical-align: middle;
+  background-image: image-url("drag-handle.png");
+  width: 5px; 
+  height: 19px; 
+  
+  #questionnaireedit #pages & {
+    float: left; 
+    overflow: hidden; 
+    left: -2px; 
+    top: -2px; 
+    position: relative; 
+  }
 }
 
 #questionnaireedit #pages .delete-page {
-  background-image: url(<%= image_path "delete.png" %>);
+  background-image: image-url("delete.png");
   width: 16px;
   height: 16px;
   border: none;
@@ -201,7 +205,7 @@ form.inplaceeditor-form {
     display: inline;
 }
 
-img.image_button {
+.image_button {
     cursor: pointer;
     vertical-align: middle;
     border: 0;
@@ -272,11 +276,11 @@ ul.tabstrip li.external a, ul.tabstrip li.dropdown a {
 }
 
 ul.tabstrip li.dropdown a {
-    background-image: url(<%= image_path "drop-down.png" %>);
+    background-image: image-url("drop-down.png");
 }
 
 ul.tabstrip li.external a {
-    background-image: url(<%= image_path "external-link.png" %>);
+    background-image: image-url("external-link.png");
 }
 
 
@@ -446,7 +450,7 @@ ul.dropdown li a:hover {
 	position: absolute;
 	right: 0px;
 	top: 0px;
-    background-image: url(<%=image_path "more-options.png" %>);
+    background-image: image-url("more-options.png");
 }
 
 .selected_dropdown_icon {
@@ -457,7 +461,7 @@ ul.dropdown li a:hover {
 	width: 16px;
 	height: 16px;
 	cursor: pointer;
-    background-image: url(<%=image_path "less-options.png" %>);
+    background-image: image-url("less-options.png");
 }
 
 .special_purpose {
@@ -585,7 +589,7 @@ label.overlabel {
     padding-left: 0;
     margin-left: 0;
     background-color: #666;
-    background-image: url(<%= image_path("white-fade.png") %>);
+    background-image: image-url("white-fade.png");
     background-repeat: repeat-x;
     background-position: bottom;
     cursor: default;
@@ -609,7 +613,7 @@ label.overlabel {
 }
 
 .globalnav li a:hover {
-    background-image: url(<%= image_path("white-fade.png") %>);
+    background-image: image-url("white-fade.png");
     background-repeat: repeat-x;
     background-position: 0% 75%;
 }

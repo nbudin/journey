@@ -1,6 +1,8 @@
 .in-place-editor {
+  display: inline;
+  
   .display {
-    display: inline-block;
+    display: inline;
     cursor: pointer;
     
     padding-right: 20px;

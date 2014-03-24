@@ -3,11 +3,12 @@ QuestionnaireEdit.Page = DS.Model.extend
   questions: DS.hasMany 'question', async: true
   
   title: DS.attr 'string'
+  position: DS.attr 'number'
   
   number: ( ->
-    pages = @get('questionnaire.pages')
+    pages = @get('questionnaire.pagesSorted')
     pages && (pages.indexOf(@) + 1)
-  ).property('questionnaire.pages')
+  ).property('questionnaire.pagesSorted')
   
   isFirstPage: ( ->
     @get('number') == 1

@@ -1,1 +1,34 @@
-{{view.content.position}} {{view.content.type}}
+<span class="draghandle" title="Drag to change question order"></span>
+
+<span class="questionandcaption">
+  {{#unless view.content.isDisplay}}
+    <label {{bind-attr class=":caption view.content.required:required" for="view.answerField.elementId"}}>
+      <span {{bind-attr class=":icon :image_button view.content.required:icon-required:icon-not-required"}} {{action "toggleRequired"}}>
+      </span>
+      
+      {{view QuestionnaireEdit.InPlaceEditorView valueBinding="view.content.caption" modelBinding="view.content"}}
+    </label>
+  {{/unless}}
+  <span class="questionbody">
+    {{#if view.content.hasPurpose}}
+      <span class="special_purpose">
+        <%= image_tag "set-special-purpose.png", :alt => "Special purpose field" %>
+        {{view.content.purpose}}
+      </span>
+    {{/if}}
+  
+    question body goes here
+      
+  </span>
+</span>
+
+<span class="moreoptions">
+  <span class="dropdown_icon" {{action "showOptions" target="view"}} title="More options..."></span>
+  {{#if view.optionsVisible}}
+    <ul class="dropdown">
+      <span class="selected_dropdown_icon" {{action "hideOptions" target="view"}} title="Hide options"></span>
+      
+      {{partial "question_options"}}
+    </ul>
+  {{/if}}
+</span>

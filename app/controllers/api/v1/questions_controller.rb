@@ -19,11 +19,11 @@ class Api::V1::QuestionsController < ApplicationController
   
   def destroy
     @question.destroy
-    head :ok
+    head :no_content
   end
   
   def update
     @question.update_attributes(params[:question])
-    head :ok
+    head :no_content
   end
 end

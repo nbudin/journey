@@ -32,6 +32,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'uglifier'
   gem 'bourbon'
+  gem 'compass-rails'
 end
 
 gem 'devise'

@@ -1,0 +1,61 @@
+{{#unless view.content.isDisplay}}
+  <li class="image_button" {{action "eraseDefaultAnswer"}}>
+    <span class="icon icon-clear-field" title="Erase default answer"></span>
+    Erase default answer
+  </li>
+{{/unless}}
+<% if question.respond_to? 'purpose' -%>
+      <li>
+            <% if @question.purpose.nil? -%>
+                    <%= link_to_function(image_tag("set-special-purpose.png", :class => "image_button",
+                                           :alt => "Set special purpose") + " Set special purpose",
+                                         "setSpecialPurpose(#{question.id}); toggleDropdown(#{question.id});") %>
+            <% else -%>
+                    <%= link_to_function(image_tag("unset-special-purpose.png", :class => "image_button",
+                                           :alt => "Remove special purpose") + " Remove special purpose (#{question.purpose})",
+                                         "setSpecialPurpose(#{question.id}, ''); toggleDropdown(#{question.id});") %>
+            <% end -%>
+      </li>
+<% end -%>
+<% if question.kind_of? Questions::Field -%>
+  <li>
+    <% if @question.layout == "left" %>
+      <%= link_to_function(image_tag("top-layout.png", :class => "image_button",
+                                     :alt => "Put question above answer") + " Put question above answer",
+                                     "setLayout(#{question.id}, 'top');") %>
+    <% else -%>
+      <%= link_to_function(image_tag("left-layout.png", :class => "image_button",
+                                     :alt => "Put question beside answer") + " Put question beside answer",
+                                     "setLayout(#{question.id}, 'left');") %>
+    <% end -%>
+  </li>
+<% end -%>
+<% if is_radio_group -%>
+  <li>
+    <% if @question.radio_layout == "vertical" %>
+      <%= link_to_function(image_tag("inline-radio-layout.png", :class => "image_button",
+                                   :alt => "Lay out options horizontally") + " Lay out options horizontally",
+                                   "setRadioLayout(#{question.id}, 'inline');") %>
+    <% else -%>
+      <%= link_to_function(image_tag("vertical-radio-layout.png", :class => "image_button",
+                                   :alt => "Lay out options vertically") + " Lay out options vertically",
+                                   "setRadioLayout(#{question.id}, 'vertical');") %>
+    <% end -%>
+  </li>
+<% end -%>
+<li>
+      <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
+                                     :alt => "Duplicate field") + " Duplicate field",
+                           "duplicateQuestion(#{question.id}, 1); toggleDropdown(#{question.id});") %>
+</li>
+<li>
+      <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
+                                     :alt => "Duplicate field many times") + " Duplicate field many times",
+                           "duplicateQuestion(#{question.id}, prompt('How many times?')); toggleDropdown(#{question.id});") %>
+</li>
+<li>                              
+  <%=link_to_function(image_tag("delete.png", :class => "image_button", :alt => "Delete field",
+                                :style => "padding: 0; margin: 0;") + " Delete field",
+                                "if (confirm('Do you really want to delete this question?')) { deleteQuestion(#{question.id}); }  toggleDropdown(#{question.id});",
+                                :style => "padding: 0; margin: 0;")%>
+</li>

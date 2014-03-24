@@ -14,6 +14,7 @@ QuestionnaireEdit.SortableView = Ember.CollectionView.extend
   didInsertElement: ->
     @$().sortable
       cursor: "move"
+      handle: @get('handle')
       start: (event, ui) -> ui.item.previousIndex = ui.item.index()
       stop: (event, ui) => @moveItem(ui.item.previousIndex, ui.item.index())
 

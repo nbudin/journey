@@ -1,12 +1,12 @@
 class Question < ActiveRecord::Base
   self.store_full_sti_class = true
   
-  belongs_to :page
+  belongs_to :page, :inverse_of => :questions
   has_one :questionnaire, :through => :page
   acts_as_list :scope => :page
-  has_many :answers, :dependent => :destroy
+  has_many :answers, :dependent => :destroy, :inverse_of => :question
   has_one :special_field_association, :dependent => :destroy, :autosave => true, :inverse_of => :question
-  has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id', :autosave => true
+  has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id', :autosave => true, :inverse_of => :question
   
   LAYOUTS = {
     :left => "left",

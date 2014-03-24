@@ -1,5 +1,5 @@
 class PageSerializer < ActiveModel::Serializer
-  attributes :id, :title, :questionnaire_id
+  attributes :id, :title, :questionnaire_id, :position
   
   has_many :questions, embed: :ids
 end

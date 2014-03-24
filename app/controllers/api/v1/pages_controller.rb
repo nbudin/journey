@@ -19,11 +19,11 @@ class Api::V1::PagesController < ApplicationController
   
   def destroy
     @page.destroy
-    head :ok
+    head :no_content
   end
   
   def update
     @page.update_attributes(params[:page])
-    head :ok
+    head :no_content
   end
 end

@@ -6,9 +6,9 @@ class Page < ActiveRecord::Base
   
   before_create :set_untitled
   
-  has_many :questions, :order => :position, :dependent => :destroy, :include => [:page, :question_options, :special_field_association]
-  has_many :fields, :class_name => 'Question', :order => :position, :conditions => { :type => Question.field_types.map(&:name) }
-  has_many :decorators, :class_name => 'Question', :order => :position, :conditions => { :type => Question.decorator_types.map(&:name) }
+  has_many :questions, :order => :position, :dependent => :destroy, :include => [:page, :question_options, :special_field_association], :inverse_of => :page
+  has_many :fields, :class_name => 'Question', :order => :position, :conditions => { :type => Question.field_types.map(&:name) }, :inverse_of => :page
+  has_many :decorators, :class_name => 'Question', :order => :position, :conditions => { :type => Question.decorator_types.map(&:name) }, :inverse_of => :page
     
   def number
     questionnaire.pages.index(self) + 1

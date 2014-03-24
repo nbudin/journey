@@ -1,14 +1,9 @@
-<ul id="pagelist">
-  {{#each page in questionnaire.pages}}
-    <li>
-      {{#link-to "page" page}}
-        <div class="draghandle"></div>
-        <div class="caption">
-          {{page.title}}
-        </div>
-        <button class="delete-page" {{action "deletePage" page bubbles=false}}></button>
-      {{/link-to}}
-    </li>
-  {{/each}}
-</ul>
-<!-- TODO sortable_element "pagelist", :handle => "draghandle", :url => url_for([:sort, @questionnaire, :pages]) -->
+{{#collection "QuestionnaireEdit.SortableView" contentBinding="questionnaire.pagesSorted" classNames="pagelist" handle=".draghandle"}}
+  {{#link-to "page" this}}
+    <div class="draghandle"></div>
+    <div class="caption">
+      {{title}}
+    </div>
+    <button class="delete-page" {{action "deletePage" this bubbles=false}}></button>
+  {{/link-to}}
+{{/collection}}

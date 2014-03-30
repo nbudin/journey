@@ -6,7 +6,7 @@
       <span {{bind-attr class=":icon :image_button view.content.required:icon-required:icon-not-required"}} {{action "toggleRequired"}}>
       </span>
       
-      {{view QuestionnaireEdit.InPlaceEditorView valueBinding="view.content.caption" modelBinding="view.content"}}
+      {{view QuestionnaireEdit.InPlaceEditorView valueBinding="view.content.caption" modelBinding="view.content" displayRawHtml=true}}
     </label>
   {{/unless}}
   <span class="questionbody">
@@ -17,7 +17,7 @@
       </span>
     {{/if}}
   
-    question body goes here
+    {{view QuestionnaireEdit.QuestionBodyView contentBinding="view.content"}}
       
   </span>
 </span>

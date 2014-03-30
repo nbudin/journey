@@ -6,11 +6,18 @@ QuestionnaireEdit.InPlaceEditorView = Ember.ContainerView.extend
   focusEditField: ( -> 
     @get('editFieldView').$().show().find('input').focus() if @get('editFieldView.isVisible')
   ).observes('editFieldView.isVisible')
+  displayRawHtml: false
     
   displayView: Ember.View.extend
     classNames: ['display']
     isVisibleBinding: 'parentView.displaying'
-    template: Ember.Handlebars.compile("{{view.parentView.value}}")
+    template: Ember.Handlebars.compile """
+    {{#if view.parentView.displayRawHtml}}
+      {{{view.parentView.value}}}
+    {{else}}
+      {{view.parentView.value}}
+    {{/if}}
+    """
     click: (evt) -> @get('parentView').startEditing()
     
   editFieldView: Ember.View.extend

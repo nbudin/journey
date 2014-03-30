@@ -23,7 +23,6 @@ QuestionnaireEdit.Question = DS.Model.extend
 
   rangeOptions: ( ->
     return [] unless @get('type') == "Questions::RangeField"
-    debugger
     options = ({value: i} for i in [parseInt(@get('min'))..parseInt(@get('max'))] by parseInt(@get('step')))
     
     length = options.length

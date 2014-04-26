@@ -3,7 +3,7 @@
 <span class="questionandcaption">
   {{#unless view.content.isDisplay}}
     <label {{bind-attr class=":caption view.content.required:required" for="view.answerField.elementId"}}>
-      <span {{bind-attr class=":icon :image_button view.content.required:icon-required:icon-not-required"}} {{action "toggleRequired"}}>
+      <span {{bind-attr class=":icon :image_button view.content.required:icon-required:icon-not-required"}} {{action "toggleRequired" target="view"}}>
       </span>
       
       {{view QuestionnaireEdit.InPlaceEditorView valueBinding="view.content.caption" modelBinding="view.content" displayRawHtml=true}}

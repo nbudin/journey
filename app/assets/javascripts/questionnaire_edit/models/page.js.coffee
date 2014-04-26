@@ -4,6 +4,8 @@ QuestionnaireEdit.Page = DS.Model.extend
   
   title: DS.attr 'string'
   position: DS.attr 'number'
+  questionsSorting: ['position']
+  questionsSorted: Ember.computed.sort('questions', 'questionsSorting')
   
   number: ( ->
     pages = @get('questionnaire.pagesSorted')

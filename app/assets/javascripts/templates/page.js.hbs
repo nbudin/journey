@@ -7,7 +7,7 @@
     <div class="pagecount">Page {{number}} of {{ questionnaire.pages.length }}</div>
   {{/if}}
 
-  {{outlet}}
+  {{view QuestionnaireEdit.QuestionsView contentBinding="questionsSorted"}}
 
   <div class="navbuttons">
     {{#unless isFirstPage}}
@@ -22,81 +22,3 @@
     {{/if}}
  </div>
 </div>
-
-<div id="toolboxspacer">
-</div>
-
-<div id="toolbox">
-  <div id="add_fields_toolbox">
-    <table style="width: 100%;">
-      <tr>
-        <td style="width: 8em;">
-          <b>Add Fields</b><br/>
-          <p style="font-size: 80%; line-height: 1.0; font-style: italic; margin-top: 2px;">Click any of these buttons to add that type of field to the page.</p>
-        </td>
-        <td>
-          <ul class="tabstrip alwaysopen" style="margin: 0;">
-	    	<li id="specials_tab"><%= link_to_function "Demographics", "selectTab('specials');" %></li>
-			<li id="fields_tab"><%= link_to_function "Questions", "selectTab('fields');" %></li>
-            <li id="decorators_tab"><%= link_to_function "Display elements", "selectTab('decorators');" %></li>
-          </ul>
-          <ul id="decorators" style="display: none; margin: 0;" class="tabpage">
-            <% Question.decorator_types.each do |klass| -%>
-              <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
-            <% end -%>
-          </ul>
-          <ul id="fields" style="display: none; margin: 0;" class="tabpage">
-            <% Question.field_types.each do |klass| -%>
-              <%= button_to_function h(klass.friendly_name), "addQuestion('#{klass.name}');" %>
-            <% end -%>
-          </ul>
-	  <ul id="specials" style="display: none; margin: 0;" class="tabpage">
-	    <% Questionnaire.special_field_purposes.each do |purpose| -%>
-	      <%= button_to_function h(purpose.humanize), "addQuestion('#{Questionnaire.special_field_type(purpose).name}', '#{purpose}');" %>
-            <% end -%>
-	  </ul>
-        </td>
-        <td style="text-align: right; vertical-align: top;">
-          <b><%= link_to_function "&darr;".html_safe,
-            "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle(); sizeToolboxSpacer();",
-            :style => "text-decoration: none; color: #754500;" %></b>
-          <br/>
-          <span class="button" onClick="setDefaultLayout('left');" id="left_layout"><%= image_tag("left-layout.png",
-			:alt => "Question beside answer", :title => "Question beside answer") %></span>
-          <br/>
-          <span class="button" onClick="setDefaultLayout('top');" id="top_layout"><%= image_tag("top-layout.png",
-			:alt => "Question above ansewr", :title => "Question above answer") %></span>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div id="add_fields_toolbox_hidden" style="display: none;">
-    <table style="width: 100%;">
-      <tr>
-        <td>
-          <b>Add Fields</b>
-        </td>
-        <td style="text-align: right;">   
-          <b><%= link_to_function "&uarr;".html_safe,
-            "$('add_fields_toolbox').toggle(); $('add_fields_toolbox_hidden').toggle(); sizeToolboxSpacer();",
-            :style => "text-decoration: none; color: #754500;" %></b>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-
-<!-- don't let the toolbox cover stuff -->
-<script type="text/javascript">
-// function sizeToolboxSpacer() {
-//   if (!viewportSizeChanged()) {
-//     return;
-//   }
-//   newHeight = findPos($('toolbox'))[1] + 5;
-//   $('toolboxspacer').style.height = newHeight + "px";
-// }
-// 
-// Event.observe(window, 'load', sizeToolboxSpacer);
-// Event.observe(window, 'resize', sizeToolboxSpacer);
-// Event.observe(window, 'load', function() { selectTab('specials'); });
-</script>

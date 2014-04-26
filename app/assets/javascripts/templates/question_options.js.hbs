@@ -1,61 +1,53 @@
 {{#unless view.content.isDisplay}}
-  <li class="image_button" {{action "eraseDefaultAnswer"}}>
+  <li class="image_button" {{action "eraseDefaultAnswer" target="view"}}>
     <span class="icon icon-clear-field" title="Erase default answer"></span>
     Erase default answer
   </li>
+  {{#if view.content.purpose}}
+    <li class="image_button">
+      <span class="icon icon-unset-special-purpose" title="Remove special purpose"></span>
+      Remove special purpose
+    </li>
+  {{else}}
+    <li class="image_button">
+      <span class="icon icon-set-special-purpose" title="Set special purpose"></span>
+      Set special purpose
+    </li>
+  {{/if}}
+  {{#if view.isLeftLayout}}
+    <li class="image_button" {{action "setLayout" "top" target="view"}}>
+      <span class="icon icon-top-layout" title="Put question above answer"></span>
+      Put question above answer
+    </li>
+  {{else}}
+    <li class="image_button" {{action "setLayout" "left" target="view"}}>
+      <span class="icon icon-left-layout" title="Put question beside answer"></span>
+      Put question beside answer
+    </li>
+  {{/if}}
 {{/unless}}
-<% if question.respond_to? 'purpose' -%>
-      <li>
-            <% if @question.purpose.nil? -%>
-                    <%= link_to_function(image_tag("set-special-purpose.png", :class => "image_button",
-                                           :alt => "Set special purpose") + " Set special purpose",
-                                         "setSpecialPurpose(#{question.id}); toggleDropdown(#{question.id});") %>
-            <% else -%>
-                    <%= link_to_function(image_tag("unset-special-purpose.png", :class => "image_button",
-                                           :alt => "Remove special purpose") + " Remove special purpose (#{question.purpose})",
-                                         "setSpecialPurpose(#{question.id}, ''); toggleDropdown(#{question.id});") %>
-            <% end -%>
-      </li>
-<% end -%>
-<% if question.kind_of? Questions::Field -%>
-  <li>
-    <% if @question.layout == "left" %>
-      <%= link_to_function(image_tag("top-layout.png", :class => "image_button",
-                                     :alt => "Put question above answer") + " Put question above answer",
-                                     "setLayout(#{question.id}, 'top');") %>
-    <% else -%>
-      <%= link_to_function(image_tag("left-layout.png", :class => "image_button",
-                                     :alt => "Put question beside answer") + " Put question beside answer",
-                                     "setLayout(#{question.id}, 'left');") %>
-    <% end -%>
-  </li>
-<% end -%>
-<% if is_radio_group -%>
-  <li>
-    <% if @question.radio_layout == "vertical" %>
-      <%= link_to_function(image_tag("inline-radio-layout.png", :class => "image_button",
-                                   :alt => "Lay out options horizontally") + " Lay out options horizontally",
-                                   "setRadioLayout(#{question.id}, 'inline');") %>
-    <% else -%>
-      <%= link_to_function(image_tag("vertical-radio-layout.png", :class => "image_button",
-                                   :alt => "Lay out options vertically") + " Lay out options vertically",
-                                   "setRadioLayout(#{question.id}, 'vertical');") %>
-    <% end -%>
-  </li>
-<% end -%>
-<li>
-      <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
-                                     :alt => "Duplicate field") + " Duplicate field",
-                           "duplicateQuestion(#{question.id}, 1); toggleDropdown(#{question.id});") %>
+{{#if isRadio}}
+  {{#if isVerticalRadioLayout}}
+    <li class="image_button" {{action "setRadioLayout" "inline" target="view"}}>
+      <span class="icon icon-inline-radio-layout" title="Lay out options horizontally"></span>
+      Lay out options horizontally
+    </li>
+  {{else}}
+    <li class="image_button" {{action "setRadioLayout" "vertical" target="view"}}>
+      <span class="icon icon-vertical-radio-layout" title="Lay out options vertically"></span>
+      Lay out options vertically
+    </li>
+  {{/if}}
+{{/if}}
+<li class="image_button">
+  <span class="icon icon-duplicate" title="Duplicate field"></span>
+  Duplicate field
 </li>
-<li>
-      <%= link_to_function(image_tag("duplicate.png", :class => "image_button",
-                                     :alt => "Duplicate field many times") + " Duplicate field many times",
-                           "duplicateQuestion(#{question.id}, prompt('How many times?')); toggleDropdown(#{question.id});") %>
+<li class="image_button">
+  <span class="icon icon-duplicate" title="Duplicate field many times"></span>
+  Duplicate field many times
 </li>
-<li>                              
-  <%=link_to_function(image_tag("delete.png", :class => "image_button", :alt => "Delete field",
-                                :style => "padding: 0; margin: 0;") + " Delete field",
-                                "if (confirm('Do you really want to delete this question?')) { deleteQuestion(#{question.id}); }  toggleDropdown(#{question.id});",
-                                :style => "padding: 0; margin: 0;")%>
+<li class="image_button">
+  <span class="icon icon-delete" title="Delete field"></span>
+  Delete field
 </li>

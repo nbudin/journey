@@ -1,0 +1,119 @@
+#questionnaire_edit {
+  #edit-toolbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300px;
+    border-right: 2px black solid;
+    padding: 5px;
+    
+    background-color: #555;
+    color: #bad032;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: Share, sans-serif;
+  }
+  
+  .add-fields-menu {
+    .ui-accordion-header {
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 1px 2px;
+      margin: 2px;
+      margin-top: 5px;
+      
+      &::before {
+        content: "▸ ";
+      }
+      
+      &.ui-accordion-header-active::before {
+        content: "▾ ";
+      }
+    }
+    
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+    
+    li {
+      list-style-type: none;
+      margin: 2px;
+      margin-left: 10px;
+      padding: 1px 2px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+  
+  .pagelist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    margin-bottom: 0.5em;
+    
+    .delete-page {
+      background-image: image-url("delete.png");
+      width: 16px;
+      height: 16px;
+      border: none;
+      cursor: pointer;
+      position: absolute; 
+      right: 2px;
+    }
+    
+    li a {
+        border: 0;
+        border-bottom: 1px #666 solid;
+        border-left: 1px #666 solid;
+        margin: 0;
+        background-color: #ddd;
+        padding: 2px;
+        height: 16px;
+        display: block;
+        cursor: pointer;
+        width: 205px;
+        overflow: hidden;
+        position: relative;
+        background-image: image-url("page-tab-gradient.png");
+    }
+    
+
+    li .active {
+        border-right: 0;
+        background-color: #fff;
+        background-image: none;
+    }
+
+    li .caption {
+        width: 182px; /* +5px if we get rid of drag handles */
+        overflow: hidden;
+        white-space: nowrap;
+        line-height: 16px;
+        text-align: right;
+        position: absolute;
+        top: 0;
+        right: 20px;
+    }
+  }
+  
+  .answerpage {
+    margin: 10px;
+  }
+  
+  .page-boundary {
+    width: 100%;
+    height: 100px;
+    background-repeat: repeat-x;
+    background-image: image-url("torn-graphpad.png");
+    opacity: 0.8;
+  }
+}

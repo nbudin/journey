@@ -3,7 +3,7 @@ class Api::V1::QuestionsController < ApplicationController
   load_and_authorize_resource except: [:index]
     
   def index
-    scope = Question.accessible_by(current_ability)
+    scope = Question.accessible_by(current_ability).includes(:question_options)
     scope = scope.where(id: params[:ids]) if params[:ids].present?
     respond_with scope.all
   end
@@ -13,7 +13,13 @@ class Api::V1::QuestionsController < ApplicationController
   end
   
   def create
-    @question = Question.create(params[:question])
+    @question = Question.new(params[:question])
+    @question.caption ||= case @question
+    when Questions::Field then "Click here to type a question."
+    else ""
+    end
+    @question.save
+    
     respond_with @question.page.questionnaire, @question.page, @question
   end
   

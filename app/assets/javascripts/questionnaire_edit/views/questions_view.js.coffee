@@ -4,7 +4,6 @@
 QuestionnaireEdit.QuestionsView = QuestionnaireEdit.SortableView.extend
   classNames: ["questions"]
   itemViewClass: QuestionnaireEdit.QuestionView
-  contentBinding: "controller"
   
   rezebrify: ->
     i = 1

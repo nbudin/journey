@@ -5,13 +5,13 @@ QuestionnaireEdit.Question = DS.Model.extend
   caption: DS.attr 'string'
   type: DS.attr 'string'
   position: DS.attr 'number'
-  layout: DS.attr 'string'
-  radioLayout: DS.attr 'string'
+  layout: DS.attr 'string', defaultValue: 'left'
+  radioLayout: DS.attr 'string', defaultValue: 'inline'
   required: DS.attr 'boolean'
   defaultAnswer: DS.attr 'string'
-  min: DS.attr 'number'
-  max: DS.attr 'number'
-  step: DS.attr 'number'
+  min: DS.attr 'number', defaultValue: 0
+  max: DS.attr 'number', defaultValue: 0
+  step: DS.attr 'number', defaultValue: 1
   
   isDisplay: ( ->
     @get('type') in ["Questions::Divider", "Questions::Heading", "Questions::Label"]

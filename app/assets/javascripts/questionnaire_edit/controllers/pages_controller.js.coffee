@@ -2,17 +2,30 @@ QuestionnaireEdit.PagesController = Ember.ArrayController.extend
   questionnaire: null
   needs: "questionnaire"
   questionnaireBinding: "controllers.questionnaire"
-
-  createPage: ->
-    page = @get('store').createRecord QuestionnaireEdit.Page,
-      questionnaire: @get('questionnaire.content')
-      
-    page.save()
-    @transitionToRoute 'page', page
+  contentBinding: "questionnaire.pages"
+  itemController: 'page'
+  defaultLayout: 'left'
+  
+  actions:
+    addQuestion: (type, purpose) ->
+      question = this.store.createRecord 'question',
+        page: @get('model')
+        type: type
+        purpose: purpose
+        layout: @get('defaultLayout')
+      question.save().then =>
+        @get('questions').addObject(question)
     
-  deletePage: (page) ->
-    if confirm("Do you really want to delete the page \"#{page.get 'title'}\"?")
-      page.deleteRecord()
-      page.save()
+    createPage: ->
+      page = @get('store').createRecord QuestionnaireEdit.Page,
+        questionnaire: @get('questionnaire.content')
       
-      @transitionToRoute 'pages'
+      page.save()
+      @transitionToRoute 'page', page
+    
+    deletePage: (page) ->
+      if confirm("Do you really want to delete the page \"#{page.get 'title'}\"?")
+        page.deleteRecord()
+        page.save()
+      
+        @transitionToRoute 'pages'

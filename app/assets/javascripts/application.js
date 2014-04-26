@@ -13,6 +13,8 @@
 
 //= require jquery
 //= require jquery.ui.sortable
+//= require jquery.ui.tabs
+//= require jquery.ui.accordion
 //= require handlebars
 //= require ember
 //= require ember-data

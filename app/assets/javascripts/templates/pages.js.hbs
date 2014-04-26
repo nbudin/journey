@@ -1,17 +1,48 @@
-<table id="questionnaireedit">
-  <tr style="height: 16px;">
-    <td id="pagesheading" style="top: -3px;">Pages</td>
-    <td id="pageheading"><span id="pagetitle"></span></td>
-  </tr>
-  <tr>
-    <td id="pages">
-      {{partial "pagelist"}}
-      <button {{action createPage}}>Create New Page</button>
-    </td>
-    <td id="editpage">
-      <div id="pageview" name="pageview" frameborder="0">
-        {{outlet}}
-      </div>
-    </td>
-  </tr>
-</table>
+<div id="edit-toolbar">
+  {{partial "pagelist"}}
+  <button {{action createPage}}>Create New Page</button>
+
+  <section>
+    <h2>Add Fields</h2>
+    
+    <p>Choose a type of field to add to the survey.</p>
+    
+    <div class="add-fields-menu">
+      <h3>Demographics</h3>
+      <ul>
+        <li {{action "addQuestion" "Questions::TextField" "name"}}>Name</li>
+        <li {{action "addQuestion" "Questions::BigTextField" "address"}}>Address</li>
+        <li {{action "addQuestion" "Questions::TextField" "phone"}}>Phone</li>
+        <li {{action "addQuestion" "Questions::TextField" "email"}}>Email</li>
+        <li {{action "addQuestion" "Questions::TextField" "gender"}}>Gender</li>
+      </ul>
+      <h3>Questions</h3>
+      <ul>
+        <li {{action "addQuestion" "Questions::TextField"}}>Freeform</li>
+        <li {{action "addQuestion" "Questions::BigTextField"}}>Big freeform</li>
+        <li {{action "addQuestion" "Questions::RangeField"}}>Numeric range</li>
+        <li {{action "addQuestion" "Questions::CheckBoxField"}}>Check box</li>
+        <li {{action "addQuestion" "Questions::DropDownField"}}>Drop-down menu</li>
+        <li {{action "addQuestion" "Questions::RadioField"}}>Radio buttons</li>
+      </ul>
+      <h3>Display Elements</h3>
+      <ul>
+        <li {{action "addQuestion" "Questions::Label"}}>Display text</li>
+        <li {{action "addQuestion" "Questions::Divider"}}>Divider</li>
+        <li {{action "addQuestion" "Questions::Heading"}}>Heading</li>
+      </ul>
+    </div>
+    <div class="hidable">
+      <span class="button icon icon-left-layout" title="Question beside answer"></span>
+      <br/>
+      <span class="button icon icon-top-layout" title="Question above answer"></span>
+    </div>
+  </div>
+</div>
+
+<div id="editpage">
+  {{#each}}
+    {{view QuestionnaireEdit.PageView contentBinding="this"}}
+    <div class="page-boundary"></div>
+  {{/each}}
+</div>

@@ -103,6 +103,7 @@ class QuestionnairesController < ApplicationController
 
   # GET /questionnaires/1;edit
   def edit
+    render layout: "questionnaire_edit"
   end
   
   # GET /questionnaires/1;customize

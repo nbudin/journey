@@ -105,22 +105,6 @@ table.itemheader tr > td:first-child {
     height: 480px;
 }
 
-#questionnaireedit #pages li a {
-    border: 0;
-    border-bottom: 1px #666 solid;
-    border-left: 1px #666 solid;
-    margin: 0;
-    background-color: #ddd;
-    padding: 2px;
-    height: 16px;
-    display: block;
-    cursor: pointer;
-    width: 205px;
-    overflow: hidden;
-    position: relative;
-    background-image: image-url("page-tab-gradient.png");
-}
-
 .draghandle {
   cursor: move;   
   display: inline-block;
@@ -129,7 +113,7 @@ table.itemheader tr > td:first-child {
   width: 5px; 
   height: 19px; 
   
-  #questionnaireedit #pages & {
+  #pages & {
     float: left; 
     overflow: hidden; 
     left: -2px; 
@@ -138,50 +122,14 @@ table.itemheader tr > td:first-child {
   }
 }
 
-#questionnaireedit #pages .delete-page {
-  background-image: image-url("delete.png");
-  width: 16px;
-  height: 16px;
-  border: none;
-  cursor: pointer;
-  position: absolute; 
-  right: 2px;
-}
-
-#questionnaireedit #pages li a.active {
-    border-right: 0;
-    background-color: #fff;
-    background-image: none;
-}
-
-#questionnaireedit #pages li div.caption {
-    width: 182px; /* +5px if we get rid of drag handles */
-    overflow: hidden;
-    white-space: nowrap;
-    line-height: 16px;
-    text-align: right;
-    position: absolute;
-    right: 20px;
-}
-
-/* #questionnaireedit #pages li.page a {
-   float: right;
-   clear: none;
-} */
-
-#questionnaireedit #pages ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border: none;
-    margin-bottom: 0.5em;
-}
-
-#questionnaireedit #pageview {
-    border: 1px black solid;
-    width: 100%;
-    height: 100%;
+#questionnaireedit .pageview {
+  border: 1px black solid;
+  width: 100%;
+  height: 100%;
 	margin-top: -1px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 div.vertical-fill {
@@ -260,7 +208,7 @@ ul.tabstrip li.disabled a, ul.tabstrip li.selected a {
     cursor: default;
 }
 
-ul.tabstrip li.selected a {
+ul.tabstrip li.selected a, ul.tabstrip li.ui-state-active a {
     background-color: #fff;
 }
 
@@ -333,59 +281,60 @@ div.tabpage {
 }
 
 div#toolbox {
-    background-color: #ffc675;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    color: #754500;
-}
+  background-color: #ffc675;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  color: #754500;
+  padding-top: 2px;
+  
+  &.hidden .hidable {
+    display: none;
+  }
 
-div#toolbox ul {
+  ul {
     padding-left: 0.5em;
-}
-
-div#toolbox ul li {
-    display: inline;
-}
-
-div#toolbox ul.tabstrip {
-    border-bottom: 1px black solid;
-    margin-bottom: 0;
-}
-
-div#toolbox ul.tabstrip li a {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    padding-top: 2px;
-    padding-bottom: 0px;
-    margin-bottom: 2px;
-    background-image: none;
-    background-color: #754500;
-    border: 1px #512f00 solid;
-    color: #ffd99c;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-div#toolbox ul.tabstrip li.selected a {
-    background-color: #ffd99c;
-    color: #754500;
-    border-bottom-color: #ffd99c;
-}
-
-div#toolbox ul.tabstrip li.selected a {
-    color: #754500;
-}
-
-div#toolbox .tabpage {
+      
+    li {  
+      display: inline;
+    }
+    
+    &.tabstrip {
+      border-bottom: 1px black solid;
+      margin-bottom: 0;      
+      
+      li a {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        padding-top: 2px;
+        padding-bottom: 0px;
+        margin-bottom: 2px;
+        background-image: none;
+        background-color: #754500;
+        border: 1px #512f00 solid;
+        color: #ffd99c;
+        font-weight: bold;
+        text-decoration: none;
+      }
+      
+      li.ui-state-active a {
+        background-color: #ffd99c;
+        color: #754500;
+        border-bottom-color: #ffd99c;
+        color: #754500;        
+      }
+    }
+  }
+  
+  .tabpage {
     background-color: #ffd99c;
     margin-top: 0;
     padding-top: 1em;
     padding-bottom: 1em;
-}
-
-div#toolbox input[type='button'], div#toolbox .button {
+  }
+  
+  input[type='button'], .button, button {
     border: #754500 1px solid;
     color: #512f00;
     background-color: #ffa92e;
@@ -394,27 +343,26 @@ div#toolbox input[type='button'], div#toolbox .button {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+  }
+  
+  .button {
+    border: none;
+    background-color: #ffd99c;
+    height: 16px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    
+    &.selected {
+      border: #754500 1px solid;
+      background-color: #ffa92e;
+      padding: 2px;
+    }
+    
+    &:hover {
+      background-color: #ffa92e;      
+    }
+  }
 }
-
-div#toolbox .button {
-  border: none;
-  background-color: #ffd99c;
-  height: 16px;
-  margin-bottom: 2px;
-  cursor: pointer;
-}
-
-div#toolbox .button.selected {
-  border: #754500 1px solid;
-  background-color: #ffa92e;
-  padding: 2px;
-}
-
-div#toolbox .button:hover {
-  background-color: #ffa92e;
-}
-
-
 
 ul.dropdown {
     position: relative;

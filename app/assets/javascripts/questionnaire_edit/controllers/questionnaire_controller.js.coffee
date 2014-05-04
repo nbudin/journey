@@ -12,7 +12,10 @@ QuestionnaireEdit.QuestionnaireController = Ember.ObjectController.extend
     deletePage: (page) ->
       if confirm("Do you really want to delete the page \"#{page.get 'title'}\"?")
         page.deleteRecord()
-        page.save().then (=> @transitionToRoute 'pages'), ((error) -> debugger; alert(error))
+        page.save().then (=>
+          @get('pages').then => @get('pages').removeObject(page)
+          @transitionToRoute 'pages'
+        ), (error) -> alert(error)
           
         
       

@@ -3,8 +3,7 @@
 QuestionnaireEdit.Router.map ()->
   @resource 'questionnaire', ->
     @resource 'pages', ->
-      @resource 'page', path: ':page_id', ->
-        @resource 'questions'
+      @resource 'page', path: ':page_id'
       
 QuestionnaireEdit.IndexRoute = Ember.Route.extend
   redirect: -> this.transitionTo('pages')

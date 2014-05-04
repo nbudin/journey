@@ -1,3 +1,6 @@
+<script type="text/javascript">
+window.questionnaireData = <%=raw QuestionnaireSerializer.new(@questionnaire).to_json %>;
+</script>
 <%= javascript_include_tag "questionnaire_edit/questionnaire_edit" %>
 
 <div id="questionnaire_edit" data-questionnaire-id="<%= @questionnaire.id %>"></div>

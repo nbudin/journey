@@ -1,0 +1,10 @@
+<div id="edit-toolbar">
+  {{partial "pagelist"}}
+  <button {{action createPage}}>Create New Page</button>
+
+  {{outlet page_controls}}
+</div>
+
+<div id="editpage">
+  {{outlet}}
+</div>

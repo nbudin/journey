@@ -18,7 +18,7 @@ QuestionnaireEdit.Question = DS.Model.extend
   ).property('type')
   
   hasPurpose: ( ->
-    @get('purpose') && @get('purpose').trim() != ''
+    !Ember.isBlank(@get('purpose'))
   ).property('purpose')
 
   rangeOptions: ( ->

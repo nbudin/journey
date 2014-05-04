@@ -1,9 +1,11 @@
-{{#collection "QuestionnaireEdit.SortableView" contentBinding="questionnaire.pagesSorted" classNames="pagelist" handle=".draghandle"}}
-  {{#link-to "page" this}}
-    <div class="draghandle"></div>
-    <div class="caption">
-      {{title}}
-    </div>
-    <button class="delete-page" {{action "deletePage" this bubbles=false}}></button>
+{{#collection "QuestionnaireEdit.SortableView" contentBinding="pagesSorted" classNames="pagelist" handle=".draghandle"}}
+  {{#link-to "page" this tagName="div" href=false}}
+    <a {{action "setCurrentPage" this}}>
+      <div class="draghandle"></div>
+      <div class="caption">
+        {{title}}
+      </div>
+      <button class="delete-page" {{action "deletePage" this bubbles=false}}></button>
+    </a>
   {{/link-to}}
 {{/collection}}

@@ -1,3 +1,8 @@
+#= require handlebars
+#= require ember
+#= require ember-data
+#= require underscore.string
+
 #= require_self
 #= require ./store
 #= require_tree ./models
@@ -11,3 +16,9 @@
 
 window.QuestionnaireEdit = Ember.Application.create
   rootElement: "#questionnaire_edit"
+  
+QuestionnaireEdit.initializer
+  name: "preloadQuestionnaire"
+  initialize: (container, app) ->
+    if window.questionnaireData
+      container.lookup('store:main').pushPayload 'questionnaire', window.questionnaireData

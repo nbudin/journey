@@ -25,6 +25,7 @@ module Journey
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false
+    config.assets.precompile += ["questionnaire_edit/questionnaire_edit.js"]
     
     config.generators do |g|
       g.test_framework :mini_test, :spec => true, :fixture => false

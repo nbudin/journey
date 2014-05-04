@@ -5,6 +5,7 @@ QuestionnaireEdit.PagesController = Ember.ArrayController.extend
   contentBinding: "questionnaire.pages"
   itemController: 'page'
   defaultLayout: 'left'
+  currentPage: null
   
   actions:
     addQuestion: (type, purpose) ->

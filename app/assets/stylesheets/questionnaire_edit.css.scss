@@ -87,7 +87,7 @@
     }
     
 
-    li .active {
+    li .active a {
         border-right: 0;
         background-color: #fff;
         background-image: none;
@@ -107,6 +107,12 @@
   
   .answerpage {
     margin: 10px;
+    border: 1px transparent solid;
+  }
+  
+  .active .answerpage {
+    border: 1px rgba(85, 85, 85, 0.5) solid;
+    box-shadow: 0 0 10px 2px #bad032;
   }
   
   .page-boundary {

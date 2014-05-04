@@ -35,10 +35,9 @@ GEM
     addressable (2.3.4)
     ae_users_migrator (1.0.5)
       activerecord (>= 2.3)
-    airbrake (3.1.12)
-      activesupport
+    airbrake (3.1.16)
       builder
-      json
+      multi_json
     arel (3.0.3)
     barber (0.4.2)
       ember-source
@@ -163,7 +162,7 @@ GEM
       minitest-matchers (~> 1.2)
       minitest-metadata (~> 0.3)
       minitest-rails (~> 0.9.1)
-    multi_json (1.9.2)
+    multi_json (1.9.3)
     mysql2 (0.3.11)
     newrelic_rpm (3.7.3.204)
     nokogiri (1.6.0)

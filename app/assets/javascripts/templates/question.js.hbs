@@ -5,23 +5,23 @@
     <p>Click to edit</p>
   </div>
   
-  {{#unless view.content.isDisplay}}
+  {{#unless isDisplay}}
     <label {{bind-attr class=":caption view.content.required:required" for="view.answerField.elementId"}}>
       <span {{bind-attr class=":icon :image_button view.content.required:icon-required:icon-not-required"}} {{action "toggleRequired" target="view"}}>
       </span>
       
-      {{view QuestionnaireEdit.InPlaceEditorView valueBinding="view.content.caption" modelBinding="view.content" displayRawHtml=true}}
+      {{view QuestionnaireEdit.InPlaceEditorView valueBinding="caption" modelBinding="this" displayRawHtml=true}}
     </label>
   {{/unless}}
   <span class="questionbody">
-    {{#if view.content.hasPurpose}}
+    {{#if hasPurpose}}
       <span class="special_purpose">
         <span class="icon icon-set-special-purpose"></span>
-        {{view.content.purpose}}
+        {{purpose}}
       </span>
     {{/if}}
   
-    {{view QuestionnaireEdit.QuestionBodyView contentBinding="view.content"}}
+    {{view QuestionnaireEdit.QuestionBodyView contentBinding="this"}}
       
   </span>
 </span>

@@ -3,7 +3,8 @@
 
 QuestionnaireEdit.QuestionsView = QuestionnaireEdit.SortableView.extend
   classNames: ["questions"]
-  itemViewClass: QuestionnaireEdit.QuestionView
+  itemViewClass: Ember.View.extend
+    template: Ember.Handlebars.compile('{{render "question" view.content}}')
   
   rezebrify: ->
     i = 1

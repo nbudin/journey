@@ -1,3 +1,18 @@
+@mixin edit-highlight($shadow-radius) {
+  border: 1px rgba(85, 85, 85, 0.5) solid;
+  box-shadow: 0 0 $shadow-radius 2px #bad032;
+}
+
+@mixin editor-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
 #questionnaire_edit {
   #edit-toolbar {
     position: fixed;
@@ -43,13 +58,7 @@
       margin: 2px;
       margin-left: 10px;
       padding: 1px 2px;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
-      cursor: pointer;
-      
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-      }
+      @include editor-button;
     }
   }
   
@@ -111,8 +120,7 @@
   }
   
   .active .answerpage {
-    border: 1px rgba(85, 85, 85, 0.5) solid;
-    box-shadow: 0 0 10px 2px #bad032;
+    @include edit-highlight(10px);
   }
   
   .page-boundary {
@@ -122,15 +130,59 @@
     background-image: image-url("torn-graphpad.png");
     opacity: 0.8;
   }
+  
+  .question.edit-mode {
+    margin: 5px;
+    width: calc(100% - 10px);
+    padding-bottom: 0;
+    
+    @include edit-highlight(5px);
+    
+    .edit-controls {
+      position: relative;
+      margin-top: 2px;
+      padding: 2px;
+
+      background-color: #555;
+      color: #bad032;
+      
+      .close {
+        color: #aaa;
+        font-weight: bold;
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        display: inline-block;
+        cursor: pointer;
+        
+        &:hover {
+          color: #fff;
+        }
+      }
+      
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+          display: inline-block;
+          padding: 0 5px;
+          @include editor-button;
+        }
+      }
+    }
+  }
 }
 
 .edit-mode-overlay {
   position: absolute;
   display: block;
-  width: 100%;
+  width: 95%;
+  width: calc(100% - 7px);
   height: 100%;
   top: 0;
-  left: 0;
+  left: 7px;
   
   background-color: transparent;
   color: transparent;

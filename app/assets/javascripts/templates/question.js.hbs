@@ -1,18 +1,15 @@
 <span class="draghandle" title="Drag to change question order"></span>
 
 <span class="questionandcaption">
-  <div class="edit-mode-overlay" {{action toggleEditMode}}>
-    <p>Click to edit</p>
-  </div>
-  
-  {{#unless isDisplay}}
-    <label {{bind-attr class=":caption view.content.required:required" for="view.answerField.elementId"}}>
-      <span {{bind-attr class=":icon :image_button view.content.required:icon-required:icon-not-required"}} {{action "toggleRequired" target="view"}}>
-      </span>
-      
-      {{view QuestionnaireEdit.InPlaceEditorView valueBinding="caption" modelBinding="this" displayRawHtml=true}}
-    </label>
+  {{#unless view.editMode}}
+    <div class="edit-mode-overlay" {{action toggleEditMode target="view"}}>
+      <p>Click to edit</p>
+    </div>
   {{/unless}}
+  
+  <label {{bind-attr class=":caption required:required" for="view.answerField.elementId"}}>
+    {{caption}}
+  </label>
   <span class="questionbody">
     {{#if hasPurpose}}
       <span class="special_purpose">
@@ -21,18 +18,32 @@
       </span>
     {{/if}}
   
-    {{view QuestionnaireEdit.QuestionBodyView contentBinding="this"}}
+    {{view QuestionnaireEdit.QuestionBodyView contentBinding="this" editModeBinding="view.editMode"}}
       
   </span>
 </span>
 
-<span class="moreoptions">
-  <span class="dropdown_icon" {{action "showOptions" target="view"}} title="More options..."></span>
-  {{#if view.optionsVisible}}
-    <ul class="dropdown">
-      <span class="selected_dropdown_icon" {{action "hideOptions" target="view"}} title="Hide options"></span>
-      
+{{#if view.editMode}}
+  <div class="edit-controls">
+    <a class="close" {{action toggleEditMode target="view"}}>x</a>
+    
+    <form>
+      <label>
+        Caption
+        {{input type="text" value=caption}}
+      </label>
+      <label>
+        {{input type="checkbox" checked=required}}
+        Required
+      </label>
+      <label>
+        Default answer
+        {{input type="text" value=defaultAnswer}}
+      </label>
+    </form>
+    
+    <ul>
       {{partial "question_options"}}
     </ul>
-  {{/if}}
-</span>
+  </div>
+{{/if}}

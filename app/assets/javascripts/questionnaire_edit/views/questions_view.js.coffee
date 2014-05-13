@@ -8,7 +8,7 @@ QuestionnaireEdit.QuestionsView = QuestionnaireEdit.SortableView.extend
   
   rezebrify: ->
     i = 1
-    @get('childViews').forEach (item, index) ->
+    @get('content').forEach (item, index) ->
       i = 1 if item.get('resetsCycle')
 
       if item.get('ignoresCycle')

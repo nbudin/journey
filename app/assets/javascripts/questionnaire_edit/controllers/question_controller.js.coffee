@@ -26,4 +26,19 @@ QuestionnaireEdit.QuestionController = Ember.ObjectController.extend
     @get('radioLayout') == 'vertical'
   ).property('radioLayout')
   
+  resetsCycle: ( ->
+    @get('type') == "Questions::Divider"
+  ).property('type')
+  
+  ignoresCycle: ( ->
+    @get('type') in ["Questions::Heading", "Questions::Label"]
+  ).property('type')
+  
+  actions:
+    eraseDefaultAnswer: -> @set('content.defaultAnswer', null)
+    setLayout: (layout) -> @set('content.layout', layout)    
+    setRadioLayout: (radioLayout) -> @set('content.radioLayout', radioLayout)
+    toggleRequired: -> @set('required', !@get('required'))
+    
+  
   

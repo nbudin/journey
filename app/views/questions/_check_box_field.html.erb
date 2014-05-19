@@ -4,6 +4,7 @@
                 (@question.default_answer and @question.default_answer != ''),
 		:onChange => "updateDefault(#{@question.id}, this.checked ? 'checked' : '');"%>
 <% else -%>
-	<%= check_box_tag "question[#{@question.id}]", 'checked', (value and value != '') %>
+  <%= hidden_field_tag "question[#{@question.id}]", 0 %>
+	<%= check_box_tag "question[#{@question.id}]", 'checked', (value.present? && value.to_s != 'false') %>
 <% end -%>
 <%= end_question @question %>

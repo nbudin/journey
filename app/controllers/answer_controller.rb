@@ -155,7 +155,12 @@ class AnswerController < ApplicationController
           if ans.nil?
             ans = Answer.new :question_id => question.id, :response_id => @resp.id
           end
-          ans.value = params[:question][question.id.to_s]
+          if question.kind_of?(Questions::CheckBoxField) && params[:question][question.id.to_s].to_s == '0'
+            ans.value = nil
+          else
+            ans.value = params[:question][question.id.to_s]
+          end
+            
           ans.save
         else
           # No answer provided

@@ -1,3 +1,4 @@
+<% value = (value.present? && value.to_s != 'false') %>
 <% if @editing -%>
 	<%= check_box_tag "answer[#{@question.id}]", 'checked', value %>
 <% else -%>

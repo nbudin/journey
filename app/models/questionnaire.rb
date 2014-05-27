@@ -346,7 +346,7 @@ class Questionnaire < ActiveRecord::Base
   end
   
   def authors
-    questionnaire_permissions.all(:include => :person, :conditions => { :can_edit => true }).map(&:person)
+    questionnaire_permissions.all(:include => :person, :conditions => { :can_edit => true }).map(&:person).compact
   end
   
   def self.load_extensions

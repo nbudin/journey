@@ -22,6 +22,9 @@ module Journey
     
     config.action_view.sanitized_allowed_attributes = ['id', 'class', 'style']
     
+    # Don't let rails-api remove all the default middleware
+    config.api_only = false
+    
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false

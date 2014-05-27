@@ -192,6 +192,9 @@ GEM
       activesupport (= 3.2.18)
       bundler (~> 1.0)
       railties (= 3.2.18)
+    rails-api (0.2.1)
+      actionpack (>= 3.2.11)
+      railties (>= 3.2.11)
     railties (3.2.18)
       actionpack (= 3.2.18)
       activesupport (= 3.2.18)
@@ -281,6 +284,7 @@ DEPENDENCIES
   pry-rails
   rack-ssl
   rails (= 3.2.18)
+  rails-api
   rmagick
   rmagick4j
   rubycas-client

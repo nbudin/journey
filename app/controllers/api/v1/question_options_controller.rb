@@ -1,4 +1,4 @@
-class Api::V1::QuestionOptionsController < ApplicationController
+class Api::V1::QuestionOptionsController < ApiController
   respond_to :json
   load_and_authorize_resource except: [:index]
     

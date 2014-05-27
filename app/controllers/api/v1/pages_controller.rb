@@ -1,4 +1,4 @@
-class Api::V1::PagesController < ApplicationController
+class Api::V1::PagesController < ApiController
   respond_to :json
   load_and_authorize_resource except: [:index]
     

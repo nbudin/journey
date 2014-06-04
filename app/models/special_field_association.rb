@@ -4,10 +4,10 @@ class SpecialFieldAssociation < ActiveRecord::Base
 
   validates_inclusion_of :purpose, :in => Questionnaire.special_field_purposes
   
-  after_save :set_questionnaire
+  before_save :set_questionnaire
   
   private
   def set_questionnaire
-    self.questionnaire = question.try(:questionnaire)
+    self.questionnaire ||= question.try(:questionnaire)
   end
 end

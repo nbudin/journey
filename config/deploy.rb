@@ -1,5 +1,4 @@
 require 'bundler/capistrano'
-require "capistrano/chef"
 require 'airbrake/capistrano'
 require 'capistrano-rbenv'
 
@@ -7,8 +6,9 @@ load "deploy/assets"
 
 set :user, 'deploy'
 
-chef_role [:web, :app], 'roles:app_server AND chef_environment:production'
-chef_role :db, 'roles:mysql_server AND chef_environment:production', primary: true
+role :web, 'hempel.sugarpond.net', primary: true
+role :app, 'hempel.sugarpond.net', primary: true
+role :db, 'hempel.sugarpond.net', primary: true
 
 #[:web, :app, :db].each { |r| role r, 'localhost', primary: true }
 #set :ssh_options, {port: 2222, keys: ['~/.ssh/id_dsa']}
@@ -17,7 +17,7 @@ set :rbenv_path, "/opt/rbenv"
 set :rbenv_setup_shell, false
 set :rbenv_setup_default_environment, false
 set :rbenv_setup_global_version, false
-set :rbenv_ruby_version, "2.0.0-p353"
+set :rbenv_ruby_version, "2.1.2"
 
 set :application, "journey"
 set :scm, :git

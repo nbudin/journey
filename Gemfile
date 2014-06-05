@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-ruby "2.0.0"
+ruby "2.1.2"
 
 gem 'bundler'
 gem "rails", "3.2.18"

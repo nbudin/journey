@@ -12,3 +12,6 @@ db/schema.rb
 db/*.sqlite3
 *.orig
 tmp
+
+# Ignore application configuration
+/config/application.yml

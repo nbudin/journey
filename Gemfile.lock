@@ -78,6 +78,9 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    figaro (1.0.0.rc1)
+      rails (>= 3, < 5)
+      thor (~> 0.14)
     gruff (0.3.7)
     haml (4.0.3)
       tilt
@@ -224,6 +227,7 @@ DEPENDENCIES
   devise_cas_authenticatable
   dynamic_form
   factory_girl_rails
+  figaro (= 1.0.0.rc1)
   gruff (~> 0.3.6)
   haml
   haml-rails

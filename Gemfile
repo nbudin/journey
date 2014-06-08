@@ -15,6 +15,7 @@ gem 'sequel', require: 'sequel/no_core_ext'
 gem 'dynamic_form'
 gem 'acts_as_list'
 gem 'thin'
+gem 'figaro', '1.0.0.rc1'
 
 gem 'haml'
 gem 'haml-rails'

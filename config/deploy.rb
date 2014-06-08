@@ -1,5 +1,4 @@
 require 'bundler/capistrano'
-require 'airbrake/capistrano'
 require 'capistrano-rbenv'
 
 load "deploy/assets"
@@ -42,6 +41,13 @@ namespace(:deploy) do
   task :restart, :roles => :app do
     run "touch #{current_path}/tmp/restart.txt"
   end
+end
+
+task :notify_rollbar, :roles => :app do
+  set :revision, `git log -n 1 --pretty=format:"%H"`
+  set :local_user, `whoami`
+  rails_env = fetch(:rails_env, 'production')
+  run "curl https://api.rollbar.com/api/1/deploy/ -F access_token=$(cat #{release_path}/config/application.yml |grep '^ROLLBAR_ACCESS_TOKEN:' |cut -d ' ' -f 2) -F environment=#{rails_env} -F revision=#{revision} -F local_username=#{local_user} >/dev/null 2>&1", :once => true
 end
 
 before "deploy:finalize_update", "deploy:symlink_config"

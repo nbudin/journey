@@ -53,3 +53,4 @@ end
 before "deploy:finalize_update", "deploy:symlink_config"
 before "deploy:finalize_update", "deploy:symlink_log"
 after "deploy", "deploy:cleanup"
+after "deploy", "notify_rollbar"

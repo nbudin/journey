@@ -35,6 +35,9 @@ GEM
       activerecord (>= 2.3)
     arel (3.0.3)
     bcrypt-ruby (3.1.1)
+    breach-mitigation-rails (0.2.2)
+      activesupport
+      rack
     builder (3.0.4)
     cancan (1.6.9)
     capybara (2.1.0)
@@ -214,6 +217,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_list
   ae_users_migrator
+  breach-mitigation-rails
   bundler
   cancan
   capybara (>= 2.0.0)

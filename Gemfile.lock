@@ -99,7 +99,7 @@ GEM
       devise (>= 1.2.0)
       rubycas-client (>= 2.2.1)
     dynamic_form (1.1.4)
-    ember-data-source (1.0.0.beta.7)
+    ember-data-source (1.0.0.beta.8)
       ember-source
     ember-rails (0.14.1)
       active_model_serializers
@@ -181,6 +181,9 @@ GEM
       minitest-rails (~> 0.9.1)
     multi_json (1.10.1)
     mysql2 (0.3.11)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.1)
     newrelic_rpm (3.7.3.204)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -188,8 +191,6 @@ GEM
     paginator (1.1.1)
       hoe (>= 1.6.0)
     polyglot (0.3.5)
-    prototype-rails (3.2.1)
-      rails (~> 3.2)
     pry (0.9.12.1)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -290,7 +291,7 @@ DEPENDENCIES
   devise
   devise_cas_authenticatable
   dynamic_form
-  ember-data-source (= 1.0.0.beta7)
+  ember-data-source (= 1.0.0.beta8)
   ember-rails
   ember-source (= 1.5.1.1)
   factory_girl_rails

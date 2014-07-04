@@ -24,7 +24,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'ember-rails'
 gem 'ember-source', '1.5.1.1'
-gem 'ember-data-source', '1.0.0.beta7'
+gem 'ember-data-source', '1.0.0.beta8'
 
 gem 'haml'
 gem 'haml-rails'

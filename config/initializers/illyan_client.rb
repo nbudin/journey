@@ -1,9 +1,7 @@
-require 'journey_config'
-
-if JourneyConfig.config['illyan_url'] && JourneyConfig.config['illyan_token']
+if ENV['ILLYAN_URL'] && ENV['ILLYAN_TOKEN']
   IllyanClient.configure! do |client|
-    client.base_url = JourneyConfig.config['illyan_url']
-    client.token = JourneyConfig.config['illyan_token']
+    client.base_url = ENV['ILLYAN_URL']
+    client.token = ENV['ILLYAN_TOKEN']
   end
 else
   puts "WARNING: Illyan client is not configured.  Inviting new users will not work.  "+

@@ -1,4 +1,4 @@
-if JourneyConfig.config['SUGAR_POND_BRANDING']
+if ENV['SUGAR_POND_BRANDING']
   require 'journey_questionnaire'
 
   if Rails.env == "production"

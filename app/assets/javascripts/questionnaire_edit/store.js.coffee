@@ -7,5 +7,5 @@ DS.RESTAdapter.reopen
   headers:
     "X-CSRF-TOKEN": token
 
-QuestionnaireEdit.Store = DS.Store.extend
+QuestionnaireEdit.ApplicationStore = DS.Store.extend
   adapter: "-active-model"

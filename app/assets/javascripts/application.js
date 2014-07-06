@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require rollbar
+//= require scroll_into_view_if_needed
 //= require jquery
 //= require jquery.ui.sortable
 //= require jquery.ui.tabs

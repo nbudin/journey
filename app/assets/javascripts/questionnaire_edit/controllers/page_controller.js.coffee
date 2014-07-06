@@ -11,7 +11,7 @@ QuestionnaireEdit.PageController = Ember.ObjectController.extend
   scrollIntoView: -> 
     element = $(".answerpage[data-page-id=#{@get('id')}]").get(0)
     if element
-      element.scrollIntoView()
+      element.scrollIntoViewIfNeeded()
     else
       Ember.run.next this, this.scrollIntoView
       

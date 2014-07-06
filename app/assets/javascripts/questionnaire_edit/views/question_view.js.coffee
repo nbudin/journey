@@ -15,6 +15,7 @@ QuestionnaireEdit.QuestionView = Ember.View.extend
     event.stopPropagation()
   
   actions:
-    toggleEditMode: -> @set('editMode', !@get('editMode'))
-      
-    
+    toggleEditMode: -> 
+      @set('editMode', !@get('editMode'))
+      if @get('editMode')
+        @get('controller').send('setCurrentPage', @get('content.page'))

@@ -32,14 +32,16 @@
         Caption
         {{input type="text" value=caption}}
       </label>
-      <label>
-        {{input type="checkbox" checked=required}}
-        Required
-      </label>
-      <label>
-        Default answer
-        {{input type="text" value=defaultAnswer}}
-      </label>
+      {{#unless isDisplay}}
+        <label>
+          {{input type="checkbox" checked=required}}
+          Required
+        </label>
+        <label>
+          Default answer
+          {{input type="text" value=defaultAnswer}}
+        </label>
+      {{/unless}}
     </form>
     
     <ul>

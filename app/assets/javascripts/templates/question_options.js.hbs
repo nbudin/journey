@@ -1,5 +1,5 @@
-{{#unless view.content.isDisplay}}
-  {{#if view.content.purpose}}
+{{#unless isDisplay}}
+  {{#if purpose}}
     <li class="image_button">
       <span class="icon icon-unset-special-purpose" title="Remove special purpose"></span>
       Remove special purpose
@@ -10,7 +10,7 @@
       Set special purpose
     </li>
   {{/if}}
-  {{#if view.isLeftLayout}}
+  {{#if isLeftLayout}}
     <li class="image_button" {{action "setLayout" "top"}}>
       <span class="icon icon-top-layout" title="Put question above answer"></span>
       Put question above answer

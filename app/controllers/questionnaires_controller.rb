@@ -167,7 +167,8 @@ class QuestionnairesController < ApplicationController
   # PUT /questionnaires/1.xml
   def update
     @questionnaire = Questionnaire.find(params[:id])
-    params[:questionnaire].delete(:questionnaire_permissions_attributes) unless current_person.can?(:change_permissions, @questionnaire)
+    authorize! :edit, @questionnaire
+    params[:questionnaire].delete(:questionnaire_permissions_attributes) unless current_person.try(:can?, :change_permissions, @questionnaire)
 
     respond_to do |format|
       if @questionnaire.update_attributes(params[:questionnaire])
@@ -189,6 +190,7 @@ class QuestionnairesController < ApplicationController
   # DELETE /questionnaires/1.xml
   def destroy
     @questionnaire = Questionnaire.find(params[:id])
+    authorize! :destroy, @questionnaire
     @questionnaire.destroy
 
     respond_to do |format|

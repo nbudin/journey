@@ -12,7 +12,7 @@ class Ability
       can :manage, :all 
     else
       can :create, Questionnaire
-      can :read, Questionnaire, :questionnaire_permissions => { :person_id => person.id }
+      can [:read, :view_edit_pages], Questionnaire, :questionnaire_permissions => { :person_id => person.id }
       can :update, Questionnaire, :questionnaire_permissions => { :person_id => person.id, :can_edit => true }
       can :destroy, Questionnaire, :questionnaire_permissions => { :person_id => person.id, :can_destroy => true }
       can :view_answers, Questionnaire, :questionnaire_permissions => { :person_id => person.id, :can_view_answers => true }

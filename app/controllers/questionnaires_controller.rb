@@ -59,6 +59,7 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/1.xml
   def show
     @questionnaire = Questionnaire.find(params[:id])
+    authorize! :view_edit_pages, @questionnaire
     attributes = params[:attributes] || @questionnaire.attribute_names
     attributes.delete "rss_secret"
 
@@ -91,6 +92,7 @@ class QuestionnairesController < ApplicationController
   def print
     @questionnaire = Questionnaire.find(params[:id], :include => :pages)
     @resp = Response.new(:questionnaire => @questionnaire)
+    authorize! :view_edit_pages, @questionnaire
     
     render :layout => "print"
   end
@@ -103,6 +105,7 @@ class QuestionnairesController < ApplicationController
 
   # GET /questionnaires/1;edit
   def edit
+    authorize! :edit, @questionnaire
   end
   
   # GET /questionnaires/1;customize
@@ -201,6 +204,7 @@ class QuestionnairesController < ApplicationController
   
   def available_special_field_purposes
     @questionnaire = Questionnaire.find(params[:id])
+    authorize! :edit, @questionnaire
     
     respond_to do |format|
       format.xml do
@@ -220,6 +224,7 @@ class QuestionnairesController < ApplicationController
 
   def pagelist
     @questionnaire = Questionnaire.find(params[:id])
+    authorize! :view_edit_pages, @questionnaire
     render :partial => 'pagelist', :locals => { :questionnaire => @questionnaire }
   end
 end

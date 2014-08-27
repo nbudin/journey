@@ -2,7 +2,8 @@ require 'test_helper'
 
 class QuestionnairesControllerTest < ActionController::TestCase
   before do
-    sign_in FactoryGirl.create(:person)
+    @person = FactoryGirl.create(:person)
+    sign_in @person
   end
 
   def test_should_get_index
@@ -25,7 +26,10 @@ class QuestionnairesControllerTest < ActionController::TestCase
   end
   
   describe 'with a questionnaire' do
-    before { @questionnaire = FactoryGirl.create(:questionnaire) }
+    before do 
+      @questionnaire = FactoryGirl.create(:questionnaire)
+      @permission = @questionnaire.questionnaire_permissions.create(person: @person)
+    end
 
     it 'should show questionnaire' do
       get :show, :id => @questionnaire.id
@@ -33,11 +37,14 @@ class QuestionnairesControllerTest < ActionController::TestCase
     end
 
     it 'should edit questionnaire' do
+      @permission.update_attributes(:can_edit => true)
       get :edit, :id => @questionnaire.id
       assert_response :success
     end
   
     it 'should update questionnaire' do
+      @permission.update_attributes(:can_edit => true)
+
       # update redirects to referer
       @request.env['HTTP_REFERER'] = 'http://example.com'
       
@@ -48,6 +55,8 @@ class QuestionnairesControllerTest < ActionController::TestCase
     end
   
     it 'should destroy questionnaire' do
+      @permission.update_attributes(:can_destroy => true)
+
       old_count = Questionnaire.count
       delete :destroy, :id => @questionnaire.id
       assert_equal old_count-1, Questionnaire.count

@@ -108,6 +108,7 @@ class QuestionsController < ApplicationController
     i = @page.questions.index(@question) + 1
     times.to_i.times do
       c = @question.deepclone
+      c.purpose = nil
       @page.questions.insert(i, c)
       c.save!
     end

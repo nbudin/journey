@@ -21,6 +21,8 @@ module Journey
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false
     
+    config.i18n.enforce_available_locales = true
+    
     config.generators do |g|
       g.test_framework :mini_test, :spec => true, :fixture => false
     end

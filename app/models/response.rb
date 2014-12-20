@@ -1,9 +1,9 @@
 class Response < ActiveRecord::Base
-  belongs_to :questionnaire, :include => [:special_field_associations]
+  belongs_to :questionnaire, -> {includes(:special_field_associations)}
   validates_associated :questionnaire
-  has_many :answers, :dependent => :destroy, :include => {:question => :question_options}, :inverse_of => :response
+  has_many :answers, -> {includes(question: :question_options)}, :dependent => :destroy
   belongs_to :person
-  scope :valid, where("responses.id in (select response_id from answers)")
+  scope :valid, -> { where("responses.id in (select response_id from answers)") }
   scope :no_answer_for, lambda { |question|
         where("responses.id not in (select response_id from answers where question_id = ?)", question.id)
   }
@@ -18,7 +18,7 @@ class Response < ActiveRecord::Base
   def verify_answers_for_page(page)
     page.questions.each do |question|
       if question.kind_of? Field
-        if not self.answers.find_by_question_id(question.id)
+        if not self.answers.find_by(question_id: question.id)
           a = Answer.new
           a.response = self
           a.question = question

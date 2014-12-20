@@ -88,7 +88,7 @@ class CreatePeople < ActiveRecord::Migration
           next
         end
         
-        merge_into = Person.find_by_username(person.primary_email_address.address)
+        merge_into = Person.find_by(username: person.primary_email_address.address)
         if merge_into.nil?
           merge_into = Person.new(:firstname => person.firstname, :lastname => person.lastname, 
             :email => person.primary_email_address.address, :gender => person.gender, :birthdate => person.birthdate,
@@ -149,7 +149,7 @@ class CreatePeople < ActiveRecord::Migration
         end
         
         people.each do |person|
-          qperm = QuestionnairePermission.find_by_questionnaire_id_and_person_id(perm.permissioned_id, person.id)
+          qperm = QuestionnairePermission.find_by(questionnaire_id: perm.permissioned_id, person_id: person.id)
           qperm ||= QuestionnairePermission.new(:questionnaire_id => perm.permissioned_id, :person_id => person.id)
           
           if perm.permission

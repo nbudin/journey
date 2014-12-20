@@ -59,7 +59,7 @@ Journey::Application.routes.draw do
     end
   end
   
-  match '/answer/:id' => 'answer#index', :as => :questionnaire_answer
+  get '/answer/:id' => 'answer#index', :as => :questionnaire_answer
   scope '/answer/:id', as: 'questionnaire_answer', controller: 'answer' do
     get :resume
     match :preview, via: [:get, :post]
@@ -70,15 +70,15 @@ Journey::Application.routes.draw do
     get :save_session
   end
 
-  match '/questionnaires/:questionnaire_id/responses/graphs/' => 'graphs#index', :as => :response_graphs
-  match '/questionnaires/:questionnaire_id/responses/graphs/:action.:format' => 'graphs#index', :as => :response_graph
-  match '/dashboard' => 'root#dashboard', :as => :dashboard
-  match '/welcome' => 'root#welcome', :as => :welcome
+  get '/questionnaires/:questionnaire_id/responses/graphs/' => 'graphs#index', :as => :response_graphs
+  get '/questionnaires/:questionnaire_id/responses/graphs/:action.:format' => 'graphs#index', :as => :response_graph
+  get '/dashboard' => 'root#dashboard', :as => :dashboard
+  get '/welcome' => 'root#welcome', :as => :welcome
   
   if ENV['SUGAR_POND_BRANDING']
-    match '/support' => 'sugar_pond/support#index', as: :support
-    match '/tos' => 'sugar_pond/legal#tos', as: :legal_tos
-    match '/privacy' => 'sugar_pond/legal#privacy', as: :legal_privacy
+    get '/support' => 'sugar_pond/support#index', as: :support
+    get '/tos' => 'sugar_pond/legal#tos', as: :legal_tos
+    get '/privacy' => 'sugar_pond/legal#privacy', as: :legal_privacy
   end  
   
   root to: 'root#index'

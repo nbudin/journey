@@ -1,7 +1,6 @@
 class Tag < ActiveRecord::Base
   has_many :taggings, :dependent => :destroy
-  has_many :questionnaires, :through => :taggings, :source => :questionnaire,
-    :conditions => "taggings.tagged_type = 'Questionnaire'"
+  has_many :questionnaires, -> {where(taggings: {tagged_type: 'Questionnaire'})}, :through => :taggings, :source => :questionnaire
   
   validates_uniqueness_of "name"
 end

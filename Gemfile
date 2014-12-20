@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby "2.1.2"
 
 gem 'bundler'
-gem "rails", "3.2.18"
+gem "rails", "4.2.0"
 gem 'paginator'
 gem 'will_paginate'
 gem "mysql2"
@@ -20,7 +20,7 @@ gem 'breach-mitigation-rails'
 
 gem 'haml'
 gem 'haml-rails'
-gem 'prototype-rails'
+gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
 gem 'tinymce-rails'
 
 group :assets do
@@ -32,7 +32,7 @@ end
 gem 'devise'
 gem 'rubycas-client'
 gem 'devise_cas_authenticatable'
-gem 'cancan'
+gem 'cancancan'
 gem 'illyan_client'
 gem 'ae_users_migrator'
 
@@ -54,7 +54,7 @@ group :test do
   gem "capybara-webkit"
 end
 
-gem 'letter_opener_web', '~> 1.0.3', :group => :development
+gem 'letter_opener_web', :group => :development
 gem 'pry-rails', :groups => [:development, :test]
 
 group :development do

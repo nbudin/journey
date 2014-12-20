@@ -118,7 +118,7 @@ class QuestionnaireAnsweringTest < ActionDispatch::IntegrationTest
     resp = Response.first
     
     ANSWERS.each do |field_name, value|
-      question = @questionnaire.questions.find_by_caption(field_name)
+      question = @questionnaire.questions.find_by(caption: field_name)
       assert_equal value, resp.answer_for_question(question).value.gsub(/\r\n/, "\n")
     end
   end

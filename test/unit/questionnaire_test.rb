@@ -42,15 +42,15 @@ class QuestionnaireTest < ActiveSupport::TestCase
     end
     
     it "should return all questions in the right order" do
-      assert_equal @questions, @questionnaire.questions
+      assert_equal @questions, @questionnaire.questions.to_a
     end
     
     it "should return all fields in the right order" do
-      assert_equal @fields, @questionnaire.fields
+      assert_equal @fields, @questionnaire.fields.to_a
     end
     
     it "should return all decorators in the right order" do
-      assert_equal @decorators, @questionnaire.decorators
+      assert_equal @decorators, @questionnaire.decorators.to_a
     end
     
     it "should deepclone to an entirely new questionnaire" do

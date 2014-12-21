@@ -19,9 +19,9 @@ class Questionnaire < ActiveRecord::Base
   has_many :submitted_responses, -> {order(id: :desc).where.not(submitted_at: nil)}, :class_name => "Response"
   has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id, :inverse_of => :questionnaire
   has_many :special_fields, :through => :special_field_associations, :source => :question
-  has_many :questions, -> {order("pages.position, questions.position") }, :through => :pages
-  has_many :fields, -> {order("pages.position, questions.position") }, :through => :pages
-  has_many :decorators, -> {order("pages.position, questions.position") }, :through => :pages
+  has_many :questions, -> {reorder("pages.position, questions.position") }, :through => :pages
+  has_many :fields, -> {reorder("pages.position, questions.position") }, :through => :pages
+  has_many :decorators, -> {reorder("pages.position, questions.position") }, :through => :pages
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
   has_many :email_notifications

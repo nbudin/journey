@@ -3,7 +3,7 @@ class AddPublicVisibilityOptionToQuestionnaires < ActiveRecord::Migration
     add_column :questionnaires, :publicly_visible, :boolean
     add_index :questionnaires, :publicly_visible
     
-    Questionnaire.all(:conditions => {:is_open => true}).each do |q|
+    Questionnaire.where(:is_open => true).find_each do |q|
       q.publicly_visible = true
       q.save :validate => false
     end

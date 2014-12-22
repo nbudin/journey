@@ -8,7 +8,7 @@ class ConvertAnnotationFieldsToNotes < ActiveRecord::Migration
   def self.up
     add_column :responses, :notes, :text
     
-    Questionnaire.all.each do |q|
+    Questionnaire.find_each do |q|
       annotation_fields = q.questions.all.select { |question| question.kind_of? Questions::AnnotationField }
       
       if annotation_fields.length > 0
@@ -41,7 +41,7 @@ class ConvertAnnotationFieldsToNotes < ActiveRecord::Migration
   end
 
   def self.down
-    needs_annotation = Questionnaire.all(:include => :responses).select do |q|
+    needs_annotation = Questionnaire.includes(:responses).to_a.select do |q|
       q.responses.any? { |r| !r.notes.blank? }
     end
     

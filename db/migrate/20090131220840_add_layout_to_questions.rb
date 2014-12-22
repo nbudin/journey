@@ -9,7 +9,7 @@ class AddLayoutToQuestions < ActiveRecord::Migration
     end
     
     add_column :questions, :layout, :string, :default => "left"
-    Question.find(:all).each do |q|
+    Question.find_each do |q|
       if q.kind_of? btf_class
         q.layout = "top"
         q.save

@@ -57,7 +57,7 @@ GEM
       activesupport
       rack
     builder (3.2.2)
-    cancancan (1.8.4)
+    cancancan (1.9.2)
     capistrano (3.3.5)
       capistrano-stats (~> 1.1.0)
       i18n

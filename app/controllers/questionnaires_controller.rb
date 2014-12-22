@@ -20,16 +20,12 @@ class QuestionnairesController < ApplicationController
       condition_vars[:tag_name] = params[:tag]
     end
         
-    find_conditions = [conditions.join(" and "), condition_vars]
-    find_options = {
-      :conditions => [conditions.join(" and "), condition_vars],
-      :order => 'questionnaires.id DESC',
-      :group => "questionnaires.id",
-      :include => {:tags => [], :questionnaire_permissions => [:person]},
-      :page => params[:page] || 1,
-      :per_page => per_page,
-    }
-    @questionnaires = Questionnaire.accessible_by(current_ability).paginate(find_options)
+    questionnaire_scope = Questionnaire.accessible_by(current_ability).
+      order(id: :desc).
+      group("questionnaires.id").
+      includes(:tags, questionnaire_permissions: :person)
+    questionnaire_scope = questionnaire_scope.where(conditions.join(" and "), condition_vars) if conditions.any?
+    @questionnaires = questionnaire_scope.paginate(page: params[:page] || 1, per_page: per_page)
     
     @rss_url = questionnaires_url(:format => "rss")
 
@@ -90,7 +86,7 @@ class QuestionnairesController < ApplicationController
   
   # GET /questionnaires/1;print
   def print
-    @questionnaire = Questionnaire.find(params[:id], :include => :pages)
+    @questionnaire = Questionnaire.includes(:pages).find(params[:id])
     @resp = Response.new(:questionnaire => @questionnaire)
     authorize! :view_edit_pages, @questionnaire
     
@@ -100,7 +96,7 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/new
   def new
     @questionnaire = Questionnaire.new(params[:questionnaire])
-    @cloneable_questionnaires = Questionnaire.accessible_by(current_ability, :edit).all(:order => "id DESC").uniq
+    @cloneable_questionnaires = Questionnaire.accessible_by(current_ability, :edit).order("questionnaires.id DESC").to_a.uniq
   end
 
   # GET /questionnaires/1;edit

@@ -45,9 +45,9 @@ class QuestionnairesController < ApplicationController
       return redirect_to(:action => 'index')
     end
     
-    @responses = Response.all(:conditions => { :person_id => current_person.id }, 
-                              :include => { :questionnaire => [:questionnaire_permissions, :tags] },
-                              :order => "created_at DESC")
+    @responses = Response.where(:person_id => current_person.id). 
+                              includes(:questionnaire => [:questionnaire_permissions, :tags]).
+                              order("created_at DESC")
     @questionnaires = @responses.collect { |r| r.questionnaire }.uniq
   end
 

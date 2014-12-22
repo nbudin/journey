@@ -14,7 +14,7 @@ class ConvertAnnotationFieldsToNotes < ActiveRecord::Migration
       if annotation_fields.length > 0
         say "Converting annotation fields to notes for '#{q.title}'"
         
-        q.responses(:include => :answers).each do |r|
+        q.responses.includes(:answers).find_each do |r|
           if annotation_fields.length == 1
             a = r.answer_for_question(annotation_fields.first)
             r.notes = a && a.value

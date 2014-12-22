@@ -60,7 +60,7 @@ class AnswerController < ApplicationController
   end
 
   def index
-    @questionnaire = Questionnaire.find(params[:id], :include => :pages)
+    @questionnaire = Questionnaire.includes(:pages).find(params[:id])
     if not @questionnaire.is_open
       redirect_to :action => 'questionnaire_closed', :id => params[:id]
     else
@@ -111,7 +111,7 @@ class AnswerController < ApplicationController
   end
   
   def preview
-    @questionnaire = Questionnaire.find(params[:id], :include => [:questionnaire_permissions, :pages])
+    @questionnaire = Questionnaire.includes(:questionnaire_permissions, :pages).find(params[:id])
     
     if @questionnaire.pages.size > 0
       @page = @questionnaire.pages[(params[:page] || 1).to_i - 1]

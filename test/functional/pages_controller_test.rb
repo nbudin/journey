@@ -39,8 +39,9 @@ class PagesControllerTest < ActionController::TestCase
     end
   
     it 'should update page' do
-      put :update, :id => @page.id, :questionnaire_id => @questionnaire.id, :page => { }
+      put :update, :id => @page.id, :questionnaire_id => @questionnaire.id, :page => { title: "something else" }
       assert_redirected_to [@questionnaire, assigns(:page)]
+      assigns(:page).title.must_equal "something else"
     end
   
     it 'should destroy page' do

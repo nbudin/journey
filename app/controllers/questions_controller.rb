@@ -46,7 +46,8 @@ class QuestionsController < ApplicationController
       ""
     end
     
-    @question = question_class.new(params[:question].except(:type).merge(:page => @page))    
+    @question = question_class.new(question_params.except(:type))    
+    @question.page = @page
     authorize! :create, @question
 
     respond_to do |format|
@@ -64,7 +65,7 @@ class QuestionsController < ApplicationController
   # PUT /questions/1.xml
   def update
     respond_to do |format|
-      if @question.update_attributes(params[:question])
+      if @question.update_attributes(question_params)
         if params[:question].has_key?(:purpose)
           @question.purpose = params[:question][:purpose]
         end
@@ -82,8 +83,6 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1
   # DELETE /questions/1.xml
   def destroy
-    @question = Question.find(params[:id])
-    check_forged_path
     @question.destroy
 
     respond_to do |format|
@@ -117,17 +116,7 @@ class QuestionsController < ApplicationController
   end
 
   private
-  def check_forged_path
-    if @question.page != @page
-      access_denied "That question ID does not match the page given."
-    end
-  end
-  
-  def get_questionnaire_and_page
-    @questionnaire = Questionnaire.find(params[:questionnaire_id])
-    @page = Page.find(params[:page_id])
-    if @page.questionnaire != @questionnaire
-      access_denied "That page ID does not match the questionnaire given."
-    end
+  def question_params
+    params.require(:question).permit(:type, :position, :caption, :required, :min, :max, :step, :default_answer, :layout, :radio_layout, :purpose)
   end
 end

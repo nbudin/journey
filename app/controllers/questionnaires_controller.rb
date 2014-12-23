@@ -145,9 +145,8 @@ class QuestionnairesController < ApplicationController
       @questionnaire.title = "Copy of #{@questionnaire.title}"
       @questionnaire.is_open = false
     else
-      p = params[:questionnaire] || {}
-      p[:title] ||= "Untitled questionnaire"
-      @questionnaire = Questionnaire.new(p)
+      @questionnaire = Questionnaire.new(create_params)
+      @questionnaire.title ||= "Untitled questionnaire"
     end
 
     respond_to do |format|
@@ -167,10 +166,9 @@ class QuestionnairesController < ApplicationController
   def update
     @questionnaire = Questionnaire.find(params[:id])
     authorize! :edit, @questionnaire
-    params[:questionnaire].delete(:questionnaire_permissions_attributes) unless current_person.try(:can?, :change_permissions, @questionnaire)
 
     respond_to do |format|
-      if @questionnaire.update_attributes(params[:questionnaire])
+      if @questionnaire.update_attributes(update_params)
         format.html { redirect_to params[:return_to] || :back }
         format.xml  { head :ok }
         format.json { head :ok }
@@ -222,5 +220,26 @@ class QuestionnairesController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
     authorize! :view_edit_pages, @questionnaire
     render :partial => 'pagelist', :locals => { :questionnaire => @questionnaire }
+  end
+  
+  private
+  def create_params
+    params.require(:questionnaire).permit(permitted_params_for_edit_permission)
+  end
+  
+  def update_params
+    permitted_params = []
+    permitted_params += permitted_params_for_edit_permission if can?(:edit, @questionnaire)
+    if can?(:change_permissions, @questionnaire)
+      permitted_params << { 
+        questionnaire_permissions_attributes: [:person_id, :can_edit, :can_view_answers, :can_edit_answers, :can_destroy, :can_change_permissions] 
+      }
+    end
+    params.require(:questionnaire).permit(permitted_params)
+  end
+  
+  def permitted_params_for_edit_permission
+    [:title, :is_open, :custom_html, :custom_css, :allow_finish_later, :allow_amend_response, 
+      :welcome_text, :advertise_login, :require_login, :publicly_visible, :allow_preview, :allow_delete_responses]
   end
 end

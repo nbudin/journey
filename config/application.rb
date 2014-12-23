@@ -26,6 +26,8 @@ module Journey
     config.generators do |g|
       g.test_framework :mini_test, :spec => true, :fixture => false
     end
+    
+    config.autoload_paths += %W(#{config.root}/app/exporters)
   
   #  config.middleware.use(Rack::Cache) do
   #    import 'config/rack_cache_config'

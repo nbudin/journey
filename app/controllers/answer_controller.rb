@@ -38,7 +38,7 @@ class AnswerController < ApplicationController
     @all_responses = []
     @responses = []
     if person_signed_in?
-      @all_responses = @questionnaire.responses.find_all_by_person_id(current_person.id)
+      @all_responses = @questionnaire.responses.where(person_id: current_person.id).to_a
       if @questionnaire.allow_finish_later
         @responses += @all_responses.select { |resp| not resp.submitted }
       end

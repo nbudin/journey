@@ -16,6 +16,7 @@ gem 'dynamic_form'
 gem 'thin'
 gem 'figaro', '1.0.0.rc1'
 gem 'breach-mitigation-rails'
+gem 'rack-cors', :require => 'rack/cors'
 
 gem 'haml'
 gem 'haml-rails'
@@ -50,6 +51,7 @@ group :test do
   gem "database_cleaner"
   gem "capybara", ">= 2.0.0"
   gem "capybara-webkit"
+  gem "capybara_minitest_spec"
 end
 
 gem 'letter_opener_web', :group => :development

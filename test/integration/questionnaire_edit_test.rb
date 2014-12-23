@@ -35,7 +35,7 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
         within("#questions") { assert has_content?(special_field) }
       end
       
-      within("#questions li", text: "Name") { find("img[alt='Not-required']").click }
+      within("#questions li", text: "Name") { find("img[alt='Not required']").click }
       fill_in "Address", with: "I have no home"
       fill_in "Phone", with: "867-5309"
       within("#questions li", text: "Phone") do
@@ -104,7 +104,7 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
   end
   
   test 'creating other types of questions' do
-    pending  # this test has never worked right, and probably never will in the Prototype.js version of the app
+    skip('this test has never worked right, and probably never will in the Prototype.js version of the app')
     
     within '#pages' do
       find('.page .caption').click

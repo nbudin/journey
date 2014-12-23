@@ -195,7 +195,7 @@ class AnswerController < ApplicationController
         
         @questionnaire.email_notifications.notify_on_response_submit.includes(:person).each do |notification|
           next unless notification.try(:person).try(:email).present?
-          NotificationMailer.response_submitted(@resp, notification.person).deliver
+          NotificationMailer.response_submitted(@resp, notification.person).deliver_later
         end
         
         redirect_to :action => "save_session", :id => @resp.questionnaire.id, :current_page => 1

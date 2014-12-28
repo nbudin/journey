@@ -16,7 +16,6 @@ gem 'dynamic_form'
 gem 'thin'
 gem 'figaro', '1.0.0.rc1'
 gem 'breach-mitigation-rails'
-gem 'rack-cors', :require => 'rack/cors'
 
 gem 'haml'
 gem 'haml-rails'

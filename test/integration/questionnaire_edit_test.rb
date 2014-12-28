@@ -95,8 +95,9 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
       assert has_content?("Untitled page")
       
       within('.page', text: "Untitled page") do
-        page.driver.accept_js_confirms!
-        find("img[alt='Delete page']").click
+        accept_confirm "Do you really want to delete the page \"Untitled page\"?" do
+          find("img[alt='Delete page']").click
+        end        
       end
       
       assert has_no_content?("Untitled page")

@@ -49,7 +49,6 @@ Journey::Application.routes.draw do
 
     resources :responses do
       collection do
-        get :responseviewer
         get :aggregate
         get :print
         get :export

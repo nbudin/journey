@@ -45,11 +45,6 @@ class ResponsesController < ApplicationController
 
     respond_to do |format|
       format.html { }
-      format.js do
-        render :update do |page|
-          page.replace_html 'responses', :partial => 'response_table'
-        end
-      end
       format.rss do 
         if params[:secret] != @questionnaire.rss_secret
           throw "Provided secret does not match questionnaire"
@@ -70,12 +65,6 @@ class ResponsesController < ApplicationController
     
     respond_to do |format|
       format.html { render :layout => "print" }
-    end
-  end
-  
-  def responseviewer
-    respond_to do |format|
-      format.js { render :layout => false }
     end
   end
 

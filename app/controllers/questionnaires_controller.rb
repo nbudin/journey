@@ -32,11 +32,6 @@ class QuestionnairesController < ApplicationController
     respond_to do |format|
       format.html { }
       format.rss  { render :layout => false }
-      format.js do
-        render :update do |page|
-          page.replace_html 'questionnaire_list', :partial => 'paged_results'
-        end
-      end
     end
   end
   
@@ -67,11 +62,6 @@ class QuestionnairesController < ApplicationController
           render :xml => @questionnaire.to_xml
         else
           render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden
-        end
-      end
-      format.js do
-        render :update do |page|
-          page.replace_html "questionnairesummary_#{@questionnaire.id}", :partial => "summary"
         end
       end
       format.json do

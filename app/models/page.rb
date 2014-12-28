@@ -7,6 +7,7 @@ class Page < ActiveRecord::Base
   has_many :decorators, -> { order(:position).where(type: Question.decorator_types.map(&:name)) }, :class_name => 'Question'
     
   before_create :set_untitled
+  before_create :set_position
     
   def number
     questionnaire.pages.index(self) + 1
@@ -17,5 +18,10 @@ class Page < ActiveRecord::Base
     if self.title.blank?
       self.title = "Untitled page"
     end
+  end
+  
+  def set_position
+    return if position
+    self.position = (questionnaire.pages.maximum(:position) || 0) + 1
   end
 end

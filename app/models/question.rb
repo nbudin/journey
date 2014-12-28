@@ -13,6 +13,7 @@ class Question < ActiveRecord::Base
   }
   
   validates_inclusion_of :layout, :in => LAYOUTS.values
+  before_create :set_position
   
   def self.decorator_types
     [ Questions::Label, 
@@ -87,5 +88,11 @@ class Question < ActiveRecord::Base
     xml.question do
       xmlcontent(xml)
     end
+  end
+  
+  private
+  def set_position
+    return if position
+    self.position = (page.questions.maximum(:position) || 0) + 1
   end
 end

@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby "2.1.2"
 
 gem 'bundler'
-gem "rails", "3.2.18"
+gem "rails", "4.2.0"
 gem "rails-api"
 gem 'paginator'
 gem 'will_paginate'
@@ -14,7 +14,6 @@ gem "jipe", ">= 2.0.1"
 gem 'rollbar'
 gem 'sequel', require: 'sequel/no_core_ext'
 gem 'dynamic_form'
-gem 'acts_as_list'
 gem 'thin'
 gem 'active_model_serializers'
 gem 'figaro', '1.0.0.rc1'
@@ -41,7 +40,7 @@ end
 gem 'devise'
 gem 'rubycas-client'
 gem 'devise_cas_authenticatable'
-gem 'cancan'
+gem 'cancancan'
 gem 'illyan_client'
 gem 'ae_users_migrator'
 
@@ -55,15 +54,15 @@ gem 'newrelic_rpm'
 
 group :test do
   gem "factory_girl_rails"
-  gem "minitest-rails"
-  gem "minitest-rails-capybara"
+  gem "minitest-spec-rails"
   gem "launchy"
   gem "database_cleaner"
   gem "capybara", ">= 2.0.0"
   gem "capybara-webkit"
+  gem "capybara_minitest_spec"
 end
 
-gem 'letter_opener_web', '~> 1.0.3', :group => :development
+gem 'letter_opener_web', :group => :development
 gem 'pry-rails', :groups => [:development, :test]
 
 group :development do

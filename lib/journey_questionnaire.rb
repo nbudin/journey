@@ -11,18 +11,6 @@ module Journey
     end
   end
   
-  module UserOptions
-    @@hooks ||= []
-    
-    def self.hook(&hook)
-      @@hooks << hook
-    end
-    
-    def self.hooks
-      @@hooks
-    end
-  end
-  
   module Dashboard
     @@left_dashboxes ||= []
     @@right_dashboxes ||= []

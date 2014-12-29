@@ -42,7 +42,7 @@ class QuestionOptionsController < ApplicationController
   # PUT /question_options/1.xml
   def update
     respond_to do |format|
-      if @question_option.update_attributes(params[:question_option])
+      if @question_option.update_attributes(question_option_params)
         format.json { head :ok }
         format.xml  { head :ok }
       else
@@ -70,5 +70,10 @@ class QuestionOptionsController < ApplicationController
       format.json { head :ok }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  def question_option_params
+    params.require(:question_option).permit(:option, :output_value, :position)
   end
 end

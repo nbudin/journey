@@ -30,9 +30,13 @@ module Journey
     config.assets.initialize_on_precompile = false
     config.assets.precompile += ["questionnaire_edit/questionnaire_edit.js"]
     
+    config.i18n.enforce_available_locales = true
+    
     config.generators do |g|
       g.test_framework :mini_test, :spec => true, :fixture => false
     end
+    
+    config.autoload_paths += %W(#{config.root}/app/exporters)
   
   #  config.middleware.use(Rack::Cache) do
   #    import 'config/rack_cache_config'

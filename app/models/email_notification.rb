@@ -1,5 +1,5 @@
 class EmailNotification < ActiveRecord::Base
-  attr_accessible :notify_on_response_submit
+  #attr_accessible :notify_on_response_submit
   
   belongs_to :questionnaire
   belongs_to :person

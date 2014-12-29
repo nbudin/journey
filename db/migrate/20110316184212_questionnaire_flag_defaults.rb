@@ -1,6 +1,6 @@
 class QuestionnaireFlagDefaults < ActiveRecord::Migration
   def self.up
-    no_preview = Questionnaire.all(:conditions => { :allow_preview => false }).each
+    no_preview = Questionnaire.where(:allow_preview => false).find_each
 
     change_column :questionnaires, :allow_preview, :boolean, :null => false, :default => true
     transaction do

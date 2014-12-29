@@ -1,6 +1,6 @@
 class QuestionOption < ActiveRecord::Base
   belongs_to :question
-  acts_as_list scope: :question
+  before_create :set_position
     
   def effective_output_value
     if output_value.blank?
@@ -8,5 +8,11 @@ class QuestionOption < ActiveRecord::Base
     else
       output_value
     end
+  end
+  
+  private
+  def set_position
+    return if position
+    self.position = (question.question_options.maximum(:position) || 0) + 1
   end
 end

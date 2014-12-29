@@ -8,19 +8,20 @@ class Questionnaire < ActiveRecord::Base
   before_save :set_published_at
   before_save :set_closed_at
 
-  has_many :pages, :dependent => :destroy, :order => :position, :inverse_of => :questionnaire
-  has_many :responses, :dependent => :destroy, :order => "responses.id DESC", :include => [:answers, :questionnaire], :inverse_of => :questionnaire
-  has_many :valid_responses, :order => "responses.id DESC", :class_name => "Response",
-    :conditions => "responses.id in (select response_id from answers)", :include => [:answers, :questionnaire]
-  has_many :valid_responses_for_export, :order => "responses.id DESC", :class_name => "Response",
-    :conditions => "responses.id in (select response_id from answers)"
-  has_many :submitted_responses, :order => "responses.id DESC", :class_name => "Response",
-    :conditions => "submitted_at is not null"
+  has_many :pages, -> {order(:position)},  :dependent => :destroy, :inverse_of => :questionnaire
+  has_many :responses, -> {order(id: :desc).includes(:answers, :questionnaire)}, :dependent => :destroy, :inverse_of => :questionnaire
+  has_many :valid_responses, -> {
+    order(id: :desc).where(responses: {id: Answer.select(:response_id)}).includes(:answers, :questionnaire)
+  }, :class_name => "Response"
+  has_many :valid_responses_for_export, -> {
+    order(id: :desc).where(responses: {id: Answer.select(:response_id)})
+  }, :class_name => "Response"
+  has_many :submitted_responses, -> {order(id: :desc).where.not(submitted_at: nil)}, :class_name => "Response"
   has_many :special_field_associations, :dependent => :destroy, :foreign_key => :questionnaire_id, :inverse_of => :questionnaire
   has_many :special_fields, :through => :special_field_associations, :source => :question
-  has_many :questions, :through => :pages, :order => "pages.position, questions.position"
-  has_many :fields, :through => :pages, :order => "pages.position, questions.position"
-  has_many :decorators, :through => :pages, :order => "pages.position, questions.position"
+  has_many :questions, -> {reorder("pages.position, questions.position") }, :through => :pages
+  has_many :fields, -> {reorder("pages.position, questions.position") }, :through => :pages
+  has_many :decorators, -> {reorder("pages.position, questions.position") }, :through => :pages
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
   has_many :email_notifications
@@ -82,8 +83,8 @@ class Questionnaire < ActiveRecord::Base
   def tags=(taglist)
     names = taglist.split(/\s*,\s*/)
     names.each do |name|
-      if not tags.find_by_name(name)
-        t = Tag.find_or_create_by_name(name)
+      if not tags.find_by(name: name)
+        t = Tag.find_or_create_by(name: name)
         taggings.create :tag => t
       end
     end
@@ -248,7 +249,7 @@ class Questionnaire < ActiveRecord::Base
         q.welcome_text = element.text
       elsif element.name == 'tags'
         element.each_element("tag") do |tag|
-          t = Tag.find_or_create_by_name(tag.attributes['name'])
+          t = Tag.find_or_create_by(name: tag.attributes['name'])
           tagging = q.taggings.new :tag => t
           q.taggings << tagging
         end
@@ -346,7 +347,7 @@ class Questionnaire < ActiveRecord::Base
   end
   
   def authors
-    questionnaire_permissions.all(:include => :person, :conditions => { :can_edit => true }).map(&:person).compact
+    questionnaire_permissions.includes(:person).where(:can_edit => true).to_a.map(&:person).compact
   end
   
   def self.load_extensions

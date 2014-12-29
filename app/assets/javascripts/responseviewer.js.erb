@@ -21,7 +21,7 @@ ResponseViewer.showingResponseId = null;
 function showResponse(id) {  
     showResponseViewer(id);
     new Ajax.Request(
-        '<%= url_for([@questionnaire, :responses]) %>/' + id,
+        getResponsesUrl() + '/' + id,
         { method: 'get' });
 }
 
@@ -46,13 +46,13 @@ function hideResponseViewer() {
 
 function showResponseThrobber() {
     showResponseToolbar('wait');
-    $('responsebody').update('<div style="text-align: center;"><%=image_tag "throbber.gif", :alt => "Loading..." %></div>');
+    $('responsebody').update('<div style="text-align: center;"><img src="<%= asset_path %(throbber.gif) %>" alt="Loading..." /></div>');
 }
 
 function editResponse() {
     showResponseThrobber();
     new Ajax.Request(
-        '<%= url_for [@questionnaire, :responses] %>/' + ResponseViewer.showingResponseId + '/edit.js', 
+        getResponsesUrl() + '/' + ResponseViewer.showingResponseId + '/edit.js', 
         { 'method': 'get' });
 }
 
@@ -66,7 +66,7 @@ function saveEditedResponse() {
     params = $$('#responsebody > form')[0].serialize(true);
     showResponseThrobber();
     new Ajax.Request(
-        '<%= url_for [@questionnaire, :responses] %>/' + ResponseViewer.showingResponseId + '.js',
+        getResponsesUrl() + '/' + ResponseViewer.showingResponseId + '.js',
         {
 			method: 'put',
             parameters: params
@@ -84,7 +84,7 @@ function cancelDelete() {
 function confirmDelete() {
   showResponseThrobber();
   new Ajax.Request(
-      '<%= url_for([@questionnaire, :responses]) %>/'+ResponseViewer.showingResponseId,
+      getResponsesUrl() + '/' + ResponseViewer.showingResponseId,
       {
           method: 'delete',
           onSuccess: function (req, header) { window.location.reload(); },
@@ -93,4 +93,8 @@ function confirmDelete() {
             cancelDelete();
           }
       });
+}
+
+function getResponsesUrl() {
+  return $('responseviewer').getAttribute('data-responses-url');
 }

@@ -1,7 +1,7 @@
 class AddPreviewableOptionToQuestionnaires < ActiveRecord::Migration
   def self.up
     add_column :questionnaires, :allow_preview, :boolean
-    Questionnaire.all(:conditions => { :is_open => true }).each do |q|
+    Questionnaire.where(:is_open => true).find_each do |q|
       q.allow_preview = true
       q.save :validate => false
     end

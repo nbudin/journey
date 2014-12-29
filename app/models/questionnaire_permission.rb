@@ -29,7 +29,7 @@ class QuestionnairePermission < ActiveRecord::Base
     end
     
     logger.info "Trying to find person with email #{email}"
-    self.person = Person.find_by_email(email)
+    self.person = Person.find_by(email: email)
     if email and self.person.nil?
       logger.info "Not found, trying Illyan invite"
       begin

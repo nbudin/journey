@@ -14,16 +14,14 @@ class RootController < ApplicationController
     
     @page_title = "Dashboard"
     
-    @my_questionnaires = QuestionnairePermission.for_person(current_person).allows_anything.all(
-      :order => "questionnaire_id DESC", :include => :questionnaire).map(&:questionnaire).compact
+    @my_questionnaires = QuestionnairePermission.for_person(current_person).allows_anything.
+      order("questionnaire_id DESC").includes(:questionnaire).to_a.map(&:questionnaire).compact
     
-    @responses = Response.all(:conditions => { :person_id => current_person.id }, 
-                          :include => { :questionnaire => nil }, :order => "created_at DESC", :limit => 8)
+    @responses = Response.where(:person_id => current_person.id).includes(:questionnaire).order(:created_at => :desc).limit(8)
   end
   
   private
   def get_new_questionnaires
-    @new_questionnaires = Questionnaire.all(:conditions => { :publicly_visible => true, :is_open => true },
-                                            :order => "published_at DESC", :limit => 8)
+    @new_questionnaires = Questionnaire.where(:publicly_visible => true, :is_open => true).order("published_at DESC").limit(8)
   end
 end

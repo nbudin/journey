@@ -3,10 +3,9 @@ class Question < ActiveRecord::Base
   
   belongs_to :page, :inverse_of => :questions
   has_one :questionnaire, :through => :page
-  acts_as_list :scope => :page
   has_many :answers, :dependent => :destroy, :inverse_of => :question
   has_one :special_field_association, :dependent => :destroy, :autosave => true, :inverse_of => :question
-  has_many :question_options, :dependent => :destroy, :order => "position", :foreign_key => 'question_id', :autosave => true, :inverse_of => :question
+  has_many :question_options, -> { order(:position) }, :dependent => :destroy, :foreign_key => 'question_id', :autosave => true, :inverse_of => :question
   
   LAYOUTS = {
     :left => "left",
@@ -14,6 +13,7 @@ class Question < ActiveRecord::Base
   }
   
   validates_inclusion_of :layout, :in => LAYOUTS.values
+  before_create :set_position
   
   # Don't protect the type attribute, we want to mass-assign it
   def self.attributes_protected_by_default
@@ -97,5 +97,11 @@ class Question < ActiveRecord::Base
     xml.question do
       xmlcontent(xml)
     end
+  end
+  
+  private
+  def set_position
+    return if position
+    self.position = (page.questions.maximum(:position) || 0) + 1
   end
 end

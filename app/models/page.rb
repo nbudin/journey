@@ -2,13 +2,12 @@ require 'journey_questionnaire'
 
 class Page < ActiveRecord::Base
   belongs_to :questionnaire
-  acts_as_list :scope => :questionnaire
-  
+  has_many :questions, -> { order(:position).includes(:page, :question_options, :special_field_association) }, :dependent => :destroy, :inverse_of => :page
+  has_many :fields, -> { where(type: Question.field_types.map(&:name)).order(:position) }, :class_name => 'Question', :inverse_of => :page
+  has_many :decorators, -> { order(:position).where(type: Question.decorator_types.map(&:name)) }, :class_name => 'Question', :inverse_of => :page
+    
   before_create :set_untitled
-  
-  has_many :questions, :order => :position, :dependent => :destroy, :include => [:page, :question_options, :special_field_association], :inverse_of => :page
-  has_many :fields, :class_name => 'Question', :order => :position, :conditions => { :type => Question.field_types.map(&:name) }, :inverse_of => :page
-  has_many :decorators, :class_name => 'Question', :order => :position, :conditions => { :type => Question.decorator_types.map(&:name) }, :inverse_of => :page
+  before_create :set_position
     
   def number
     questionnaire.pages.index(self) + 1
@@ -19,5 +18,10 @@ class Page < ActiveRecord::Base
     if self.title.blank?
       self.title = "Untitled page"
     end
+  end
+  
+  def set_position
+    return if position
+    self.position = (questionnaire.pages.maximum(:position) || 0) + 1
   end
 end

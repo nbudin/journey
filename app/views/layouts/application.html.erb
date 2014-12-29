@@ -36,8 +36,29 @@
 <% end %>
 
 <div class="topbar">
-    <%= nav_bar :user_options %>
-    <%= image_tag("journey26-logo.png", :alt => "Journey") %>
+  <nav class="user_options">
+    <ul>
+      <% if ENV['SUGAR_POND_BRANDING'] -%>
+        <li <% if params[:controller] == 'support' %>class="current"<% end %>>
+          <%= link_to "Support", support_path %>
+        </li>
+      <% end -%>
+      
+      <% if person_signed_in? -%>
+        <li>
+          <%= link_to(current_person.name.presence || "My profile", IllyanClient.base_url) %>
+        </li>
+        <li>
+          <%= link_to "Log out", destroy_person_session_path, method: :delete %>
+        </li>
+      <% else -%>
+        <li>
+          <%= link_to "Log in", new_person_session_path %>
+        </li>
+      <% end -%>
+    </ul>
+  </nav>
+  <%= image_tag("journey26-logo.png", :alt => "Journey") %>
 </div>
 
 <% if globalnav_links.size > 0 -%>

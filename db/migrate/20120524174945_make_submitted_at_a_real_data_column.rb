@@ -1,6 +1,6 @@
 class MakeSubmittedAtARealDataColumn < ActiveRecord::Migration
   def self.up
-    Response.all(:conditions => {:submitted => true}).each do |resp|
+    Response.where(:submitted => true).find_each do |resp|
       next unless resp.submitted
       
       say "Updating response #{resp.id}"

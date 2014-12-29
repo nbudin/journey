@@ -4,27 +4,9 @@
 class ApplicationController < ActionController::Base  
   protect_from_forgery
   
-  helper :user_options
   helper :question_answer
   helper :tabstrip
   helper :color
-  
-  helper Xebec::NavBarHelper
-  include Xebec::ControllerSupport  
-
-  nav_bar :user_options, :class => "user_options" do |nb|
-    Journey::UserOptions.hooks.each do |hook|
-      hook.call(nb, self)
-    end
-    
-    if person_signed_in?
-      profile_name = current_person.name.present? ? current_person.name : "My profile"
-      nb.nav_item profile_name, IllyanClient.base_url
-      nb.nav_item "Log out", destroy_person_session_path, :method => :delete
-    else
-      nb.nav_item "Log in", new_person_session_path unless person_signed_in?
-    end
-  end
   
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message

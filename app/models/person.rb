@@ -26,7 +26,7 @@ class Person < ActiveRecord::Base
   end
   
   def permission_for(questionnaire)
-    questionnaire_permissions.first(:conditions => {:questionnaire_id => questionnaire.id})
+    questionnaire_permissions.find_by(:questionnaire_id => questionnaire.id)
   end
   
   def can?(action, questionnaire)

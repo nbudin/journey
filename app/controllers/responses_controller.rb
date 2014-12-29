@@ -7,7 +7,7 @@ class ResponsesController < ApplicationController
   before_filter :set_page_title
   before_filter :require_view_answers_except_rss, :only => [:index]
   before_filter :get_email_notification, :only => [:subscribe, :update_subscription]
-    
+  
   # GET /responses
   # GET /responses.xml
   def index
@@ -45,11 +45,6 @@ class ResponsesController < ApplicationController
 
     respond_to do |format|
       format.html { }
-      format.js do
-        render :update do |page|
-          page.replace_html 'responses', :partial => 'response_table'
-        end
-      end
       format.rss do 
         if params[:secret] != @questionnaire.rss_secret
           throw "Provided secret does not match questionnaire"
@@ -57,96 +52,9 @@ class ResponsesController < ApplicationController
         render :layout => false
       end
       format.csv do
-        
+        exporter = ResponsesCsvExporter.new(@questionnaire, params[:rotate] == 'true')
         stream_csv(@questionnaire.title.gsub(/[^A-Za-z0-9 \-\(\)\.]/, '-') + ".csv") do |csv|
-          db = RailsSequel.connect
-          
-          ds = db[:answers]
-          ds = ds.inner_join(:responses, :id => :response_id)
-          ds = ds.inner_join(:questions, :id => :answers__question_id)
-          ds = ds.inner_join(:pages, :id => :questions__page_id)
-          ds = ds.left_join(:question_options, :question_id => :answers__question_id, :option => :answers__value)
-          ds = ds.where(:responses__questionnaire_id => @questionnaire.id)
-
-          case params[:rotate]
-          when 'true'
-            valid_response_ids = db[:answers].select(:response_id).inner_join(:responses, :id => :response_id).where(:questionnaire_id => @questionnaire.id)
-            
-            response_metadata = db[:responses].order(:id).where(:id => valid_response_ids).select(:id, :submitted_at, :notes).all
-            response_ids = response_metadata.map { |resp| resp[:id] }
-            csv << ["id"] + response_ids
-            csv << ["Submitted"] + response_metadata.map { |resp| resp[:submitted_at] }
-            csv << ["Notes"] + response_metadata.map { |resp| resp[:notes] }
-            
-            ds = ds.order(:pages__position, :questions__position, :responses__id)
-            ds = ds.select(:answers__question_id, :questions__caption, :answers__response_id, :answers__value, :question_options__output_value)
-            
-            current_response_index = 0
-            current_question_id = 0
-            current_row = nil
-            ds.each do |db_row|
-              if db_row[:question_id] != current_question_id
-                csv << current_row if current_row
-                current_row = [db_row[:caption]]
-                current_response_index = 0
-                current_question_id = db_row[:question_id]
-              end
-              
-              current_response_id = response_ids[current_response_index]
-              if current_response_id != db_row[:response_id]
-                skip_to = response_ids.find_index(db_row[:response_id])
-                if skip_to
-                  (skip_to - current_response_index).times { current_row << "" }
-                  current_response_index = skip_to
-                else
-                  next
-                end
-              end
-              
-              db_row[:output_value] = nil if db_row[:output_value].blank?
-              current_row << (db_row[:output_value] || db_row[:value] || "")
-              current_response_index += 1
-            end
-            csv << current_row if current_row
-          else
-            @columns = @questionnaire.fields
-
-            header = ["id", "Submitted", "Notes"]
-            header += @columns.collect { |c| c.caption }
-            csv << header
-            
-            ds = ds.order(Sequel.desc(:responses__id), :pages__position, :questions__position)
-            ds = ds.select(:responses__id, :responses__submitted_at, :responses__notes, :answers__question_id, :answers__value, :question_options__output_value)
-            
-            column_ids = @columns.map(&:id)
-            current_column_index = 0
-            current_response_id = 0
-            current_row = nil
-            ds.each do |db_row|
-              if db_row[:id] != current_response_id
-                csv << current_row if current_row                
-                current_row = [db_row[:id], db_row[:submitted_at], db_row[:notes]]
-                current_column_index = 0
-                current_response_id = db_row[:id]
-              end
-              
-              current_column_id = column_ids[current_column_index]
-              if current_column_id != db_row[:question_id]
-                skip_to = column_ids.find_index(db_row[:question_id])
-                if skip_to
-                  (skip_to - current_column_index).times { current_row << "" }
-                  current_column_index = skip_to
-                else
-                  next
-                end
-              end
-              
-              db_row[:output_value] = nil if db_row[:output_value].blank?
-              current_row << (db_row[:output_value] || db_row[:value] || "")
-              current_column_index += 1
-            end
-            csv << current_row if current_row
-          end
+          exporter.each_row { |row| csv << row }
         end
       end
     end
@@ -157,12 +65,6 @@ class ResponsesController < ApplicationController
     
     respond_to do |format|
       format.html { render :layout => "print" }
-    end
-  end
-  
-  def responseviewer
-    respond_to do |format|
-      format.js { render :layout => false }
     end
   end
 
@@ -205,7 +107,7 @@ class ResponsesController < ApplicationController
   # POST /responses
   # POST /responses.xml
   def create
-    @response = Response.new(params[:response])
+    @response = Response.new(response_params)
 
     respond_to do |format|
       if @response.save
@@ -246,7 +148,7 @@ class ResponsesController < ApplicationController
     end
 
     respond_to do |format|
-      if @response.update_attributes(params[:response])
+      if @response.update_attributes(response_params)
         format.html { redirect_to([@questionnaire, @response]) }
         format.js { redirect_to(polymorphic_url([@questionnaire, @response], :format => "js")) }
         format.xml  { head :ok }
@@ -334,5 +236,9 @@ class ResponsesController < ApplicationController
   
   def get_email_notification
     @email_notification = @questionnaire.email_notifications.where(person_id: current_person.id).first
+  end
+  
+  def response_params
+    params[:response].try(:permit, :notes) || {}
   end
 end

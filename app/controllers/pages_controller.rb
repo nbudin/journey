@@ -49,7 +49,7 @@ class PagesController < ApplicationController
   # PUT /pages/1.xml
   def update
     respond_to do |format|
-      if @page.update_attributes(params[:page])
+      if @page.update_attributes(page_params)
         flash[:notice] = 'Page was successfully updated.'
         format.json { head :ok }
         format.html { redirect_to [@questionnaire, @page] }
@@ -81,5 +81,10 @@ class PagesController < ApplicationController
       page.save
     end
     render :nothing => true
+  end
+  
+  private
+  def page_params
+    params[:page].try(:permit, :position, :title) || {}
   end
 end

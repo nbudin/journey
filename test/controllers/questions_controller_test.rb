@@ -41,7 +41,7 @@ class QuestionsControllerTest < ActionController::TestCase
     end
   
     it 'should update question' do
-      put :update, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id, :question => { }
+      put :update, :questionnaire_id => @questionnaire.id, :page_id => @page.id, :id => @question.id, :question => { caption: "abcd" }
       assert_redirected_to [@questionnaire, @page, assigns(:question)]
     end
   

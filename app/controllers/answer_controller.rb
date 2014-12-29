@@ -38,7 +38,7 @@ class AnswerController < ApplicationController
     @all_responses = []
     @responses = []
     if person_signed_in?
-      @all_responses = @questionnaire.responses.find_all_by_person_id(current_person.id)
+      @all_responses = @questionnaire.responses.where(person_id: current_person.id).to_a
       if @questionnaire.allow_finish_later
         @responses += @all_responses.select { |resp| not resp.submitted }
       end
@@ -60,7 +60,7 @@ class AnswerController < ApplicationController
   end
 
   def index
-    @questionnaire = Questionnaire.find(params[:id], :include => :pages)
+    @questionnaire = Questionnaire.includes(:pages).find(params[:id])
     if not @questionnaire.is_open
       redirect_to :action => 'questionnaire_closed', :id => params[:id]
     else
@@ -111,7 +111,7 @@ class AnswerController < ApplicationController
   end
   
   def preview
-    @questionnaire = Questionnaire.find(params[:id], :include => [:questionnaire_permissions, :pages])
+    @questionnaire = Questionnaire.includes(:questionnaire_permissions, :pages).find(params[:id])
     
     if @questionnaire.pages.size > 0
       @page = @questionnaire.pages[(params[:page] || 1).to_i - 1]
@@ -195,7 +195,7 @@ class AnswerController < ApplicationController
         
         @questionnaire.email_notifications.notify_on_response_submit.includes(:person).each do |notification|
           next unless notification.try(:person).try(:email).present?
-          NotificationMailer.response_submitted(@resp, notification.person).deliver
+          NotificationMailer.response_submitted(@resp, notification.person).deliver_later
         end
         
         redirect_to :action => "save_session", :id => @resp.questionnaire.id, :current_page => 1

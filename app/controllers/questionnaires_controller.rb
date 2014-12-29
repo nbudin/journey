@@ -20,27 +20,18 @@ class QuestionnairesController < ApplicationController
       condition_vars[:tag_name] = params[:tag]
     end
         
-    find_conditions = [conditions.join(" and "), condition_vars]
-    find_options = {
-      :conditions => [conditions.join(" and "), condition_vars],
-      :order => 'questionnaires.id DESC',
-      :group => "questionnaires.id",
-      :include => {:tags => [], :questionnaire_permissions => [:person]},
-      :page => params[:page] || 1,
-      :per_page => per_page,
-    }
-    @questionnaires = Questionnaire.accessible_by(current_ability).paginate(find_options)
+    questionnaire_scope = Questionnaire.accessible_by(current_ability).
+      order(id: :desc).
+      group("questionnaires.id").
+      includes(:tags, questionnaire_permissions: :person)
+    questionnaire_scope = questionnaire_scope.where(conditions.join(" and "), condition_vars) if conditions.any?
+    @questionnaires = questionnaire_scope.paginate(page: params[:page] || 1, per_page: per_page)
     
     @rss_url = questionnaires_url(:format => "rss")
 
     respond_to do |format|
       format.html { }
       format.rss  { render :layout => false }
-      format.js do
-        render :update do |page|
-          page.replace_html 'questionnaire_list', :partial => 'paged_results'
-        end
-      end
     end
   end
   
@@ -49,9 +40,9 @@ class QuestionnairesController < ApplicationController
       return redirect_to(:action => 'index')
     end
     
-    @responses = Response.all(:conditions => { :person_id => current_person.id }, 
-                              :include => { :questionnaire => [:questionnaire_permissions, :tags] },
-                              :order => "created_at DESC")
+    @responses = Response.where(:person_id => current_person.id). 
+                              includes(:questionnaire => [:questionnaire_permissions, :tags]).
+                              order("created_at DESC")
     @questionnaires = @responses.collect { |r| r.questionnaire }.uniq
   end
 
@@ -59,6 +50,7 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/1.xml
   def show
     @questionnaire = Questionnaire.find(params[:id])
+    authorize! :view_edit_pages, @questionnaire
     attributes = params[:attributes] || @questionnaire.attribute_names
     attributes.delete "rss_secret"
 
@@ -70,11 +62,6 @@ class QuestionnairesController < ApplicationController
           render :xml => @questionnaire.to_xml
         else
           render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden
-        end
-      end
-      format.js do
-        render :update do |page|
-          page.replace_html "questionnairesummary_#{@questionnaire.id}", :partial => "summary"
         end
       end
       format.json do
@@ -89,8 +76,9 @@ class QuestionnairesController < ApplicationController
   
   # GET /questionnaires/1;print
   def print
-    @questionnaire = Questionnaire.find(params[:id], :include => :pages)
+    @questionnaire = Questionnaire.includes(:pages).find(params[:id])
     @resp = Response.new(:questionnaire => @questionnaire)
+    authorize! :view_edit_pages, @questionnaire
     
     render :layout => "print"
   end
@@ -98,11 +86,12 @@ class QuestionnairesController < ApplicationController
   # GET /questionnaires/new
   def new
     @questionnaire = Questionnaire.new(params[:questionnaire])
-    @cloneable_questionnaires = Questionnaire.accessible_by(current_ability, :edit).all(:order => "id DESC").uniq
+    @cloneable_questionnaires = Questionnaire.accessible_by(current_ability, :edit).order("questionnaires.id DESC").to_a.uniq
   end
 
   # GET /questionnaires/1;edit
   def edit
+    authorize! :edit, @questionnaire
     render layout: "questionnaire_edit"
   end
   
@@ -147,9 +136,8 @@ class QuestionnairesController < ApplicationController
       @questionnaire.title = "Copy of #{@questionnaire.title}"
       @questionnaire.is_open = false
     else
-      p = params[:questionnaire] || {}
-      p[:title] ||= "Untitled questionnaire"
-      @questionnaire = Questionnaire.new(p)
+      @questionnaire = Questionnaire.new(create_params)
+      @questionnaire.title ||= "Untitled questionnaire"
     end
 
     respond_to do |format|
@@ -168,10 +156,10 @@ class QuestionnairesController < ApplicationController
   # PUT /questionnaires/1.xml
   def update
     @questionnaire = Questionnaire.find(params[:id])
-    params[:questionnaire].delete(:questionnaire_permissions_attributes) unless current_person.can?(:change_permissions, @questionnaire)
+    authorize! :edit, @questionnaire
 
     respond_to do |format|
-      if @questionnaire.update_attributes(params[:questionnaire])
+      if @questionnaire.update_attributes(update_params)
         format.html { redirect_to params[:return_to] || :back }
         format.xml  { head :ok }
         format.json { head :ok }
@@ -190,6 +178,7 @@ class QuestionnairesController < ApplicationController
   # DELETE /questionnaires/1.xml
   def destroy
     @questionnaire = Questionnaire.find(params[:id])
+    authorize! :destroy, @questionnaire
     @questionnaire.destroy
 
     respond_to do |format|
@@ -200,6 +189,7 @@ class QuestionnairesController < ApplicationController
   
   def available_special_field_purposes
     @questionnaire = Questionnaire.find(params[:id])
+    authorize! :edit, @questionnaire
     
     respond_to do |format|
       format.xml do
@@ -219,6 +209,28 @@ class QuestionnairesController < ApplicationController
 
   def pagelist
     @questionnaire = Questionnaire.find(params[:id])
+    authorize! :view_edit_pages, @questionnaire
     render :partial => 'pagelist', :locals => { :questionnaire => @questionnaire }
+  end
+  
+  private
+  def create_params
+    params.require(:questionnaire).permit(permitted_params_for_edit_permission)
+  end
+  
+  def update_params
+    permitted_params = []
+    permitted_params += permitted_params_for_edit_permission if can?(:edit, @questionnaire)
+    if can?(:change_permissions, @questionnaire)
+      permitted_params << { 
+        questionnaire_permissions_attributes: [:email, :person_id, :can_edit, :can_view_answers, :can_edit_answers, :can_destroy, :can_change_permissions, :id, :_destroy] 
+      }
+    end
+    params.require(:questionnaire).permit(permitted_params)
+  end
+  
+  def permitted_params_for_edit_permission
+    [:title, :is_open, :custom_html, :custom_css, :allow_finish_later, :allow_amend_response, 
+      :welcome_text, :advertise_login, :require_login, :publicly_visible, :allow_preview, :allow_delete_responses]
   end
 end

@@ -3,7 +3,8 @@ require 'test_helper'
 class PageTest < ActiveSupport::TestCase
   describe "A new page" do
     before do
-      @page = Page.create
+      @questionnaire = FactoryGirl.create(:questionnaire)
+      @page = @questionnaire.pages.create
     end
     
     it "should be called 'untitled'" do

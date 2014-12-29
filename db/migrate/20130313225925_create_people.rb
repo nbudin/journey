@@ -44,9 +44,9 @@ class CreatePeople < ActiveRecord::Migration
     add_index :questionnaire_permissions, [:questionnaire_id, :person_id], :unique => true, :name => 'permission_by_questionnaire_and_person'
     add_index :questionnaire_permissions, :person_id
     
-    person_ids = Response.all(:group => :person_id, :select => :person_id).map(&:person_id)
+    person_ids = Response.group(:person_id).pluck(:person_id)
     begin
-      person_ids += Permission.all(:group => :person_id, :select => :person_id).map(&:person_id)
+      person_ids += Permission.group(:person_id).pluck(:person_id)
     rescue
       # Ignore this; procon_profiles and permissions might not exist for clean installs
     end
@@ -88,7 +88,7 @@ class CreatePeople < ActiveRecord::Migration
           next
         end
         
-        merge_into = Person.find_by_username(person.primary_email_address.address)
+        merge_into = Person.find_by(username: person.primary_email_address.address)
         if merge_into.nil?
           merge_into = Person.new(:firstname => person.firstname, :lastname => person.lastname, 
             :email => person.primary_email_address.address, :gender => person.gender, :birthdate => person.birthdate,
@@ -107,7 +107,7 @@ class CreatePeople < ActiveRecord::Migration
         say "Merged #{count} existing records for person ID #{from_id}"
       end
       
-      Permission.all(:conditions => "permission is null and permissioned_id is null").each do |perm|
+      Permission.where("permission is null and permissioned_id is null").to_a.each do |perm|
         say "Found admin permission #{perm.inspect}"
         
         admins = []
@@ -118,7 +118,7 @@ class CreatePeople < ActiveRecord::Migration
             admins << Person.find(perm.person_id)
           end
         elsif perm.role_id
-          admins += Person.all(:conditions => {:id => dumpfile.roles[perm.role_id].people.map(&:id)})
+          admins += Person.where(:id => dumpfile.roles[perm.role_id].people.map(&:id)).to_a
         end
         
         admins.each do |person|
@@ -131,7 +131,7 @@ class CreatePeople < ActiveRecord::Migration
       end
       
       say "Migrating permissions"
-      Permission.find_each(:conditions => { :permissioned_type => "Questionnaire" }, :include => :permissioned) do |perm|
+      Permission.where(:permissioned_type => "Questionnaire").includes(:permissioned).find_each do |perm|
         people = []
         if perm.person_id
           if merged_person_ids[perm.person_id]
@@ -145,11 +145,11 @@ class CreatePeople < ActiveRecord::Migration
             end
           end
         elsif perm.role_id
-          people += Person.all(:conditions => {:id => dumpfile.roles[perm.role_id].people.map(&:id)})
+          people += Person.where(:id => dumpfile.roles[perm.role_id].people.map(&:id)).to_a
         end
         
         people.each do |person|
-          qperm = QuestionnairePermission.find_by_questionnaire_id_and_person_id(perm.permissioned_id, person.id)
+          qperm = QuestionnairePermission.find_by(questionnaire_id: perm.permissioned_id, person_id: person.id)
           qperm ||= QuestionnairePermission.new(:questionnaire_id => perm.permissioned_id, :person_id => person.id)
           
           if perm.permission

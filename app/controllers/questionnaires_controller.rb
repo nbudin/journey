@@ -222,7 +222,7 @@ class QuestionnairesController < ApplicationController
     permitted_params += permitted_params_for_edit_permission if can?(:edit, @questionnaire)
     if can?(:change_permissions, @questionnaire)
       permitted_params << { 
-        questionnaire_permissions_attributes: [:person_id, :can_edit, :can_view_answers, :can_edit_answers, :can_destroy, :can_change_permissions] 
+        questionnaire_permissions_attributes: [:email, :person_id, :can_edit, :can_view_answers, :can_edit_answers, :can_destroy, :can_change_permissions, :id, :_destroy] 
       }
     end
     params.require(:questionnaire).permit(permitted_params)

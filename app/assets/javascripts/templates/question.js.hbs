@@ -7,9 +7,12 @@
     </div>
   {{/unless}}
   
-  <label {{bind-attr class=":caption required:required" for="view.answerField.elementId"}}>
-    {{caption}}
-  </label>
+  {{#unless isDisplay}}
+    <label {{bind-attr class=":caption required:required" for="view.answerField.elementId"}}>
+      {{{caption}}}
+    </label>
+  {{/unless}}
+  
   <span class="questionbody">
     {{#if hasPurpose}}
       <span class="special_purpose">

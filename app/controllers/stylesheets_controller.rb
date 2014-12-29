@@ -1,8 +1,6 @@
 class StylesheetsController < ApplicationController
   layout nil
   
-  caches_page :ie7hacks, :scaffold, :journey, :questionnaire, :welcome
-  
   after_filter do |response|
     response.headers["Cache-Control"] = "public"
   end

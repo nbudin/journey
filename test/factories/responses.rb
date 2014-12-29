@@ -8,7 +8,7 @@ FactoryGirl.define do
           answer = response.answers.new :question => field          
           answer.value = case field
           when Questions::FreeformField
-            (0...(Kernel.rand(10) + 10)).collect { (45..126).to_a[Kernel.rand(81)].chr }.join
+            (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a).sample(Kernel.rand(10) + 10).join
           when Questions::CheckBoxField
             Kernel.rand(2) == 0 ? nil : true
           when Questions::RangeField

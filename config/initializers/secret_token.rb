@@ -1,2 +1,3 @@
 Rails.application.config.session_store :cookie_store, :key => '_journey_aegames_org-trunk_session'
 Rails.application.config.secret_token = ENV['SECRET_TOKEN'] || 'ca837e0d9bfed2129139ac1712cf768687981f043aca55c15b424d1deee830babca9bf84afea63d9fd18164f9b026b5c5846b3cb1d64d8febeab9618d24a385f'
+Rails.application.config.secret_key_base = ENV['SECRET_KEY_BASE'] || '3462faa5d73a03241dcd3fba9047ca5f0a5ad9faa7181ae0cc2a6e874ad98a792894a75aaeeea8bc6cc7cdda50096975ddbe86ee79a5041fa060f3cf105324e9'

@@ -23,7 +23,8 @@ class QuestionnairesController < ApplicationController
     questionnaire_scope = Questionnaire.accessible_by(current_ability).
       order(id: :desc).
       group("questionnaires.id").
-      includes(:tags, questionnaire_permissions: :person)
+      includes(:tags, questionnaire_permissions: :person).
+      references(:tags)
     questionnaire_scope = questionnaire_scope.where(conditions.join(" and "), condition_vars) if conditions.any?
     @questionnaires = questionnaire_scope.paginate(page: params[:page] || 1, per_page: per_page)
     

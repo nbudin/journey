@@ -215,7 +215,7 @@ class QuestionnairesController < ApplicationController
   
   private
   def create_params
-    params.require(:questionnaire).permit(permitted_params_for_edit_permission)
+    params[:questionnaire].try(:permit, permitted_params_for_edit_permission)
   end
   
   def update_params
@@ -226,7 +226,7 @@ class QuestionnairesController < ApplicationController
         questionnaire_permissions_attributes: [:email, :person_id, :can_edit, :can_view_answers, :can_edit_answers, :can_destroy, :can_change_permissions, :id, :_destroy] 
       }
     end
-    params.require(:questionnaire).permit(permitted_params)
+    params[:questionnaire].try(:permit, permitted_params)
   end
   
   def permitted_params_for_edit_permission

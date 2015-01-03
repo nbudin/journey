@@ -1,0 +1,46 @@
+{
+  "ignored_warnings":[
+    {
+      "warning_type":"Cross Site Scripting",
+      "warning_code":2,
+      "fingerprint":"4f65ac15e19282954f527b6b634c9677dc10e5996e27f3a1f9d5449847c57fe7",
+      "message":"Unescaped model attribute",
+      "file":"app\/views\/answer\/prompt.html.erb",
+      "line":4,
+      "link":"http:\/\/brakemanscanner.org\/docs\/warning_types\/cross_site_scripting",
+      "code":"Questionnaire.includes(:questionnaire_permissions, :pages).find(params[:id]).welcome_text",
+      "render_path":[
+        "AnswerController#preview"
+      ],
+      "location":{
+        "type":"template",
+        "template":"answer\/prompt (AnswerController#preview)"
+      },
+      "user_input":null,
+      "confidence":"High",
+      "note":""
+    },
+    {
+      "warning_type":"Cross Site Scripting",
+      "warning_code":2,
+      "fingerprint":"98cdfb7a3b7a9e16399c66003b1aa666c395ad7284130b02bcf2dea9d9bc51d9",
+      "message":"Unescaped model attribute",
+      "file":"app\/views\/layouts\/answer.html.erb",
+      "line":30,
+      "link":"http:\/\/brakemanscanner.org\/docs\/warning_types\/cross_site_scripting",
+      "code":"Questionnaire.includes(:pages).find(params[:id]).custom_html",
+      "render_path":[
+        "AnswerController#index"
+      ],
+      "location":{
+        "type":"template",
+        "template":"layouts\/answer (AnswerController#index)"
+      },
+      "user_input":null,
+      "confidence":"High",
+      "note":""
+    }
+  ],
+  "updated":"2015-01-03 09:19:46 -0500",
+  "brakeman_version":"3.0.0"
+}

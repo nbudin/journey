@@ -231,6 +231,7 @@ class QuestionnairesController < ApplicationController
   
   def permitted_params_for_edit_permission
     [:title, :is_open, :custom_html, :custom_css, :allow_finish_later, :allow_amend_response, 
-      :welcome_text, :advertise_login, :require_login, :publicly_visible, :allow_preview, :allow_delete_responses]
+      :welcome_text, :advertise_login, :require_login, :publicly_visible, :allow_preview, :allow_delete_responses,
+      :publication_mode, :login_policy]
   end
 end

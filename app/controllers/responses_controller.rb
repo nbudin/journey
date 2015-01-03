@@ -33,7 +33,7 @@ class ResponsesController < ApplicationController
                     if q and q.questionnaire == @questionnaire
                       q
                     end
-                  elsif [:id, :submitted_at, :notes].include?(colspec.to_sym)
+                  elsif %w(id submitted_at notes).include?(colspec.to_s)
                     colspec
                   end
                 end

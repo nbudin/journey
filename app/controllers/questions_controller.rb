@@ -1,4 +1,16 @@
 class QuestionsController < ApplicationController
+  ALLOWED_QUESTION_TYPES = %w(
+    Questions::BigTextField
+    Questions::CheckBoxField
+    Questions::Divider
+    Questions::DropDownField
+    Questions::Heading
+    Questions::Label
+    Questions::RadioField
+    Questions::RangeField
+    Questions::TextField
+  ).map { |typ| [typ, typ.constantize] }.to_h
+  
   load_resource :questionnaire
   load_resource :page, :through => :questionnaire
   load_and_authorize_resource :through => :page, :except => [:create]
@@ -37,8 +49,8 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.xml
   def create
-    question_class = params[:question][:type].constantize
-    raise "#{params[:question][:type]} is not a valid question type" unless question_class <= Question
+    question_class = ALLOWED_QUESTION_TYPES[params[:question][:type]]
+    raise "#{params[:question][:type]} is not a valid question type" unless question_class
     
     params[:question][:caption] ||= if question_class <= Questions::Field
       "Click here to type a question."

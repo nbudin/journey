@@ -114,14 +114,20 @@ class QuestionsController < ApplicationController
   end
   
   def duplicate
-    times = params[:times] || 1
+    n = params[:times].try(:to_i) || 1
     
-    i = @page.questions.index(@question) + 1
-    times.to_i.times do
-      c = @question.deepclone
-      c.purpose = nil
-      @page.questions.insert(i, c)
-      c.save!
+    i = @question.position + 1
+    Question.transaction do
+      @page.questions.where("position >= ?", i).reorder(nil).update_all("position = position + #{n}")
+      n.times do
+        c = @question.deepclone
+        c.purpose = nil
+        c.position = i
+        @page.questions << c
+        c.save!
+  
+        i += 1
+      end
     end
     
     render :nothing => true

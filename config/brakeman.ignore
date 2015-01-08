@@ -23,6 +23,26 @@
     {
       "warning_type":"Cross Site Scripting",
       "warning_code":2,
+      "fingerprint":"49c21f0a89fba9b9c43386fffc18597b52a6df702497107f2eb2edcb932b6ebc",
+      "message":"Unescaped model attribute",
+      "file":"app\/views\/layouts\/answer.html.erb",
+      "line":23,
+      "link":"http:\/\/brakemanscanner.org\/docs\/warning_types\/cross_site_scripting",
+      "code":"Questionnaire.includes(:pages).find(params[:id]).custom_css",
+      "render_path":[
+        "AnswerController#index"
+      ],
+      "location":{
+        "type":"template",
+        "template":"layouts\/answer (AnswerController#index)"
+      },
+      "user_input":null,
+      "confidence":"High",
+      "note":""
+    },
+    {
+      "warning_type":"Cross Site Scripting",
+      "warning_code":2,
       "fingerprint":"98cdfb7a3b7a9e16399c66003b1aa666c395ad7284130b02bcf2dea9d9bc51d9",
       "message":"Unescaped model attribute",
       "file":"app\/views\/layouts\/answer.html.erb",
@@ -41,6 +61,6 @@
       "note":""
     }
   ],
-  "updated":"2015-01-03 09:19:46 -0500",
+  "updated":"2015-01-08 17:56:51 -0500",
   "brakeman_version":"3.0.0"
 }

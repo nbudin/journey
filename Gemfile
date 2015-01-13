@@ -16,6 +16,7 @@ gem 'dynamic_form'
 gem 'thin'
 gem 'figaro', '1.0.0.rc1'
 gem 'breach-mitigation-rails'
+gem 'builder'
 
 gem 'haml'
 gem 'haml-rails'

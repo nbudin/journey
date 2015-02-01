@@ -312,6 +312,7 @@ DEPENDENCIES
   ae_users_migrator
   bourbon
   breach-mitigation-rails
+  builder
   bundler
   cancancan
   capistrano-bundler (~> 1.1)

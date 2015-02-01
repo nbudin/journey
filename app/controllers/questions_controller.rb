@@ -1,4 +1,16 @@
 class QuestionsController < ApplicationController
+  ALLOWED_QUESTION_TYPES = %w(
+    Questions::BigTextField
+    Questions::CheckBoxField
+    Questions::Divider
+    Questions::DropDownField
+    Questions::Heading
+    Questions::Label
+    Questions::RadioField
+    Questions::RangeField
+    Questions::TextField
+  ).map { |typ| [typ, typ.constantize] }.to_h
+  
   load_resource :questionnaire
   load_resource :page, :through => :questionnaire
   load_and_authorize_resource :through => :page, :except => [:create]
@@ -37,8 +49,8 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.xml
   def create
-    question_class = params[:question][:type].constantize
-    raise "#{params[:question][:type]} is not a valid question type" unless question_class <= Question
+    question_class = ALLOWED_QUESTION_TYPES[params[:question][:type]]
+    raise "#{params[:question][:type]} is not a valid question type" unless question_class
     
     params[:question][:caption] ||= if question_class <= Questions::Field
       "Click here to type a question."
@@ -102,14 +114,20 @@ class QuestionsController < ApplicationController
   end
   
   def duplicate
-    times = params[:times] || 1
+    n = params[:times].try(:to_i) || 1
     
-    i = @page.questions.index(@question) + 1
-    times.to_i.times do
-      c = @question.deepclone
-      c.purpose = nil
-      @page.questions.insert(i, c)
-      c.save!
+    i = @question.position + 1
+    Question.transaction do
+      @page.questions.where("position >= ?", i).reorder(nil).update_all("position = position + #{n}")
+      n.times do
+        c = @question.deepclone
+        c.purpose = nil
+        c.position = i
+        @page.questions << c
+        c.save!
+  
+        i += 1
+      end
     end
     
     render :nothing => true

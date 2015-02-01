@@ -23,7 +23,8 @@ class QuestionnairesController < ApplicationController
     questionnaire_scope = Questionnaire.accessible_by(current_ability).
       order(id: :desc).
       group("questionnaires.id").
-      includes(:tags, questionnaire_permissions: :person)
+      includes(:tags, questionnaire_permissions: :person).
+      references(:tags)
     questionnaire_scope = questionnaire_scope.where(conditions.join(" and "), condition_vars) if conditions.any?
     @questionnaires = questionnaire_scope.paginate(page: params[:page] || 1, per_page: per_page)
     
@@ -215,7 +216,7 @@ class QuestionnairesController < ApplicationController
   
   private
   def create_params
-    params.require(:questionnaire).permit(permitted_params_for_edit_permission)
+    params[:questionnaire].try(:permit, permitted_params_for_edit_permission)
   end
   
   def update_params
@@ -226,11 +227,12 @@ class QuestionnairesController < ApplicationController
         questionnaire_permissions_attributes: [:email, :person_id, :can_edit, :can_view_answers, :can_edit_answers, :can_destroy, :can_change_permissions, :id, :_destroy] 
       }
     end
-    params.require(:questionnaire).permit(permitted_params)
+    params[:questionnaire].try(:permit, permitted_params)
   end
   
   def permitted_params_for_edit_permission
     [:title, :is_open, :custom_html, :custom_css, :allow_finish_later, :allow_amend_response, 
-      :welcome_text, :advertise_login, :require_login, :publicly_visible, :allow_preview, :allow_delete_responses]
+      :welcome_text, :advertise_login, :require_login, :publicly_visible, :allow_preview, :allow_delete_responses,
+      :publication_mode, :login_policy]
   end
 end

@@ -18,6 +18,7 @@ gem 'thin'
 gem 'active_model_serializers', '~> 0.8.1'
 gem 'figaro', '1.0.0.rc1'
 gem 'breach-mitigation-rails'
+gem 'builder'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

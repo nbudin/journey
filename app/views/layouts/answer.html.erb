@@ -21,7 +21,7 @@
                 }
 
                 <% if @questionnaire and not @suppress_custom_css -%>
-                        <%= strip_tags @questionnaire.custom_css %>
+                        <%=raw @questionnaire.custom_css %>
                 <% end -%>
   </style>
   <%= javascript_include_tag :application %>

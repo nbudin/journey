@@ -22,9 +22,7 @@ gem 'builder'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'ember-rails'
-gem 'ember-source', '1.9.1'
-gem 'ember-data-source', '1.0.0.beta14'
+gem 'ember-cli-rails'
 
 gem 'haml'
 gem 'haml-rails'
@@ -35,7 +33,7 @@ group :assets do
   gem 'coffee-rails'
   gem 'uglifier'
   gem 'bourbon'
-  gem 'compass-rails'
+  gem 'sprite-factory'
 end
 
 gem 'devise'

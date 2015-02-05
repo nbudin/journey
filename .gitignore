@@ -12,6 +12,27 @@ db/schema.rb
 db/*.sqlite3
 *.orig
 tmp
+.sass-cache
+.rbenv-version
+brakeman.html
+
+### EMBER IGNORES BELOW
 
 # Ignore application configuration
 /config/application.yml
+
+# compiled output
+/journey-ember/dist
+/journey-ember/tmp
+
+# dependencies
+/journey-ember/node_modules
+/journey-ember/bower_components
+
+# misc
+/journey-ember/.sass-cache
+/journey-ember/connect.lock
+/journey-ember/coverage/*
+/journey-ember/libpeerconnection.log
+npm-debug.log
+testem.log

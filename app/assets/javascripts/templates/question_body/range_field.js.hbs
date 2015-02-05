@@ -1,7 +1,0 @@
-{{view QuestionnaireEdit.InPlaceEditorView valueBinding="view.content.min" modelBinding="view.content.model"}}
-{{#each rangeOption in view.content.rangeOptions}}
-  {{#if rangeOption.isMedian}}[{{/if}}
-  {{view QuestionnaireEdit.RadioButtonView value=rangeOption.value targetBinding="view.content.defaultAnswer"}}
-  {{#if rangeOption.isMedian}}]{{/if}}
-{{/each}}
-{{view QuestionnaireEdit.InPlaceEditorView valueBinding="view.content.max" modelBinding="view.content.model"}}

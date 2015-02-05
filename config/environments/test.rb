@@ -15,9 +15,6 @@ Journey::Application.configure do
   # Randomize test order
   config.active_support.test_order = :random
 
-  # Which Ember are we using
-  config.ember.variant = :development
-
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
 

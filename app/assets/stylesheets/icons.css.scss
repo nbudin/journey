@@ -1,7 +1,56 @@
-$icon_sprite_dimensions: true;
+/*
 
-@import "compass/utilities/sprites";
-@import "icon/*.png";
-@include all-icon-sprites;
+        Creating a sprite from following images:
+        
+        app/assets/images/icon/add.png (16x16)
+        app/assets/images/icon/clear-field.png (16x16)
+        app/assets/images/icon/delete.png (16x16)
+        app/assets/images/icon/drag-handle.png (5x19)
+        app/assets/images/icon/drop-down.png (16x16)
+        app/assets/images/icon/duplicate.png (16x16)
+        app/assets/images/icon/edit.png (16x16)
+        app/assets/images/icon/edit-field.png (12x12)
+        app/assets/images/icon/inline-radio-layout.png (16x16)
+        app/assets/images/icon/left-layout.png (16x16)
+        app/assets/images/icon/less-options.png (16x16)
+        app/assets/images/icon/link.png (16x16)
+        app/assets/images/icon/more-options.png (16x16)
+        app/assets/images/icon/not-required.png (12x12)
+        app/assets/images/icon/remove.png (16x16)
+        app/assets/images/icon/required.png (12x12)
+        app/assets/images/icon/set-special-purpose.png (16x16)
+        app/assets/images/icon/top-layout.png (16x16)
+        app/assets/images/icon/unset-special-purpose.png (16x16)
+        app/assets/images/icon/vertical-radio-layout.png (16x16)
+        app/assets/images/icon/view-response.png (16x16)
 
-.icon { display: inline-block; }
+        Output files:
+          app/assets/images/icon.png
+          app/assets/stylesheets/icons.css.scss
+
+        Output size:
+          313x19
+
+
+*/
+.icon.icon-add { width: 16px; height: 16px; background: image-url('icon.png') 0px -1px no-repeat; }
+.icon.icon-clear-field { width: 16px; height: 16px; background: image-url('icon.png') -16px -1px no-repeat; }
+.icon.icon-delete { width: 16px; height: 16px; background: image-url('icon.png') -32px -1px no-repeat; }
+.icon.icon-drag-handle { width: 5px; height: 19px; background: image-url('icon.png') -48px 0px no-repeat; }
+.icon.icon-drop-down { width: 16px; height: 16px; background: image-url('icon.png') -53px -1px no-repeat; }
+.icon.icon-duplicate { width: 16px; height: 16px; background: image-url('icon.png') -69px -1px no-repeat; }
+.icon.icon-edit { width: 16px; height: 16px; background: image-url('icon.png') -85px -1px no-repeat; }
+.icon.icon-edit-field { width: 12px; height: 12px; background: image-url('icon.png') -101px -3px no-repeat; }
+.icon.icon-inline-radio-layout { width: 16px; height: 16px; background: image-url('icon.png') -113px -1px no-repeat; }
+.icon.icon-left-layout { width: 16px; height: 16px; background: image-url('icon.png') -129px -1px no-repeat; }
+.icon.icon-less-options { width: 16px; height: 16px; background: image-url('icon.png') -145px -1px no-repeat; }
+.icon.icon-link { width: 16px; height: 16px; background: image-url('icon.png') -161px -1px no-repeat; }
+.icon.icon-more-options { width: 16px; height: 16px; background: image-url('icon.png') -177px -1px no-repeat; }
+.icon.icon-not-required { width: 12px; height: 12px; background: image-url('icon.png') -193px -3px no-repeat; }
+.icon.icon-remove { width: 16px; height: 16px; background: image-url('icon.png') -205px -1px no-repeat; }
+.icon.icon-required { width: 12px; height: 12px; background: image-url('icon.png') -221px -3px no-repeat; }
+.icon.icon-set-special-purpose { width: 16px; height: 16px; background: image-url('icon.png') -233px -1px no-repeat; }
+.icon.icon-top-layout { width: 16px; height: 16px; background: image-url('icon.png') -249px -1px no-repeat; }
+.icon.icon-unset-special-purpose { width: 16px; height: 16px; background: image-url('icon.png') -265px -1px no-repeat; }
+.icon.icon-vertical-radio-layout { width: 16px; height: 16px; background: image-url('icon.png') -281px -1px no-repeat; }
+.icon.icon-view-response { width: 16px; height: 16px; background: image-url('icon.png') -297px -1px no-repeat; }

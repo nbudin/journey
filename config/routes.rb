@@ -27,6 +27,7 @@ Journey::Application.routes.draw do
       get :share
       get :preview
       get :print
+      get 'edit/*extra' => 'questionnaires#edit'
     end
 
     resource :publish, :controller => 'publish', :only => :show do

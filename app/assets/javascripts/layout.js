@@ -52,13 +52,14 @@ function viewportSizeChanged() {
   return true;
 }
 
-function toggleEditor(id, editor) {
-  if (!tinyMCE.get(id) && editor) {
-    tinyMCE.execCommand('mceAddControl', false, id);
+function toggleEditor(id, showEditor) {
+  var editor = tinyMCE.get(id);
+  if (showEditor) {
+    editor.show();
     $(id + '_html').removeClassName('selected');
     $(id + '_visual').addClassName('selected');
-  } else if (tinyMCE.get(id) && !editor) {
-    tinyMCE.execCommand('mceRemoveControl', false, id);
+  } else {
+    editor.hide();
     $(id + '_visual').removeClassName('selected');
     $(id + '_html').addClassName('selected');
   }

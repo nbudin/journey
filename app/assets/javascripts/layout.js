@@ -51,16 +51,3 @@ function viewportSizeChanged() {
   lastViewportSize = vpSize;
   return true;
 }
-
-function toggleEditor(id, showEditor) {
-  var editor = tinyMCE.get(id);
-  if (showEditor) {
-    editor.show();
-    $(id + '_html').removeClassName('selected');
-    $(id + '_visual').addClassName('selected');
-  } else {
-    editor.hide();
-    $(id + '_visual').removeClassName('selected');
-    $(id + '_html').addClassName('selected');
-  }
-}

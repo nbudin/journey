@@ -191,7 +191,7 @@ class ResponsesController < ApplicationController
       @email_notification.save!
     end
     
-    if @email_notification.update_attributes(params[:email_notification])
+    if @email_notification.update_attributes(email_notification_params)
       respond_to do |format|
         format.html { redirect_to action: 'subscribe' }
       end
@@ -240,5 +240,9 @@ class ResponsesController < ApplicationController
   
   def response_params
     params[:response].try(:permit, :notes) || {}
+  end
+  
+  def email_notification_params
+    params.require(:email_notification).permit(:notify_on_response_submit)
   end
 end

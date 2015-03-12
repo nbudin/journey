@@ -117,7 +117,7 @@ class QuestionnairesController < ApplicationController
     if params[:file]
       begin
         @questionnaire = Questionnaire.from_xml(params[:file].read)
-        logger.debug @questionnaire.taggings
+        @questionnaire.save!
       rescue Exception => ex
         flash[:error_messages] = ["There was an error parsing the XML file you uploaded.  Please check to make sure it is a valid Journey survey export."]
         m = ex.message.to_s

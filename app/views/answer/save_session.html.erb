@@ -1,25 +1,26 @@
-<% if not @resp.submitted -%>
-	<h1>Session saved</h1>
+<div class="answerpage" id="answerpage">  
+  <% if not @resp.submitted -%>
+  	<div class="pagetitle">Session saved</div>
 	
-	<p>You have saved your response in progress to this survey.  When you come back to Journey and log in, you'll be
-	  able to pick it up where you left off.</p>
-<% else -%>
-	<h1>Thank you!</h1>
+  	<p>You have saved your response in progress to this survey.  When you come back to Journey and log in, you'll be
+  	  able to pick it up where you left off.</p>
+  <% else -%>
+  	<div class="pagetitle">Thank you!</div>
 	
-	<p>You have successfully submitted your answers to the <%=h @resp.questionnaire.title %> survey.</p>
-<% end -%>
+  	<p>You have successfully submitted your answers to the <%=h @resp.questionnaire.title %> survey.</p>
+  <% end -%>
 
-<ul>
-  <li>
-    <%= link_to :action => 'prompt', :id => @resp.questionnaire.id do %>
-	  Go back to the front page of this survey &raquo;
-    <% end -%>
-  </li>
-  <li>
-    <%= link_to root_url do %>
-	   Go to the main page of Journey &raquo;
-    <% end -%>
-  </li>
-</ul>
-
+  <ul>
+    <li>
+      <%= link_to :action => 'prompt', :id => @resp.questionnaire.id do %>
+  	  Go back to the front page of this survey &raquo;
+      <% end -%>
+    </li>
+    <li>
+      <%= link_to root_url do %>
+  	   Go to the main page of Journey &raquo;
+      <% end -%>
+    </li>
+  </ul>
+</div>
 	

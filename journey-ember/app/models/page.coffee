@@ -14,12 +14,10 @@ Page = DS.Model.extend
     pages && (pages.indexOf(@) + 1)
   ).property('questionnaire.pagesSorted')
   
-  isFirstPage: ( ->
-    @get('number') == 1
-  ).property('number')
+  isFirstPage: Ember.computed.equal('number', 1)
   
   isLastPage: ( ->
-    @get('number') < @get('questionnaire.pages.size')
-  ).property('questionnaire.pages.size', 'number')
+    @get('number') == @get('questionnaire.pages.length')
+  ).property('questionnaire.pages.length', 'number')
   
 `export default Page`

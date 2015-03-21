@@ -1,0 +1,18 @@
+{{#if editing}}
+  <div class="edit">
+    {{input value=newValue}} 
+    <button {{action "saveNewValue"}} {{bind-attr disabled="disabled"}}>Save</button>
+    {{#unless view.disabled}}
+      <a href="#" {{action "cancelEditing"}}>Cancel</a>
+    {{/unless}}
+  </div>
+{{else}}
+  <div class="display" {{action "startEditing"}}>
+    {{#if displayRawHtml}}
+      {{{value}}}
+    {{else}}
+      {{value}}
+    {{/if}}
+  </div>
+{{/if}}
+

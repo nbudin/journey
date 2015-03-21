@@ -1,20 +1,20 @@
-{{#link-to "page" this tagName="div" href=false}}
+{{#link-to "page" page tagName="div" href=false}}
   <div class="answerpage" {{bind-attr data-page-id="id"}}>
     <div class="pagetitle">
-      {{view 'in-place-editor-view' valueBinding="title" modelBinding="model"}}
+      {{in-place-editor value=page.title model=page}}
     </div>
 
     {{#if questionnaire.hasMultiplePages}}
-      <div class="pagecount">Page {{number}} of {{ questionnaire.pages.length }}</div>
+      <div class="pagecount">Page {{page.number}} of {{ questionnaire.pages.length }}</div>
     {{/if}}
 
-    {{view 'questions-view' contentBinding="questionsSorted"}}
+    {{view 'questions-view' contentBinding="page.questionsSorted"}}
 
     <div class="navbuttons">
-      {{#unless isFirstPage}}
+      {{#unless page.isFirstPage}}
         <input type="submit" value="<< Previous page"/>
       {{/unless}}
-      {{#if isLastPage}}
+      {{#if page.isLastPage}}
         <input type="submit" value="Finish"/>
       {{else}}
         <input type="submit" value="Next page >>"/>

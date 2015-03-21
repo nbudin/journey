@@ -1,5 +1,5 @@
-{{#unless isDisplay}}
-  {{#if purpose}}
+{{#unless question.isDisplay}}
+  {{#if question.purpose}}
     <li class="image_button">
       <span class="icon icon-unset-special-purpose" title="Remove special purpose"></span>
       Remove special purpose
@@ -10,7 +10,7 @@
       Set special purpose
     </li>
   {{/if}}
-  {{#if isLeftLayout}}
+  {{#if question.isLeftLayout}}
     <li class="image_button" {{action "setLayout" "top"}}>
       <span class="icon icon-top-layout" title="Put question above answer"></span>
       Put question above answer
@@ -22,8 +22,8 @@
     </li>
   {{/if}}
 {{/unless}}
-{{#if isRadio}}
-  {{#if isVerticalRadioLayout}}
+{{#if question.isRadio}}
+  {{#if question.isVerticalRadioLayout}}
     <li class="image_button" {{action "setRadioLayout" "inline"}}>
       <span class="icon icon-inline-radio-layout" title="Lay out options horizontally"></span>
       Lay out options horizontally

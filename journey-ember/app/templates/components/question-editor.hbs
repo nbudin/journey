@@ -1,0 +1,53 @@
+<span class="draghandle" title="Drag to change question order"></span>
+
+<span class="questionandcaption">
+  {{#unless editMode}}
+    <div class="edit-mode-overlay" {{action 'toggleEditMode'}}>
+      <p>Click to edit</p>
+    </div>
+  {{/unless}}
+  
+  {{#unless question.isDisplay}}
+    <label {{bind-attr class=":caption question.required:required" for="view.answerField.elementId"}}>
+      {{{question.caption}}}
+    </label>
+  {{/unless}}
+  
+  <span class="questionbody">
+    {{#if question.hasPurpose}}
+      <span class="special_purpose">
+        <span class="icon icon-set-special-purpose"></span>
+        {{question.purpose}}
+      </span>
+    {{/if}}
+  
+    {{view 'question-body-view' content=question editMode=editMode}}    
+  </span>
+</span>
+
+{{#if editMode}}
+  <div class="edit-controls">
+    <a class="close" {{action 'toggleEditMode'}}>x</a>
+    
+    <form>
+      <label>
+        Caption
+        {{input type="text" value=question.caption}}
+      </label>
+      {{#unless isDisplay}}
+        <label>
+          {{input type="checkbox" checked=question.required}}
+          Required
+        </label>
+        <label>
+          Default answer
+          {{input type="text" value=question.defaultAnswer}}
+        </label>
+      {{/unless}}
+    </form>
+    
+    <ul>
+      {{partial "question-options"}}
+    </ul>
+  </div>
+{{/if}}

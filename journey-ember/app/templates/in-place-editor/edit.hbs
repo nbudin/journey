@@ -1,5 +1,0 @@
-{{input value=view.parentView.newValue}} 
-<button {{action "saveNewValue" target="view.parentView"}} {{bind-attr disabled="view.disabled"}}>Save</button>
-{{#unless view.disabled}}
-  <a href="#" {{action "cancelEditing" target="view.parentView"}}>Cancel</a>
-{{/unless}}

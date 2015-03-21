@@ -1,4 +1,4 @@
-{{#collection "SortableView" contentBinding="pagesSorted" classNames="pagelist" handle=".draghandle"}}
+{{#collection 'sortable-view' contentBinding="pagesSorted" classNames="pagelist" handle=".draghandle"}}
   {{#link-to "page" this tagName="div" href=false}}
     <a {{action "setCurrentPage" this}}>
       <div class="draghandle"></div>

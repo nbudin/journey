@@ -4,7 +4,7 @@
 QuestionsView = SortableView.extend
   classNames: ["questions"]
   itemViewClass: Ember.View.extend
-    template: Ember.Handlebars.compile('{{view QuestionView contentBinding="view.content"}}')
+    templateName: 'questions'
   
   rezebrify: ->
     i = 1

@@ -1,14 +1,14 @@
 {{#link-to "page" this tagName="div" href=false}}
   <div class="answerpage" {{bind-attr data-page-id="id"}}>
     <div class="pagetitle">
-      {{view InPlaceEditorView valueBinding="title" modelBinding="model"}}
+      {{view 'in-place-editor-view' valueBinding="title" modelBinding="model"}}
     </div>
 
     {{#if questionnaire.hasMultiplePages}}
       <div class="pagecount">Page {{number}} of {{ questionnaire.pages.length }}</div>
     {{/if}}
 
-    {{view QuestionsView contentBinding="questionsSorted"}}
+    {{view 'questions-view' contentBinding="questionsSorted"}}
 
     <div class="navbuttons">
       {{#unless isFirstPage}}

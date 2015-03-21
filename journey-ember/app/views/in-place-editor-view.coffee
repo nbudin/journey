@@ -1,7 +1,11 @@
 `import Ember from 'ember'`
 
 InPlaceEditorView = Ember.ContainerView.extend
-  childViews: ['displayView', 'editFieldView']
+
+  setupChildViews: Ember.on 'init', ->
+    this.clear()
+    this.pushObjects [@createChildView(@get('displayView')), @createChildView(@get('editFieldView'))]
+    
   editing: false
   displaying: ( -> !@get('editing') ).property('editing')
   classNames: ['in-place-editor']
@@ -13,27 +17,14 @@ InPlaceEditorView = Ember.ContainerView.extend
   displayView: Ember.View.extend
     classNames: ['display']
     isVisibleBinding: 'parentView.displaying'
-    template: Ember.Handlebars.compile """
-    {{#if view.parentView.displayRawHtml}}
-      {{{view.parentView.value}}}
-    {{else}}
-      {{view.parentView.value}}
-    {{/if}}
-    """
+    templateName: 'in-place-editor/display'
     click: (evt) -> @get('parentView').startEditing()
     
   editFieldView: Ember.View.extend
     classNames: ['edit']
     isVisibleBinding: 'parentView.editing'
     disabled: false
-    
-    template: Ember.Handlebars.compile """
-    {{input value=view.parentView.newValue}} 
-    <button {{action "saveNewValue" target="view.parentView"}} {{bind-attr disabled="view.disabled"}}>Save</button>
-    {{#unless view.disabled}}
-      <a href="#" {{action "cancelEditing" target="view.parentView"}}>Cancel</a>
-    {{/unless}}
-    """
+    templateName: 'in-place-editor/edit'
     
     keyPress: (e) ->
       if e.keyCode == 13

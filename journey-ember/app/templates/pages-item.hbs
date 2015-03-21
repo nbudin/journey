@@ -1,0 +1,6 @@
+{{#with view.content as page}}
+  {{#unless page.isFirstPage}}
+    <div class="page-boundary"></div>
+  {{/unless}}
+  {{view 'page-view' content=page}}
+{{/with}}

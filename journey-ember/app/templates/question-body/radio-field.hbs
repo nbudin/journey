@@ -2,7 +2,7 @@
   {{#each questionOption in view.content.questionOptions}}
     <li>
       <label>
-        {{view RadioButtonView valueBinding="questionOption.option" targetBinding="view.content.defaultAnswer"}}
+        {{view 'radio-button-view' valueBinding="questionOption.option" targetBinding="view.content.defaultAnswer"}}
         {{questionOption.option}}
       </label>
       <span class="radiospacer">&nbsp;</span>

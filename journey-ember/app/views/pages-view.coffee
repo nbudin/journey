@@ -3,14 +3,7 @@
 PagesView = Ember.CollectionView.extend
   contentBinding: 'controller'
   itemViewClass: Ember.View.extend
-    template: Ember.Handlebars.compile """
-    {{#with view.content}}
-      {{#unless isFirstPage}}
-        <div class="page-boundary"></div>
-      {{/unless}}
-      {{view PageView contentBinding="this"}}
-    {{/with}}
-    """
+    templateName: 'pages-item'
 
   didInsertElement: ->
     @set 'scrollHandler', => @scrolled(arguments)

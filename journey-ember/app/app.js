@@ -5,13 +5,13 @@ import config from './config/environment';
 
 Ember.MODEL_FACTORY_INJECTIONS = true;
 
-var QuestionnaireEdit = Ember.Application.extend({
+var App = Ember.Application.extend({
   modulePrefix: config.modulePrefix,
   podModulePrefix: config.podModulePrefix,
   Resolver: Resolver,
   rootElement: "#questionnaire_edit"
 });
 
-loadInitializers(QuestionnaireEdit, config.modulePrefix);
+loadInitializers(App, config.modulePrefix);
 
-export default QuestionnaireEdit;
+export default App;

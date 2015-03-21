@@ -1,7 +1,7 @@
-{{view InPlaceEditorView valueBinding="view.content.min" modelBinding="view.content.model"}}
+{{view 'in-place-editor-view' valueBinding="view.content.min" modelBinding="view.content.model"}}
 {{#each rangeOption in view.content.rangeOptions}}
   {{#if rangeOption.isMedian}}[{{/if}}
-  {{view RadioButtonView value=rangeOption.value targetBinding="view.content.defaultAnswer"}}
+  {{view 'radio-button-view' value=rangeOption.value targetBinding="view.content.defaultAnswer"}}
   {{#if rangeOption.isMedian}}]{{/if}}
 {{/each}}
-{{view InPlaceEditorView valueBinding="view.content.max" modelBinding="view.content.model"}}
+{{view 'in-place-editor-view' valueBinding="view.content.max" modelBinding="view.content.model"}}

@@ -6,5 +6,9 @@ PageEditorComponent = Ember.Component.extend
   scrollIntoView: Ember.on 'didInsertElement', ->
     if @get('isCurrent')
       Ember.run.schedule 'afterRender', @get('controller'), @get('controller').scrollIntoView
+      
+  actions:
+    questionEnteredEditMode: (question) ->
+      @sendAction 'setCurrentPage', question.get('page')
 
 `export default PageEditorComponent`

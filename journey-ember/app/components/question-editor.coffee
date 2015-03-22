@@ -24,6 +24,6 @@ QuestionEditorComponent = Ember.Component.extend
     toggleEditMode: -> 
       @set('editMode', !@get('editMode'))
       if @get('editMode')
-        @sendAction('setCurrentPage', @get('question.page'))
+        @sendAction('enteredEditMode', @get('question'))
 
 `export default QuestionEditorComponent`

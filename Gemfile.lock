@@ -314,6 +314,7 @@ DEPENDENCIES
   rack-ssl
   rails (= 4.2.1)
   rails-api
+  responders (~> 2.0)
   rmagick
   rmagick4j
   rollbar

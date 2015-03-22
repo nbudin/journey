@@ -1,0 +1,51 @@
+<ul>
+  {{#unless question.isDisplay}}
+    {{#if question.purpose}}
+      <li class="image_button">
+        <span class="icon icon-unset-special-purpose" title="Remove special purpose"></span>
+        Remove special purpose
+      </li>
+    {{else}}
+      <li class="image_button">
+        <span class="icon icon-set-special-purpose" title="Set special purpose"></span>
+        Set special purpose
+      </li>
+    {{/if}}
+    {{#if question.isLeftLayout}}
+      <li class="image_button" {{action "setLayout" "top"}}>
+        <span class="icon icon-top-layout" title="Put question above answer"></span>
+        Put question above answer
+      </li>
+    {{else}}
+      <li class="image_button" {{action "setLayout" "left"}}>
+        <span class="icon icon-left-layout" title="Put question beside answer"></span>
+        Put question beside answer
+      </li>
+    {{/if}}
+  {{/unless}}
+  {{#if question.isRadio}}
+    {{#if question.isVerticalRadioLayout}}
+      <li class="image_button" {{action "setRadioLayout" "inline"}}>
+        <span class="icon icon-inline-radio-layout" title="Lay out options horizontally"></span>
+        Lay out options horizontally
+      </li>
+    {{else}}
+      <li class="image_button" {{action "setRadioLayout" "vertical"}}>
+        <span class="icon icon-vertical-radio-layout" title="Lay out options vertically"></span>
+        Lay out options vertically
+      </li>
+    {{/if}}
+  {{/if}}
+  <li class="image_button">
+    <span class="icon icon-duplicate" title="Duplicate field"></span>
+    Duplicate field
+  </li>
+  <li class="image_button">
+    <span class="icon icon-duplicate" title="Duplicate field many times"></span>
+    Duplicate field many times
+  </li>
+  <li class="image_button">
+    <span class="icon icon-delete" title="Delete field"></span>
+    Delete field
+  </li>
+</ul>

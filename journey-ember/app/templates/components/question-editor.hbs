@@ -30,24 +30,28 @@
     <a class="close" {{action 'toggleEditMode'}}>x</a>
     
     <form>
-      <label>
-        Caption
-        {{input type="text" value=question.caption}}
-      </label>
+      <div>
+        <label {{bind-attr for="view.captionField.elementId"}}>Caption</label>
+        {{input type="text" value=question.caption viewName="captionField"}}
+      </div>
       {{#unless isDisplay}}
-        <label>
-          {{input type="checkbox" checked=question.required}}
-          Required
-        </label>
-        <label>
-          Default answer
-          {{input type="text" value=question.defaultAnswer}}
-        </label>
+        <div>
+          <label>
+            {{input type="checkbox" checked=question.required}}
+            Required
+          </label>
+        </div>
+        <div>
+          <label {{bind-attr for="view.defaultAnswerField.elementId"}}>Default answer</label>
+          {{input type="text" value=question.defaultAnswer viewName="defaultAnswerField"}}
+        </div>
       {{/unless}}
     </form>
     
     <ul>
       {{partial "question-options"}}
     </ul>
+    
+    <button {{action "save"}}>Save changes</button>
   </div>
 {{/if}}

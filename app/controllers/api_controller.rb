@@ -1,6 +1,8 @@
 class ApiController < ActionController::API
   include CanCan::ControllerAdditions
-  include ActionController::MimeResponds # Devise needs it
+  extend Responders::ControllerMethod
+  include ActionController::RespondWith
+  include ActionController::ImplicitRender
   
   protected
   def current_ability

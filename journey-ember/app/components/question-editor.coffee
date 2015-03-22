@@ -21,7 +21,17 @@ QuestionEditorComponent = Ember.Component.extend
     event.stopPropagation()
   
   actions:
+    save: ->
+      @get('question').save().then(
+        ( => @set('editMode', false)),
+        ( (error) => alert("Saving failed with error: #{error}") )
+      )
+    
     toggleEditMode: -> 
+      if @get('editMode') && @get('question.isDirty')
+        return unless confirm("There are unsaved changes.  Are you sure you want to cancel them?")
+        @get('question').rollback()
+        
       @set('editMode', !@get('editMode'))
       if @get('editMode')
         @sendAction('enteredEditMode', @get('question'))

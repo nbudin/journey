@@ -29,7 +29,7 @@ QuestionEditorComponent = Ember.Component.extend
     
     toggleEditMode: -> 
       if @get('editMode') && @get('question.isDirty')
-        return unless confirm("There are unsaved changes.  Are you sure you want to cancel them?")
+        return unless confirm("There are unsaved changes.  Are you sure you want to lose them?")
         @get('question').rollback()
         
       @set('editMode', !@get('editMode'))

@@ -1,7 +1,7 @@
 class CustomHtml < ActiveRecord::Migration
   def self.up
-    add_column "questionnaires", "custom_html", :text, :null => false, :default => ""
-    add_column "questionnaires", "custom_css", :text, :null => false, :default => ""
+    add_column "questionnaires", "custom_html", :text
+    add_column "questionnaires", "custom_css", :text
   end
 
   def self.down

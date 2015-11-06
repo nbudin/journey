@@ -183,8 +183,8 @@ class AnswerController < ApplicationController
       if offset != -1
         errors = validate_answers(@resp, @page)
         if errors.length > 0
-          flash[:error_messages] = errors
-          redirect_to :action => "index", :id => @resp.questionnaire.id, :page => params[:current_page]
+          @error_messages = errors
+          render :action => "index", :id => @resp.questionnaire.id, :page => params[:current_page]
           return
         end
       end

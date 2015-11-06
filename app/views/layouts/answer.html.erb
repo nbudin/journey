@@ -31,10 +31,11 @@
         <%=raw @questionnaire.custom_html %>
 <% end -%>
 
-<% if flash[:error_messages] -%>
+<% error_messages = @error_messages.presence || flash[:error_messages].presence %>
+<% if error_messages -%>
         <div style="color: red; font-size: 125%;">There were errors processing your request:</div>
         <ul>
-                <% flash[:error_messages].each do |error| -%>
+                <% error_messages.each do |error| -%>
                         <li style="color: red"><%= error %></li>
                 <% end -%>
         </ul>

@@ -1,11 +1,11 @@
 class AnswerController < ApplicationController
   before_filter :get_questionnaire, :except => [:resume]
   before_filter :check_required_login, :only => [:start]
-  
+
   layout "answer"
-  
+
   public
-  
+
   def resume
     @resp = Response.find(params[:id])
     if @resp.person != current_person
@@ -33,7 +33,7 @@ class AnswerController < ApplicationController
     flash[:error_messages] = [$!.to_s]
     redirect_to :action => 'prompt', :id => @resp.questionnaire.id
   end
-  
+
   def prompt
     @all_responses = []
     @responses = []
@@ -47,7 +47,7 @@ class AnswerController < ApplicationController
       end
     end
   end
-  
+
   def start
     @resp = Response.new :questionnaire => @questionnaire
     if @questionnaire.advertise_login and person_signed_in?
@@ -55,7 +55,7 @@ class AnswerController < ApplicationController
     end
     @resp.save!
     session["response_#{@questionnaire.id}"] = @resp.id
-    
+
     redirect_to :action => 'index', :id => @questionnaire.id
   end
 
@@ -72,7 +72,7 @@ class AnswerController < ApplicationController
           @resp = Response.find(session[response_key])
         rescue ActiveRecord::RecordNotFound
           # bad response ID, it may have been deleted by an admin
-          session[response_key] = nil
+          session.delete(response_key)
           redirect_to :action => prompt, :id => params[:id]
         else
           if params[:page]
@@ -109,13 +109,13 @@ class AnswerController < ApplicationController
       end
     end
   end
-  
+
   def preview
     @questionnaire = Questionnaire.includes(:questionnaire_permissions, :pages).find(params[:id])
-    
+
     if @questionnaire.pages.size > 0
       @page = @questionnaire.pages[(params[:page] || 1).to_i - 1]
-    
+
       @resp = @questionnaire.responses.build
       @previewing = true
       render :action => "index"
@@ -141,7 +141,7 @@ class AnswerController < ApplicationController
       @resp.save
     end
 
-    session["response_#{params[:id]}"] = nil
+    session.delete("response_#{params[:id]}")
   end
 
   def save_answers
@@ -160,7 +160,7 @@ class AnswerController < ApplicationController
           else
             ans.value = params[:question][question.id.to_s]
           end
-            
+
           ans.save
         else
           # No answer provided
@@ -192,12 +192,12 @@ class AnswerController < ApplicationController
         @resp.submitted = true
         @resp.submitted_at = Time.now
         @resp.save
-        
+
         @questionnaire.email_notifications.notify_on_response_submit.includes(:person).each do |notification|
           next unless notification.try(:person).try(:email).present?
           NotificationMailer.response_submitted(@resp, notification.person).deliver_later
         end
-        
+
         redirect_to :action => "save_session", :id => @resp.questionnaire.id, :current_page => 1
       else
         new_page = params[:current_page].to_i + offset
@@ -207,17 +207,17 @@ class AnswerController < ApplicationController
       end
     end
   end
-  
+
   private
   def answer_given(question_id)
     return (params[:question] and not params[:question][question_id.to_s].blank? and
       params[:question][question_id.to_s].length > 0)
   end
-  
+
   def get_questionnaire
     @questionnaire = Questionnaire.find params[:id]
   end
-  
+
   def check_required_login
     if @questionnaire.require_login and not person_signed_in?
       redirect_to :action => "prompt", :id => params[:id]

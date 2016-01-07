@@ -17,7 +17,6 @@ Journey::Application.configure do
 
   # Compress both stylesheets and JavaScripts
   config.assets.compress = true
-  config.assets.digest = true
 
   # Specifies the header that your server uses for sending files
   # (comment out if your front-end server doesn't support this)
@@ -38,7 +37,7 @@ Journey::Application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   #config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
 
-  config.assets.digest = false
+  config.assets.digest = true
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )

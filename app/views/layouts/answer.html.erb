@@ -15,15 +15,17 @@
     <%= stylesheet_link_tag 'ie6hacks' %>
   <![endif]-->
   <style type="text/css">
-                body {
-                        margin-left: 0.5em;
-                        margin-top: 0.5em;
-                }
-
-                <% if @questionnaire and not @suppress_custom_css -%>
-                        <%=raw @questionnaire.custom_css %>
-                <% end -%>
+    body {
+      margin-left: 0.5em;
+      margin-top: 0.5em;
+    }
   </style>
+
+  <% if @questionnaire and not @suppress_custom_css -%>
+    <style type="text/css">
+      <%=raw @questionnaire.custom_css %>
+    </style>
+  <% end -%>
   <%= javascript_include_tag :application %>
 </head>
 <body>

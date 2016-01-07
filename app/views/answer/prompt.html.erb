@@ -26,7 +26,8 @@
 }
 
 .bigbutton.full {
-  width: 388px;
+  max-width: 388px;
+  width: 100%;
   text-align: center;
 }
 
@@ -58,7 +59,8 @@
 
 .bigbutton.small {
   font-size: 90%;
-  width: 388px;
+  max-width: 388px;
+  width: 100%;
   text-align: center;
 }
 </style>
@@ -71,11 +73,11 @@
         Not <%=h current_person.name %>?  <%= link_to "Click here to log out.", destroy_person_session_path(prompting_questionnaire_id: @questionnaire.id), method: :delete %>
       </span>
     <% end -%>
-    
-    <% if @responses.length > 0 -%>   
+
+    <% if @responses.length > 0 -%>
      <% content_for :startbox_main_option do -%>
         <p style="margin: 1em; margin-left: 0;">You've already taken this survey.</p>
-        
+
         <table>
           <% @responses.each do |resp| -%>
             <tr class="<%= cycle "odd", "even" %>">
@@ -101,7 +103,7 @@
                   <% end -%>
                 <% end -%>
                 <% if @questionnaire.allow_delete_responses %>
-                  <%= link_to "Delete", [@questionnaire, resp], :method => "delete", 
+                  <%= link_to "Delete", [@questionnaire, resp], :method => "delete",
                         :confirm => "Are you sure you want to delete response \##{resp.id}?" %>
                 <% end -%>
               </td>
@@ -128,12 +130,12 @@
     <% if @questionnaire.require_login -%>
       <% content_for :startbox_main_option do -%>
         <p>This survey requires you to log into Journey in order to answer it.</p>
-      
-        <%= link_to "Log into Journey, or sign up for a free account &raquo;".html_safe, new_person_session_path(prompting_questionnaire_id: @questionnaire.id), :class => "bigbutton full" %> 
+
+        <%= link_to "Log into Journey, or sign up for a free account &raquo;".html_safe, new_person_session_path(prompting_questionnaire_id: @questionnaire.id), :class => "bigbutton full" %>
       <% end -%>
     <% elsif @questionnaire.advertise_login and (@questionnaire.special_fields.length > 0 or @questionnaire.allow_finish_later or @questionnaire.allow_amend_response) -%>
       <% content_for :startbox_main_option do -%>
-        <%= link_to "Log into Journey, or sign up for a free account &raquo;".html_safe, new_person_session_path(prompting_questionnaire_id: @questionnaire.id), :class => "bigbutton green half" %> 
+        <%= link_to "Log into Journey, or sign up for a free account &raquo;".html_safe, new_person_session_path(prompting_questionnaire_id: @questionnaire.id), :class => "bigbutton green half" %>
         <%= link_to "Answer this survey without logging in &raquo;".html_safe, { :action => 'start', :id => @questionnaire.id }, :class => "bigbutton half" %>
       <% end -%>
       <% content_for :startbox_additional_options do -%>
@@ -144,7 +146,7 @@
               end %>
         </li>
       <% end -%>
-              
+
       <% content_for :startbox_additional_content do -%>
         <div id="why_login" style="display: none;">
           <p><b>Why log in?</b></p>
@@ -167,13 +169,13 @@
       <% end -%>
     <% end -%>
   <% end -%>
-  
+
   <% if @questionnaire.allow_preview -%>
     <% content_for :startbox_main_option do -%>
       <%= link_to "View a preview of this survey &raquo;".html_safe, { :action => "preview", :id => @questionnaire.id }, :class => "bigbutton blue small" %>
     <% end -%>
   <% end -%>
-  
+
   <%= yield :startbox_heading -%>
   <%= yield :startbox_main_option -%>
   <ul style="padding-left: 0; margin-left: 0; list-style-type: none;">
@@ -182,5 +184,5 @@
   <%= yield :startbox_additional_content -%>
 </div>
 </div>
-      
-  
+
+

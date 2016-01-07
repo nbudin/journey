@@ -5,7 +5,7 @@
 <head>
   <title><%=h @questionnaire.title%><% if @page %> - Page <%= @page.number %> of <%= @questionnaire.pages.size %><% end %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   <%= stylesheet_link_tag 'application' %>
   <%= csrf_meta_tags %>

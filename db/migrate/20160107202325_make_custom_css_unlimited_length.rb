@@ -1,7 +1,7 @@
 class MakeCustomCssUnlimitedLength < ActiveRecord::Migration
   def up
-    change_column :questionnaires, :custom_html, :text
-    change_column :questionnaires, :custom_css, :text
+    change_column :questionnaires, :custom_html, :text, default: nil
+    change_column :questionnaires, :custom_css, :text, default: nil
   end
 
   def down

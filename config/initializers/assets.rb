@@ -1,0 +1,1 @@
+Rails.application.config.assets.precompile += %w( ie6hacks.css ie7hacks.css jester.js jipe.js layout.js questionnaireedit.js responseviewer.js )

@@ -5,6 +5,8 @@
 <head>
   <title><%=h @questionnaire.title%><% if @page %> - Page <%= @page.number %> of <%= @questionnaire.pages.size %><% end %></title>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
   <%= stylesheet_link_tag 'application' %>
   <%= csrf_meta_tags %>
   <!--[if IE 7]>
@@ -15,15 +17,17 @@
     <%= stylesheet_link_tag 'ie6hacks' %>
   <![endif]-->
   <style type="text/css">
-                body {
-                        margin-left: 0.5em;
-                        margin-top: 0.5em;
-                }
-
-                <% if @questionnaire and not @suppress_custom_css -%>
-                        <%=raw @questionnaire.custom_css %>
-                <% end -%>
+    body {
+      margin-left: 0.5em;
+      margin-top: 0.5em;
+    }
   </style>
+
+  <% if @questionnaire and not @suppress_custom_css -%>
+    <style type="text/css">
+      <%=raw @questionnaire.custom_css %>
+    </style>
+  <% end -%>
   <%= javascript_include_tag :application %>
 </head>
 <body>
@@ -31,10 +35,11 @@
         <%=raw @questionnaire.custom_html %>
 <% end -%>
 
-<% if flash[:error_messages] -%>
+<% error_messages = @error_messages.presence || flash[:error_messages].presence %>
+<% if error_messages -%>
         <div style="color: red; font-size: 125%;">There were errors processing your request:</div>
         <ul>
-                <% flash[:error_messages].each do |error| -%>
+                <% error_messages.each do |error| -%>
                         <li style="color: red"><%= error %></li>
                 <% end -%>
         </ul>

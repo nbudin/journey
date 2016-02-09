@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby "2.1.2"
 
 gem 'bundler'
-gem "rails", "4.2.1"
+gem "rails", "4.2.5.1"
 gem "rails-api"
 gem 'paginator'
 gem 'will_paginate'
@@ -60,6 +60,7 @@ group :test do
   gem "capybara", ">= 2.0.0"
   gem "capybara-webkit"
   gem "capybara_minitest_spec"
+  gem "rails-dom-testing"
 end
 
 gem 'letter_opener_web', :group => :development

@@ -2,7 +2,7 @@
 import Ember from 'ember';
 var PagesController;
 
-PagesController = Ember.ArrayController.extend({
+PagesController = Ember.Controller.extend({
   questionnaire: null,
   needs: "questionnaire",
   questionnaireBinding: "controllers.questionnaire",

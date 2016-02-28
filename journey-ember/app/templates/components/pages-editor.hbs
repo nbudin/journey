@@ -2,5 +2,5 @@
   {{#unless page.isFirstPage}}
     <div class="page-boundary"></div>
   {{/unless}}
-  <page-editor page=page questionnaire=questionnaire setCurrentPage="setCurrentPage" register={{action 'register'}} />
+  {{page-editor page=page questionnaire=questionnaire register=(action 'register')}}
 {{/each}}

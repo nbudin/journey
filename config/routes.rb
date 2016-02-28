@@ -3,7 +3,7 @@ Journey::Application.routes.draw do
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 
-  mount_ember_app :journey_ember, to: "/journey-ember"
+  mount_ember_app :journey_ember, to: "/admin"
 
   devise_for :people, controllers: { cas_sessions: :journey_cas_sessions }
 

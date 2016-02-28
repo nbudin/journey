@@ -6,9 +6,11 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function () {
-  this.route('questionnaire', { path: 'questionnaires/:questionnaire_id/edit' }, function () {
-    this.route('pages', function () {
-      this.route('page', { path: ':page_id' });
+  this.route('admin', function() {
+    this.route('questionnaire', { path: 'questionnaires/:questionnaire_id/edit' }, function () {
+      this.route('pages', function () {
+        this.route('page', { path: ':page_id' });
+      });
     });
   });
 });

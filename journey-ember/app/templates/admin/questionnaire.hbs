@@ -1,0 +1,12 @@
+<div id="questionnaire_edit">
+  <div id="edit-toolbar">
+    {{page-list pages=model.pagesSorted deletePage=(action 'deletePage')}}
+    <button {{action "createPage"}}>Create New Page</button>
+
+    {{outlet 'page_controls'}}
+  </div>
+
+  <div id="editpage">
+    {{outlet}}
+  </div>
+</div>

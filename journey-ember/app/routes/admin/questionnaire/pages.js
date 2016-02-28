@@ -4,13 +4,18 @@ var PagesRoute;
 
 PagesRoute = Ember.Route.extend({
   model: function() {
-    return this.modelFor('questionnaire').get('pages');
+    const questionnaire = this.modelFor('questionnaire');
+    if (questionnaire) {
+      return questionnaire.get('pages');
+    } else {
+      return null;
+    }
   },
   actions: {
     setCurrentPage: function(page) {
       var pageController;
-      this.transitionTo('page', page);
-      pageController = this.controllerFor('page');
+      this.transitionTo('admin.questionnaire.pages.page', page);
+      pageController = this.controllerFor('admin.questionnaire.pages.page');
       return Ember.run.schedule('afterRender', pageController, pageController.scrollIntoView);
     }
   }

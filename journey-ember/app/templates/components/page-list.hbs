@@ -1,7 +1,7 @@
-{{#sortable-group tagName="div" classNames="pagelist" handle=".draghandle" as |group|}}
-  {{#each pagesSorted as |page|}}
-    {{#sortable-item handle=".draghandle"}}
-      {{#link-to "page" this tagName="div" href=false}}
+{{#sortable-group tagName="ul" classNames="pagelist" handle=".draghandle" as |group|}}
+  {{#each pages as |page|}}
+    {{#sortable-item tagName="li" handle=".draghandle"}}
+      {{#link-to "admin.questionnaire.pages.page" page tagName="div" href=false}}
         <a {{action "setCurrentPage" page}}>
           <div class="draghandle"></div>
           <div class="caption">

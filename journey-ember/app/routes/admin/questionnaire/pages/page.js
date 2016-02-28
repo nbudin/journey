@@ -8,12 +8,12 @@ PageRoute = Ember.Route.extend({
   },
   setupController: function(controller, page) {
     this._super(controller, page);
-    return this.controllerFor('pages').set('currentPage', page);
+    return this.controllerFor('admin.questionnaire.pages').set('currentPage', page);
   },
   renderTemplate: function(controller, model) {
     this._super(controller, model);
     return this.render('page_controls', {
-      into: 'questionnaire',
+      into: 'admin.questionnaire',
       outlet: 'page_controls'
     });
   }

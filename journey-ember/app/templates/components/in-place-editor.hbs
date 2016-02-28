@@ -1,8 +1,8 @@
 {{#if editing}}
   <div class="edit">
-    {{input value=newValue}} 
+    {{input value=newValue}}
     <button {{action "saveNewValue"}} {{bind-attr disabled="disabled"}}>Save</button>
-    {{#unless view.disabled}}
+    {{#unless disabled}}
       <a href="#" {{action "cancelEditing"}}>Cancel</a>
     {{/unless}}
   </div>

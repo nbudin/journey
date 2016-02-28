@@ -6,13 +6,13 @@
       <p>Click to edit</p>
     </div>
   {{/unless}}
-  
+
   {{#unless question.isDisplay}}
     <label {{bind-attr class=":caption question.required:required" for="view.answerField.elementId"}}>
       {{{question.caption}}}
     </label>
   {{/unless}}
-  
+
   <span class="questionbody">
     {{#if question.hasPurpose}}
       <span class="special_purpose">
@@ -20,15 +20,15 @@
         {{question.purpose}}
       </span>
     {{/if}}
-  
-    {{view 'question-body-view' content=question editMode=editMode}}    
+
+    <question-body question=question editMode=editMode />
   </span>
 </span>
 
 {{#if editMode}}
   <div class="edit-controls">
     <a class="close" {{action 'toggleEditMode'}}>x</a>
-    
+
     <form>
       <div>
         <label {{bind-attr for="view.captionField.elementId"}}>Caption</label>
@@ -47,11 +47,11 @@
         </div>
       {{/unless}}
     </form>
-    
+
     <ul>
       {{partial "question-options"}}
     </ul>
-    
+
     <button {{action "save"}}>Save changes</button>
   </div>
 {{/if}}

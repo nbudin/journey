@@ -1,9 +1,10 @@
-<ul {{bind-attr class=":radio-field view.radioLayoutClass"}}>
-  {{#each questionOption in view.content.questionOptions}}
+<ul {{bind-attr class=":radio-field radioLayoutClass"}}>
+  {{#each questionOption in question.questionOptions}}
     <li>
       <label>
-        {{view 'radio-button-view' valueBinding="questionOption.option" targetBinding="view.content.defaultAnswer"}}
-        {{questionOption.option}}
+        <radio-button value=questionOption.option groupValue=question.defaultAnswer>
+          {{questionOption.option}}
+        </radio-button>
       </label>
       <span class="radiospacer">&nbsp;</span>
     </li>

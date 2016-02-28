@@ -8,7 +8,7 @@
       <div class="pagecount">Page {{page.number}} of {{ questionnaire.pages.length }}</div>
     {{/if}}
 
-    {{view 'questions-view' contentBinding="page.questionsSorted"}}
+    <questions-editor questions=page.questionsSorted />
 
     <div class="navbuttons">
       {{#unless page.isFirstPage}}

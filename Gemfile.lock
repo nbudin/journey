@@ -107,7 +107,7 @@ GEM
       devise (>= 1.2.0)
       rubycas-client (>= 2.2.1)
     dynamic_form (1.1.4)
-    ember-cli-rails (0.7.1)
+    ember-cli-rails (0.7.2)
       cocaine (~> 0.5.8)
       ember-cli-rails-assets (>= 0.6.1)
       html_page (~> 0.1.0)

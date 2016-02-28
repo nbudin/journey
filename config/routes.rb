@@ -2,9 +2,11 @@ Journey::Application.routes.draw do
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
-    
+
+  mount_ember_app :journey_ember, to: "/journey-ember"
+
   devise_for :people, controllers: { cas_sessions: :journey_cas_sessions }
-  
+
   namespace :api do
     namespace :v1 do
       resources :questionnaires
@@ -13,7 +15,7 @@ Journey::Application.routes.draw do
       resources :question_options
     end
   end
-  
+
   resources :questionnaires do
     collection do
       get :responses
@@ -40,7 +42,7 @@ Journey::Application.routes.draw do
       collection do
         post :sort
       end
-    
+
       resources :questions, :except => [:new] do
         collection do
           post :sort
@@ -67,7 +69,7 @@ Journey::Application.routes.draw do
       end
     end
   end
-  
+
   get '/answer/:id' => 'answer#index', :as => :questionnaire_answer
   scope '/answer/:id', as: 'questionnaire_answer', controller: 'answer' do
     get :resume
@@ -83,12 +85,12 @@ Journey::Application.routes.draw do
   get '/questionnaires/:questionnaire_id/responses/graphs/:action.:format' => 'graphs#index', :as => :response_graph
   get '/dashboard' => 'root#dashboard', :as => :dashboard
   get '/welcome' => 'root#welcome', :as => :welcome
-  
+
   if ENV['SUGAR_POND_BRANDING']
     get '/support' => 'sugar_pond/support#index', as: :support
     get '/tos' => 'sugar_pond/legal#tos', as: :legal_tos
     get '/privacy' => 'sugar_pond/legal#privacy', as: :legal_privacy
-  end  
-  
+  end
+
   root to: 'root#index'
 end

@@ -1,6 +1,6 @@
-{{view 'select'
-       contentBinding="view.content.questionOptions"
-       valueBinding="view.content.defaultAnswer"
-       optionValuePath="content.option"
-       optionLabelPath="content.option"
-       prompt=" "}}
+{{#x-select value=question.defaultAnswer}}
+  {{#x-option value=null}} {{/x-option}}
+  {{#each question.questionOptions as |option|}}
+    {{#x-option value=option.option}}{{option.option}}{{/x-option}}
+  {{/each}}
+{{/x-select}}

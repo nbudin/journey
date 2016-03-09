@@ -73,7 +73,7 @@ class AnswerController < ApplicationController
         rescue ActiveRecord::RecordNotFound
           # bad response ID, it may have been deleted by an admin
           session.delete(response_key)
-          redirect_to :action => prompt, :id => params[:id]
+          redirect_to :action => 'prompt', :id => params[:id]
         else
           if params[:page]
             @page = @resp.questionnaire.pages[params[:page].to_i - 1]

@@ -161,7 +161,7 @@ class AnswerController < ApplicationController
             ans.value = nil
           else
             ans.value = params[:question][question.id.to_s]
-            ans.other_value = params[:other_value][question.id.to_s]
+            ans.other_value = other_value_params[question.id.to_s]
           end
 
           ans.save

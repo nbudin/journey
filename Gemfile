@@ -50,7 +50,7 @@ group :test do
   gem "launchy"
   gem "database_cleaner"
   gem "capybara", ">= 2.0.0"
-  gem "capybara-webkit"
+  gem "poltergeist"
   gem "capybara_minitest_spec"
   gem "rails-dom-testing"
 end

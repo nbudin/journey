@@ -4,4 +4,7 @@
   <% end -%>
 <% else -%>
   <%= simple_format value %>
+  <% if other_value.present? -%>
+    <p><em><%= other_value %></em></p>
+  <% end -%>
 <% end -%>

@@ -14,7 +14,7 @@ QuestionnaireController = Ember.Controller.extend({
           _this.get('pages').then(function() {
             return _this.get('pages').addObject(page);
           });
-          return _this.transitionToRoute('page', page);
+          return _this.transitionToRoute('admin.questionnaire.pages.page', page);
         };
       })(this)), function(error) {
         return alert(error);
@@ -28,7 +28,7 @@ QuestionnaireController = Ember.Controller.extend({
             _this.get('pages').then(function() {
               return _this.get('pages').removeObject(page);
             });
-            return _this.transitionToRoute('questionnaire.pages', {questionnaire: this.get('content')});
+            return _this.transitionToRoute('admin.questionnaire.pages', {questionnaire: this.get('content')});
           };
         })(this)), function(error) {
           return alert(error);

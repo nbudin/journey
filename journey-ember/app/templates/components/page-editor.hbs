@@ -1,4 +1,4 @@
-{{#link-to "page" page tagName="div" href=false}}
+{{#link-to "admin.questionnaire.pages.page" page tagName="div" href=false}}
   <div class="answerpage" {{bind-attr data-page-id="id"}}>
     <div class="pagetitle">
       {{in-place-editor value=page.title model=page}}
@@ -8,7 +8,7 @@
       <div class="pagecount">Page {{page.number}} of {{ questionnaire.pages.length }}</div>
     {{/if}}
 
-    <questions-editor questions=page.questionsSorted />
+    {{questions-editor questions=page.questionsSorted}}
 
     <div class="navbuttons">
       {{#unless page.isFirstPage}}

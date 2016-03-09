@@ -51,13 +51,13 @@ export default Ember.Component.extend({
 
     if (currentPageIsInvisible) {
       const nextVisiblePage = pageStates[currentPageIndex + nextVisibleOffset].page;
-      this.get('controller').transitionToRoute('page', nextVisiblePage.get('content.model'));
+      this.get('controller').transitionToRoute('admin.questionnaire.pages.page', nextVisiblePage.get('page'));
     }
   },
 
   actions: {
-    register: function(page) {
-      this.get('pages').addObject(page);
+    register: function(pageEditor) {
+      this.get('pageEditors').addObject(pageEditor);
     }
   }
 });

@@ -3,14 +3,6 @@ import Ember from 'ember';
 var PagesRoute;
 
 PagesRoute = Ember.Route.extend({
-  model: function() {
-    const questionnaire = this.modelFor('questionnaire');
-    if (questionnaire) {
-      return questionnaire.get('pages');
-    } else {
-      return null;
-    }
-  },
   actions: {
     setCurrentPage: function(page) {
       var pageController;

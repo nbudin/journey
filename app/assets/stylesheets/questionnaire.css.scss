@@ -69,6 +69,7 @@ div.submit {
 .questionandcaption {
   display: inline-block;
   width: 95%;
+  position: relative;
 }
 
 @mixin layout-top {

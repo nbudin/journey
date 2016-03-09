@@ -3,9 +3,9 @@ import Ember from 'ember';
 var PagesController;
 
 PagesController = Ember.Controller.extend({
-  questionnaire: null,
-  needs: "questionnaire",
-  questionnaireBinding: "controllers.questionnaire",
+  questionnaireController: Ember.inject.controller('admin.questionnaire'),
+  questionnaire: Ember.computed.reads('questionnaireController.model'),
+  model: Ember.computed.reads('questionnaire.pages'),
   itemController: 'page',
   defaultLayout: 'left',
   currentPage: null,
@@ -30,7 +30,7 @@ PagesController = Ember.Controller.extend({
         questionnaire: this.get('questionnaire.content')
       });
       page.save();
-      return this.transitionToRoute('page', page);
+      return this.transitionToRoute('admin.questionnaire.pages.page', page);
     },
     deletePage: function(page) {
       if (confirm("Do you really want to delete the page \"" + (page.get('title')) + "\"?")) {

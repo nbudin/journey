@@ -7,30 +7,39 @@
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
   cursor: pointer;
-  
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.2);
   }
 }
 
 #questionnaire_edit {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  #editpage {
+    flex-grow: 1;
+  }
+
   #edit-toolbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
     width: 300px;
     border-right: 2px black solid;
     padding: 5px;
-    
+
     background-color: #555;
     color: #bad032;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: Share, sans-serif;
   }
-  
+
   .add-fields-menu {
     .ui-accordion-header {
       cursor: pointer;
@@ -38,21 +47,21 @@
       padding: 1px 2px;
       margin: 2px;
       margin-top: 5px;
-      
+
       &::before {
         content: "▸ ";
       }
-      
+
       &.ui-accordion-header-active::before {
         content: "▾ ";
       }
     }
-    
+
     ul {
       padding: 0;
       margin: 0;
     }
-    
+
     li {
       list-style-type: none;
       margin: 2px;
@@ -61,24 +70,24 @@
       @include editor-button;
     }
   }
-  
+
   .pagelist {
     list-style: none;
     margin: 0;
     padding: 0;
     border: none;
     margin-bottom: 0.5em;
-    
+
     .delete-page {
       background-image: image-url("delete.png");
       width: 16px;
       height: 16px;
       border: none;
       cursor: pointer;
-      position: absolute; 
+      position: absolute;
       right: 2px;
     }
-    
+
     li a {
         border: 0;
         border-bottom: 1px #666 solid;
@@ -94,7 +103,7 @@
         position: relative;
         background-image: image-url("page-tab-gradient.png");
     }
-    
+
 
     li .active a {
         border-right: 0;
@@ -113,16 +122,16 @@
         right: 20px;
     }
   }
-  
+
   .answerpage {
     margin: 10px;
     border: 1px transparent solid;
   }
-  
+
   .active .answerpage {
     @include edit-highlight(10px);
   }
-  
+
   .page-boundary {
     width: 100%;
     height: 100px;
@@ -130,14 +139,14 @@
     background-image: image-url("torn-graphpad.png");
     opacity: 0.8;
   }
-  
+
   .question.edit-mode {
     margin: 5px;
     width: calc(100% - 10px);
     padding-bottom: 0;
-    
+
     @include edit-highlight(5px);
-    
+
     .edit-controls {
       position: relative;
       margin-top: 2px;
@@ -145,7 +154,7 @@
 
       background-color: #555;
       color: #bad032;
-      
+
       .close {
         color: #aaa;
         font-weight: bold;
@@ -154,17 +163,17 @@
         right: 2px;
         display: inline-block;
         cursor: pointer;
-        
+
         &:hover {
           color: #fff;
         }
       }
-      
+
       ul {
         list-style-type: none;
         padding: 0;
         margin: 0;
-        
+
         li {
           display: inline-block;
           padding: 0 5px;
@@ -183,14 +192,14 @@
   height: 100%;
   top: 0;
   left: 7px;
-  
+
   background-color: transparent;
   color: transparent;
   z-index: 100;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
-  
+
   p {
     height: 100%;
     font-size: 16px;
@@ -198,7 +207,7 @@
     display: inline-block;
     margin-top: 4px;
   }
-  
+
   &:hover {
     background-color: rgba(186, 208, 50, 0.3);
     color: darken(#bad032, 20%);

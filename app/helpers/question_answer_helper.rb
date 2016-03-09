@@ -5,7 +5,7 @@ module QuestionAnswerHelper
 
   def render_question(question)
     @question = question
-    
+
     value = ''
     if params[:controller] == "answer"
       answer = @resp.answer_for_question(question)
@@ -15,11 +15,11 @@ module QuestionAnswerHelper
         value = @question.default_answer
       end
     end
-    return render(:partial => "questions/" + question_class_template(question.class), :locals => { :value => value })
+    return render(:partial => "questions/" + question_class_template(question.class), :locals => { :value => value, :other_value => answer.try(:other_value) })
   rescue Exception => e
     return render(:inline => "<%= start_question @question %><b>Error rendering #{question.class.name.demodulize} \##{question.id} (#{h e.message})</b><%= end_question @question %>")
   end
-  
+
   def render_answer(question, answer)
     @answer = answer
     @question = question
@@ -32,7 +32,7 @@ module QuestionAnswerHelper
     else
       nil
     end
-    return render(:partial => "answers/" + question_class_template(question.class), :locals => { :value => value })
+    return render(:partial => "answers/" + question_class_template(question.class), :locals => { :value => value, :other_value => answer.try(:other_value) })
   rescue Exception => e
     return "<b>Error rendering answer to #{@question.class.name.demodulize} \##{@question.id} (#{h e.message})</b>"
   end
@@ -52,13 +52,13 @@ module QuestionAnswerHelper
     }.update(options)
     return render(:partial => 'questions/questionend', :locals => { :question => question }.update(options))
   end
-  
+
   def question_cycle(question)
     if question.kind_of? Questions::Divider
       reset_cycle("questions")
       return "reset-cycle"
     end
-    
+
     if question.kind_of? Questions::Field
       return cycle("odd", "even", :name => "questions")
     else

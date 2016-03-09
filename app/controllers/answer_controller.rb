@@ -148,6 +148,8 @@ class AnswerController < ApplicationController
     @resp = Response.find(session["response_#{params[:id]}"])
     @page = @resp.questionnaire.pages[params[:current_page].to_i - 1]
 
+    other_value_params = params[:other_value] || {}
+
     @page.questions.each do |question|
       if question.kind_of? Questions::Field
         ans = @resp.answer_for_question(question)
@@ -159,6 +161,7 @@ class AnswerController < ApplicationController
             ans.value = nil
           else
             ans.value = params[:question][question.id.to_s]
+            ans.other_value = params[:other_value][question.id.to_s]
           end
 
           ans.save

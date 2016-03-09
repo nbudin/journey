@@ -2,7 +2,10 @@
 <% if @editing -%>
         <%= render :partial => 'questions/selectorstart' %>
 	<%= select "question[]", "default_answer", @question.options_for_select, {},
-	      {:onChange => "updateDefault(#{@question.id}, this.value);" } %>
+	      {:onChange => "updateDefault(#{@question.id}, this.value);", "data-question-id" => @question.id } %>
+  <% if @question.has_other? -%>
+    <%= text_field_tag "other_value[#{@question.id}]", "", "data-other-response-for-question-id" => @question.id %>
+  <% end -%>
 	<script type="text/javascript">
 	  $('question_<%=@question.id%>_default_answer').ddoptions = {
 	  <% @question.question_options.each do |o| %>
@@ -12,6 +15,9 @@
 	</script>
 	<%= render :partial => 'questions/selectorend' %>
 <% else -%>
-	<%= select_tag "question[#{@question.id}]", options_for_select(@question.options_for_select, value) %>
+	<%= select_tag "question[#{@question.id}]", options_for_select(@question.options_for_select, value), "data-question-id" => @question.id %>
+  <% if @question.has_other? -%>
+    <%= text_field_tag "other_value[#{@question.id}]", other_value, "data-other-response-for-question-id" => @question.id %>
+  <% end -%>
 <% end -%>
 <%= end_question @question %>

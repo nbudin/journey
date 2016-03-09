@@ -1,14 +1,23 @@
 class Questions::SelectorField < Questions::Field
   def options_for_select
-    return question_options.collect { |o| [ o.option, o.option ] }
+    question_options.collect do |o|
+      option_attrs = {}
+      option_attrs["data-is-other"] = true if o.is_other?
+
+      [ o.option, o.option, option_attrs ]
+    end
   end
-  
+
   def is_numeric?
     question_options.all? do |o|
       o.effective_output_value =~ /^[+-]?\d*(\.[\d]+)?$/
     end
   end
-  
+
+  def has_other?
+    question_options.any?(&:is_other?)
+  end
+
   def min
     m = question_options.collect { |o| o.effective_output_value.try(:to_f) }.compact.min
     if m
@@ -17,7 +26,7 @@ class Questions::SelectorField < Questions::Field
       nil
     end
   end
-  
+
   def max
     m = question_options.collect { |o| o.effective_output_value.try(:to_f) }.compact.max
     if m
@@ -26,7 +35,7 @@ class Questions::SelectorField < Questions::Field
       nil
     end
   end
-  
+
   def xmlcontent(xml)
     super
     xml.question_options do

@@ -21,3 +21,4 @@
 //= require jipe/jipe
 //= require overlabel
 //= require layout
+//= require other_value

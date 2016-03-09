@@ -2,4 +2,7 @@
         <%= select_tag "answer[#{@question.id}]", options_for_select(@question.options_for_select, value) %>
 <% else -%>
 	<%= simple_format value %>
+  <% if other_value.present? -%>
+    <p><em><%= other_value %></em></p>
+  <% end -%>
 <% end -%>

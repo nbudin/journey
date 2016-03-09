@@ -4,10 +4,12 @@
     <%= render :partial => "questions/selectorstart" %>
       <% @question.question_options.each do |option| -%>
         <li>
+          <% is_other_attributes = (option.is_other? ? {"data-is-other" => true} : {}) -%>
           <%= radio_button "question[]", "default_answer", option.option,
-                        :onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);",
+                        is_other_attributes.merge(:onChange => "updateDefaultForRadioGroup(#{@question.id}, this.value);",
                         :style => "vertical-align: middle;",
-                        :id => "question_#{@question.id}_option_#{option.id}" %>
+                        :id => "question_#{@question.id}_option_#{option.id}",
+                        "data-question-id" => @question.id) %>
           <label for="question_<%= @question.id %>_option_<%= option.id %>"><%= option.option %></label>
           <span class="radiospacer">&nbsp;</span>
         </li>
@@ -16,12 +18,16 @@
   <% else -%>
   	<% @question.question_options.each do |option| -%>
       <li>
-        <%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option, 
-      	                     :id => "question_#{@question.id}_option_#{option.id}" %>
+        <% is_other_attributes = (option.is_other? ? {"data-is-other" => true} : {}) -%>
+        <%= radio_button_tag "question[#{@question.id}]", option.option, value == option.option,
+      	                     is_other_attributes.merge(:id => "question_#{@question.id}_option_#{option.id}", "data-question-id" => @question.id) %>
   		  <label for="question_<%= @question.id %>_option_<%= option.id %>"><%= option.option %> </label>
   		  <span class="radiospacer">&nbsp;</span>
   		</li>
   	<% end -%>
   <% end -%>
 </ul>
+<% if @question.has_other? -%>
+  <%= text_field_tag "other_value[#{@question.id}]", other_value, "data-other-response-for-question-id" => @question.id %>
+<% end -%>
 <%= end_question(@question, :is_radio_group => true) %>

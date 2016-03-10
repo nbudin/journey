@@ -49,6 +49,8 @@ class AnswerController < ApplicationController
   end
 
   def start
+    return redirect_to action: "questionnaire_closed", id: params[:id] unless @questionnaire.is_open?
+
     @resp = Response.new :questionnaire => @questionnaire
     if @questionnaire.advertise_login and person_signed_in?
       @resp.person = current_person
@@ -61,46 +63,46 @@ class AnswerController < ApplicationController
 
   def index
     @questionnaire = Questionnaire.includes(:pages).find(params[:id])
-    if not @questionnaire.is_open
-      redirect_to :action => 'questionnaire_closed', :id => params[:id]
-    else
-      response_key = "response_#{@questionnaire.id}"
-      if not session[response_key]
+    response_key = "response_#{@questionnaire.id}"
+    if not session[response_key]
+      if @questionnaire.is_open
         redirect_to :action => 'prompt', :id => @questionnaire.id
       else
-        begin
-          @resp = Response.find(session[response_key])
-        rescue ActiveRecord::RecordNotFound
-          # bad response ID, it may have been deleted by an admin
-          session.delete(response_key)
-          redirect_to :action => 'prompt', :id => params[:id]
+        redirect_to action: "questionnaire_closed", id: params[:id]
+      end
+    else
+      begin
+        @resp = Response.find(session[response_key])
+      rescue ActiveRecord::RecordNotFound
+        # bad response ID, it may have been deleted by an admin
+        session.delete(response_key)
+        redirect_to :action => 'prompt', :id => params[:id]
+      else
+        if params[:page]
+          @page = @resp.questionnaire.pages[params[:page].to_i - 1]
         else
-          if params[:page]
-            @page = @resp.questionnaire.pages[params[:page].to_i - 1]
-          else
-            @page = @resp.questionnaire.pages[0]
-          end
+          @page = @resp.questionnaire.pages[0]
+        end
 
-          if @questionnaire.advertise_login and person_signed_in?
-            @page.questions.each do |question|
-              if not question.respond_to? 'purpose'
-                next
-              end
-              purpose = question.purpose
-              if purpose
-                answer = @resp.answer_for_question(question)
-                if not answer
-                  value = nil
-                  if purpose == 'name'
-                    value = current_person.name
-                  elsif purpose == 'email'
-                    value = current_person.email
-                  elsif purpose == 'gender'
-                    value = current_person.gender
-                  end
-                  if not (value.nil? or value == '')
-                    @resp.answers.create :question => question, :value => value
-                  end
+        if @questionnaire.advertise_login and person_signed_in?
+          @page.questions.each do |question|
+            if not question.respond_to? 'purpose'
+              next
+            end
+            purpose = question.purpose
+            if purpose
+              answer = @resp.answer_for_question(question)
+              if not answer
+                value = nil
+                if purpose == 'name'
+                  value = current_person.name
+                elsif purpose == 'email'
+                  value = current_person.email
+                elsif purpose == 'gender'
+                  value = current_person.gender
+                end
+                if not (value.nil? or value == '')
+                  @resp.answers.create :question => question, :value => value
                 end
               end
             end

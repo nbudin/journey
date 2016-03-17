@@ -1,0 +1,7 @@
+{{question.min}}
+{{#each question.rangeOptions as |rangeOption|}}
+  {{#if rangeOption.isMedian}}[{{/if}}
+  {{radio-button value=rangeOption.value groupValue=question.defaultAnswer}}
+  {{#if rangeOption.isMedian}}]{{/if}}
+{{/each}}
+{{question.max}}

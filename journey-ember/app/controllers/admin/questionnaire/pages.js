@@ -26,7 +26,7 @@ PagesController = Ember.Controller.extend({
     },
     createPage: function() {
       var page;
-      page = this.get('store').createRecord(Page, {
+      page = this.get('store').createRecord('page', {
         questionnaire: this.get('questionnaire.content')
       });
       page.save();

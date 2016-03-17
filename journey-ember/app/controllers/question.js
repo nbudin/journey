@@ -6,7 +6,7 @@ QuestionController = Ember.ObjectController.extend({
   saveInPlace: (function() {
     return Ember.run.debounce(this.get('model'), 'save', 300);
   }).observes('defaultAnswer', 'min', 'max', 'step', 'layout', 'radioLayout', 'required'),
-  defaultAnswerBoolean: (function(key, value, oldValue) {
+  defaultAnswerBoolean: (function(key, value) {
     var defaultAnswer;
     if (arguments.length === 1) {
       defaultAnswer = this.get('defaultAnswer');

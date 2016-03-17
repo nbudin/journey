@@ -11,11 +11,5 @@ export default Ember.Component.extend({
     if (this.get('isCurrent')) {
       Ember.run.schedule('afterRender', this.get('controller'), this.get('controller').scrollIntoView);
     }
-  }),
-
-  actions: {
-    questionEnteredEditMode(question) {
-      this.sendAction('setCurrentPage', question.get('page'));
-    }
-  }
+  })
 });

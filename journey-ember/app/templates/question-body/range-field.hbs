@@ -1,7 +1,0 @@
-<in-place-editor value=question.min modelBinding=question />
-{{#each rangeOption in rangeOptions}}
-  {{#if rangeOption.isMedian}}[{{/if}}
-  <radio-button value=rangeOption.value groupValue=question.defaultAnswer />
-  {{#if rangeOption.isMedian}}]{{/if}}
-{{/each}}
-<in-place-editor value=question.max modelBinding=question />

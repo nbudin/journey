@@ -13,7 +13,7 @@ export default Ember.Component.extend({
   editMode: false,
 
   layoutClass: function() {
-    "layout-" + this.get("question.layout")
+    return "layout-" + this.get("question.layout");
   }.property('question.layout'),
 
   click(event) {
@@ -26,7 +26,7 @@ export default Ember.Component.extend({
       this.get('question').save().then(
         () => { this.set('editMode', false); },
         (error) => { alert("Saving failed with error: " + error); }
-      )
+      );
     },
 
     toggleEditMode() {

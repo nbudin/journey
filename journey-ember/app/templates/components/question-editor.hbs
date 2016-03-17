@@ -8,7 +8,7 @@
   {{/unless}}
 
   {{#unless question.isDisplay}}
-    <label {{bind-attr class=":caption question.required:required" for="view.answerField.elementId"}}>
+    <label class="caption {{if question.required 'required'}}" for={{view.answerField.elementId}}>
       {{{question.caption}}}
     </label>
   {{/unless}}
@@ -21,7 +21,7 @@
       </span>
     {{/if}}
 
-    <question-body question=question editMode=editMode />
+    {{question-body question=question editMode=editMode}}
   </span>
 </span>
 
@@ -31,10 +31,10 @@
 
     <form>
       <div>
-        <label {{bind-attr for="view.captionField.elementId"}}>Caption</label>
+        <label for={{view.captionField.elementId}}>Caption</label>
         {{input type="text" value=question.caption viewName="captionField"}}
       </div>
-      {{#unless isDisplay}}
+      {{#unless question.isDisplay}}
         <div>
           <label>
             {{input type="checkbox" checked=question.required}}
@@ -42,10 +42,20 @@
           </label>
         </div>
         <div>
-          <label {{bind-attr for="view.defaultAnswerField.elementId"}}>Default answer</label>
+          <label for={{view.defaultAnswerField.elementId}}>Default answer</label>
           {{input type="text" value=question.defaultAnswer viewName="defaultAnswerField"}}
         </div>
       {{/unless}}
+      {{#if question.isRange}}
+        <div>
+          <label for={{view.minField.elementId}}>Minimum value</label>
+          {{input type="number" value=question.min viewName="minField"}}
+        </div>
+        <div>
+          <label for={{view.minField.elementId}}>Maximum value</label>
+          {{input type="number" value=question.max viewName="maxField"}}
+        </div>
+      {{/if}}
     </form>
 
     <ul>

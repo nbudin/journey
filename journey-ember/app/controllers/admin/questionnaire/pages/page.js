@@ -13,7 +13,7 @@ PageController = Ember.Controller.extend({
   }).property('controllers.pages.currentPage.id', 'id'),
   scrollIntoView: function() {
     var element;
-    element = $(".answerpage[data-page-id=" + (this.get('id')) + "]").get(0);
+    element = Ember.$(".answerpage[data-page-id=" + (this.get('id')) + "]").get(0);
     if (element) {
       return element.scrollIntoViewIfNeeded();
     } else {

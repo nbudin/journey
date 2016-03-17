@@ -2,11 +2,11 @@ import Ember from 'ember';
 import _ from 'lodash/lodash';
 
 export default Ember.Component.extend({
-  templateName: function() {
+  bodyPartialName: function() {
     const demodulizedType = this.get('question.type').replace("Questions::", "");
-    const snakeCasedType = _.snakeCase(demodulizedType);
+    const kebabCasedType = _.kebabCase(demodulizedType);
 
-    return this.get('question.type') && ("question_body/" + snakeCasedType);
+    return this.get('question.type') && ("components/question_body/" + kebabCasedType);
   }.property('question.type'),
 
   radioLayoutClass: function() {

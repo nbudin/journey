@@ -21,5 +21,12 @@ export default Ember.Component.extend({
 
   rezebrifyObserver: function() {
     Ember.run.debounce(this, this.rezebrify, 50);
-  }.observes('questions.@each.position', 'questions.@each.type')
+  }.observes('questions.@each.position', 'questions.@each.type'),
+
+
+  actions: {
+    questionEnteredEditMode(question) {
+      this.sendAction('setCurrentPage', question.get('page'));
+    }
+  }
 });

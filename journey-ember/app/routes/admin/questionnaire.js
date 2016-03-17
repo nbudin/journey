@@ -3,7 +3,7 @@ import Ember from 'ember';
 var QuestionnaireRoute;
 
 QuestionnaireRoute = Ember.Route.extend({
-  model: function(params, transition) {
+  model: function(params) {
     return this.store.find('questionnaire', params.questionnaire_id);
   },
   redirect: function(model) {

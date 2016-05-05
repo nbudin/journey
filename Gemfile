@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby "2.1.2"
 
 gem 'bundler'
-gem "rails", "4.2.5.1"
+gem "rails", "4.2.6"
 gem 'paginator'
 gem 'will_paginate'
 gem "mysql2"

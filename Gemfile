@@ -20,7 +20,7 @@ gem 'builder'
 
 gem 'haml'
 gem 'haml-rails'
-gem 'prototype-rails', '~> 4.0.1'
+gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
 gem 'tinymce-rails'
 
 group :assets do

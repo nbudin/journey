@@ -20,7 +20,7 @@ gem 'builder'
 
 gem 'haml'
 gem 'haml-rails'
-gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
+gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails.git', branch: '4.2'
 gem 'tinymce-rails'
 
 group :assets do
@@ -47,6 +47,7 @@ gem 'newrelic_rpm'
 group :test do
   gem "factory_girl_rails"
   gem "minitest-spec-rails"
+  gem "minitest-reporters"
   gem "launchy"
   gem "database_cleaner"
   gem "capybara", ">= 2.0.0"

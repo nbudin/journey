@@ -11,7 +11,7 @@ gem "xebec"
 gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 2.0.1"
 gem 'rollbar'
-gem 'sequel', require: 'sequel/no_core_ext'
+gem 'sequel'
 gem 'dynamic_form'
 gem 'thin'
 gem 'figaro', '= 1.1.1'

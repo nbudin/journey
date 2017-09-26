@@ -230,9 +230,9 @@ GEM
     rmagick (2.13.4)
     rollbar (2.15.4)
       multi_json
+    ruby-progressbar (1.8.3)
     ruby_parser (3.10.1)
       sexp_processor (~> 4.9)
-    ruby-progressbar (1.8.3)
     rubycas-client (2.3.9)
       activesupport
     rubyzip (1.2.1)

@@ -24,11 +24,11 @@ else
 end
 DatabaseCleaner.strategy = :truncation
 
+require "minitest/reporters"
+Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
+
 # TODO: JIPE can be kind of slow.  Increasing the wait time to work around it.
 Capybara.default_max_wait_time = 5
-
-# Uncomment for awesome colorful output
-require "minitest/pride"
 
 class ActionController::TestCase
   include Devise::TestHelpers

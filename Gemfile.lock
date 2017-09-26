@@ -250,7 +250,7 @@ GEM
       json (>= 1.8.0)
     warden (1.2.3)
       rack (>= 1.0)
-    will_paginate (3.0.7)
+    will_paginate (3.1.6)
     xebec (2.7.0)
     xpath (2.1.0)
       nokogiri (~> 1.3)

@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/rails/prototype-rails.git
+  remote: https://github.com/rails/prototype-rails.git
   revision: 0fed929ff48c10c3b978edd3baa983a81f404dbf
   branch: 4.2
   specs:
@@ -51,6 +51,7 @@ GEM
       public_suffix (>= 2.0.2, < 4.0)
     ae_users_migrator (1.0.6)
       activerecord (>= 2.3)
+    ansi (1.5.0)
     archive-zip (0.7.0)
       io-like (~> 0.3.0)
     arel (6.0.4)
@@ -167,6 +168,11 @@ GEM
     mini_mime (0.1.4)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
+    minitest-reporters (1.1.18)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     minitest-spec-rails (5.1.1)
       minitest (~> 5.0)
       rails (~> 4.1)
@@ -224,6 +230,7 @@ GEM
     rmagick (2.13.4)
     rollbar (2.15.4)
       multi_json
+    ruby-progressbar (1.8.3)
     ruby_parser (3.1.3)
       sexp_processor (~> 4.1)
     rubycas-client (2.3.9)
@@ -305,6 +312,7 @@ DEPENDENCIES
   jipe (>= 2.0.1)
   launchy
   letter_opener_web
+  minitest-reporters
   minitest-spec-rails
   mysql2
   newrelic_rpm

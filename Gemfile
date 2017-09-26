@@ -14,7 +14,7 @@ gem 'rollbar'
 gem 'sequel', require: 'sequel/no_core_ext'
 gem 'dynamic_form'
 gem 'thin'
-gem 'figaro', '1.0.0.rc1'
+gem 'figaro', '= 1.1.1'
 gem 'breach-mitigation-rails'
 gem 'builder'
 

@@ -50,9 +50,10 @@ group :test do
   gem "launchy"
   gem "database_cleaner"
   gem "capybara", ">= 2.0.0"
-  gem "capybara-webkit"
+  gem "selenium-webdriver"
   gem "capybara_minitest_spec"
   gem "rails-dom-testing"
+  gem "chromedriver-helper"
 end
 
 gem 'letter_opener_web', :group => :development

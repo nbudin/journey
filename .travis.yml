@@ -7,4 +7,7 @@ before_script:
 rvm:
   - "2.1.2"
 
+addons:
+  chrome: stable
+
 sudo: false

@@ -30,8 +30,11 @@
         <% @responses.each do |response| %>
             <tr class="<%=cycle "even", "odd" %>" style="height: 0">
               <td style="width: 20px; background-color: white; vertical-align: middle; background-color: #eee; border: 1px #999 solid;">
-			  	<%=link_to image_tag("view-response.png", :alt => "View response", :title => "View response", :style => "margin: 2px;"), 
-					  polymorphic_url([@questionnaire, response], :format => "js"), :class => "viewresponse", :remote => true, :method => "get" %>
+			  	<%= link_to_function(
+                image_tag("view-response.png", :alt => "View response", :title => "View response", :style => "margin: 2px;").html_safe,
+                "showResponse(#{response.id})",
+                class: 'viewresponse'
+              ) %>
 			  </td>
               <% @columns.each do |column| -%>
                 <td>

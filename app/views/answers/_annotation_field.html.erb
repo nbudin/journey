@@ -2,6 +2,6 @@
   <%= text_area_tag "answer[#{@question.id}]", value, :rows => 4 %>
 <% else -%>
   <% if person_signed_in? and current_person.can?(:view_answers, @question.questionnaire) -%>
-    <%= simple_format value %>
+    <%= simple_format_with_html_escape value %>
   <% end -%>
 <% end -%>

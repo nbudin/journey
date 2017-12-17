@@ -3,11 +3,11 @@ require 'csv'
 class ResponsesController < ApplicationController
   load_resource :questionnaire
   load_and_authorize_resource :through => :questionnaire
-  
+
   before_filter :set_page_title
   before_filter :require_view_answers_except_rss, :only => [:index]
   before_filter :get_email_notification, :only => [:subscribe, :update_subscription]
-  
+
   # GET /responses
   # GET /responses.xml
   def index
@@ -15,15 +15,15 @@ class ResponsesController < ApplicationController
     if params[:reverse] == "true"
       sort = "#{sort} DESC"
     end
-        
+
     @rss_url = response_rss_url(@questionnaire)
-    
+
     @responses = @questionnaire.valid_responses.paginate :page => params[:page]
-    
+
     default_columns = ["title", "submitted_at", "notes"]
     default_columns += @questionnaire.special_field_associations.select { |sfa| sfa.purpose != 'name' }.collect { |sfa| sfa.question }
     default_columns.push("id")
-    
+
     @columns = []
     1.upto(5) do |i|
       colspec = params["column_#{i}".to_sym]
@@ -45,7 +45,7 @@ class ResponsesController < ApplicationController
 
     respond_to do |format|
       format.html { }
-      format.rss do 
+      format.rss do
         if params[:secret] != @questionnaire.rss_secret
           throw "Provided secret does not match questionnaire"
         end
@@ -59,10 +59,10 @@ class ResponsesController < ApplicationController
       end
     end
   end
-  
+
   def print
     @responses = @questionnaire.valid_responses
-    
+
     respond_to do |format|
       format.html { render :layout => "print" }
     end
@@ -75,14 +75,11 @@ class ResponsesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js do
-        content = render_to_string(:layout => false)
-        render :update do |page|
-          page.replace_html 'responsebody', content
-          page.replace_html 'responsetitle', @resp.title
-          page.call 'showResponseViewer', @resp.id
-          page << "$$('#responsebody > form input[type=submit]').each(function(elt) { elt.hide(); });"
-        end
+      format.json do
+        render json: {
+          content: render_to_string(formats: [:html], layout: false),
+          title: @resp.title
+        }
       end
     end
   end
@@ -90,16 +87,14 @@ class ResponsesController < ApplicationController
   # GET /responses/1/edit
   def edit
     @editing = true
-    
+
     respond_to do |format|
       format.html
-      format.js do
-        content = render_to_string(:layout => false)
-        render :update do |page|
-          page.replace_html 'responsebody', content
-          page.replace_html 'responsetitle', "Editing #{@response.title}"
-          page.call 'showResponseEditor', @response.id
-        end
+      format.json do
+        render json: {
+          content: render_to_string(formats: [:html], layout: false),
+          title: "Editing #{@response.title}"
+        }
       end
     end
   end
@@ -128,7 +123,7 @@ class ResponsesController < ApplicationController
       return (params[:answer] and params[:answer][question_id.to_s] and
          params[:answer][question_id.to_s].length > 0)
     end
-    
+
     @questionnaire.questions.each do |question|
       if question.kind_of? Questions::Field
         ans = Answer.find_answer(@response, question)
@@ -150,11 +145,9 @@ class ResponsesController < ApplicationController
     respond_to do |format|
       if @response.update_attributes(response_params)
         format.html { redirect_to([@questionnaire, @response]) }
-        format.js { redirect_to(polymorphic_url([@questionnaire, @response], :format => "js")) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.js { render :action => "edit" }
         format.xml  { render :xml => @response.errors, :status => :unprocessable_entity }
       end
     end
@@ -170,27 +163,27 @@ class ResponsesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
-  def aggregate  
+
+  def aggregate
     @page_title = "Response graphs"
     @fields = @questionnaire.fields.select { |f| not f.kind_of? Questions::FreeformField }
     @numeric_fields = @fields.select { |f| f.is_numeric? }
     @nonnumeric_fields = @fields.select { |f| not f.is_numeric? }
   end
-  
+
   def export
-    
+
   end
-  
+
   def subscribe
   end
-  
+
   def update_subscription
     unless @email_notification
       @email_notification = @questionnaire.email_notifications.new.tap { |n| n.person = current_person }
       @email_notification.save!
     end
-    
+
     if @email_notification.update_attributes(email_notification_params)
       respond_to do |format|
         format.html { redirect_to action: 'subscribe' }
@@ -201,7 +194,7 @@ class ResponsesController < ApplicationController
       end
     end
   end
-  
+
   private
   def stream_csv(filename)
     content_type = 'text/csv'
@@ -216,32 +209,32 @@ class ResponsesController < ApplicationController
     tmpfile = Tempfile.new(filename)
     pathname = tmpfile.path
     tmpfile.close
-    
+
     output_path = pathname + '-nontemp'
     CSV.open(output_path, "w", :row_sep => "\r\n") do |csv|
       yield csv
     end
     send_file(output_path, :type => content_type, :disposition => "attachment", :filename => filename)
   end
-  
+
   def set_page_title
     @page_title = "Responses"
   end
-  
+
   def require_view_answers_except_rss
     unless params[:format].to_s == 'rss'
       authorize! :show, Response.new(:questionnaire => @questionnaire)
     end
   end
-  
+
   def get_email_notification
     @email_notification = @questionnaire.email_notifications.where(person_id: current_person.id).first
   end
-  
+
   def response_params
     params[:response].try(:permit, :notes) || {}
   end
-  
+
   def email_notification_params
     params.require(:email_notification).permit(:notify_on_response_submit)
   end

@@ -18,11 +18,20 @@ function sizeResponseViewer() {
 ResponseViewer = {};
 ResponseViewer.showingResponseId = null;
 
-function showResponse(id) {  
+function showResponse(id) {
     showResponseViewer(id);
     new Ajax.Request(
-        getResponsesUrl() + '/' + id,
-        { method: 'get' });
+      getResponsesUrl() + '/' + id + '.json',
+      {
+        method: 'get',
+        onSuccess: function(response) {
+          document.getElementById('responsebody').innerHTML = response.responseJSON.content;
+          document.getElementById('responsetitle').textContent = response.responseJSON.title;
+          showResponseViewer(id);
+          $$('#responsebody > form input[type=submit]').each(function(elt) { elt.hide(); });
+        }
+      }
+    );
 }
 
 function showResponseToolbar(which) {
@@ -52,8 +61,16 @@ function showResponseThrobber() {
 function editResponse() {
     showResponseThrobber();
     new Ajax.Request(
-        getResponsesUrl() + '/' + ResponseViewer.showingResponseId + '/edit.js', 
-        { 'method': 'get' });
+      getResponsesUrl() + '/' + ResponseViewer.showingResponseId + '/edit.json',
+      {
+        method: 'get',
+        onSuccess: function(response) {
+          document.getElementById('responsebody').innerHTML = response.responseJSON.content;
+          document.getElementById('responsetitle').textContent = response.responseJSON.title;
+          showResponseEditor(ResponseViewer.showingResponseId);
+        }
+      }
+    );
 }
 
 function showResponseEditor(id) {
@@ -66,11 +83,15 @@ function saveEditedResponse() {
     params = $$('#responsebody > form')[0].serialize(true);
     showResponseThrobber();
     new Ajax.Request(
-        getResponsesUrl() + '/' + ResponseViewer.showingResponseId + '.js',
-        {
-			method: 'put',
-            parameters: params
-        });
+      getResponsesUrl() + '/' + ResponseViewer.showingResponseId,
+      {
+    		method: 'put',
+        parameters: params,
+        onSuccess: function() {
+          showResponse(ResponseViewer.showingResponseId);
+        }
+      }
+    );
 }
 
 function deleteResponse() {
@@ -88,7 +109,7 @@ function confirmDelete() {
       {
           method: 'delete',
           onSuccess: function (req, header) { window.location.reload(); },
-          onFailure: function (req, header) { 
+          onFailure: function (req, header) {
             alert(resp.responseText);
             cancelDelete();
           }

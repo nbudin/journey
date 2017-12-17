@@ -14,7 +14,7 @@
         <% if @editing -%>
           <%= text_area_tag "response[notes]", resp.notes %>
         <% else -%>
-          <%= simple_format resp.notes %>
+          <%= simple_format_with_html_escape resp.notes %>
         <% end -%>
       </td>
     </tr>
@@ -25,7 +25,7 @@
       last_page = question.page -%>
       <p class="pageheader"><%=h question.page.title %></p>
     <% end -%>
-  
+
     <% answer = resp.answer_for_question(question) -%>
     <table class="question" id="question<%=resp.id%>_<%=question.id%>">
       <tr class="<%= cycle("odd", "even") %>">

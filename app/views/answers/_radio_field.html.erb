@@ -3,5 +3,5 @@
     <%= option.option %> <%= radio_button_tag "answer[#{@question.id}]", option.option, value == option.option %>
   <% end -%>
 <% else -%>
-  <%= simple_format value %>
+  <%= simple_format_with_html_escape value %>
 <% end -%>

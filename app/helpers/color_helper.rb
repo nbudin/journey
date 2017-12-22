@@ -1,11 +1,11 @@
 module ColorHelper
   def journey_colors
     [
-      ["Red Pill", "8d0000"],
+      ["Red Adair", "8d0000"],
       ["La Red", "d03200"],
       ["Orange Zest", "ffd032"],
       ["Old Gold", "d0ba32"],
-      ["Leroy Brown", "9a6a00"],
+      ["Doc Brown", "9a6a00"],
       ["Journey Green", "bad032"],
       ["Putting Green", "006a32"],
       ["Blue Pill", "00326a"],
@@ -17,7 +17,7 @@ module ColorHelper
       ["Stealth Grey", "666666"]
     ]
   end
-  
+
   def journey_color_select_options
     color_options = journey_colors.collect do |name, color|
       css = "color: ##{color}; font-weight: bold; "

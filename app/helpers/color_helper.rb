@@ -1,14 +1,14 @@
 module ColorHelper
   def journey_colors
     [
-      ["Red Adair", "8d0000"],
-      ["La Red", "d03200"],
+      ["Red Grooms", "8d0000"],
+      ["Red Adair", "d03200"],
       ["Orange Zest", "ffd032"],
       ["Old Gold", "d0ba32"],
       ["Doc Brown", "9a6a00"],
       ["Journey Green", "bad032"],
-      ["Putting Green", "006a32"],
-      ["Blue Pill", "00326a"],
+      ["Green Energy", "006a32"],
+      ["Blueberry Hill", "00326a"],
       ["Blue Meany", "32bad0"],
       ["Indigo Montoya", "6a00d0"],
       ["Purple People Eater", "ba32d0"],

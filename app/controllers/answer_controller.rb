@@ -184,6 +184,7 @@ class AnswerController < ApplicationController
         errors = validate_answers(@resp, @page)
         if errors.length > 0
           @error_messages = errors
+          @resp.reload
           render :action => "index", :id => @resp.questionnaire.id, :page => params[:current_page]
           return
         end

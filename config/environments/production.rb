@@ -66,5 +66,7 @@ Journey::Application.configure do
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.asset_host = "https://secure.journeysurveys.com"
-end
 
+  # Work around TinyMCE module loading weirdness
+  config.tinymce.install = :copy
+end

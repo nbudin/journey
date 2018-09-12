@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-ruby "2.1.2"
+ruby "2.4.0"
 
 gem 'bundler'
 gem "rails", "= 4.2.9"
@@ -30,8 +30,7 @@ group :assets do
 end
 
 gem 'devise'
-gem 'rubycas-client'
-gem 'devise_cas_authenticatable'
+gem 'omniauth-illyan', path: '../omniauth-illyan'
 gem 'cancancan'
 gem 'illyan_client'
 gem 'ae_users_migrator'

@@ -269,7 +269,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (1.4.1)
-    tinymce-rails (4.8.2)
+    tinymce-rails (4.6.7)
       railties (>= 3.1.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
@@ -332,7 +332,7 @@ DEPENDENCIES
   sequel
   sqlite3
   thin
-  tinymce-rails
+  tinymce-rails (= 4.6.7)
   uglifier
   will_paginate
   xebec

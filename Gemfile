@@ -21,7 +21,7 @@ gem 'builder'
 gem 'haml'
 gem 'haml-rails'
 gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails.git', branch: '4.2'
-gem 'tinymce-rails'
+gem 'tinymce-rails', '= 4.6.7'
 
 group :assets do
   gem 'sass-rails'

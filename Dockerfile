@@ -1,4 +1,4 @@
-from nbudin/precise-ruby-2.0.0-p247
+from ruby:2.1.2
 
 run apt-get install -y libmysqlclient-dev libmagickwand-dev
 

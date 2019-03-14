@@ -173,7 +173,7 @@ GEM
       minitest (~> 5.0)
       rails (~> 4.1)
     multi_json (1.12.2)
-    mysql2 (0.4.9)
+    mysql2 (0.5.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
@@ -333,7 +333,7 @@ DEPENDENCIES
   xebec
 
 RUBY VERSION
-   ruby 2.1.2p95
+   ruby 2.6.2p47
 
 BUNDLED WITH
-   1.16.0
+   1.17.2

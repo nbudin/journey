@@ -1,4 +1,4 @@
-from ruby:2.1.2
+from ruby:2.6.2
 
 run apt-get install -y libmysqlclient-dev libmagickwand-dev
 

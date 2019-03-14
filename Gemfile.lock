@@ -223,7 +223,7 @@ GEM
     rake (12.3.2)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
-    rmagick (2.13.4)
+    rmagick (2.16.0)
     rollbar (2.15.4)
       multi_json
     ruby-progressbar (1.8.3)

@@ -40,7 +40,7 @@ gem 'rack-ssl'
 
 gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
 gem 'rmagick', :require => 'RMagick', :platforms => ['ruby', 'mswin']
-gem 'gruff', '~> 0.3.6'
+gem 'gruff', '~> 0.7.0'
 
 gem 'newrelic_rpm'
 

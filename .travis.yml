@@ -1,6 +1,3 @@
-before_install:
-  - "gem install bundler -v 1.15.4 --no-ri --no-rdoc"
-
 before_script:
   - "echo 'test:\n  adapter: sqlite3\n  database: test.sqlite3' >config/database.yml"
   - "bundle exec rake db:migrate RAILS_ENV=test"

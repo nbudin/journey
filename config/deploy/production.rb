@@ -15,7 +15,7 @@
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'hempel.sugarpond.net', user: 'deploy', roles: %w{web app db}
+server 'scanlon.sugarpond.net', user: 'deploy', roles: %w{web app db}
 
 
 # Custom SSH Options

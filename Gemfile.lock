@@ -124,7 +124,8 @@ GEM
       thor (~> 0.14)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    gruff (0.3.7)
+    gruff (0.7.0)
+      rmagick (~> 2.13, >= 2.13.4)
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
@@ -300,7 +301,7 @@ DEPENDENCIES
   dynamic_form
   factory_girl_rails
   figaro (= 1.1.1)
-  gruff (~> 0.3.6)
+  gruff (~> 0.7.0)
   haml
   haml-rails
   heroku_external_db (>= 1.0.0)

@@ -2,7 +2,9 @@ source "http://rubygems.org"
 ruby "2.6.2"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem "rails", "4.2.11.1"
+gem "rails", "5.0.7.2"
+gem 'activeresource', '5.0.0'
+
 gem 'will_paginate'
 gem 'pg', '~> 0.20'
 gem "jipe", ">= 2.0.1"
@@ -13,7 +15,6 @@ gem 'puma'
 gem 'breach-mitigation-rails'
 gem 'builder'
 
-gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails.git', branch: '4.2'
 gem 'tinymce-rails', '= 4.6.7'
 
 group :assets do

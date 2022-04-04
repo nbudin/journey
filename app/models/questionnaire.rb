@@ -2,7 +2,7 @@ require 'digest'
 require 'rexml/document'
 require 'journey_questionnaire'
 
-class Questionnaire < ActiveRecord::Base
+class Questionnaire < ApplicationRecord
   before_create :set_untitled
   after_create :create_initial_page
   before_save :set_published_at
@@ -25,12 +25,12 @@ class Questionnaire < ActiveRecord::Base
   has_many :taggings, :as => :tagged, :dependent => :destroy
   has_many :tags, :through => :taggings
   has_many :email_notifications
-  
+
   has_many :questionnaire_permissions
   accepts_nested_attributes_for :questionnaire_permissions, :allow_destroy => true, :reject_if => lambda { |attrs| attrs['id'].blank? && attrs['email'].blank? }
-  
+
   scope :publicly_visible, lambda { where(:publicly_visible => true) }
-  
+
   def Questionnaire.special_field_purposes
     %w( name address phone email gender )
   end
@@ -42,14 +42,14 @@ class Questionnaire < ActiveRecord::Base
       Questions::TextField
     end
   end
-  
+
   @@creator_warning_hooks = []
   def Questionnaire.creator_warnings(person)
     @@creator_warning_hooks.collect do |hook|
       hook.call(person)
     end.compact
   end
-  
+
   def Questionnaire.add_creator_warning_hook(hook)
     @@creator_warning_hooks.push(hook)
   end
@@ -57,7 +57,7 @@ class Questionnaire < ActiveRecord::Base
   def used_special_field_purposes
     special_field_associations.collect { |sfa| sfa.purpose }
   end
-  
+
   def unused_special_field_purposes
     usfp = used_special_field_purposes
     Questionnaire.special_field_purposes.select { |p| not usfp.include?(p) }
@@ -75,11 +75,11 @@ class Questionnaire < ActiveRecord::Base
     assn = special_field_associations.select { |sfa| sfa.purpose == purpose }[0]
     assn.nil? ? nil : assn.question
   end
-  
+
   def tag_names
     tags.collect {|t| t.name}
   end
-  
+
   def tags=(taglist)
     names = taglist.split(/\s*,\s*/)
     names.each do |name|
@@ -94,7 +94,7 @@ class Questionnaire < ActiveRecord::Base
       end
     end
   end
-  
+
   def login_policy
     if advertise_login
       if require_login
@@ -106,7 +106,7 @@ class Questionnaire < ActiveRecord::Base
       return "unadvertised"
     end
   end
-  
+
   def login_policy=(policy)
     case policy.to_s
     when "unadvertised"
@@ -120,7 +120,7 @@ class Questionnaire < ActiveRecord::Base
       self.require_login = true
     end
   end
-  
+
   def publication_mode
     if is_open
       if publicly_visible
@@ -136,7 +136,7 @@ class Questionnaire < ActiveRecord::Base
       end
     end
   end
-  
+
   def publication_mode=(mode)
     case mode.to_s
     when "unpublished", "closed"
@@ -150,11 +150,11 @@ class Questionnaire < ActiveRecord::Base
       self.publicly_visible = true
     end
   end
-  
+
   def deepclone(with_responses=nil)
     dup.tap do |c|
       question_clones_by_original_id = {}
-      
+
       pages.each do |page|
         page_clone = page.dup.tap do |page_clone|
           page.questions.each do |question|
@@ -165,11 +165,11 @@ class Questionnaire < ActiveRecord::Base
         end
         c.pages << page_clone
       end
-      
+
       taggings.each do |tagging|
         c.taggings << Tagging.new(tag: tagging.tag)
       end
-      
+
       if with_responses
         responses.each do |response|
           c.responses << response.dup.tap do |response_clone|
@@ -235,7 +235,7 @@ class Questionnaire < ActiveRecord::Base
       end
     end
   end
-  
+
   def Questionnaire.from_xml(xml)
     root = REXML::Document.new(xml).root
     q = Questionnaire.new(:title => root.attributes['title'], :custom_html => '',
@@ -259,14 +259,14 @@ class Questionnaire < ActiveRecord::Base
           if question.name != 'question'
             raise "Found a #{question.name} tag that shouldn't be a direct child of page"
           end
-          
+
           klass = Question.question_class_from_name(question.attributes['type'])
           unless klass
             raise "#{question.attributes['type']} is not a valid question type"
           end
 
           ques = klass.new(:required => question.attributes['required'], :page => p)
-          
+
           ques.caption = ""
           question.each_element('caption') do |caption|
             next unless caption.text
@@ -277,16 +277,16 @@ class Questionnaire < ActiveRecord::Base
             da = default_answer.text
             logger.info "Default answer is #{da}"
           end
-          
+
           question.each_element('purpose') do |purpose|
             sfa = q.special_field_associations.new :question => ques, :purpose => purpose.text
             q.special_field_associations << sfa
           end
-          
+
           question.each_element('layout') do |layout|
             ques.layout = layout.text
           end
-          
+
           if ques.kind_of? Questions::RangeField
             question.each_element('range') do |range|
               ['min', 'max', 'step'].each do |attrib|
@@ -294,7 +294,7 @@ class Questionnaire < ActiveRecord::Base
               end
             end
           end
-          
+
           if ques.kind_of? Questions::SelectorField
             optrows = {}
             question.each_element('option') do |option|
@@ -316,17 +316,17 @@ class Questionnaire < ActiveRecord::Base
               end
             end
           end
-          
+
           if ques.kind_of? Questions::RadioField
             question.each_element('radio_layout') do |layout|
               ques.radio_layout = layout.text
             end
           end
-          
+
           ques.position = p.questions.length + 1
           p.questions << ques
         end
-        
+
         p.position = q.pages.length + 1
         q.pages << p
       else
@@ -335,7 +335,7 @@ class Questionnaire < ActiveRecord::Base
     end
     return q
   end
-  
+
   def is_open
     read_attribute(:is_open) && (!respond_to?(:closes_at) || closes_at.nil? || closes_at > Time.now)
   end
@@ -345,37 +345,37 @@ class Questionnaire < ActiveRecord::Base
     write_attribute(:is_open, value)
     self.closes_at = nil if value && !was_open
   end
-  
+
   def authors
     questionnaire_permissions.includes(:person).where(:can_edit => true).to_a.map(&:person).compact
   end
-  
+
   def self.load_extensions
     Journey::QuestionnaireExtensions.extensions.each do |ext|
       include ext
     end
   end
   self.load_extensions
-  
+
   private
   def set_published_at
     if is_open && is_open_changed?
       self.published_at = Time.now
     end
   end
-  
+
   def set_closed_at
     if !is_open && is_open_changed?
       self.closes_at = Time.now
     end
   end
-  
+
   def set_untitled
     if self.title.blank?
       self.title = "Untitled survey"
     end
   end
-  
+
   def create_initial_page
     if pages.size == 0
       pages.create

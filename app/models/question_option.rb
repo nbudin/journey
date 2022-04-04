@@ -1,7 +1,7 @@
-class QuestionOption < ActiveRecord::Base
+class QuestionOption < ApplicationRecord
   belongs_to :question
   before_create :set_position
-    
+
   def effective_output_value
     if output_value.blank?
       option
@@ -9,7 +9,7 @@ class QuestionOption < ActiveRecord::Base
       output_value
     end
   end
-  
+
   private
   def set_position
     return if position

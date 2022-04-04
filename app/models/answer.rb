@@ -1,13 +1,13 @@
-class Answer < ActiveRecord::Base
+class Answer < ApplicationRecord
   belongs_to :response, :inverse_of => :answers
   validates_associated :response
   belongs_to :question
   validates_associated :question
-  
+
   def self.find_answer(resp, question)
     where(response_id: resp.id, question_id: question.id).first
   end
-  
+
   def value
     v = read_attribute(:value)
     if question.kind_of?(Questions::CheckBoxField)
@@ -20,7 +20,7 @@ class Answer < ActiveRecord::Base
       return v
     end
   end
-  
+
   def output_value
     v = self.value
     if question.kind_of?(Questions::SelectorField)

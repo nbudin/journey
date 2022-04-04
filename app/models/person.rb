@@ -1,6 +1,6 @@
-class Person < ActiveRecord::Base
+class Person < ApplicationRecord
   devise :cas_authenticatable, :trackable
-  
+
   has_many :questionnaire_permissions
   has_many :email_notifications
 
@@ -24,18 +24,18 @@ class Person < ActiveRecord::Base
       end
     end
   end
-  
+
   def permission_for(questionnaire)
     questionnaire_permissions.find_by(:questionnaire_id => questionnaire.id)
   end
-  
+
   def can?(action, questionnaire)
     return true if admin?
-    
+
     permission = permission_for(questionnaire)
     permission && permission.send("can_#{action}?")
   end
-  
+
   QuestionnairePermission::ACTIONS.each do |action|
     define_method "can_#{action}?" do |survey|
       can? action, survey

@@ -1,9 +1,9 @@
 # Put this in config/application.rb
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
-Bundler.require(:default, Rails.env) if defined?(Bundler)
+Bundler.require(*Rails.groups)
 
 module Journey
   class Application < Rails::Application

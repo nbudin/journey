@@ -1,4 +1,4 @@
-class Response < ActiveRecord::Base
+class Response < ApplicationRecord
   belongs_to :questionnaire, -> {includes(:special_field_associations)}
   validates_associated :questionnaire
   has_many :answers, -> {includes(question: :question_options)}, :dependent => :destroy

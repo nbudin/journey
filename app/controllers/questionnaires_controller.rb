@@ -1,5 +1,3 @@
-require 'paginator'
-
 class QuestionnairesController < ApplicationController
   load_resource
 

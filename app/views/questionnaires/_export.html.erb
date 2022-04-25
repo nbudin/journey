@@ -1,0 +1,23 @@
+<h2>Export</h2>
+<p>You can export all the responses to this survey to a spreadsheet (in CSV format, which can be opened by Excel, Numbers, Google Spreadsheets, OpenOffice.org, and other spreadsheet software).  You can also export your survey itself (without the responses) to XML format for your archives.  Later on, if you wish, you can import this XML file back into Journey.</p>
+<ul>
+  <li>
+    <%= link_to "Export response CSV - each response in a row", polymorphic_url([@questionnaire, :responses], format: "csv", rotate: "false") %>
+  </li>
+  <li>
+    <%= link_to "Export response CSV - each response in a column", polymorphic_url([@questionnaire, :responses], format: "csv", rotate: "true") %>
+  </li>
+  <li>
+    <%= link_to "Export survey to XML file", questionnaire_path(@questionnaire, :format => "xml"), :method => "get" %>
+  </li>
+</ul>
+<h2>Print</h2>
+<p>You can print this survey in order to hand to respondents to fill out on paper.  You can also print out the responses, each on a separate page.</p>
+<ul>
+  <li>
+    <%= link_to "Print survey", [:print, @questionnaire] %>
+  </li>
+  <li>
+    <%= link_to "Print responses", [:print, @questionnaire, :responses] %>
+  </li>
+</ul>

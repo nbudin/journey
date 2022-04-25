@@ -1,0 +1,3 @@
+<h2>A new response was submitted on your survey "#{@resp.questionnaire.title}"</h2>
+<%= html_table(response_submitted_table_data) %>
+<%= email_bigbutton_link_to("View this response &raquo;".html_safe, questionnaire_responses_url(@resp.questionnaire, view_response_id: @resp.id)) %>

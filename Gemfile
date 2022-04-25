@@ -3,10 +3,8 @@ ruby "2.6.2"
 
 gem 'bundler'
 gem "rails", "4.2.11.1"
-gem 'paginator'
 gem 'will_paginate'
 gem 'pg', '~> 0.20'
-gem "xebec"
 gem "jipe", ">= 2.0.1"
 gem 'rollbar'
 gem 'sequel'
@@ -16,8 +14,6 @@ gem 'figaro', '= 1.1.1'
 gem 'breach-mitigation-rails'
 gem 'builder'
 
-gem 'haml'
-gem 'haml-rails'
 gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails.git', branch: '4.2'
 gem 'tinymce-rails', '= 4.6.7'
 

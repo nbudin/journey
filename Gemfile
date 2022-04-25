@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 ruby "2.6.2"
 
-gem 'bundler'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem "rails", "4.2.11.1"
 gem 'will_paginate'
 gem 'pg', '~> 0.20'
@@ -10,7 +10,6 @@ gem 'rollbar'
 gem 'sequel'
 gem 'dynamic_form'
 gem 'puma'
-gem 'figaro', '= 1.1.1'
 gem 'breach-mitigation-rails'
 gem 'builder'
 

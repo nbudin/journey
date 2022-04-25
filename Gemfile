@@ -9,7 +9,7 @@ gem "jipe", ">= 2.0.1"
 gem 'rollbar'
 gem 'sequel'
 gem 'dynamic_form'
-gem 'thin'
+gem 'puma'
 gem 'figaro', '= 1.1.1'
 gem 'breach-mitigation-rails'
 gem 'builder'

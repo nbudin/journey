@@ -24,7 +24,6 @@ group :assets do
 end
 
 gem 'devise'
-gem 'rubycas-client'
 gem 'devise_cas_authenticatable'
 gem 'cancancan'
 gem 'illyan_client'

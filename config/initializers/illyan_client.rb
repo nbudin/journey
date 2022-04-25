@@ -7,3 +7,5 @@ else
   puts "WARNING: Illyan client is not configured.  Inviting new users will not work.  "+
        "To configure the Illyan client, set the ILLYAN_URL and ILLYAN_TOKEN environment variables."
 end
+
+Rails.application.config.rack_cas.server_url = "#{IllyanClient.base_url}/cas"

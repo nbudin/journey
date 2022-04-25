@@ -5,10 +5,8 @@ gem 'bundler'
 gem "rails", "4.2.11.1"
 gem 'paginator'
 gem 'will_paginate'
-gem "mysql2"
-gem "sqlite3", :groups => [:development, :test]
+gem 'pg', '~> 0.20'
 gem "xebec"
-gem "heroku_external_db", ">= 1.0.0"
 gem "jipe", ">= 2.0.1"
 gem 'rollbar'
 gem 'sequel'
@@ -42,8 +40,6 @@ gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
 gem 'rmagick', :require => 'RMagick', :platforms => ['ruby', 'mswin']
 gem 'gruff', '~> 0.3.6'
 
-gem 'newrelic_rpm'
-
 group :test do
   gem "factory_girl_rails"
   gem "minitest-spec-rails"
@@ -64,4 +60,5 @@ group :development do
   gem 'capistrano-rails',   '~> 1.1', require: false
   gem 'capistrano-bundler', '~> 1.1', require: false
   gem 'capistrano-rbenv', '~> 2.0', require: false
+  gem 'capistrano-maintenance', '~> 1.0', require: false
 end

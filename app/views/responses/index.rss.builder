@@ -1,6 +1,6 @@
 xml.instruct!
 
-resp_page_url = url_for :only_path => false, :controller => 'analyze', :action => 'responses', :id => @questionnaire.id
+resp_page_url = polymorphic_url([@questionnaire, :responses], :only_path => false)
 
 xml.rss "version" => "2.0", "xmlns:dc" => "http://purl.org/dc/elements/1.1/" do
   xml.channel do

@@ -171,6 +171,8 @@ class AnswerController < ApplicationController
       end
     end
 
+    binding.pry
+
     if params[:commit] =~ /later/i
       redirect_to :action => "save_session", :id => @resp.questionnaire.id, :current_page => params[:current_page]
       return

@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-ruby "2.6.2"
+ruby File.read(File.expand_path(".ruby-version", __dir__)).strip
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem "rails", "5.0.7.2"
@@ -12,7 +12,6 @@ gem 'rollbar'
 gem 'sequel'
 gem 'dynamic_form'
 gem 'puma'
-gem 'breach-mitigation-rails'
 gem 'builder'
 
 gem 'tinymce-rails', '= 4.6.7'

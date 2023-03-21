@@ -140,10 +140,7 @@
       <% end -%>
       <% content_for :startbox_additional_options do -%>
         <li>
-          <%= link_to_function("Why log in?", :id => "why_login_link") do |page|
-                page['why_login'].show
-                page['why_login_link'].hide
-              end %>
+          <%= link_to_function("Why log in?", "$('why_login').show(); $('why_login_link').hide();", :id => "why_login_link") %>
         </li>
       <% end -%>
 

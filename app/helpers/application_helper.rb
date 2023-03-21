@@ -16,6 +16,14 @@ module ApplicationHelper
     components.join(" - ")
   end
 
+  def button_to_function(content, onclick, attrs = {})
+    content_tag(:button, content, attrs.symbolize_keys.merge(type: 'button', onclick: onclick))
+  end
+
+  def link_to_function(content, onclick, attrs = {})
+    content_tag(:a, content, { href: '#' }.merge(attrs.symbolize_keys.merge(onclick: onclick)))
+  end
+
   # by Rob Biedenharn: http://www.mail-archive.com/rubyonrails-talk@googlegroups.com/msg15305.html
   def image_url(source)
     abs_path = image_path(source)

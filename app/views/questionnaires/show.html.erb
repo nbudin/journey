@@ -48,10 +48,7 @@
     <% scrubber.tags = ['form'] -%>
 		<%= sanitize @questionnaire.welcome_text, scrubber: scrubber %>
 		<p>
-		  <%= button_to_function "Edit welcome text &raquo;".html_safe do |page|
-			page['welcome_page_editor'].show
-			page['welcome_page_preview'].hide
-		  end -%>
+		  <%= button_to_function "Edit welcome text &raquo;".html_safe, "$('welcome_page_editor').show(); $('welcome_page_preview').hide();" %>
 		</p>
 	  </div>
 

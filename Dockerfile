@@ -1,6 +1,6 @@
 from ruby:2.6.2
 
-run apt-get install -y libmysqlclient-dev libmagickwand-dev
+run apt-get install -y libpq-dev libmagickwand-dev
 
 add . /app
 run cp /app/config/database.yml.docker /app/config/database.yml

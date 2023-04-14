@@ -1,10 +1,10 @@
 from ruby:2.6.2
 
-run apt-get install -y libmysqlclient-dev libmagickwand-dev
+run apt-get update && apt-get install -y libpq-dev graphicsmagick-libmagick-dev-compat libmagickwand-dev imagemagick
 
 add . /app
 run cp /app/config/database.yml.docker /app/config/database.yml
-run cd /app ; bundle install --without development test
+run cd /app ; gem install nokogiri --platform=ruby ; bundle install --without development test
 
 env RAILS_ENV production
 expose 3000

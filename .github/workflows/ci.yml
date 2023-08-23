@@ -67,7 +67,6 @@ jobs:
           context: .
           push: ${{ github.event_name == 'push' && github.event.ref == 'refs/heads/main' }}
           platforms: linux/amd64
-          target: production
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.sha }}
           build-args: |

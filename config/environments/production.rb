@@ -2,7 +2,7 @@ Journey::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Enfore SSL in prod
-  config.middleware.insert_before ActionDispatch::Static, ::Rack::SSL, :host => "secure.journeysurveys.com"
+  # config.middleware.insert_before ActionDispatch::Static, ::Rack::SSL, :host => "secure.journeysurveys.com"
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -26,7 +26,7 @@ Journey::Application.configure do
   # config.force_ssl = true
 
   # See everything in the log (default is :info)
-  # config.log_level = :debug
+  config.log_level = :info
 
   # Use a different logger for distributed setups
   # config.logger = SyslogLogger.new
@@ -49,6 +49,12 @@ Journey::Application.configure do
     host: "secure.journeysurveys.com",
     protocol: "https"
   }
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
 
   # Enable threaded mode
   # config.threadsafe!

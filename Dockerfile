@@ -1,11 +1,53 @@
-from ruby:2.6.2
+ARG RUBY_VERSION=2.6.10
+FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
-run apt-get update && apt-get install -y libpq-dev graphicsmagick-libmagick-dev-compat libmagickwand-dev imagemagick
+# Rails app lives here
+WORKDIR /rails
 
-add . /app
-run cp /app/config/database.yml.docker /app/config/database.yml
-run cd /app ; gem install nokogiri --platform=ruby ; bundle install --without development test
+# Set production environment
+ENV RAILS_ENV="production" \
+  BUNDLE_DEPLOYMENT="1" \
+  BUNDLE_PATH="/usr/local/bundle" \
+  BUNDLE_WITHOUT="development"
 
-env RAILS_ENV production
-expose 3000
-cmd ["ruby", "/app/script/rails", "server", "-p", "3000"]
+
+# Throw-away build stage to reduce size of final image
+FROM base as build
+
+# Install packages needed to build gems
+RUN apt-get update -qq && \
+  apt-get install --no-install-recommends -y libpq-dev imagemagick libmagickcore-dev git build-essential
+
+# Install application gems
+COPY Gemfile Gemfile.lock ./
+RUN bundle install && \
+  rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
+
+# Copy application code
+COPY . .
+
+# Move Docker database.yml into place
+RUN mv config/database.yml.docker config/database.yml
+
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN SECRET_KEY_BASE_DUMMY=1 DATABASE_URL=postgres://dummy/dummy ./bin/rake assets:precompile
+
+# Final stage for app image
+FROM base
+
+# Install packages needed for deployment
+RUN apt-get update -qq && \
+  apt-get install --no-install-recommends -y libpq5 libmagickcore-6.q16-6 && \
+  rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Copy built artifacts: gems, application
+COPY --from=build /usr/local/bundle /usr/local/bundle
+COPY --from=build /rails /rails
+
+# Run and own only the runtime files as a non-root user for security
+RUN useradd rails --create-home --shell /bin/bash && \
+  chown -R rails:rails /rails
+USER rails:rails
+
+EXPOSE 3000
+CMD ["./bin/rails", "server", "-b", "0.0.0.0"]

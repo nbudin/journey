@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-ruby "2.6.2"
+ruby "2.6.10"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem "rails", "4.2.11.1"
@@ -30,9 +30,7 @@ gem 'ae_users_migrator'
 
 gem 'rack-ssl'
 
-gem 'rmagick4j', :require => "RMagick", :platforms => 'jruby'
-gem 'rmagick', :require => 'RMagick', :platforms => ['ruby', 'mswin']
-gem 'gruff', '~> 0.3.6'
+gem 'gruff', '~> 0.23.0'
 
 group :test do
   gem "factory_girl_rails"
@@ -55,4 +53,6 @@ group :development do
   gem 'capistrano-bundler', '~> 1.1', require: false
   gem 'capistrano-rbenv', '~> 2.0', require: false
   gem 'capistrano-maintenance', '~> 1.0', require: false
+  gem 'ed25519', require: false
+  gem 'bcrypt_pbkdf', require: false
 end

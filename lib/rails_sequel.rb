@@ -11,7 +11,7 @@ module RailsSequel
 
   # Returns loaded database.yml configuration for current environment
   def self.config
-    @config ||= YAML::load(ERB.new(IO.read(File.join(Rails.root, "config", "database.yml"))).result)[Rails.env].with_indifferent_access
+    @config ||= ActiveRecord::Base.configurations.fetch(Rails.env).with_indifferent_access
   end
 
   # Resets config

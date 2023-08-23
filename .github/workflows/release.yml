@@ -1,0 +1,21 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  docker-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Pull built image
+        run: docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
+      - name: Tag image with version Tag
+        run: docker tag ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:${{ github.event.release.name }}
+      - name: Tag image as latest
+        run: docker tag ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:latest
+      - name: Push to registry
+        run: docker push ghcr.io/${{ github.repository }}:latest && docker push ghcr.io/${{ github.repository }}:${{ github.event.release.name }}

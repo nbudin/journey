@@ -18,10 +18,11 @@ jobs:
       - name: Write dockerfile for release
         run: |
           echo "FROM ghcr.io/${{ github.repository }}:${{ github.sha }}" >Dockerfile
-      - name: Build (and push to registry, if on main)
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
+          push: true
           platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.event.release.name }}

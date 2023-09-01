@@ -73,6 +73,8 @@ jobs:
             ghcr.io/${{ github.repository }}:${{ github.sha }}
           build-args: |
             RUBY_VERSION=${{ steps.ruby-version.outputs.ruby-version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
   update-release-draft:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.event.ref == 'refs/heads/main'

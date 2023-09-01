@@ -7,12 +7,15 @@ on:
 jobs:
   docker-release:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: ["linux/amd64", "linux/arm64"]
     steps:
       - uses: actions/checkout@v3
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
       - name: Pull built image
-        run: docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
+        run: docker pull --platform ${{ matrix.platform }} ghcr.io/${{ github.repository }}:${{ github.sha }}
       - name: Tag image with version Tag
         run: docker tag ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:${{ github.event.release.name }}
       - name: Tag image as latest

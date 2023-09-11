@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Log in to registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@master
@@ -23,7 +21,54 @@ jobs:
         with:
           context: .
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           tags: |
             ghcr.io/${{ github.repository }}:${{ github.event.release.name }}
             ghcr.io/${{ github.repository }}:latest
+  heroku-release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app:
+          - journeysurveys
+    steps:
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Log into Heroku Container Registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@master
+      - name: Write dockerfiles
+        run: |
+          echo "FROM ghcr.io/${{ github.repository }}:${{ github.sha }}" >>Dockerfile.web
+          echo "FROM ghcr.io/${{ github.repository }}:${{ github.sha }}" >>Dockerfile.release
+          echo "CMD bundle exec rake db:migrate" >>Dockerfile.release
+      - name: Build web image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile.web
+          load: true
+          platforms: linux/amd64
+          tags: registry.heroku.com/${{ matrix.app }}/web
+      - name: Build release image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile.release
+          load: true
+          platforms: linux/amd64
+          tags: registry.heroku.com/${{ matrix.app }}/release
+      - name: Push built images
+        run: |
+          docker push registry.heroku.com/${{ matrix.app }}/web
+          docker push registry.heroku.com/${{ matrix.app }}/release
+      - name: Perform release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a ${{ matrix.app }} web release

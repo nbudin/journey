@@ -42,12 +42,11 @@ RUN apt-get update -qq && \
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
-COPY --from=build /rails /rails
+COPY --from=build --chown=rails:rails /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-  chown -R rails:rails /rails
+RUN useradd rails --create-home --shell /bin/bash
 USER rails:rails
 
 EXPOSE 3000
-CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
+CMD bundle exec rails server -b 0.0.0.0 -p $PORT

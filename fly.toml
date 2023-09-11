@@ -1,0 +1,33 @@
+# fly.toml app configuration file generated for journeysurveys on 2023-09-11T11:21:53-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "journeysurveys"
+
+[build]
+image = "ghcr.io/nbudin/journey:latest"
+
+[deploy]
+release_command = "bundle exec rake db:migrate"
+strategy = "rolling"
+
+[env]
+ILLYAN_URL = "https://accounts.sugarpond.net"
+PORT = "3000"
+RAILS_LOG_TO_STDOUT = "1"
+SUGAR_POND_BRANDING = "1"
+
+[http_service]
+auto_start_machines = true
+auto_stop_machines = true
+internal_port = 3000
+min_machines_running = 0
+
+# Does not work with autoscaling to zero
+# [[http_service.checks]]
+# grace_period = "3s"
+# interval = "30s"
+# method = "GET"
+# path = "/questionnaires"
+# timeout = "5s"

@@ -4,6 +4,7 @@
 #
 
 app = "journeysurveys"
+swap = 512
 
 [build]
 image = "ghcr.io/nbudin/journey:latest"

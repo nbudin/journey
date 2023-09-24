@@ -24,12 +24,12 @@ auto_start_machines = true
 auto_stop_machines = true
 force_https = true
 internal_port = 3000
-min_machines_running = 0
+min_machines_running = 1
 
 # Does not work with autoscaling to zero
-# [[http_service.checks]]
-# grace_period = "3s"
-# interval = "30s"
-# method = "GET"
-# path = "/questionnaires"
-# timeout = "5s"
+[[http_service.checks]]
+grace_period = "3s"
+interval = "30s"
+method = "GET"
+path = "/questionnaires"
+timeout = "5s"

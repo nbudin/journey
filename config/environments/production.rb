@@ -66,10 +66,19 @@ Journey::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.asset_host = "https://secure.journeysurveys.com"
+
+  config.action_mailer.smtp_settings = {
+    address:              ENV['SMTP_HOST'],
+    port:                 ENV['SMTP_PORT'].to_i,
+    user_name:            ENV['SMTP_USERNAME'],
+    password:             ENV['SMTP_PASSWORD'],
+    authentication:       :plain,
+    enable_starttls_auto: true
+  }
 end

@@ -159,9 +159,9 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
-    minitest-spec-rails (5.1.1)
+    minitest-spec-rails (5.4.0)
       minitest (~> 5.0)
-      rails (~> 4.1)
+      rails (>= 4.1)
     multi_json (1.12.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)

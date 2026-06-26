@@ -40,6 +40,11 @@ module RailsSequel
     # Default database is hey_dude_configure_your_database
     options[:database]  = config[:database] || "hey_dude_configure_your_database"
 
+    # Postgres support
+    [:sslmode, :channel_binding, :options].each do |var|
+      options[var]      = config[var] if config[var]
+    end
+
     # MSSQL support
     [:db_type, :socket, :charset, :encoding].each do |var|
       options[var]      = config[var] if config[var]

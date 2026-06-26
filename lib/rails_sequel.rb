@@ -41,8 +41,12 @@ module RailsSequel
     options[:database]  = config[:database] || "hey_dude_configure_your_database"
 
     # Postgres support
-    [:sslmode, :channel_binding, :options].each do |var|
+    [:sslmode, :channel_binding].each do |var|
       options[var]      = config[var] if config[var]
+    end
+
+    if config[:options]
+      options[:driver_options] = config[:options]
     end
 
     # MSSQL support

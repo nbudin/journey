@@ -46,7 +46,7 @@ module RailsSequel
     end
 
     if config[:options]
-      options[:driver_options] = config[:options]
+      options[:driver_options] = { options: config[:options] }
     end
 
     # MSSQL support

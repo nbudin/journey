@@ -10,6 +10,14 @@ ENV RAILS_ENV="production" \
   BUNDLE_PATH="/usr/local/bundle" \
   BUNDLE_WITHOUT="development"
 
+# Debian 11 (bullseye) is end of life and its packages have moved to archive.debian.org; the regular
+# mirrors now return 404 for them, so point apt at the archive or no image build can install packages.
+RUN printf '%s\n' \
+    'deb http://archive.debian.org/debian bullseye main' \
+    'deb http://archive.debian.org/debian-security bullseye-security main' \
+    > /etc/apt/sources.list && \
+  echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99archive
+
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -39,6 +47,15 @@ FROM base
 RUN apt-get update -qq && \
   apt-get install --no-install-recommends -y libpq5 libmagickcore-6.q16-6 && \
   rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+# Distrust the two roots affected by the 20 Oct 2026 eMudhra intermediate CA compromise
+# (https://emudhra.we-have-a-problem.com/). This image is Debian 11 (Ruby 2.6.10), which no longer
+# gets ca-certificates updates, so apply the advisory's manual workaround instead.
+RUN sed -i \
+    -e 's|^mozilla/emSign_ECC_Root_CA_-_G3.crt|!&|' \
+    -e 's|^mozilla/Comodo_AAA_Services_root.crt|!&|' \
+    /etc/ca-certificates.conf && \
+  update-ca-certificates
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash

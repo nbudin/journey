@@ -16,6 +16,12 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  # The XML error document for a record that failed to save.  ActiveModel::Errors#to_xml was removed in Rails 7.0;
+  # this builds the same document it used to: <errors><error>full message</error>...</errors>
+  def errors_xml(record)
+    record.errors.full_messages.to_xml(root: "errors", skip_types: true)
+  end
+
   def last_answer_prompt_or_root_path
     if (qid = (session.delete("prompting_questionnaire_id") || params[:prompting_questionnaire_id]))
       questionnaire_answer_path(qid)

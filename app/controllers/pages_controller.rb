@@ -39,8 +39,8 @@ class PagesController < ApplicationController
         format.json { head :created, :location => polymorphic_url([@questionnaire, @page], :format => 'json') }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @page.errors.to_xml }
-        format.json { render :json => @page.errors.to_xml }
+        format.xml  { render :xml => errors_xml(@page) }
+        format.json { render :json => errors_xml(@page) }
       end
     end
   end
@@ -56,7 +56,7 @@ class PagesController < ApplicationController
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @page.errors.to_xml }
+        format.xml  { render :xml => errors_xml(@page) }
         format.json { render :json => @page.errors.to_json }
       end
     end

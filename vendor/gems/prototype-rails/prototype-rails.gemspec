@@ -10,6 +10,6 @@ Gem::Specification.new do |spec|
 
   # Vendored from https://github.com/rails/prototype-rails (4.2 branch, commit 0fed929), which is no longer
   # maintained.  The Rails constraint is relaxed so that this app can keep using these helpers while upgrading.
-  spec.add_dependency('rails', '>= 4.0', '< 6')
+  spec.add_dependency('rails', '>= 4.0', '< 7')
   spec.license = "MIT"
 end

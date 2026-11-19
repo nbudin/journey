@@ -75,14 +75,14 @@ class AnswerTest < ActiveSupport::TestCase
     end
     
     it "should say 'false' for its value and output value if the value is nil" do
-      @answer.update_attributes(value: nil)
+      @answer.update(value: nil)
       assert_equal "false", @answer.value
       assert_equal "false", @answer.output_value
     end
 
     it "should say 'true' for its value and output value if the value is non-nil" do
       ["true", 1, "false"].each do |value|
-        @answer.update_attributes(value: value)
+        @answer.update(value: value)
         assert_equal "true", @answer.value
         assert_equal "true", @answer.output_value
       end

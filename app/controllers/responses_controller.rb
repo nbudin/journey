@@ -143,7 +143,7 @@ class ResponsesController < ApplicationController
     end
 
     respond_to do |format|
-      if @response.update_attributes(response_params)
+      if @response.update(response_params)
         format.html { redirect_to([@questionnaire, @response]) }
         format.xml  { head :ok }
       else
@@ -184,7 +184,7 @@ class ResponsesController < ApplicationController
       @email_notification.save!
     end
 
-    if @email_notification.update_attributes(email_notification_params)
+    if @email_notification.update(email_notification_params)
       respond_to do |format|
         format.html { redirect_to action: 'subscribe' }
       end

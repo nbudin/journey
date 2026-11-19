@@ -5,7 +5,7 @@ class QuestionTest < ActiveSupport::TestCase
     question = FactoryGirl.create(:question, purpose: "name")
     assert_equal "name", question.reload.purpose
     
-    question.update_attributes(purpose: nil)
+    question.update(purpose: nil)
     assert_nil question.reload.purpose
   end  
 end

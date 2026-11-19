@@ -37,13 +37,13 @@ class QuestionnairesControllerTest < ActionController::TestCase
     end
 
     it 'should edit questionnaire' do
-      @permission.update_attributes(:can_edit => true)
+      @permission.update(:can_edit => true)
       get :edit, params: { :id => @questionnaire.id }
       assert_response :success
     end
   
     it 'should update questionnaire' do
-      @permission.update_attributes(:can_edit => true)
+      @permission.update(:can_edit => true)
 
       # update redirects to referer
       @request.env['HTTP_REFERER'] = 'http://example.com'
@@ -55,7 +55,7 @@ class QuestionnairesControllerTest < ActionController::TestCase
     end
   
     it 'should destroy questionnaire' do
-      @permission.update_attributes(:can_destroy => true)
+      @permission.update(:can_destroy => true)
 
       old_count = Questionnaire.count
       delete :destroy, params: { :id => @questionnaire.id }

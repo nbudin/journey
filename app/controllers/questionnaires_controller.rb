@@ -156,7 +156,7 @@ class QuestionnairesController < ApplicationController
     authorize! :edit, @questionnaire
 
     respond_to do |format|
-      if @questionnaire.update_attributes(update_params)
+      if @questionnaire.update(update_params)
         format.html { params[:return_to] ? redirect_to(params[:return_to]) : redirect_back(fallback_location: questionnaire_path(@questionnaire)) }
         format.xml  { head :ok }
         format.json { head :ok }

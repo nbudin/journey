@@ -44,7 +44,7 @@ class AnswerFlowTest < ActionController::TestCase
     end
 
     it "only offers what the questionnaire allows" do
-      @questionnaire.update_attributes!(allow_finish_later: false, allow_amend_response: false)
+      @questionnaire.update!(allow_finish_later: false, allow_amend_response: false)
       person = FactoryGirl.create(:person)
       sign_in person
       @questionnaire.responses.create!(person: person)
@@ -75,7 +75,7 @@ class AnswerFlowTest < ActionController::TestCase
     end
 
     it "doesn't attach the person if the questionnaire doesn't advertise login" do
-      @questionnaire.update_attributes!(advertise_login: false)
+      @questionnaire.update!(advertise_login: false)
       sign_in FactoryGirl.create(:person)
 
       get :start, params: { id: @questionnaire.id }
@@ -83,7 +83,7 @@ class AnswerFlowTest < ActionController::TestCase
     end
 
     it "sends people back to the prompt when login is required" do
-      @questionnaire.update_attributes!(require_login: true)
+      @questionnaire.update!(require_login: true)
 
       assert_no_difference("Response.count") { get :start, params: { id: @questionnaire.id } }
       assert_redirected_to action: "prompt", id: @questionnaire.id
@@ -92,7 +92,7 @@ class AnswerFlowTest < ActionController::TestCase
 
   describe "index" do
     it "redirects to the closed page when the questionnaire isn't open" do
-      @questionnaire.update_attributes!(is_open: false)
+      @questionnaire.update!(is_open: false)
 
       get :index, params: { id: @questionnaire.id }
       assert_redirected_to action: "questionnaire_closed", id: @questionnaire.id.to_s
@@ -238,7 +238,7 @@ class AnswerFlowTest < ActionController::TestCase
     # flash message the user gets an error.  This pins the current behavior; when it's fixed, this should
     # assert the redirect and the flash message instead.
     it "currently fails when the questionnaire doesn't allow finishing later" do
-      @questionnaire.update_attributes!(allow_finish_later: false)
+      @questionnaire.update!(allow_finish_later: false)
 
       assert_raises(ActionController::UrlGenerationError) do
         get :save_session, params: { id: @questionnaire.id, current_page: 2 }
@@ -246,8 +246,8 @@ class AnswerFlowTest < ActionController::TestCase
     end
 
     it "doesn't change a submitted response that can't be amended" do
-      @questionnaire.update_attributes!(allow_amend_response: false)
-      @resp.update_attributes!(submitted: true, submitted_at: Time.now)
+      @questionnaire.update!(allow_amend_response: false)
+      @resp.update!(submitted: true, submitted_at: Time.now)
 
       get :save_session, params: { id: @questionnaire.id, current_page: 2 }
       assert_nil @resp.reload.saved_page
@@ -269,7 +269,7 @@ class AnswerFlowTest < ActionController::TestCase
     end
 
     it "reopens a submitted response for amendment" do
-      @resp.update_attributes!(submitted: true, submitted_at: Time.now)
+      @resp.update!(submitted: true, submitted_at: Time.now)
 
       get :resume, params: { id: @resp.id }
 
@@ -279,8 +279,8 @@ class AnswerFlowTest < ActionController::TestCase
     end
 
     it "won't reopen a submitted response if the questionnaire doesn't allow amending" do
-      @questionnaire.update_attributes!(allow_amend_response: false)
-      @resp.update_attributes!(submitted: true, submitted_at: Time.now)
+      @questionnaire.update!(allow_amend_response: false)
+      @resp.update!(submitted: true, submitted_at: Time.now)
 
       get :resume, params: { id: @resp.id }
 
@@ -290,7 +290,7 @@ class AnswerFlowTest < ActionController::TestCase
     end
 
     it "won't resume if the questionnaire doesn't allow finishing later" do
-      @questionnaire.update_attributes!(allow_finish_later: false)
+      @questionnaire.update!(allow_finish_later: false)
 
       get :resume, params: { id: @resp.id }
       assert_match(/does not allow you to resume/, flash[:error_messages].first)

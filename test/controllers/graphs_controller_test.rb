@@ -27,7 +27,7 @@ class GraphsControllerTest < ActionController::TestCase
 
   def assert_png
     assert_response :success
-    assert_equal "image/png", response.content_type
+    assert_equal "image/png", response.media_type
     assert_equal PNG_SIGNATURE, response.body.b[0, 4]
   end
 
@@ -59,7 +59,7 @@ class GraphsControllerTest < ActionController::TestCase
 
       get :pie, params: { questionnaire_id: @questionnaire.id, question_id: @color.id, format: :png }
       assert_redirected_to root_url
-      assert_not_equal "image/png", response.content_type.to_s
+      assert_not_equal "image/png", response.media_type.to_s
     end
   end
 
@@ -82,7 +82,7 @@ class GraphsControllerTest < ActionController::TestCase
 
       get :line, params: { questionnaire_id: @questionnaire.id, question_ids: [@range.id], format: :png }
       assert_redirected_to root_url
-      assert_not_equal "image/png", response.content_type.to_s
+      assert_not_equal "image/png", response.media_type.to_s
     end
   end
 end

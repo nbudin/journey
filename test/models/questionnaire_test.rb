@@ -104,7 +104,7 @@ class QuestionnaireTest < ActiveSupport::TestCase
             @fields.zip(answer_set).map do |(field, answer_value)|
               response.answers.create(question: field, value: answer_value)
             end
-            response.update_attributes(submitted_at: Time.now)
+            response.update(submitted_at: Time.now)
           end
         end
       end

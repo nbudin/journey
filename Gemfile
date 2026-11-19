@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby "2.6.10"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem "rails", "~> 5.0.7"
+gem "rails", "~> 5.1.7"
 gem 'will_paginate'
 gem 'pg', '~> 0.20'
 gem "jipe", ">= 2.0.1"
@@ -10,7 +10,6 @@ gem 'rollbar'
 gem 'sequel'
 gem 'dynamic_form'
 gem 'puma'
-gem 'breach-mitigation-rails'
 gem 'builder'
 # to_xml/from_xml on models were extracted from Rails core in 5.0
 gem 'activemodel-serializers-xml'

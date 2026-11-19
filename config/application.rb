@@ -5,6 +5,8 @@ require 'rails/all'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 
+require File.expand_path('../../lib/breach_length_hiding', __FILE__)
+
 module Journey
   class Application < Rails::Application
     config.autoload_paths += [config.root.join('lib')]
@@ -25,6 +27,9 @@ module Journey
     config.assets.initialize_on_precompile = false
 
     config.i18n.enforce_available_locales = true
+
+    # BREACH mitigation (replaces the breach-mitigation-rails gem)
+    config.middleware.insert_before Rack::ETag, BreachLengthHiding
 
     # Rails 4.2 ran ActiveJob jobs (such as deliver_later) inline, and Rails 5 defaults to :async, which
     # runs them on a background thread instead.  There's no job backend here, so keep the old behavior.

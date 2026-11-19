@@ -10,14 +10,14 @@ class PagesControllerTest < ActionController::TestCase
   end
   
   def test_should_get_index
-    get :index, :questionnaire_id => @questionnaire.id, :format => :json
+    get :index, params: { :questionnaire_id => @questionnaire.id, :format => :json }
     assert_response :success
     assert assigns(:pages)
   end
   
   def test_should_create_page
     old_count = Page.count
-    post :create, :page => { }, :questionnaire_id => @questionnaire.id
+    post :create, params: { :page => { }, :questionnaire_id => @questionnaire.id }
     assert_equal old_count+1, Page.count
     
     assert_redirected_to [@questionnaire, assigns(:page)]
@@ -29,24 +29,24 @@ class PagesControllerTest < ActionController::TestCase
     end
     
     it 'should show page' do
-      get :show, :id => @page.id, :questionnaire_id => @questionnaire.id, :format => :json
+      get :show, params: { :id => @page.id, :questionnaire_id => @questionnaire.id, :format => :json }
       assert_response :success
     end
 
     it 'should edit page' do
-      get :edit, :id => @page.id, :questionnaire_id => @questionnaire.id
+      get :edit, params: { :id => @page.id, :questionnaire_id => @questionnaire.id }
       assert_response :success
     end
   
     it 'should update page' do
-      put :update, :id => @page.id, :questionnaire_id => @questionnaire.id, :page => { title: "something else" }
+      put :update, params: { :id => @page.id, :questionnaire_id => @questionnaire.id, :page => { title: "something else" } }
       assert_redirected_to [@questionnaire, assigns(:page)]
       assigns(:page).title.must_equal "something else"
     end
   
     it 'should destroy page' do
       old_count = Page.count
-      delete :destroy, :id => @page.id, :questionnaire_id => @questionnaire.id
+      delete :destroy, params: { :id => @page.id, :questionnaire_id => @questionnaire.id }
       assert_equal old_count-1, Page.count
     
       assert_redirected_to [@questionnaire, :pages]

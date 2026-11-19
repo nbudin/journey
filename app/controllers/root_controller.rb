@@ -1,5 +1,5 @@
 class RootController < ApplicationController
-  before_filter :get_new_questionnaires, :only => [:welcome, :dashboard]
+  before_action :get_new_questionnaires, :only => [:welcome, :dashboard]
   
   def index
     redirect_to Journey::SiteOptions.site_root(person_signed_in?), :status => 307

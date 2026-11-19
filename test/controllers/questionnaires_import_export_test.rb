@@ -25,7 +25,7 @@ class QuestionnairesImportExportTest < ActionController::TestCase
 
   describe "exporting" do
     it "exports XML for people who can edit" do
-      get :show, id: @questionnaire.id, format: :xml
+      get :show, params: { id: @questionnaire.id, format: :xml }
 
       assert_response :success
       assert_match(/attachment; filename="Original.xml"/, response.headers["Content-Disposition"])
@@ -34,12 +34,12 @@ class QuestionnairesImportExportTest < ActionController::TestCase
 
     it "refuses to export XML to people who can only view answers" do
       @permission.update_attributes!(can_edit: false)
-      get :show, id: @questionnaire.id, format: :xml
+      get :show, params: { id: @questionnaire.id, format: :xml }
       assert_response :forbidden
     end
 
     it "exports JSON without the RSS secret" do
-      get :show, id: @questionnaire.id, format: :json
+      get :show, params: { id: @questionnaire.id, format: :json }
 
       assert_response :success
       json = JSON.parse(response.body)
@@ -48,13 +48,13 @@ class QuestionnairesImportExportTest < ActionController::TestCase
     end
 
     it "limits the JSON to the requested attributes" do
-      get :show, id: @questionnaire.id, attributes: ["title"], format: :json
+      get :show, params: { id: @questionnaire.id, attributes: ["title"], format: :json }
       assert_equal ["title"], JSON.parse(response.body).keys
     end
 
     it "refuses to export JSON to people who can't edit" do
       @permission.update_attributes!(can_edit: false)
-      get :show, id: @questionnaire.id, format: :json
+      get :show, params: { id: @questionnaire.id, format: :json }
       assert_response :forbidden
     end
   end
@@ -64,7 +64,7 @@ class QuestionnairesImportExportTest < ActionController::TestCase
       xml = @questionnaire.to_xml
 
       assert_difference("Questionnaire.count", 1) do
-        post :create, file: uploaded_file(xml)
+        post :create, params: { file: uploaded_file(xml) }
       end
 
       imported = assigns(:questionnaire)
@@ -75,7 +75,7 @@ class QuestionnairesImportExportTest < ActionController::TestCase
 
     it "explains what went wrong when the file isn't valid" do
       assert_no_difference("Questionnaire.count") do
-        post :create, file: uploaded_file("<questionnaire title='x'><bogus/></questionnaire>")
+        post :create, params: { file: uploaded_file("<questionnaire title='x'><bogus/></questionnaire>") }
       end
 
       assert_redirected_to action: "new"
@@ -84,7 +84,7 @@ class QuestionnairesImportExportTest < ActionController::TestCase
     end
 
     it "asks for a file when Import is clicked without one" do
-      assert_no_difference("Questionnaire.count") { post :create, commit: "Import" }
+      assert_no_difference("Questionnaire.count") { post :create, params: { commit: "Import" } }
 
       assert_redirected_to action: "new"
       assert_equal ["Please specify a file to import."], flash[:error_messages]
@@ -98,7 +98,7 @@ class QuestionnairesImportExportTest < ActionController::TestCase
     end
 
     it "makes a closed copy owned by the current person, without responses by default" do
-      assert_difference("Questionnaire.count", 1) { post :create, clone_questionnaire_id: @questionnaire.id }
+      assert_difference("Questionnaire.count", 1) { post :create, params: { clone_questionnaire_id: @questionnaire.id } }
 
       copy = assigns(:questionnaire)
       assert_equal "Copy of Original", copy.title
@@ -109,21 +109,21 @@ class QuestionnairesImportExportTest < ActionController::TestCase
     end
 
     it "copies responses when asked" do
-      post :create, clone_questionnaire_id: @questionnaire.id, clone_responses: "true"
+      post :create, params: { clone_questionnaire_id: @questionnaire.id, clone_responses: "true" }
       assert_equal 1, assigns(:questionnaire).responses.count
     end
   end
 
   describe "creating" do
     it "falls back to a default title" do
-      post :create, questionnaire: { welcome_text: "Hi" }
+      post :create, params: { questionnaire: { welcome_text: "Hi" } }
       assert_equal "Untitled questionnaire", assigns(:questionnaire).title
     end
   end
 
   describe "special field purposes" do
     it "lists the unused purposes as XML" do
-      get :available_special_field_purposes, id: @questionnaire.id, format: :xml
+      get :available_special_field_purposes, params: { id: @questionnaire.id, format: :xml }
 
       purposes = REXML::XPath.match(REXML::Document.new(response.body), "//purpose").map(&:text)
       refute_includes purposes, "name"
@@ -131,7 +131,7 @@ class QuestionnairesImportExportTest < ActionController::TestCase
     end
 
     it "lists the unused purposes as JSON" do
-      get :available_special_field_purposes, id: @questionnaire.id, format: :json
+      get :available_special_field_purposes, params: { id: @questionnaire.id, format: :json }
 
       purposes = JSON.parse(response.body)
       refute_includes purposes, "name"
@@ -140,12 +140,12 @@ class QuestionnairesImportExportTest < ActionController::TestCase
   end
 
   it "renders the page list" do
-    get :pagelist, id: @questionnaire.id
+    get :pagelist, params: { id: @questionnaire.id }
     assert_response :success
   end
 
   it "doesn't let people without permission destroy a questionnaire" do
-    assert_no_difference("Questionnaire.count") { delete :destroy, id: @questionnaire.id }
+    assert_no_difference("Questionnaire.count") { delete :destroy, params: { id: @questionnaire.id } }
     assert_redirected_to root_url
   end
 end

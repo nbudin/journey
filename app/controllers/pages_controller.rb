@@ -8,7 +8,7 @@ class PagesController < ApplicationController
   # GET /pages.xml
   def index
     respond_to do |format|
-      format.json { render :text => @pages.to_json }
+      format.json { render json: @pages.to_json }
       format.xml  { render :xml => @pages.to_xml }
     end
   end
@@ -17,7 +17,7 @@ class PagesController < ApplicationController
   # GET /pages/1.xml
   def show
     respond_to do |format|
-      format.json { render :text => @page.to_json }
+      format.json { render json: @page.to_json }
       format.xml  { render :xml => @page.to_xml }
     end
   end
@@ -80,7 +80,7 @@ class PagesController < ApplicationController
       page.position = params['pagelist'].index(page.id.to_s) + 1
       page.save
     end
-    render :nothing => true
+    head :ok
   end
   
   private

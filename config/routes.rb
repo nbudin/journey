@@ -70,7 +70,9 @@ Journey::Application.routes.draw do
   end
 
   get '/questionnaires/:questionnaire_id/responses/graphs/' => 'graphs#index', :as => :response_graphs
-  get '/questionnaires/:questionnaire_id/responses/graphs/:action.:format' => 'graphs#index', :as => :response_graph
+  # (These used to be a single route with a dynamic :action segment, which Rails 5.2 no longer allows.)
+  get '/questionnaires/:questionnaire_id/responses/graphs/line.:format' => 'graphs#line', :as => :response_graph_line
+  get '/questionnaires/:questionnaire_id/responses/graphs/pie.:format' => 'graphs#pie', :as => :response_graph_pie
   get '/dashboard' => 'root#dashboard', :as => :dashboard
   get '/welcome' => 'root#welcome', :as => :welcome
   

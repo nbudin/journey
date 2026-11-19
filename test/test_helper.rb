@@ -50,7 +50,7 @@ class ActionController::TestResponse < ActionDispatch::TestResponse
 end
 
 class ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 end
 
 # Some code (the CSV exporter, graphs) talks to the database through its own Sequel connection,
@@ -58,7 +58,7 @@ end
 # module to commit their data and clean up by truncation instead.
 module NonTransactionalDatabase
   def self.included(base)
-    base.use_transactional_fixtures = false
+    base.use_transactional_tests = false
     base.class_eval do
       before { DatabaseCleaner.start }
       teardown { DatabaseCleaner.clean }
@@ -71,7 +71,7 @@ class ActionDispatch::IntegrationTest
   include Capybara::DSL
   include Warden::Test::Helpers
 
-  self.use_transactional_fixtures = false
+  self.use_transactional_tests = false
 
   before do
     Warden.test_mode!

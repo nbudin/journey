@@ -1,5 +1,5 @@
 class JourneyCasSessionsController < Devise::CasSessionsController
-  before_filter :save_questionnaire_id, only: :new
+  before_action :save_questionnaire_id, only: :new
   
   private
   def save_questionnaire_id

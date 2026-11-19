@@ -58,7 +58,7 @@ class QuestionOptionsController < ApplicationController
       option.position = params['options'].index(option.id.to_s) + 1
       option.save!
     end
-    render :nothing => true
+    head :ok
   end
 
   # DELETE /question_options/1

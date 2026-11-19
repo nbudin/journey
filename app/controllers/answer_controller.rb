@@ -1,6 +1,6 @@
 class AnswerController < ApplicationController
-  before_filter :get_questionnaire, :except => [:resume]
-  before_filter :check_required_login, :only => [:start]
+  before_action :get_questionnaire, :except => [:resume]
+  before_action :check_required_login, :only => [:start]
 
   layout "answer"
 

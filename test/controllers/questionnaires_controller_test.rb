@@ -19,7 +19,7 @@ class QuestionnairesControllerTest < ActionController::TestCase
   
   def test_should_create_questionnaire
     old_count = Questionnaire.count
-    post :create, :questionnaire => { :title => "New questionnaire!" }
+    post :create, params: { :questionnaire => { :title => "New questionnaire!" } }
     assert_equal old_count+1, Questionnaire.count
     
     assert_redirected_to questionnaire_path(assigns(:questionnaire))
@@ -32,13 +32,13 @@ class QuestionnairesControllerTest < ActionController::TestCase
     end
 
     it 'should show questionnaire' do
-      get :show, :id => @questionnaire.id
+      get :show, params: { :id => @questionnaire.id }
       assert_response :success
     end
 
     it 'should edit questionnaire' do
       @permission.update_attributes(:can_edit => true)
-      get :edit, :id => @questionnaire.id
+      get :edit, params: { :id => @questionnaire.id }
       assert_response :success
     end
   
@@ -48,7 +48,7 @@ class QuestionnairesControllerTest < ActionController::TestCase
       # update redirects to referer
       @request.env['HTTP_REFERER'] = 'http://example.com'
       
-      put :update, :id => @questionnaire.id, :questionnaire => { :title => "blooblah" }
+      put :update, params: { :id => @questionnaire.id, :questionnaire => { :title => "blooblah" } }
       assert_equal "blooblah", @questionnaire.reload.title
       
       assert_redirected_to 'http://example.com'
@@ -58,7 +58,7 @@ class QuestionnairesControllerTest < ActionController::TestCase
       @permission.update_attributes(:can_destroy => true)
 
       old_count = Questionnaire.count
-      delete :destroy, :id => @questionnaire.id
+      delete :destroy, params: { :id => @questionnaire.id }
       assert_equal old_count-1, Questionnaire.count
     
       assert_redirected_to questionnaires_path

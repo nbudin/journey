@@ -34,7 +34,7 @@ gem 'tinymce-rails', '= 4.9.11.1'
 gem 'dartsass-sprockets'
 gem 'sprockets', '~> 4.2'
 
-gem 'devise', '~> 4.9.4'
+gem 'devise', '~> 5.0.4'
 gem 'devise_cas_authenticatable'
 gem 'cancancan', '~> 3.0'
 gem 'illyan_client'

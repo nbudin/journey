@@ -33,7 +33,7 @@ class QuestionOptionsController < ApplicationController
         format.xml  { head :created, :location => polymorphic_url([@questionnaire, @page, @question.becomes(Question), @question_option], :format => 'xml') }
       else
         format.json { render :json => @question_option.errors.to_json }
-        format.xml  { render :xml => @question_option.errors.to_xml }
+        format.xml  { render :xml => errors_xml(@question_option) }
       end
     end
   end
@@ -47,7 +47,7 @@ class QuestionOptionsController < ApplicationController
         format.xml  { head :ok }
       else
         format.json { render :json => @question_option.errors.to_json }
-        format.xml  { render :xml => @question_option.errors.to_xml }
+        format.xml  { render :xml => errors_xml(@question_option) }
       end
     end
   end

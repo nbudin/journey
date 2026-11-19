@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby "3.1.7"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem "rails", "~> 6.1.7"
+gem "rails", "~> 7.0.8"
 # concurrent-ruby 1.3.5+ no longer loads Logger, which Rails before 7.1 depends on
 gem 'concurrent-ruby', '< 1.3.5'
 gem 'will_paginate', '~> 3.3'

@@ -144,7 +144,7 @@ class QuestionnairesController < ApplicationController
         format.xml  { head :created, :location => questionnaire_url(@questionnaire) }
       else
         format.html { redirect_to :action => "index" }
-        format.xml  { render :xml => @questionnaire.errors.to_xml }
+        format.xml  { render :xml => errors_xml(@questionnaire) }
       end
     end
   end
@@ -165,7 +165,7 @@ class QuestionnairesController < ApplicationController
           flash[:error_messages] = @questionnaire.errors.full_messages
           redirect_back fallback_location: questionnaire_path(@questionnaire)
         end
-        format.xml  { render :xml => @questionnaire.errors.to_xml }
+        format.xml  { render :xml => errors_xml(@questionnaire) }
         format.json { render :json => @questionnaire.errors.to_json }
       end
     end

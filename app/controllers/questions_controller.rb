@@ -67,7 +67,7 @@ class QuestionsController < ApplicationController
         format.xml  { head(:created, :location => polymorphic_url([@questionnaire, @page, @question.becomes(Question)], :format => 'xml')) }
         format.json { head(:created, :location => polymorphic_url([@questionnaire, @page, @question.becomes(Question)], :format => 'json')) }
       else
-        format.xml  { render :xml => @question.errors.to_xml, :status => 500 }
+        format.xml  { render :xml => errors_xml(@question), :status => 500 }
         format.json { render :json => @question.errors.to_json, :status => 500 }
       end
     end

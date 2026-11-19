@@ -11,7 +11,7 @@ xml.rss(:version=>"2.0"){
     end
     xml.description(desc)
     xml.language("en-us")
-    xml.link(url_for(params.update({:only_path => false})))
+    xml.link(url_for(request.query_parameters.merge(:format => params[:format], :only_path => false)))
     for questionnaire in @questionnaires
       xml.item do
         xml.title(questionnaire.title)

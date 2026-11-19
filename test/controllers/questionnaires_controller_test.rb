@@ -12,6 +12,15 @@ class QuestionnairesControllerTest < ActionController::TestCase
     assert assigns(:questionnaires)
   end
 
+  def test_should_get_index_as_rss
+    get :index, params: { :tag => "fun" }, format: :rss
+    assert_response :success
+    assert_equal "application/rss+xml", response.media_type
+    doc = Nokogiri::XML(response.body)
+    assert_includes doc.at_xpath("//channel/description").text, "tagged as 'fun'"
+    assert_equal "http://test.host/questionnaires.rss?tag=fun", doc.at_xpath("//channel/link").text
+  end
+
   def test_should_get_new
     get :new
     assert_response :success

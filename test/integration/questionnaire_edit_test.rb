@@ -125,22 +125,26 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
         within("#questions") { assert has_content?(field_type) }
       end
 
+      # The question body is re-rendered after every in-place edit, so look it up afresh each time
+      # instead of holding on to a scope that may go stale.
+      edit_range_bound = lambda do |current_text, new_value|
+        within("#questions li", text: "Numeric range") do
+          within ".questionbody" do
+            find("span", text: current_text, match: :first).click
+            within(".inplaceeditor-form") do
+              fill_in "value", with: new_value
+              click_button "ok"
+            end
+          end
+        end
+      end
+
+      edit_range_bound.call("0", "-3")
+      within("#questions li", text: "Numeric range") { within(".questionbody") { assert has_content?("-3") } }
+
+      edit_range_bound.call("0", "5")
       within("#questions li", text: "Numeric range") do
         within ".questionbody" do
-          all("span", text: "0").first.click
-          within(".inplaceeditor-form") do
-            fill_in "value", with: "-3"
-            click_button "ok"
-          end
-
-          assert has_content?("-3")
-
-          find("span", text: "0").click
-          within(".inplaceeditor-form") do
-            fill_in "value", with: "5"
-            click_button "ok"
-          end
-
           assert has_content?("5")
           assert has_content?("[")
           assert has_content?("]")

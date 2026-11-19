@@ -1,4 +1,4 @@
-ARG RUBY_VERSION=3.3.14
+ARG RUBY_VERSION=3.4.9
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim-bookworm as base
 
 # Rails app lives here

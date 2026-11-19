@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-ruby "3.3.14"
+ruby "3.4.9"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem "rails", "~> 8.1.0"
@@ -18,6 +18,10 @@ gem 'psych', '~> 4.0'
 # Sprockets 3.7 (the last release compatible with sass-rails 5) parses its manifest with JSON.parse(create_additions:),
 # which json 3 rejects, so reading any existing assets manifest (e.g. in a deployed image) would crash.
 gem 'json', '~> 2.9'
+# rmagick and factory_girl require 'observer', which stopped being a default gem in Ruby 3.4
+gem 'observer'
+# CSV left the default gems in Ruby 3.4 (used by ResponsesCsvExporter)
+gem 'csv'
 # Not used directly, but it bundles libxml2, so keep it current.  1.19+ requires Ruby 3.2.
 gem 'nokogiri', '~> 1.18.0'
 # to_xml/from_xml on models were extracted from Rails core in 5.0
@@ -45,15 +49,15 @@ gem 'gruff', '~> 0.23.0'
 group :test do
   gem "factory_girl_rails"
   gem "minitest-spec-rails"
-  # capybara_minitest_spec still uses the MiniTest constant, which was removed in minitest 5.19
-  gem "minitest", "< 5.19"
+  gem "minitest", "~> 5.25"
   gem "minitest-reporters"
   gem "launchy"
   gem "simplecov", require: false
   gem "database_cleaner"
   gem "capybara", "~> 3.0"
   gem "selenium-webdriver", "~> 4.1"
-  gem "capybara_minitest_spec"
+  # Loaded from test_helper, after the MiniTest alias it needs (minitest 5.19+ no longer defines it)
+  gem "capybara_minitest_spec", require: false
   gem "rails-dom-testing"
   # assigns and assert_template were extracted from Rails core in 5.0
   gem "rails-controller-testing"

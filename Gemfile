@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-ruby "2.6.10"
+ruby "2.7.8"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem "rails", "~> 5.2.8"

@@ -1,5 +1,5 @@
 source "http://rubygems.org"
-ruby "3.1.7"
+ruby "3.3.14"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem "rails", "~> 7.1.5"
@@ -22,7 +22,7 @@ gem 'activemodel-serializers-xml'
 
 # Vendored: the upstream gem is unmaintained and requires Rails 4
 gem 'prototype-rails', path: 'vendor/gems/prototype-rails'
-gem 'tinymce-rails', '= 4.6.7'
+gem 'tinymce-rails', '= 4.9.11.1'
 
 group :assets do
   # Stay on the Ruby Sass compiler; sass-rails 6 switches to libsass, which could change the compiled CSS

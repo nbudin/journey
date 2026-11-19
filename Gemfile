@@ -1,16 +1,17 @@
 source "http://rubygems.org"
-ruby "2.7.8"
+ruby "3.1.7"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem "rails", "~> 6.1.7"
 # concurrent-ruby 1.3.5+ no longer loads Logger, which Rails before 7.1 depends on
 gem 'concurrent-ruby', '< 1.3.5'
-gem 'will_paginate'
+gem 'will_paginate', '~> 3.3'
 gem 'pg', '~> 1.5.9'
 gem "jipe", ">= 2.0.1"
 gem 'rollbar', '~> 2.27'
 gem 'sequel'
-gem 'dynamic_form'
+# Vendored: unmaintained, and its ActiveModel::Errors override breaks on Ruby 3 (see vendor/gems/dynamic_form)
+gem 'dynamic_form', path: 'vendor/gems/dynamic_form'
 gem 'puma'
 gem 'builder'
 # to_xml/from_xml on models were extracted from Rails core in 5.0

@@ -82,5 +82,10 @@ Journey::Application.routes.draw do
     get '/privacy' => 'sugar_pond/legal#privacy', as: :legal_privacy
   end  
   
+  # TinyMCE's skin CSS ends up asking for its icon font at /fonts/tinymce.woff etc. (Sprockets can't resolve the skin's
+  # relative url() against the gem's asset path), but the files are published under /assets/tinymce/skins/lightgray/fonts.
+  get '/fonts/:name', to: redirect('/assets/tinymce/skins/lightgray/fonts/%{name}.%{format}'),
+    constraints: { name: /tinymce(-small|-mobile)?/, format: /eot|woff|ttf|svg/ }, format: true
+
   root to: 'root#index'
 end

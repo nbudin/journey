@@ -2,4 +2,4 @@ plugins:
   - code
 toolbar:
   - formatselect bold italic underline strikethrough | bullist numlist outdent indent | undo redo | link unlink image | code
-content_css: "/assets/questionnaire.css"
+content_css: "<%= ActionController::Base.helpers.asset_path('questionnaire.css') %>"

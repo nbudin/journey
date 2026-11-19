@@ -221,7 +221,8 @@ module ActionView
 
             message = options.include?(:message) ? options[:message] : locale.t(:body)
 
-            error_messages = objects.sum do |object|
+            # (sums arrays, so it needs an explicit starting value: ActiveSupport no longer patches Enumerable#sum)
+            error_messages = objects.sum([]) do |object|
               object.errors.full_messages.map do |msg|
                 content_tag(:li, msg)
               end

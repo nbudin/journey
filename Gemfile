@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby "3.3.14"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem "rails", "~> 8.0.0"
+gem "rails", "~> 8.1.0"
 gem 'will_paginate', '~> 3.3'
 gem 'pg', '~> 1.5.9'
 gem "jipe", ">= 2.0.1"

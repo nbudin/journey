@@ -6,7 +6,7 @@ gem "rails", "~> 7.1.5"
 gem 'will_paginate', '~> 3.3'
 gem 'pg', '~> 1.5.9'
 gem "jipe", ">= 2.0.1"
-gem 'rollbar', '~> 2.27'
+gem 'rollbar', '~> 3.5'
 gem 'sequel'
 # Vendored: unmaintained, and its ActiveModel::Errors override breaks on Ruby 3 (see vendor/gems/dynamic_form)
 gem 'dynamic_form', path: 'vendor/gems/dynamic_form'

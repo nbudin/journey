@@ -299,7 +299,7 @@ GEM
     rexml (3.4.4)
     rmagick (5.3.0)
       pkg-config (~> 1.4)
-    rollbar (2.27.1)
+    rollbar (3.8.0)
     ruby-progressbar (1.8.3)
     rubyzip (2.4.1)
     sass (3.4.25)
@@ -387,7 +387,7 @@ DEPENDENCIES
   rails (~> 7.1.5)
   rails-controller-testing
   rails-dom-testing
-  rollbar (~> 2.27)
+  rollbar (~> 3.5)
   sass (~> 3.4.25)
   sass-rails (~> 5.0)
   selenium-webdriver (~> 4.1)

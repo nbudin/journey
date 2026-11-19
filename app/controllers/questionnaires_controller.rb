@@ -157,7 +157,11 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       if @questionnaire.update(update_params)
-        format.html { params[:return_to] ? redirect_to(params[:return_to]) : redirect_back(fallback_location: questionnaire_path(@questionnaire)) }
+        format.html do
+          # url_from only returns URLs on this host, so return_to can't be used as an open redirect
+          return_to = url_from(params[:return_to])
+          return_to ? redirect_to(return_to) : redirect_back(fallback_location: questionnaire_path(@questionnaire))
+        end
         format.xml  { head :ok }
         format.json { head :ok }
       else

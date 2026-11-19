@@ -1,4 +1,4 @@
-class AeUsersLocalTables < ActiveRecord::Migration
+class AeUsersLocalTables < ActiveRecord::Migration[4.2]
   def self.up
     unless table_exists? :permissions
       create_table :permissions do |t|

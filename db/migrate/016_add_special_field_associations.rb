@@ -1,4 +1,4 @@
-class AddSpecialFieldAssociations < ActiveRecord::Migration
+class AddSpecialFieldAssociations < ActiveRecord::Migration[4.2]
   def self.up
     create_table :special_field_associations do |t|
       t.column :questionnaire_id, :integer

@@ -1,4 +1,4 @@
-class AddAllowDeleteOptionToQuestionnaires < ActiveRecord::Migration
+class AddAllowDeleteOptionToQuestionnaires < ActiveRecord::Migration[4.2]
   def self.up
     add_column :questionnaires, :allow_delete_responses, :boolean
     Questionnaire.where(:is_open => true).find_each do |q|

@@ -1,4 +1,4 @@
-class RenameOpen < ActiveRecord::Migration
+class RenameOpen < ActiveRecord::Migration[4.2]
   def self.up
     rename_column "questionnaires", "open", "is_open"
   end

@@ -1,4 +1,4 @@
-class AddQuestionIdIndexToAnswers < ActiveRecord::Migration
+class AddQuestionIdIndexToAnswers < ActiveRecord::Migration[4.2]
   def self.up
     add_index :answers, :question_id
   end

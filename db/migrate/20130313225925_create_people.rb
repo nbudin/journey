@@ -1,4 +1,4 @@
-class CreatePeople < ActiveRecord::Migration
+class CreatePeople < ActiveRecord::Migration[4.2]
   class Permission < ActiveRecord::Base
     belongs_to :permissioned, :class_name => "Questionnaire"
   end

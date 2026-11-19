@@ -1,4 +1,4 @@
-class CustomQuestionnaireAttributesNullable < ActiveRecord::Migration
+class CustomQuestionnaireAttributesNullable < ActiveRecord::Migration[4.2]
   def self.up
     change_column "questionnaires", "custom_html", :string, :null => true, :default => ''
     change_column "questionnaires", "custom_css", :string, :null => true, :default => ''

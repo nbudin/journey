@@ -1,4 +1,4 @@
-class AddPublishedAtToQuestionnaires < ActiveRecord::Migration
+class AddPublishedAtToQuestionnaires < ActiveRecord::Migration[4.2]
   def self.up
     add_column :questionnaires, :published_at, :timestamp
     Questionnaire.where(:is_open => true).find_each do |q|

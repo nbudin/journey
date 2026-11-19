@@ -1,4 +1,4 @@
-class AllowNullForAssociationFields < ActiveRecord::Migration
+class AllowNullForAssociationFields < ActiveRecord::Migration[4.2]
   def self.up
     change_column :pages, "questionnaire_id", :integer, :default => 0, :null => false
     change_column :question_options, "question_id", :integer, :default => 0, :null => false

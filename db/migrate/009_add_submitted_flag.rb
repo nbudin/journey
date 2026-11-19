@@ -1,4 +1,4 @@
-class AddSubmittedFlag < ActiveRecord::Migration
+class AddSubmittedFlag < ActiveRecord::Migration[4.2]
   def self.up
     add_column "responses", "submitted", :boolean, :default => false, :null => false
   end

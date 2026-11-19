@@ -1,4 +1,4 @@
-class AddLayoutToQuestions < ActiveRecord::Migration
+class AddLayoutToQuestions < ActiveRecord::Migration[4.2]
   def self.up
     # cope with the scoping transition
     btf_class = nil

@@ -1,4 +1,4 @@
-class ReturnsToResponses < ActiveRecord::Migration
+class ReturnsToResponses < ActiveRecord::Migration[4.2]
   def self.up
     create_table "answers", :force => true do |t|
       t.column "response_id", :integer

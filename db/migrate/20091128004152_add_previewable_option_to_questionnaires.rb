@@ -1,4 +1,4 @@
-class AddPreviewableOptionToQuestionnaires < ActiveRecord::Migration
+class AddPreviewableOptionToQuestionnaires < ActiveRecord::Migration[4.2]
   def self.up
     add_column :questionnaires, :allow_preview, :boolean
     Questionnaire.where(:is_open => true).find_each do |q|

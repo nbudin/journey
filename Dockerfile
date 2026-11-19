@@ -28,6 +28,8 @@ RUN apt-get update -qq && \
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
+# Gems vendored in the repo (referenced by path in the Gemfile) must be present for bundle install
+COPY vendor/gems ./vendor/gems
 RUN bundle install && \
   rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git
 

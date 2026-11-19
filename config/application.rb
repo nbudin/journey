@@ -36,6 +36,16 @@ module Journey
 
     config.i18n.enforce_available_locales = true
 
+    config.autoloader = :zeitwerk
+
+    # These lib files are loaded with an explicit require (from initializers) and don't define a constant named
+    # after the file (they reopen Journey and Sequel::Model), so Zeitwerk can't autoload them.
+    Rails.autoloaders.main.ignore(
+      config.root.join('lib', 'journey_questionnaire.rb'),
+      config.root.join('lib', 'sequel_ext.rb'),
+      config.root.join('lib', 'questionnaires_index_profiler.rb')
+    )
+
     # Rails 4.2 ran ActiveJob jobs (such as deliver_later) inline, and Rails 5 defaults to :async, which
     # runs them on a background thread instead.  There's no job backend here, so keep the old behavior.
     config.active_job.queue_adapter = :inline

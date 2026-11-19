@@ -232,8 +232,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
-    psych (5.5.0)
-      date
+    psych (4.0.6)
       stringio
     public_suffix (4.0.6)
     puma (5.6.9)
@@ -383,6 +382,7 @@ DEPENDENCIES
   pg (~> 1.5.9)
   prototype-rails!
   pry-rails
+  psych (~> 4.0)
   puma
   rails (~> 7.1.5)
   rails-controller-testing

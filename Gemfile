@@ -12,6 +12,9 @@ gem 'sequel'
 gem 'dynamic_form', path: 'vendor/gems/dynamic_form'
 gem 'puma'
 gem 'builder'
+# Rails 7.1 pulls in psych via irb and rdoc.  psych 5 needs libyaml headers to compile, which the Docker base image
+# doesn't have; the psych that ships with this Ruby needs nothing extra.
+gem 'psych', '~> 4.0'
 # Not used directly, but it bundles libxml2, so keep it current.  1.19+ requires Ruby 3.2.
 gem 'nokogiri', '~> 1.18.0'
 # to_xml/from_xml on models were extracted from Rails core in 5.0

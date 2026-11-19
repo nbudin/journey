@@ -26,6 +26,15 @@ module Journey
 
     config.i18n.enforce_available_locales = true
 
+    # Rails 4.2 ran ActiveJob jobs (such as deliver_later) inline, and Rails 5 defaults to :async, which
+    # runs them on a background thread instead.  There's no job backend here, so keep the old behavior.
+    config.active_job.queue_adapter = :inline
+
+    # Rails 5 adds data-disable-with to every submit button.  This app's prototype_ujs disables the button as
+    # soon as it's clicked, and browsers don't submit disabled buttons, so the "commit" parameter went missing
+    # and every button on the answering form (Next page, Finish later...) acted like "Finish".
+    config.action_view.automatically_disable_submit_tag = false
+
     config.generators do |g|
       g.test_framework :mini_test, :spec => true, :fixture => false
     end

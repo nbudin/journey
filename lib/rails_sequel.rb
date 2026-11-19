@@ -11,7 +11,12 @@ module RailsSequel
 
   # Returns loaded database.yml configuration for current environment
   def self.config
-    @config ||= ActiveRecord::Base.configurations.fetch(Rails.env).with_indifferent_access
+    @config ||= begin
+      # configurations is a DatabaseConfigurations object (not a Hash) as of Rails 6.0
+      db_config = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env).first
+      raise "No database configuration found for #{Rails.env}" unless db_config
+      (db_config.respond_to?(:configuration_hash) ? db_config.configuration_hash : db_config.config).with_indifferent_access
+    end
   end
 
   # Resets config

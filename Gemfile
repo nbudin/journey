@@ -2,7 +2,9 @@ source "http://rubygems.org"
 ruby "2.7.8"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem "rails", "~> 5.2.8"
+gem "rails", "~> 6.0.6"
+# concurrent-ruby 1.3.5+ no longer loads Logger, which Rails before 7.1 depends on
+gem 'concurrent-ruby', '< 1.3.5'
 gem 'will_paginate'
 gem 'pg', '~> 0.20'
 gem "jipe", ">= 2.0.1"
@@ -27,7 +29,7 @@ end
 
 gem 'devise'
 gem 'devise_cas_authenticatable'
-gem 'cancancan', '~> 2.3'
+gem 'cancancan', '~> 3.0'
 gem 'illyan_client'
 
 

@@ -35,7 +35,12 @@ class ResponsesCsvExportTest < ActionController::TestCase
   it "makes a safe filename from the questionnaire title" do
     get :index, params: { questionnaire_id: @questionnaire.id, format: :csv }
 
-    assert_match(/filename="?Survey- the \(sequel\)--\.csv"?/, response.headers["Content-Disposition"])
+    # Rails 6 percent-encodes the filename (RFC 6266); browsers decode the filename* parameter back to
+    # "Survey- the (sequel)--.csv"
+    header = response.headers["Content-Disposition"]
+    assert_match(/\Aattachment;/, header)
+    assert_includes header, "filename*=UTF-8''Survey-%20the%20%28sequel%29--.csv"
+    assert_equal "Survey- the (sequel)--.csv", URI.decode_www_form_component(header[/filename\*=UTF-8''([^;]+)/, 1].gsub("+", "%2B"))
   end
 
   it "requires permission to view answers" do

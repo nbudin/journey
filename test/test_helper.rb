@@ -13,6 +13,9 @@ end
 require File.expand_path("../../config/environment", __FILE__)
 require "rails/test_help"
 require "capybara/rails"
+# capybara_minitest_spec still refers to the MiniTest constant, which minitest 5.19+ no longer defines
+MiniTest = Minitest unless defined?(MiniTest)
+require "capybara_minitest_spec"
 
 Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, :browser => :chrome)

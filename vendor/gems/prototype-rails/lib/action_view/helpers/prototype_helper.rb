@@ -132,9 +132,9 @@ module ActionView
           update << "'#{options[:update]}'"
         end
 
-        function = update.empty? ?
+        function = +(update.empty? ?
           "new Ajax.Request(" :
-          "new Ajax.Updater(#{update}, "
+          "new Ajax.Updater(#{update}, ")
 
         url_options = options[:url]
         function << "'#{ERB::Util.html_escape(escape_javascript(url_for(url_options)))}'"

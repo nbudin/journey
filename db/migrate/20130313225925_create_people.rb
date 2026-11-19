@@ -1,5 +1,3 @@
-require 'ae_users_migrator/import'
-
 class CreatePeople < ActiveRecord::Migration
   class Permission < ActiveRecord::Base
     belongs_to :permissioned, :class_name => "Questionnaire"
@@ -60,6 +58,10 @@ class CreatePeople < ActiveRecord::Migration
     role_ids = role_ids.uniq.compact
     
     if person_ids.count > 0 or role_ids.count > 0
+      # The ae_users_migrator gem was only needed to migrate from the old ae_users database, which was
+      # done long ago on every real install.  If you somehow need this again, add it back to the Gemfile.
+      require 'ae_users_migrator/import'
+
       unless File.exist?("ae_users.json")
         raise "There are users to migrate, and ae_users.json does not exist.  Please use export_ae_users.rb to create it."
       end

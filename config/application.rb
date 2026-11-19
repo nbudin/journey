@@ -1,7 +1,17 @@
 # Put this in config/application.rb
 require File.expand_path('../boot', __FILE__)
 
-require 'rails/all'
+require 'rails'
+
+# The frameworks this app uses.  (rails/all would also load Active Storage, Action Cable, Action Mailbox and
+# Action Text, which this app doesn't use; they add routes, including public upload and mail ingress endpoints.)
+require 'active_record/railtie'
+require 'action_controller/railtie'
+require 'action_view/railtie'
+require 'action_mailer/railtie'
+require 'active_job/railtie'
+require 'rails/test_unit/railtie'
+require 'sprockets/railtie'
 
 Bundler.require(:default, Rails.env) if defined?(Bundler)
 

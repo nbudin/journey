@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 ruby "3.4.9"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
@@ -34,7 +34,7 @@ gem 'tinymce-rails', '= 4.9.11.1'
 gem 'dartsass-sprockets'
 gem 'sprockets', '~> 4.2'
 
-gem 'devise', '~> 4.9.4'
+gem 'devise', '~> 5.0.4'
 gem 'devise_cas_authenticatable'
 gem 'cancancan', '~> 3.0'
 gem 'illyan_client'

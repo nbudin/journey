@@ -2,18 +2,19 @@ source "http://rubygems.org"
 ruby "3.1.7"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem "rails", "~> 7.0.8"
-# concurrent-ruby 1.3.5+ no longer loads Logger, which Rails before 7.1 depends on
-gem 'concurrent-ruby', '< 1.3.5'
+gem "rails", "~> 7.1.5"
 gem 'will_paginate', '~> 3.3'
 gem 'pg', '~> 1.5.9'
 gem "jipe", ">= 2.0.1"
-gem 'rollbar', '~> 2.27'
+gem 'rollbar', '~> 3.5'
 gem 'sequel'
 # Vendored: unmaintained, and its ActiveModel::Errors override breaks on Ruby 3 (see vendor/gems/dynamic_form)
 gem 'dynamic_form', path: 'vendor/gems/dynamic_form'
 gem 'puma'
 gem 'builder'
+# Rails 7.1 pulls in psych via irb and rdoc.  psych 5 needs libyaml headers to compile, which the Docker base image
+# doesn't have; the psych that ships with this Ruby needs nothing extra.
+gem 'psych', '~> 4.0'
 # Not used directly, but it bundles libxml2, so keep it current.  1.19+ requires Ruby 3.2.
 gem 'nokogiri', '~> 1.18.0'
 # to_xml/from_xml on models were extracted from Rails core in 5.0

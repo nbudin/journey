@@ -19,7 +19,13 @@ class CsrfTokenCompatibilityTest < ActionController::TestCase
   before do
     get :prompt, params: { id: FactoryGirl.create(:questionnaire, is_open: true).id }
     @raw = SecureRandom.random_bytes(32)
-    @session = { _csrf_token: Base64.strict_encode64(@raw) }   # the old session format: padded standard base64
+
+    # The session holds the token in the old format (padded standard base64).  Rails 7.1 ignores the session
+    # argument to valid_authenticity_token? and reads the token from the request, so put it there (and clear
+    # the copy Rails caches in the request environment).
+    @session = { _csrf_token: Base64.strict_encode64(@raw) }
+    request.session[:_csrf_token] = @session[:_csrf_token]
+    request.env.delete(ActionController::RequestForgeryProtection::CSRF_TOKEN)
   end
 
   it "accepts a masked token issued in the old format" do
@@ -37,6 +43,11 @@ class CsrfTokenCompatibilityTest < ActionController::TestCase
 
   it "rejects a token for a different session" do
     refute @controller.send(:valid_authenticity_token?, @session, old_format_masked(SecureRandom.random_bytes(32)))
+  end
+
+  it "does compare against this session's token (a token for another session must fail, this one must pass)" do
+    assert @controller.send(:valid_authenticity_token?, @session, old_format_masked(@raw))
+    refute @controller.send(:valid_authenticity_token?, @session, old_format_masked(@raw.reverse))
   end
 
   it "rejects garbage" do

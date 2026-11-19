@@ -32,19 +32,19 @@ class ResponsesFlowTest < ActionController::TestCase
     it "lists responses that have answers, most recent first" do
       @questionnaire.responses.create!  # no answers, so not a valid response
 
-      get :index, questionnaire_id: @questionnaire.id
+      get :index, params: { questionnaire_id: @questionnaire.id }
 
       assert_response :success
       assert_equal [@bob.id, @alice.id], assigns(:responses).map(&:id)
     end
 
     it "shows title, submitted, notes, the other special fields and id by default" do
-      get :index, questionnaire_id: @questionnaire.id
+      get :index, params: { questionnaire_id: @questionnaire.id }
       assert_equal ["title", "submitted_at", "notes", @email, "id"], assigns(:columns)
     end
 
     it "lets people choose which columns to show" do
-      get :index, questionnaire_id: @questionnaire.id, column_1: "id", column_2: "question_#{@rating.id}", column_3: "notes"
+      get :index, params: { questionnaire_id: @questionnaire.id, column_1: "id", column_2: "question_#{@rating.id}", column_3: "notes" }
 
       assert_equal ["id", @rating, "notes", "submitted_at", "title"].first(3), assigns(:columns).first(3)
       assert_equal 5, assigns(:columns).size
@@ -54,7 +54,7 @@ class ResponsesFlowTest < ActionController::TestCase
       other = FactoryGirl.create(:questionnaire)
       foreign = Questions::TextField.create!(page: other.pages.first, caption: "Foreign", position: 1)
 
-      get :index, questionnaire_id: @questionnaire.id, column_1: "bogus", column_2: "question_#{foreign.id}"
+      get :index, params: { questionnaire_id: @questionnaire.id, column_1: "bogus", column_2: "question_#{foreign.id}" }
 
       refute_includes assigns(:columns), foreign
       assert_equal "title", assigns(:columns).first
@@ -64,13 +64,13 @@ class ResponsesFlowTest < ActionController::TestCase
       # Either can_view_answers or can_edit_answers is enough to see responses
       @permission.update_attributes!(can_view_answers: false, can_edit_answers: false)
 
-      get :index, questionnaire_id: @questionnaire.id
+      get :index, params: { questionnaire_id: @questionnaire.id }
       assert_redirected_to root_url
     end
 
     describe "as an RSS feed" do
       it "works for a logged in person when the secret matches" do
-        get :index, questionnaire_id: @questionnaire.id, format: :rss, secret: @questionnaire.rss_secret
+        get :index, params: { questionnaire_id: @questionnaire.id, format: :rss, secret: @questionnaire.rss_secret }
 
         assert_response :success
         assert_match %r{<rss}, response.body
@@ -78,7 +78,7 @@ class ResponsesFlowTest < ActionController::TestCase
 
       it "rejects the wrong secret" do
         assert_raises(UncaughtThrowError) do
-          get :index, questionnaire_id: @questionnaire.id, format: :rss, secret: "wrong"
+          get :index, params: { questionnaire_id: @questionnaire.id, format: :rss, secret: "wrong" }
         end
       end
 
@@ -88,7 +88,7 @@ class ResponsesFlowTest < ActionController::TestCase
       it "currently redirects logged out requests even when the secret matches" do
         sign_out @person
 
-        get :index, questionnaire_id: @questionnaire.id, format: :rss, secret: @questionnaire.rss_secret
+        get :index, params: { questionnaire_id: @questionnaire.id, format: :rss, secret: @questionnaire.rss_secret }
         assert_response :redirect
       end
     end
@@ -96,7 +96,7 @@ class ResponsesFlowTest < ActionController::TestCase
 
   describe "show" do
     it "returns JSON with the rendered response and its title" do
-      get :show, questionnaire_id: @questionnaire.id, id: @alice.id, format: :json
+      get :show, params: { questionnaire_id: @questionnaire.id, id: @alice.id, format: :json }
 
       json = JSON.parse(response.body)
       assert_equal "Alice", json["title"]
@@ -106,7 +106,7 @@ class ResponsesFlowTest < ActionController::TestCase
 
   describe "edit" do
     it "returns JSON with an edit form" do
-      get :edit, questionnaire_id: @questionnaire.id, id: @alice.id, format: :json
+      get :edit, params: { questionnaire_id: @questionnaire.id, id: @alice.id, format: :json }
 
       json = JSON.parse(response.body)
       assert_equal "Editing Alice", json["title"]
@@ -116,9 +116,9 @@ class ResponsesFlowTest < ActionController::TestCase
 
   describe "update" do
     it "saves notes and changes answers" do
-      put :update, questionnaire_id: @questionnaire.id, id: @alice.id,
+      put :update, params: { questionnaire_id: @questionnaire.id, id: @alice.id,
         response: { notes: "Followed up" },
-        answer: { @name.id.to_s => "Alicia", @story.id.to_s => "A long tale" }
+        answer: { @name.id.to_s => "Alicia", @story.id.to_s => "A long tale" } }
 
       assert_redirected_to [@questionnaire, @alice]
       @alice.reload
@@ -128,7 +128,7 @@ class ResponsesFlowTest < ActionController::TestCase
     end
 
     it "removes answers that are no longer given" do
-      put :update, questionnaire_id: @questionnaire.id, id: @alice.id, answer: { @name.id.to_s => "Alice", @email.id.to_s => "" }
+      put :update, params: { questionnaire_id: @questionnaire.id, id: @alice.id, answer: { @name.id.to_s => "Alice", @email.id.to_s => "" } }
 
       @alice.reload
       assert_equal "Alice", @alice.answer_for_question(@name).value
@@ -138,7 +138,7 @@ class ResponsesFlowTest < ActionController::TestCase
     it "only lets people who can edit answers do it" do
       @permission.update_attributes!(can_edit_answers: false)
 
-      put :update, questionnaire_id: @questionnaire.id, id: @alice.id, response: { notes: "Nope" }
+      put :update, params: { questionnaire_id: @questionnaire.id, id: @alice.id, response: { notes: "Nope" } }
 
       assert_redirected_to root_url
       assert_nil @alice.reload.notes
@@ -152,19 +152,19 @@ class ResponsesFlowTest < ActionController::TestCase
     it "currently saves the response and then fails to build its location" do
       assert_difference("Response.count", 1) do
         assert_raises(NoMethodError) do
-          post :create, questionnaire_id: @questionnaire.id, response: { notes: "Hi" }, format: :xml
+          post :create, params: { questionnaire_id: @questionnaire.id, response: { notes: "Hi" }, format: :xml }
         end
       end
     end
 
     it "destroys a response" do
-      assert_difference("Response.count", -1) { delete :destroy, questionnaire_id: @questionnaire.id, id: @bob.id, format: :xml }
+      assert_difference("Response.count", -1) { delete :destroy, params: { questionnaire_id: @questionnaire.id, id: @bob.id, format: :xml } }
       assert_response :success
     end
   end
 
   it "renders the printable view of valid responses" do
-    get :print, questionnaire_id: @questionnaire.id
+    get :print, params: { questionnaire_id: @questionnaire.id }
 
     assert_response :success
     assert_equal [@bob.id, @alice.id], assigns(:responses).map(&:id)
@@ -175,7 +175,7 @@ class ResponsesFlowTest < ActionController::TestCase
       color = Questions::RadioField.create!(page: @questionnaire.pages.first, caption: "Color", position: 5)
       color.question_options.create!(option: "Red", position: 1)
 
-      get :aggregate, questionnaire_id: @questionnaire.id
+      get :aggregate, params: { questionnaire_id: @questionnaire.id }
 
       assert_response :success
       assert_equal [@rating], assigns(:numeric_fields)
@@ -186,23 +186,23 @@ class ResponsesFlowTest < ActionController::TestCase
   end
 
   it "renders the export page" do
-    get :export, questionnaire_id: @questionnaire.id
+    get :export, params: { questionnaire_id: @questionnaire.id }
     assert_response :success
   end
 
   describe "subscriptions" do
     it "shows the subscription form" do
-      get :subscribe, questionnaire_id: @questionnaire.id
+      get :subscribe, params: { questionnaire_id: @questionnaire.id }
       assert_response :success
     end
 
     it "turns notifications on and off for the current person" do
-      put :update_subscription, questionnaire_id: @questionnaire.id, email_notification: { notify_on_response_submit: "0" }
+      put :update_subscription, params: { questionnaire_id: @questionnaire.id, email_notification: { notify_on_response_submit: "0" } }
       notification = @questionnaire.email_notifications.find_by(person_id: @person.id)
       refute notification.notify_on_response_submit
       assert_redirected_to action: "subscribe"
 
-      put :update_subscription, questionnaire_id: @questionnaire.id, email_notification: { notify_on_response_submit: "1" }
+      put :update_subscription, params: { questionnaire_id: @questionnaire.id, email_notification: { notify_on_response_submit: "1" } }
       assert notification.reload.notify_on_response_submit
       assert_equal 1, @questionnaire.email_notifications.where(person_id: @person.id).count
     end

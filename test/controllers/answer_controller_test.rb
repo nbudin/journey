@@ -15,7 +15,7 @@ class AnswerControllerTest < ActionController::TestCase
     @resp = @questionnaire.responses.create
     session["response_#{@questionnaire.id}"] = @resp.id
     
-    post :save_answers, id: @questionnaire.id
+    post :save_answers, params: { id: @questionnaire.id }
     
     assert_equal 1, ActionMailer::Base.deliveries.count
     assert_match /\A\[#{@questionnaire.title}\]/, ActionMailer::Base.deliveries.first.subject

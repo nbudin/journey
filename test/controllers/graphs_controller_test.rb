@@ -27,27 +27,28 @@ class GraphsControllerTest < ActionController::TestCase
 
   def assert_png
     assert_response :success
+    assert_equal "image/png", response.content_type
     assert_equal PNG_SIGNATURE, response.body.b[0, 4]
   end
 
   describe "pie" do
     it "renders a PNG" do
-      get :pie, questionnaire_id: @questionnaire.id, question_id: @color.id, format: :png
+      get :pie, params: { questionnaire_id: @questionnaire.id, question_id: @color.id, format: :png }
       assert_png
     end
 
     it "counts each answer, translating options to output values and counting missing answers" do
-      get :pie, questionnaire_id: @questionnaire.id, question_id: @color.id, format: :png
+      get :pie, params: { questionnaire_id: @questionnaire.id, question_id: @color.id, format: :png }
       assert_equal({ "Red" => 1, "Blue" => 1, "No answer" => 1 }, assigns(:answercounts))
     end
 
     it "leaves out missing answers when skip_no_answer is set" do
-      get :pie, questionnaire_id: @questionnaire.id, question_id: @color.id, skip_no_answer: "true", format: :png
+      get :pie, params: { questionnaire_id: @questionnaire.id, question_id: @color.id, skip_no_answer: "true", format: :png }
       assert_equal({ "Red" => 1, "Blue" => 1 }, assigns(:answercounts))
     end
 
     it "accepts a custom geometry" do
-      get :pie, questionnaire_id: @questionnaire.id, question_id: @color.id, geom: "320x200", format: :png
+      get :pie, params: { questionnaire_id: @questionnaire.id, question_id: @color.id, geom: "320x200", format: :png }
       assert_png
       assert_equal "320x200", assigns(:geom)
     end
@@ -56,7 +57,7 @@ class GraphsControllerTest < ActionController::TestCase
       sign_out @person
       sign_in FactoryGirl.create(:person)
 
-      get :pie, questionnaire_id: @questionnaire.id, question_id: @color.id, format: :png
+      get :pie, params: { questionnaire_id: @questionnaire.id, question_id: @color.id, format: :png }
       assert_redirected_to root_url
       assert_not_equal "image/png", response.content_type.to_s
     end
@@ -64,12 +65,12 @@ class GraphsControllerTest < ActionController::TestCase
 
   describe "line" do
     it "renders a PNG" do
-      get :line, questionnaire_id: @questionnaire.id, question_ids: [@range.id], format: :png
+      get :line, params: { questionnaire_id: @questionnaire.id, question_ids: [@range.id], format: :png }
       assert_png
     end
 
     it "builds a series of counts for each value in the range" do
-      get :line, questionnaire_id: @questionnaire.id, question_ids: [@range.id], skip_no_answer: "true", format: :png
+      get :line, params: { questionnaire_id: @questionnaire.id, question_ids: [@range.id], skip_no_answer: "true", format: :png }
 
       assert_equal [@range], assigns(:series).keys
       assert_equal [2, 0, 1], assigns(:series)[@range]
@@ -79,7 +80,7 @@ class GraphsControllerTest < ActionController::TestCase
       sign_out @person
       sign_in FactoryGirl.create(:person)
 
-      get :line, questionnaire_id: @questionnaire.id, question_ids: [@range.id], format: :png
+      get :line, params: { questionnaire_id: @questionnaire.id, question_ids: [@range.id], format: :png }
       assert_redirected_to root_url
       assert_not_equal "image/png", response.content_type.to_s
     end

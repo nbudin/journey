@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
   # GET /questions.xml
   def index
     respond_to do |format|
-      format.json { render :text => @questions.to_json }
+      format.json { render json: @questions.to_json }
       format.xml  { render :xml => @questions.to_xml }
     end
   end
@@ -110,7 +110,7 @@ class QuestionsController < ApplicationController
       question.position = params['questions'].index(question.id.to_s) + 1
       question.save!
     end
-    render :nothing => true
+    head :ok
   end
   
   def duplicate
@@ -130,7 +130,7 @@ class QuestionsController < ApplicationController
       end
     end
     
-    render :nothing => true
+    head :ok
   end
 
   private

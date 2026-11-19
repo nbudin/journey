@@ -25,7 +25,7 @@ class AnswerFlowTest < ActionController::TestCase
 
   describe "prompt" do
     it "is shown to people who aren't logged in" do
-      get :prompt, id: @questionnaire.id
+      get :prompt, params: { id: @questionnaire.id }
 
       assert_response :success
       assert_empty assigns(:responses)
@@ -38,7 +38,7 @@ class AnswerFlowTest < ActionController::TestCase
       submitted = @questionnaire.responses.create!(person: person, submitted: true, submitted_at: Time.now)
       @questionnaire.responses.create!(person: FactoryGirl.create(:person))
 
-      get :prompt, id: @questionnaire.id
+      get :prompt, params: { id: @questionnaire.id }
 
       assert_equal [unfinished.id, submitted.id].sort, assigns(:responses).map(&:id).sort
     end
@@ -50,7 +50,7 @@ class AnswerFlowTest < ActionController::TestCase
       @questionnaire.responses.create!(person: person)
       @questionnaire.responses.create!(person: person, submitted: true, submitted_at: Time.now)
 
-      get :prompt, id: @questionnaire.id
+      get :prompt, params: { id: @questionnaire.id }
 
       assert_empty assigns(:responses)
       assert_equal 2, assigns(:all_responses).size
@@ -59,7 +59,7 @@ class AnswerFlowTest < ActionController::TestCase
 
   describe "start" do
     it "creates a response, remembers it in the session, and goes to the first page" do
-      assert_difference("Response.count", 1) { get :start, id: @questionnaire.id }
+      assert_difference("Response.count", 1) { get :start, params: { id: @questionnaire.id } }
 
       assert_equal Response.last.id, session["response_#{@questionnaire.id}"]
       assert_nil Response.last.person
@@ -70,7 +70,7 @@ class AnswerFlowTest < ActionController::TestCase
       person = FactoryGirl.create(:person)
       sign_in person
 
-      get :start, id: @questionnaire.id
+      get :start, params: { id: @questionnaire.id }
       assert_equal person, Response.last.person
     end
 
@@ -78,14 +78,14 @@ class AnswerFlowTest < ActionController::TestCase
       @questionnaire.update_attributes!(advertise_login: false)
       sign_in FactoryGirl.create(:person)
 
-      get :start, id: @questionnaire.id
+      get :start, params: { id: @questionnaire.id }
       assert_nil Response.last.person
     end
 
     it "sends people back to the prompt when login is required" do
       @questionnaire.update_attributes!(require_login: true)
 
-      assert_no_difference("Response.count") { get :start, id: @questionnaire.id }
+      assert_no_difference("Response.count") { get :start, params: { id: @questionnaire.id } }
       assert_redirected_to action: "prompt", id: @questionnaire.id
     end
   end
@@ -94,23 +94,23 @@ class AnswerFlowTest < ActionController::TestCase
     it "redirects to the closed page when the questionnaire isn't open" do
       @questionnaire.update_attributes!(is_open: false)
 
-      get :index, id: @questionnaire.id
+      get :index, params: { id: @questionnaire.id }
       assert_redirected_to action: "questionnaire_closed", id: @questionnaire.id.to_s
     end
 
     it "redirects to the prompt when there's no response in progress" do
-      get :index, id: @questionnaire.id
+      get :index, params: { id: @questionnaire.id }
       assert_redirected_to action: "prompt", id: @questionnaire.id
     end
 
     it "shows the first page by default and other pages on request" do
       start_response
 
-      get :index, id: @questionnaire.id
+      get :index, params: { id: @questionnaire.id }
       assert_response :success
       assert_equal @page1, assigns(:page)
 
-      get :index, id: @questionnaire.id, page: 2
+      get :index, params: { id: @questionnaire.id, page: 2 }
       assert_equal @page2, assigns(:page)
     end
 
@@ -119,7 +119,7 @@ class AnswerFlowTest < ActionController::TestCase
       sign_in person
       resp = start_response(person)
 
-      get :index, id: @questionnaire.id
+      get :index, params: { id: @questionnaire.id }
 
       assert_equal "Ada Lovelace", resp.answer_for_question(@name).value
       assert_equal "ada@example.com", resp.reload.answer_for_question(@email).value
@@ -131,19 +131,19 @@ class AnswerFlowTest < ActionController::TestCase
       resp = start_response(person)
       resp.answers.create!(question: @name, value: "Someone else")
 
-      get :index, id: @questionnaire.id
+      get :index, params: { id: @questionnaire.id }
       assert_equal "Someone else", resp.reload.answer_for_question(@name).value
     end
   end
 
   it "explains that a questionnaire is closed" do
-    get :questionnaire_closed, id: @questionnaire.id
+    get :questionnaire_closed, params: { id: @questionnaire.id }
     assert_response :success
   end
 
   describe "preview" do
     it "renders the questionnaire without saving a response" do
-      assert_no_difference("Response.count") { get :preview, id: @questionnaire.id, page: 2 }
+      assert_no_difference("Response.count") { get :preview, params: { id: @questionnaire.id, page: 2 } }
 
       assert_response :success
       assert_template "index"
@@ -155,7 +155,7 @@ class AnswerFlowTest < ActionController::TestCase
     before { @resp = start_response }
 
     def save(answers, commit = "Next >", page = 1)
-      post :save_answers, id: @questionnaire.id, current_page: page, commit: commit, question: answers
+      post :save_answers, params: { id: @questionnaire.id, current_page: page, commit: commit, question: answers }
     end
 
     it "saves answers and moves to the next page" do
@@ -227,7 +227,7 @@ class AnswerFlowTest < ActionController::TestCase
     before { @resp = start_response }
 
     it "remembers the page and forgets the response in the session" do
-      get :save_session, id: @questionnaire.id, current_page: 2
+      get :save_session, params: { id: @questionnaire.id, current_page: 2 }
 
       assert_response :success
       assert_equal 2, @resp.reload.saved_page.to_i
@@ -241,7 +241,7 @@ class AnswerFlowTest < ActionController::TestCase
       @questionnaire.update_attributes!(allow_finish_later: false)
 
       assert_raises(ActionController::UrlGenerationError) do
-        get :save_session, id: @questionnaire.id, current_page: 2
+        get :save_session, params: { id: @questionnaire.id, current_page: 2 }
       end
     end
 
@@ -249,7 +249,7 @@ class AnswerFlowTest < ActionController::TestCase
       @questionnaire.update_attributes!(allow_amend_response: false)
       @resp.update_attributes!(submitted: true, submitted_at: Time.now)
 
-      get :save_session, id: @questionnaire.id, current_page: 2
+      get :save_session, params: { id: @questionnaire.id, current_page: 2 }
       assert_nil @resp.reload.saved_page
     end
   end
@@ -262,7 +262,7 @@ class AnswerFlowTest < ActionController::TestCase
     end
 
     it "puts an unfinished response back in the session and goes to its saved page" do
-      get :resume, id: @resp.id
+      get :resume, params: { id: @resp.id }
 
       assert_equal @resp.id, session["response_#{@questionnaire.id}"]
       assert_redirected_to action: "index", id: @questionnaire.id, page: 2
@@ -271,7 +271,7 @@ class AnswerFlowTest < ActionController::TestCase
     it "reopens a submitted response for amendment" do
       @resp.update_attributes!(submitted: true, submitted_at: Time.now)
 
-      get :resume, id: @resp.id
+      get :resume, params: { id: @resp.id }
 
       refute @resp.reload.submitted
       assert_nil @resp.submitted_at
@@ -282,7 +282,7 @@ class AnswerFlowTest < ActionController::TestCase
       @questionnaire.update_attributes!(allow_amend_response: false)
       @resp.update_attributes!(submitted: true, submitted_at: Time.now)
 
-      get :resume, id: @resp.id
+      get :resume, params: { id: @resp.id }
 
       assert_match(/does not allow you to amend/, flash[:error_messages].first)
       assert_redirected_to action: "prompt", id: @questionnaire.id
@@ -292,7 +292,7 @@ class AnswerFlowTest < ActionController::TestCase
     it "won't resume if the questionnaire doesn't allow finishing later" do
       @questionnaire.update_attributes!(allow_finish_later: false)
 
-      get :resume, id: @resp.id
+      get :resume, params: { id: @resp.id }
       assert_match(/does not allow you to resume/, flash[:error_messages].first)
     end
 
@@ -300,7 +300,7 @@ class AnswerFlowTest < ActionController::TestCase
       sign_out @person
       sign_in FactoryGirl.create(:person)
 
-      get :resume, id: @resp.id
+      get :resume, params: { id: @resp.id }
 
       assert_match(/does not belong to you/, flash[:error_messages].first)
       assert_nil session["response_#{@questionnaire.id}"]

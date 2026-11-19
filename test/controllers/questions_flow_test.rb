@@ -28,22 +28,22 @@ class QuestionsFlowTest < ActionController::TestCase
 
   describe "create" do
     it "gives new fields a prompt to click on" do
-      post :create, params_for(question: { type: "Questions::TextField" }, format: :json)
+      post :create, params: params_for(question: { type: "Questions::TextField" }, format: :json)
       assert_equal "Click here to type a question.", assigns(:question).caption
     end
 
     it "gives new decorators the default caption" do
-      post :create, params_for(question: { type: "Questions::Label" }, format: :json)
+      post :create, params: params_for(question: { type: "Questions::Label" }, format: :json)
       assert_equal "Click here to type.", assigns(:question).caption
     end
 
     it "keeps a caption that's provided" do
-      post :create, params_for(question: { type: "Questions::TextField", caption: "Hello?" }, format: :json)
+      post :create, params: params_for(question: { type: "Questions::TextField", caption: "Hello?" }, format: :json)
       assert_equal "Hello?", assigns(:question).caption
     end
 
     it "responds with the location of the new question" do
-      post :create, params_for(question: { type: "Questions::TextField" }, format: :xml)
+      post :create, params: params_for(question: { type: "Questions::TextField" }, format: :xml)
 
       assert_response :created
       assert_match %r{/questions/#{assigns(:question).id}\.xml\z}, response.location
@@ -52,14 +52,14 @@ class QuestionsFlowTest < ActionController::TestCase
     it "creates every kind of question the editor offers" do
       %w(TextField BigTextField RangeField CheckBoxField DropDownField RadioField Label Divider Heading).each do |type|
         assert_difference("Question.count", 1, type) do
-          post :create, params_for(question: { type: "Questions::#{type}" }, format: :json)
+          post :create, params: params_for(question: { type: "Questions::#{type}" }, format: :json)
         end
       end
     end
 
     it "rejects types it doesn't know about" do
       assert_no_difference("Question.count") do
-        error = assert_raises(RuntimeError) { post :create, params_for(question: { type: "Kernel" }, format: :json) }
+        error = assert_raises(RuntimeError) { post :create, params: params_for(question: { type: "Kernel" }, format: :json) }
         assert_match(/not a valid question type/, error.message)
       end
     end
@@ -67,14 +67,14 @@ class QuestionsFlowTest < ActionController::TestCase
     it "requires permission to edit" do
       @permission.update_attributes!(can_edit: false)
 
-      assert_no_difference("Question.count") { post :create, params_for(question: { type: "Questions::TextField" }, format: :json) }
+      assert_no_difference("Question.count") { post :create, params: params_for(question: { type: "Questions::TextField" }, format: :json) }
       assert_redirected_to root_url
     end
   end
 
   describe "update" do
     it "changes a question and responds with ok" do
-      put :update, params_for(id: @first.id, question: { caption: "Renamed", required: "true" }, format: :json)
+      put :update, params: params_for(id: @first.id, question: { caption: "Renamed", required: "true" }, format: :json)
 
       assert_response :success
       assert_equal "Renamed", @first.reload.caption
@@ -82,18 +82,18 @@ class QuestionsFlowTest < ActionController::TestCase
     end
 
     it "changes the purpose of a question" do
-      put :update, params_for(id: @first.id, question: { purpose: "email" }, format: :json)
+      put :update, params: params_for(id: @first.id, question: { purpose: "email" }, format: :json)
 
       assert_equal "email", @first.reload.purpose
     end
 
     it "responds to XML" do
-      put :update, params_for(id: @first.id, question: { caption: "Renamed" }, format: :xml)
+      put :update, params: params_for(id: @first.id, question: { caption: "Renamed" }, format: :xml)
       assert_response :success
     end
 
     it "reports validation errors as JSON" do
-      put :update, params_for(id: @first.id, question: { layout: "sideways" }, format: :json)
+      put :update, params: params_for(id: @first.id, question: { layout: "sideways" }, format: :json)
 
       assert_response :bad_request
       assert_match(/layout/i, JSON.parse(response.body))
@@ -101,40 +101,40 @@ class QuestionsFlowTest < ActionController::TestCase
     end
 
     it "reports validation errors as XML" do
-      put :update, params_for(id: @first.id, question: { layout: "sideways" }, format: :xml)
+      put :update, params: params_for(id: @first.id, question: { layout: "sideways" }, format: :xml)
       assert_response :bad_request
     end
 
     it "shows the form again when validation fails for an HTML request" do
-      put :update, params_for(id: @first.id, question: { layout: "sideways" })
+      put :update, params: params_for(id: @first.id, question: { layout: "sideways" })
       assert_template "edit"
     end
   end
 
   describe "destroy" do
     it "removes the question and responds to JSON" do
-      delete :destroy, params_for(id: @first.id, format: :json)
+      delete :destroy, params: params_for(id: @first.id, format: :json)
 
       assert_response :success
       assert_equal ["Second", "Third"], ordered_captions
     end
 
     it "removes the question and responds to XML" do
-      delete :destroy, params_for(id: @second.id, format: :xml)
+      delete :destroy, params: params_for(id: @second.id, format: :xml)
 
       assert_response :success
       assert_equal ["First", "Third"], ordered_captions
     end
 
     it "redirects to the page for HTML" do
-      delete :destroy, params_for(id: @first.id)
+      delete :destroy, params: params_for(id: @first.id)
       assert_redirected_to [@questionnaire, @page]
     end
   end
 
   describe "sort" do
     it "puts the questions in the order given" do
-      post :sort, params_for(questions: [@third.id, @first.id, @second.id].map(&:to_s))
+      post :sort, params: params_for(questions: [@third.id, @first.id, @second.id].map(&:to_s))
 
       assert_response :success
       assert_equal ["Third", "First", "Second"], ordered_captions
@@ -143,7 +143,7 @@ class QuestionsFlowTest < ActionController::TestCase
 
   describe "duplicate" do
     it "copies a question right after the original, shifting the ones below it" do
-      post :duplicate, params_for(id: @first.id)
+      post :duplicate, params: params_for(id: @first.id)
 
       assert_response :success
       assert_equal ["First", "First", "Second", "Third"], ordered_captions
@@ -151,12 +151,12 @@ class QuestionsFlowTest < ActionController::TestCase
     end
 
     it "can make several copies" do
-      post :duplicate, params_for(id: @second.id, times: 3)
+      post :duplicate, params: params_for(id: @second.id, times: 3)
       assert_equal ["First", "Second", "Second", "Second", "Second", "Third"], ordered_captions
     end
 
     it "doesn't copy the special purpose, which can only belong to one question" do
-      post :duplicate, params_for(id: @second.id)
+      post :duplicate, params: params_for(id: @second.id)
 
       copy = @page.reload.questions.reorder(:position)[2]
       assert_equal "Second", copy.caption
@@ -168,7 +168,7 @@ class QuestionsFlowTest < ActionController::TestCase
   it "renders the option editor" do
     radio = Questions::RadioField.create!(page: @page, caption: "Pick one", position: 4)
 
-    get :edit_options, params_for(id: radio.id)
+    get :edit_options, params: params_for(id: radio.id)
 
     assert_response :success
     assert assigns(:suppress_custom_html)

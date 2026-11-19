@@ -4,9 +4,9 @@ class ResponsesController < ApplicationController
   load_resource :questionnaire
   load_and_authorize_resource :through => :questionnaire
 
-  before_filter :set_page_title
-  before_filter :require_view_answers_except_rss, :only => [:index]
-  before_filter :get_email_notification, :only => [:subscribe, :update_subscription]
+  before_action :set_page_title
+  before_action :require_view_answers_except_rss, :only => [:index]
+  before_action :get_email_notification, :only => [:subscribe, :update_subscription]
 
   # GET /responses
   # GET /responses.xml
@@ -159,7 +159,7 @@ class ResponsesController < ApplicationController
     @response.destroy
 
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_back fallback_location: questionnaire_responses_path(@questionnaire) }
       format.xml  { head :ok }
     end
   end

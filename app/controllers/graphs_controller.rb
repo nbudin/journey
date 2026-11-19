@@ -2,7 +2,7 @@ class GraphsController < ApplicationController
   include ActionView::Helpers::TextHelper
 
   load_resource :questionnaire
-  before_filter :set_geom
+  before_action :set_geom
   respond_to :png
 
   def line
@@ -35,7 +35,7 @@ class GraphsController < ApplicationController
     @graph.title = "Answer frequency"
     set_journey_theme(@graph)
 
-    render text: @graph.to_blob
+    send_data @graph.to_blob, type: 'image/png', disposition: 'inline'
   end
 
   def pie
@@ -53,7 +53,7 @@ class GraphsController < ApplicationController
     @graph.title = truncate(@question.caption || "Untitled question")
     set_journey_theme(@graph)
 
-    render text: @graph.to_blob
+    send_data @graph.to_blob, type: 'image/png', disposition: 'inline'
   end
 
   private

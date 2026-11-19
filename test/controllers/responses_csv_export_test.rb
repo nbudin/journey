@@ -18,7 +18,7 @@ class ResponsesCsvExportTest < ActionController::TestCase
   end
 
   it "downloads responses as CSV" do
-    get :index, questionnaire_id: @questionnaire.id, format: :csv
+    get :index, params: { questionnaire_id: @questionnaire.id, format: :csv }
 
     assert_response :success
     assert_match %r{text/csv}, response.content_type.to_s
@@ -26,14 +26,14 @@ class ResponsesCsvExportTest < ActionController::TestCase
   end
 
   it "downloads rotated CSV when asked to" do
-    get :index, questionnaire_id: @questionnaire.id, rotate: "true", format: :csv
+    get :index, params: { questionnaire_id: @questionnaire.id, rotate: "true", format: :csv }
 
     assert_response :success
     assert_equal [["id", @response_id.to_s], ["Submitted", nil], ["Notes", nil], ["Name", "Alice"]], CSV.parse(response.body)
   end
 
   it "makes a safe filename from the questionnaire title" do
-    get :index, questionnaire_id: @questionnaire.id, format: :csv
+    get :index, params: { questionnaire_id: @questionnaire.id, format: :csv }
 
     assert_match(/filename="?Survey- the \(sequel\)--\.csv"?/, response.headers["Content-Disposition"])
   end
@@ -42,7 +42,7 @@ class ResponsesCsvExportTest < ActionController::TestCase
     sign_out @person
     sign_in FactoryGirl.create(:person)
 
-    get :index, questionnaire_id: @questionnaire.id, format: :csv
+    get :index, params: { questionnaire_id: @questionnaire.id, format: :csv }
     assert_redirected_to root_url
   end
 end

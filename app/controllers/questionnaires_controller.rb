@@ -59,14 +59,14 @@ class QuestionnairesController < ApplicationController
           headers["Content-Disposition"] = "attachment; filename=\"#{@questionnaire.title}.xml\""
           render :xml => @questionnaire.to_xml
         else
-          render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden
+          render :plain => "You're not allowed to edit this questionnaire.", :status => :forbidden
         end
       end
       format.json do
         if person_signed_in? and current_person.can?(:edit, @questionnaire)
           render :json => @questionnaire.to_json(:only => attributes)
         else
-          render :text => "You're not allowed to edit this questionnaire.", :status => :forbidden
+          render :plain => "You're not allowed to edit this questionnaire.", :status => :forbidden
         end
       end
     end
@@ -157,13 +157,13 @@ class QuestionnairesController < ApplicationController
 
     respond_to do |format|
       if @questionnaire.update_attributes(update_params)
-        format.html { redirect_to params[:return_to] || :back }
+        format.html { params[:return_to] ? redirect_to(params[:return_to]) : redirect_back(fallback_location: questionnaire_path(@questionnaire)) }
         format.xml  { head :ok }
         format.json { head :ok }
       else
         format.html do
           flash[:error_messages] = @questionnaire.errors.full_messages
-          redirect_to :back
+          redirect_back fallback_location: questionnaire_path(@questionnaire)
         end
         format.xml  { render :xml => @questionnaire.errors.to_xml }
         format.json { render :json => @questionnaire.errors.to_json }

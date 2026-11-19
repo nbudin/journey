@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby "2.6.10"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
-gem "rails", "~> 5.1.7"
+gem "rails", "~> 5.2.8"
 gem 'will_paginate'
 gem 'pg', '~> 0.20'
 gem "jipe", ">= 2.0.1"
@@ -27,7 +27,7 @@ end
 
 gem 'devise'
 gem 'devise_cas_authenticatable'
-gem 'cancancan', '~> 1.17'
+gem 'cancancan', '~> 2.3'
 gem 'illyan_client'
 
 

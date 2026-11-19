@@ -1,5 +1,16 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  # Rails 5.2 stopped giving image_tag an alt attribute derived from the file name ("not-required.png" becomes
+  # "Not required"), but this app (and the jipe gem) relies on that for its icon buttons, and screen readers rely
+  # on it.  This restores the old behavior.  An explicit alt (including alt: nil) still wins.
+  def image_tag(source, options = {})
+    options = options.symbolize_keys
+    if source.is_a?(String) && !options.key?(:alt) && !source.start_with?("data:", "cid:")
+      options[:alt] = File.basename(source, ".*").sub(/-[[:xdigit:]]{32,64}\z/, "").tr("-_", " ").capitalize
+    end
+    super(source, options)
+  end
+
   def tag_links(questionnaire)
     safe_join questionnaire.tag_names.map { |t| link_to t, questionnaires_path(:tag => t) }, ", "
   end

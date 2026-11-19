@@ -1,6 +1,5 @@
 <%
 
-require 'cgi'
 require 'uri'
 
 begin
@@ -36,7 +35,8 @@ password = uri.password
 host = uri.host
 port = uri.port
 
-params = CGI.parse(uri.query || "")
+# (CGI.parse was removed from Ruby 4.0.)  Like it did, use the first value when a key is repeated.
+params = URI.decode_www_form(uri.query || "").each_with_object({}) { |(key, value), h| h[key] ||= value }
 
 %>
 
@@ -49,6 +49,6 @@ params = CGI.parse(uri.query || "")
   <%= attribute "port",     port %>
 
 <% params.each do |key, value| %>
-  <%= key %>: <%= value.first %>
+  <%= key %>: <%= value %>
 <% end %>
 

@@ -12,7 +12,6 @@ abort "use a scratch database; refusing to run outside production-style env" unl
 require File.expand_path("config/environment", Dir.pwd) # run from the repo root
 require "capybara"
 require "selenium-webdriver"
-require "webdrivers" # finds/downloads chromedriver (only loaded in the test group by Bundler)
 require "warden/test/helpers"
 
 include Warden::Test::Helpers

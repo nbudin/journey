@@ -19,8 +19,10 @@ gem 'psych', '~> 4.0'
 gem 'observer'
 # CSV left the default gems in Ruby 3.4 (used by ResponsesCsvExporter)
 gem 'csv'
+# ActiveSupport's default XML backend (XML request/response handling); Rails doesn't declare it, and it used to arrive only via selenium
+gem 'rexml'
 # Not used directly, but it bundles libxml2, so keep it current.  1.19+ requires Ruby 3.2.
-gem 'nokogiri', '~> 1.18.0'
+gem 'nokogiri', '~> 1.19.5'
 # to_xml/from_xml on models were extracted from Rails core in 5.0
 gem 'activemodel-serializers-xml'
 
@@ -49,13 +51,12 @@ group :test do
   gem "simplecov", require: false
   gem "database_cleaner"
   gem "capybara", "~> 3.0"
-  gem "selenium-webdriver", "~> 4.1"
+  gem "selenium-webdriver", "~> 4.14"
   # Loaded from test_helper, after the MiniTest alias it needs (minitest 5.19+ no longer defines it)
   gem "capybara_minitest_spec", require: false
   gem "rails-dom-testing"
   # assigns and assert_template were extracted from Rails core in 5.0
   gem "rails-controller-testing"
-  gem "webdrivers", "~> 5.3"
 end
 
 gem 'letter_opener_web', :group => :development

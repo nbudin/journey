@@ -1,0 +1,11 @@
+{
+  "name": "journey-asset-compare",
+  "private": true,
+  "description": "Dev-only tools for checking that two builds of the asset pipeline are equivalent",
+  "dependencies": {
+    "csso": "^5.0.5",
+    "esbuild": "^0.25.0",
+    "pixelmatch": "^5.3.0",
+    "pngjs": "^7.0.0"
+  }
+}

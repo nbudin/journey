@@ -18,3 +18,6 @@ tmp
 # Ignore application configuration
 /config/application.yml
 coverage/
+
+# script/asset_compare dependencies
+/script/asset_compare/node_modules

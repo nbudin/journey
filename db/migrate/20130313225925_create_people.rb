@@ -45,19 +45,17 @@ class CreatePeople < ActiveRecord::Migration
     add_index :questionnaire_permissions, :person_id
     
     person_ids = Response.group(:person_id).pluck(:person_id)
-    begin
+    # permissions might not exist for clean installs.  (Check for the table rather than rescuing the
+    # error, because a failed query aborts the whole transaction on Postgres.)
+    if table_exists?(:permissions)
       person_ids += Permission.group(:person_id).pluck(:person_id)
-    rescue
-      # Ignore this; procon_profiles and permissions might not exist for clean installs
     end
     
     person_ids = person_ids.uniq.compact
     
     role_ids = []
-    begin
-      role_ids += Permission.group(:role_id).map(&:role_id)
-    rescue
-      # Ignore for clean installs
+    if table_exists?(:permissions)
+      role_ids += Permission.group(:role_id).pluck(:role_id)
     end
     role_ids = role_ids.uniq.compact
     

@@ -37,12 +37,13 @@ group :test do
   gem "minitest-spec-rails"
   gem "minitest-reporters"
   gem "launchy"
+  gem "simplecov", require: false
   gem "database_cleaner"
-  gem "capybara", ">= 2.0.0"
-  gem "selenium-webdriver"
+  gem "capybara", "~> 3.0"
+  gem "selenium-webdriver", "~> 4.1"
   gem "capybara_minitest_spec"
   gem "rails-dom-testing"
-  gem "chromedriver-helper"
+  gem "webdrivers", "~> 5.3"
 end
 
 gem 'letter_opener_web', :group => :development

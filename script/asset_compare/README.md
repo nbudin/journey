@@ -36,3 +36,19 @@ taken on the same machine.
 
 It runs the test environment's asset pipeline (live compilation), so it complements `compare.js`, which looks at the
 precompiled production files. JS behaviour (editor, sorting, survey flow) is covered by the normal browser tests.
+
+## 3. TinyMCE against the precompiled production assets: `editor_check.rb`
+
+Neither the test suite nor the snapshot test serves `public/assets`, and TinyMCE loads its theme, skin and plugins at
+runtime from non-digested paths under `/assets/tinymce/`, so a pipeline change can break the editor without any test
+noticing. This boots the app in production mode against a scratch database, serves the precompiled assets, logs in,
+opens the two pages with an HTML editor, and checks that TinyMCE initialises, accepts content and applies Bold.
+
+```sh
+export RAILS_ENV=production SECRET_KEY_BASE=x DATABASE_URL=postgres:///some_migrated_empty_scratch_db
+bin/rails assets:precompile
+bundle exec ruby script/asset_compare/editor_check.rb     # from the repo root; exits non-zero on failure
+```
+
+It also prints the browser's failed requests as `note` lines. Run it on the old and new pipeline and diff the output:
+some notes are already present (404s for `questionnaire.css` and the TinyMCE icon fonts `/fonts/tinymce.*`).

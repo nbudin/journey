@@ -1,4 +1,10 @@
 PATH
+  remote: vendor/gems/dynamic_form
+  specs:
+    dynamic_form (1.1.4)
+      rails (>= 3.0)
+
+PATH
   remote: vendor/gems/prototype-rails
   specs:
     prototype-rails (4.0.0)
@@ -118,7 +124,6 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
-    dynamic_form (1.1.4)
     erubi (1.13.1)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -286,7 +291,7 @@ GEM
       base64
       websocket-extensions (>= 0.2.0)
     websocket-extensions (0.2.0)
-    will_paginate (3.1.6)
+    will_paginate (3.3.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.18)
@@ -305,7 +310,7 @@ DEPENDENCIES
   devise
   devise_cas_authenticatable
   dotenv-rails
-  dynamic_form
+  dynamic_form!
   factory_girl_rails
   gruff (~> 0.23.0)
   illyan_client
@@ -330,10 +335,10 @@ DEPENDENCIES
   simplecov
   tinymce-rails (= 4.6.7)
   webdrivers (~> 5.3)
-  will_paginate
+  will_paginate (~> 3.3)
 
 RUBY VERSION
-   ruby 2.7.8p225
+   ruby 3.1.7p261
 
 BUNDLED WITH
-   2.1.4
+   2.3.27

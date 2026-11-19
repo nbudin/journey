@@ -96,7 +96,7 @@ class QuestionsFlowTest < ActionController::TestCase
       put :update, params: params_for(id: @first.id, question: { layout: "sideways" }, format: :json)
 
       assert_response :bad_request
-      assert_match(/layout/i, JSON.parse(response.body))
+      assert_equal "Layout is not included in the list", JSON.parse(response.body)
       assert_equal "left", @first.reload.layout
     end
 

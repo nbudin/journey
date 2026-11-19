@@ -4,6 +4,7 @@ require "simplecov"
 SimpleCov.start "rails" do
   add_filter "/test/"
   add_filter "/db/"
+  add_filter "/vendor/"
   add_filter "/config/"
   add_group "Exporters", "app/exporters"
   add_group "Presenters/Helpers", "app/helpers"

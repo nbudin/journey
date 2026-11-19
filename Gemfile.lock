@@ -11,7 +11,7 @@ PATH
       rails (>= 4.0, < 9)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     action_text-trix (2.1.19)
       railties

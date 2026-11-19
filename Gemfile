@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 ruby "3.4.9"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'

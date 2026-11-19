@@ -14,6 +14,8 @@ gem 'sequel'
 gem 'dynamic_form', path: 'vendor/gems/dynamic_form'
 gem 'puma'
 gem 'builder'
+# Not used directly, but it bundles libxml2, so keep it current.  1.19+ requires Ruby 3.2.
+gem 'nokogiri', '~> 1.18.0'
 # to_xml/from_xml on models were extracted from Rails core in 5.0
 gem 'activemodel-serializers-xml'
 

@@ -1,4 +1,4 @@
-class RemoveNotifyOnStartedFromEmailNotifications < ActiveRecord::Migration
+class RemoveNotifyOnStartedFromEmailNotifications < ActiveRecord::Migration[4.2]
   def up
     remove_column :email_notifications, :notify_on_response_start
   end

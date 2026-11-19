@@ -1,4 +1,4 @@
-class CreateEmailNotifications < ActiveRecord::Migration
+class CreateEmailNotifications < ActiveRecord::Migration[4.2]
   def change
     create_table :email_notifications do |t|
       t.references :person

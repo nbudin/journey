@@ -1,4 +1,4 @@
-class CleanUpTheBadSpecialFieldAssociations < ActiveRecord::Migration
+class CleanUpTheBadSpecialFieldAssociations < ActiveRecord::Migration[4.2]
   def up
     SpecialFieldAssociation.where(question_id: nil).delete_all
     SpecialFieldAssociation.where(

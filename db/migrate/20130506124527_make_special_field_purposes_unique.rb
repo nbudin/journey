@@ -1,4 +1,4 @@
-class MakeSpecialFieldPurposesUnique < ActiveRecord::Migration
+class MakeSpecialFieldPurposesUnique < ActiveRecord::Migration[4.2]
   def self.up
     add_index :special_field_associations, [:questionnaire_id, :purpose], :unique => true, name: 'idx_special_field_associations_unique'
   end

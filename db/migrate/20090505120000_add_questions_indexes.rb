@@ -1,4 +1,4 @@
-class AddQuestionsIndexes < ActiveRecord::Migration
+class AddQuestionsIndexes < ActiveRecord::Migration[4.2]
   def self.up
     add_index :questions, :page_id
     add_index :questions, [:page_id, :type]

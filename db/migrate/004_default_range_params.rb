@@ -1,4 +1,4 @@
-class DefaultRangeParams < ActiveRecord::Migration
+class DefaultRangeParams < ActiveRecord::Migration[4.2]
   def self.up
     change_column "questions", "min", :integer, :default => 0, :null => false
     change_column "questions", "max", :integer, :default => 0, :null => false

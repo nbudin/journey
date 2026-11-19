@@ -1,4 +1,4 @@
-class MoreFinishOptions < ActiveRecord::Migration
+class MoreFinishOptions < ActiveRecord::Migration[4.2]
   def self.up
     add_column "questionnaires", "allow_finish_later", :boolean, :default => true, :null => false
     add_column "questionnaires", "allow_amend_response", :boolean, :default => true, :null => false

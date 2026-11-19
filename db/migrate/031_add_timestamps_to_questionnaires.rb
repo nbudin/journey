@@ -1,4 +1,4 @@
-class AddTimestampsToQuestionnaires < ActiveRecord::Migration
+class AddTimestampsToQuestionnaires < ActiveRecord::Migration[4.2]
   def self.up
     add_column "questionnaires", "created_at", :datetime
     add_column "questionnaires", "updated_at", :datetime

@@ -1,4 +1,4 @@
-class MakeSubmittedAtARealDataColumn < ActiveRecord::Migration
+class MakeSubmittedAtARealDataColumn < ActiveRecord::Migration[4.2]
   def self.up
     Response.where(:submitted => true).find_each do |resp|
       next unless resp.submitted

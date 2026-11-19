@@ -1,4 +1,4 @@
-class DeprecateSubscriptions < ActiveRecord::Migration
+class DeprecateSubscriptions < ActiveRecord::Migration[4.2]
   def self.up
     return unless table_exists? :subscriptions
 

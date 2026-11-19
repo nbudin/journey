@@ -1,4 +1,4 @@
-class QuestionnaireFlagDefaults < ActiveRecord::Migration
+class QuestionnaireFlagDefaults < ActiveRecord::Migration[4.2]
   def self.up
     no_preview = Questionnaire.where(:allow_preview => false).find_each
 

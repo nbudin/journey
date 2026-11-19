@@ -1,4 +1,4 @@
-class AddPublicVisibilityOptionToQuestionnaires < ActiveRecord::Migration
+class AddPublicVisibilityOptionToQuestionnaires < ActiveRecord::Migration[4.2]
   def self.up
     add_column :questionnaires, :publicly_visible, :boolean
     add_index :questionnaires, :publicly_visible

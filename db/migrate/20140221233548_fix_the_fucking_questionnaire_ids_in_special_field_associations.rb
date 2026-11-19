@@ -1,4 +1,4 @@
-class FixTheFuckingQuestionnaireIdsInSpecialFieldAssociations < ActiveRecord::Migration
+class FixTheFuckingQuestionnaireIdsInSpecialFieldAssociations < ActiveRecord::Migration[4.2]
   def up
     SpecialFieldAssociation.includes(:questionnaire, question: { page: :questionnaire }).find_each do |sfa|
       next unless sfa.question

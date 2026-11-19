@@ -1,4 +1,4 @@
-class Pages < ActiveRecord::Migration
+class Pages < ActiveRecord::Migration[4.2]
   def self.up
     create_table "questionnaires", :force => true do |t|
       t.column "title", :text

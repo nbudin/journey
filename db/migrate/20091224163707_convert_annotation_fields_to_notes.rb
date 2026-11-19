@@ -1,4 +1,4 @@
-class ConvertAnnotationFieldsToNotes < ActiveRecord::Migration
+class ConvertAnnotationFieldsToNotes < ActiveRecord::Migration[4.2]
   class Questions::AnnotationField < Questions::FreeformField
     def self.friendly_name
       "Admin notes"

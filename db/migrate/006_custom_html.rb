@@ -1,4 +1,4 @@
-class CustomHtml < ActiveRecord::Migration
+class CustomHtml < ActiveRecord::Migration[4.2]
   def self.up
     add_column "questionnaires", "custom_html", :text
     add_column "questionnaires", "custom_css", :text

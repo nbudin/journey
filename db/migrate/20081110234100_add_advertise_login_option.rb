@@ -1,4 +1,4 @@
-class AddAdvertiseLoginOption < ActiveRecord::Migration
+class AddAdvertiseLoginOption < ActiveRecord::Migration[4.2]
   def self.up
     add_column :questionnaires, :advertise_login, :boolean, :default => true
   end

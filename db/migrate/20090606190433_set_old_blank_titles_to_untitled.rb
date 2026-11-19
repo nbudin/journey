@@ -1,4 +1,4 @@
-class SetOldBlankTitlesToUntitled < ActiveRecord::Migration
+class SetOldBlankTitlesToUntitled < ActiveRecord::Migration[4.2]
   def self.up
     Questionnaire.all.each do |q|
       if q.title.blank?

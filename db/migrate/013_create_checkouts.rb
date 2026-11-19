@@ -1,4 +1,4 @@
-class CreateCheckouts < ActiveRecord::Migration
+class CreateCheckouts < ActiveRecord::Migration[4.2]
   def self.up
     create_table :checkouts do |t|
       t.column :project_id, :integer

@@ -1,4 +1,4 @@
-class ResponseStatus < ActiveRecord::Migration
+class ResponseStatus < ActiveRecord::Migration[4.2]
   def self.up
     add_column "responses", "saved_page", :integer
     add_column "responses", "session_code", :string

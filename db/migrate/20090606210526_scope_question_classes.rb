@@ -1,4 +1,4 @@
-class ScopeQuestionClasses < ActiveRecord::Migration
+class ScopeQuestionClasses < ActiveRecord::Migration[4.2]
   class Question < ActiveRecord::Base
     self.inheritance_column = nil
   end

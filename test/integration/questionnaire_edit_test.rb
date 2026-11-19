@@ -55,24 +55,27 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
       end
     end
 
+    # Questions are all created with position 0 here, so order by id (creation order) explicitly
+    # rather than relying on the database's tie-breaking.
     page1 = @questionnaire.reload.pages.first
+    page1_questions = page1.questions.reorder(:id).to_a
     %w(Name Address Phone Email Gender).each_with_index do |field_name, i|
       if field_name == "Email"
-        assert_equal "E-Mail", page1.questions[i].caption
+        assert_equal "E-Mail", page1_questions[i].caption
       else
-        assert_equal field_name, page1.questions[i].caption
+        assert_equal field_name, page1_questions[i].caption
       end
-      assert_equal field_name.downcase, page1.questions[i].purpose
+      assert_equal field_name.downcase, page1_questions[i].purpose
     end
 
-    [0, 2, 3, 4].each { |i| assert page1.questions[i].kind_of?(Questions::TextField) }
-    assert page1.questions[1].kind_of?(Questions::BigTextField)
+    [0, 2, 3, 4].each { |i| assert page1_questions[i].kind_of?(Questions::TextField) }
+    assert page1_questions[1].kind_of?(Questions::BigTextField)
 
-    assert page1.questions[0].required?
-    assert_equal "I have no home", page1.questions[1].default_answer
-    assert page1.questions[2].default_answer.blank?
-    [0, 1, 2, 3].each { |i| assert_equal "left", page1.questions[i].layout }
-    assert_equal "top", page1.questions[4].layout
+    assert page1_questions[0].required?
+    assert_equal "I have no home", page1_questions[1].default_answer
+    assert page1_questions[2].default_answer.blank?
+    [0, 1, 2, 3].each { |i| assert_equal "left", page1_questions[i].layout }
+    assert_equal "top", page1_questions[4].layout
   end
 
   test 'creating, renaming and deleting pages' do
@@ -147,12 +150,15 @@ class QuestionnaireEditTest < ActionDispatch::IntegrationTest
       # TODO: seems like Capybara-webkit can't handle iframes in iframes, which we'd need to edit options.
     end
 
+    # Questions are all created with position 0 here, so order by id (creation order) explicitly
+    # rather than relying on the database's tie-breaking.
     page1 = @questionnaire.reload.pages.first
+    page1_questions = page1.questions.reorder(:id).to_a
     [Questions::TextField, Questions::BigTextField, Questions::RangeField, Questions::CheckBoxField, Questions::DropDownField, Questions::RadioField].each_with_index do |klass, i|
-      assert page1.questions[i].is_a? klass
+      assert page1_questions[i].is_a? klass
     end
 
-    assert_equal -3, page1.questions[2].min
-    assert_equal 5, page1.questions[2].max
+    assert_equal -3, page1_questions[2].min
+    assert_equal 5, page1_questions[2].max
   end
 end

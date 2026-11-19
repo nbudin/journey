@@ -13,9 +13,6 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       RAILS_ENV: test
-      # config/database.yml has no host or password, so point libpq at the service container
-      PGHOST: localhost
-      PGUSER: postgres
     services:
       postgres:
         image: postgres:14.8
@@ -38,7 +35,16 @@ jobs:
         with:
           bundler-cache: true
       - name: Database setup
-        run: bundle exec rake db:create db:migrate
+        # config/database.yml is gitignored, so write one for the service container
+        run: |
+          cat > config/database.yml <<'YAML'
+          test:
+            adapter: postgresql
+            database: journey_test
+            username: postgres
+            host: localhost
+          YAML
+          bundle exec rake db:create db:migrate
       - name: Run tests
         run: TERM=xterm-color bundle exec rake test
       - name: Archive coverage report

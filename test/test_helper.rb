@@ -52,6 +52,19 @@ class ActionController::TestCase
   include Devise::TestHelpers
 end
 
+# Some code (the CSV exporter, graphs) talks to the database through its own Sequel connection,
+# which can't see data inside an uncommitted test transaction.  Tests for that code include this
+# module to commit their data and clean up by truncation instead.
+module NonTransactionalDatabase
+  def self.included(base)
+    base.use_transactional_fixtures = false
+    base.class_eval do
+      before { DatabaseCleaner.start }
+      teardown { DatabaseCleaner.clean }
+    end
+  end
+end
+
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL

@@ -1,9 +1,9 @@
 require 'test_helper'
 require 'tmpdir'
 
-# Sprockets 3.7 reads an existing assets manifest with JSON.parse(create_additions: false), which the json 3 gem
-# rejects.  That only breaks once a manifest exists on disk (like in a deployed image, where assets are precompiled
-# at build time), so a from-scratch precompile or the test suite alone would not notice.
+# Reading an existing assets manifest only happens once one exists on disk (like in a deployed image, where assets are
+# precompiled at build time), so a from-scratch precompile or the rest of the test suite would not notice if the
+# Sprockets and json gems stopped getting along (Sprockets 3.7 broke on json 3 this way).
 class AssetsManifestTest < ActiveSupport::TestCase
   test "Sprockets can load an existing manifest" do
     Dir.mktmpdir do |dir|

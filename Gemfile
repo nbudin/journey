@@ -15,9 +15,6 @@ gem 'builder'
 # Rails 7.1 pulls in psych via irb and rdoc.  psych 5 needs libyaml headers to compile, which the Docker base image
 # doesn't have; the psych that ships with this Ruby needs nothing extra.
 gem 'psych', '~> 4.0'
-# Sprockets 3.7 (the last release compatible with sass-rails 5) parses its manifest with JSON.parse(create_additions:),
-# which json 3 rejects, so reading any existing assets manifest (e.g. in a deployed image) would crash.
-gem 'json', '~> 2.9'
 # rmagick and factory_girl require 'observer', which stopped being a default gem in Ruby 3.4
 gem 'observer'
 # CSV left the default gems in Ruby 3.4 (used by ResponsesCsvExporter)
@@ -31,12 +28,9 @@ gem 'activemodel-serializers-xml'
 gem 'prototype-rails', path: 'vendor/gems/prototype-rails'
 gem 'tinymce-rails', '= 4.9.11.1'
 
-group :assets do
-  # Stay on the Ruby Sass compiler; sass-rails 6 switches to libsass, which could change the compiled CSS
-  gem 'sass-rails', '~> 5.0'
-  # Sass 3.5+ pulls in file-watcher gems (ffi) that don't support this Ruby
-  gem 'sass', '~> 3.4.25'
-end
+# Sprockets 4 with the current (Dart) Sass compiler
+gem 'dartsass-sprockets'
+gem 'sprockets', '~> 4.2'
 
 gem 'devise', '~> 4.9.4'
 gem 'devise_cas_authenticatable'

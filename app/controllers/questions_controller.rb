@@ -77,7 +77,7 @@ class QuestionsController < ApplicationController
   # PUT /questions/1.xml
   def update
     respond_to do |format|
-      if @question.update_attributes(question_params)
+      if @question.update(question_params)
         if params[:question].has_key?(:purpose)
           @question.purpose = params[:question][:purpose]
         end

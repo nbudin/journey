@@ -62,7 +62,7 @@ class ResponsesFlowTest < ActionController::TestCase
 
     it "requires permission to view answers" do
       # Either can_view_answers or can_edit_answers is enough to see responses
-      @permission.update_attributes!(can_view_answers: false, can_edit_answers: false)
+      @permission.update!(can_view_answers: false, can_edit_answers: false)
 
       get :index, params: { questionnaire_id: @questionnaire.id }
       assert_redirected_to root_url
@@ -136,7 +136,7 @@ class ResponsesFlowTest < ActionController::TestCase
     end
 
     it "only lets people who can edit answers do it" do
-      @permission.update_attributes!(can_edit_answers: false)
+      @permission.update!(can_edit_answers: false)
 
       put :update, params: { questionnaire_id: @questionnaire.id, id: @alice.id, response: { notes: "Nope" } }
 

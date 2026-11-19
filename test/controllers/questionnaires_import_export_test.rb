@@ -33,7 +33,7 @@ class QuestionnairesImportExportTest < ActionController::TestCase
     end
 
     it "refuses to export XML to people who can only view answers" do
-      @permission.update_attributes!(can_edit: false)
+      @permission.update!(can_edit: false)
       get :show, params: { id: @questionnaire.id, format: :xml }
       assert_response :forbidden
     end
@@ -53,7 +53,7 @@ class QuestionnairesImportExportTest < ActionController::TestCase
     end
 
     it "refuses to export JSON to people who can't edit" do
-      @permission.update_attributes!(can_edit: false)
+      @permission.update!(can_edit: false)
       get :show, params: { id: @questionnaire.id, format: :json }
       assert_response :forbidden
     end

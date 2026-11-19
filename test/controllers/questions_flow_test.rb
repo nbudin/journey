@@ -65,7 +65,7 @@ class QuestionsFlowTest < ActionController::TestCase
     end
 
     it "requires permission to edit" do
-      @permission.update_attributes!(can_edit: false)
+      @permission.update!(can_edit: false)
 
       assert_no_difference("Question.count") { post :create, params: params_for(question: { type: "Questions::TextField" }, format: :json) }
       assert_redirected_to root_url

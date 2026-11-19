@@ -5,7 +5,7 @@ class QuestionOptionTest < ActiveSupport::TestCase
     option = FactoryGirl.create(:question_option, option: "blue")
     assert_equal "blue", option.effective_output_value
     
-    option.update_attributes(output_value: "orange")
+    option.update(output_value: "orange")
     assert_equal "orange", option.effective_output_value
   end
 end

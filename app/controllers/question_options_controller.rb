@@ -42,7 +42,7 @@ class QuestionOptionsController < ApplicationController
   # PUT /question_options/1.xml
   def update
     respond_to do |format|
-      if @question_option.update_attributes(question_option_params)
+      if @question_option.update(question_option_params)
         format.json { head :ok }
         format.xml  { head :ok }
       else

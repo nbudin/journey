@@ -30,6 +30,9 @@ module Journey
     # runs them on a background thread instead.  There's no job backend here, so keep the old behavior.
     config.active_job.queue_adapter = :inline
 
+    # Rails 6 deprecated the old mail delivery job (used by deliver_later); this is the replacement
+    config.action_mailer.delivery_job = "ActionMailer::MailDeliveryJob"
+
     # Rails 5 adds data-disable-with to every submit button.  This app's prototype_ujs disables the button as
     # soon as it's clicked, and browsers don't submit disabled buttons, so the "commit" parameter went missing
     # and every button on the answering form (Next page, Finish later...) acted like "Finish".

@@ -97,7 +97,7 @@ class AbilityTest < ActiveSupport::TestCase
     end
     
     it "should let the general public read open, public questionnaires" do
-      @questionnaire.update_attributes(is_open: true, publicly_visible: true)
+      @questionnaire.update(is_open: true, publicly_visible: true)
       assert @ability.can?(:read, @questionnaire)
     end
   end  

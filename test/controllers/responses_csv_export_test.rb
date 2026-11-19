@@ -21,7 +21,7 @@ class ResponsesCsvExportTest < ActionController::TestCase
     get :index, params: { questionnaire_id: @questionnaire.id, format: :csv }
 
     assert_response :success
-    assert_match %r{text/csv}, response.content_type.to_s
+    assert_match %r{text/csv}, response.media_type.to_s
     assert_equal [["id", "Submitted", "Notes", "Name"], [@response_id.to_s, nil, nil, "Alice"]], CSV.parse(response.body)
   end
 

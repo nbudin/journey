@@ -172,7 +172,7 @@ module PrototypeRails
   # +assert_select+ and +css_select+ call this to obtain the content in the HTML
   # page, or from all the RJS statements, depending on the type of response.
   def response_from_page_with_rjs
-    content_type = @response.content_type
+    content_type = @response.media_type
 
     if content_type && Mime[:js] =~ content_type
       body = @response.body.dup

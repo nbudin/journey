@@ -8,7 +8,7 @@ gem 'concurrent-ruby', '< 1.3.5'
 gem 'will_paginate'
 gem 'pg', '~> 0.20'
 gem "jipe", ">= 2.0.1"
-gem 'rollbar'
+gem 'rollbar', '~> 2.27'
 gem 'sequel'
 gem 'dynamic_form'
 gem 'puma'

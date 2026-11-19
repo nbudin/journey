@@ -63,6 +63,34 @@ class QuestionnairesControllerTest < ActionController::TestCase
       assert_redirected_to 'http://example.com'
     end
   
+    it 'redirects to a return_to URL on this site after updating' do
+      @permission.update(:can_edit => true)
+
+      put :update, params: { :id => @questionnaire.id, :questionnaire => { :title => "blooblah" }, :return_to => "http://test.host/publish/settings" }
+
+      assert_redirected_to "http://test.host/publish/settings"
+    end
+
+    it 'redirects to a return_to path on this site after updating' do
+      @permission.update(:can_edit => true)
+
+      put :update, params: { :id => @questionnaire.id, :questionnaire => { :title => "blooblah" }, :return_to => "/questionnaires" }
+
+      assert_redirected_to "http://test.host/questionnaires"
+    end
+
+    ["http://evil.example.com/phish", "//evil.example.com/phish", "https://test.host.evil.example.com/"].each do |url|
+      it "ignores an off-site return_to (#{url}) and falls back to the referer" do
+        @permission.update(:can_edit => true)
+        @request.env['HTTP_REFERER'] = 'http://test.host/somewhere'
+
+        put :update, params: { :id => @questionnaire.id, :questionnaire => { :title => "blooblah" }, :return_to => url }
+
+        assert_equal "blooblah", @questionnaire.reload.title
+        assert_redirected_to 'http://test.host/somewhere'
+      end
+    end
+
     it 'should destroy questionnaire' do
       @permission.update(:can_destroy => true)
 

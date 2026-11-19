@@ -19,7 +19,7 @@ def attribute(name, value, force_string = false)
       else
         value
       end
-    "\#{name}: \#{value_string}"
+    "#{name}: #{value_string}"
   else
     ""
   end
